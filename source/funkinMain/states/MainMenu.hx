@@ -1,7 +1,5 @@
 package funkinMain.states;
 
-import flixel.FlxState;
-
 class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
@@ -23,6 +21,10 @@ class MainMenu extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		if (CoolInput.pressed("enter"))
+		{
+			FlxG.switchState(PlayState);
+		}
 		super.update(elapsed);
 	}
 }
