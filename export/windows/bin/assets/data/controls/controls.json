@@ -1,0 +1,20 @@
+{
+    "controls": [
+        {
+            "name": "left",
+            "defaultKey": "d"
+        },
+        {
+            "name": "down",
+            "defaultKey": "f"
+        },
+        {
+            "name": "up",
+            "defaultKey": "j"
+        },
+        {
+            "name": "right",
+            "defaultKey": "k"
+        }
+    ]
+}

@@ -62,6 +62,9 @@ class HXCPP_CLASS_ATTRIBUTES Paths_obj : public ::hx::Object
 		static ::String sound(::String pth);
 		static ::Dynamic sound_dyn();
 
+		static ::String json(::String pth);
+		static ::Dynamic json_dyn();
+
 };
 
 } // end namespace backend

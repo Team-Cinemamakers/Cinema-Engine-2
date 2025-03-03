@@ -1,4 +1,5 @@
 export/windows/bin/assets/audio/music/freakyMenu.ogg
+export/windows/bin/assets/data/controls/controls.json
 export/windows/bin/assets/images/stateAssets/mainMenu/menuBG.png
 export/windows/bin/flixel/sounds/beep.ogg
 export/windows/bin/flixel/sounds/flixel.ogg

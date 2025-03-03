@@ -92,6 +92,7 @@ import sys.FileSystem;
 #if flash
 
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_audio_music_freakymenu_ogg extends null { }
+@:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_data_controls_controls_json extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__assets_images_stateassets_mainmenu_menubg_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__flixel_sounds_beep_ogg extends null { }
 @:keep @:bind @:noCompletion #if display private #end class __ASSET__flixel_sounds_flixel_ogg extends null { }

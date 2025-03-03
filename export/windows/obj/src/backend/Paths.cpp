@@ -9,6 +9,7 @@ HX_LOCAL_STACK_FRAME(_hx_pos_359943aa63fd1400_9_char,"backend.Paths","char",0x20
 HX_LOCAL_STACK_FRAME(_hx_pos_359943aa63fd1400_17_stateAssets,"backend.Paths","stateAssets",0xa16b5d3a,"backend.Paths.stateAssets","backend/Paths.hx",17,0x7c630d0b)
 HX_LOCAL_STACK_FRAME(_hx_pos_359943aa63fd1400_21_music,"backend.Paths","music",0x6025dfeb,"backend.Paths.music","backend/Paths.hx",21,0x7c630d0b)
 HX_LOCAL_STACK_FRAME(_hx_pos_359943aa63fd1400_25_sound,"backend.Paths","sound",0xd0979c15,"backend.Paths.sound","backend/Paths.hx",25,0x7c630d0b)
+HX_LOCAL_STACK_FRAME(_hx_pos_359943aa63fd1400_29_json,"backend.Paths","json",0x25793da2,"backend.Paths.json","backend/Paths.hx",29,0x7c630d0b)
 namespace backend{
 
 void Paths_obj::__construct() { }
@@ -67,6 +68,14 @@ HXDLIN(  25)		return ((HX_("assets/audio/sound/",25,d0,61,6d) + pth) + HX_(".ogg
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(Paths_obj,sound,return )
 
+::String Paths_obj::json(::String pth){
+            	HX_STACKFRAME(&_hx_pos_359943aa63fd1400_29_json)
+HXDLIN(  29)		return ((HX_("assets/data/",f9,10,73,a0) + pth) + HX_(".json",56,f1,d6,c2));
+            	}
+
+
+STATIC_HX_DEFINE_DYNAMIC_FUNC1(Paths_obj,json,return )
+
 
 Paths_obj::Paths_obj()
 {
@@ -77,6 +86,7 @@ bool Paths_obj::__GetStatic(const ::String &inName, Dynamic &outValue, ::hx::Pro
 	switch(inName.length) {
 	case 4:
 		if (HX_FIELD_EQ(inName,"char") ) { outValue = _hx_char_dyn(); return true; }
+		if (HX_FIELD_EQ(inName,"json") ) { outValue = json_dyn(); return true; }
 		break;
 	case 5:
 		if (HX_FIELD_EQ(inName,"music") ) { outValue = music_dyn(); return true; }
@@ -100,6 +110,7 @@ static ::String Paths_obj_sStaticFields[] = {
 	HX_("stateAssets",74,95,8c,c6),
 	HX_("music",a5,d0,5a,10),
 	HX_("sound",cf,8c,cc,80),
+	HX_("json",28,42,68,46),
 	::String(null())
 };
 

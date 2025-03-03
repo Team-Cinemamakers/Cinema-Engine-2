@@ -1156,6 +1156,9 @@
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
 #endif
+#ifndef INCLUDED_backend_Input
+#include <backend/Input.h>
+#endif
 #ifndef INCLUDED_Xml
 #include <Xml.h>
 #endif
@@ -1230,9 +1233,6 @@
 #endif
 #ifndef INCLUDED_sys_io_FileInput
 #include <sys/io/FileInput.h>
-#endif
-#ifndef INCLUDED_sys_io_File
-#include <sys/io/File.h>
 #endif
 #ifndef INCLUDED_sys_FileSystem
 #include <sys/FileSystem.h>
@@ -2470,9 +2470,6 @@
 #ifndef INCLUDED_haxe_format_JsonPrinter
 #include <haxe/format/JsonPrinter.h>
 #endif
-#ifndef INCLUDED_haxe_format_JsonParser
-#include <haxe/format/JsonParser.h>
-#endif
 #ifndef INCLUDED_haxe_exceptions_NotImplementedException
 #include <haxe/exceptions/NotImplementedException.h>
 #endif
@@ -3112,8 +3109,20 @@
 #ifndef INCLUDED_cpp_Lib
 #include <cpp/Lib.h>
 #endif
+#ifndef INCLUDED_backend__Input_Input_Fields_
+#include <backend/_Input/Input_Fields_.h>
+#endif
+#ifndef INCLUDED_haxe_format_JsonParser
+#include <haxe/format/JsonParser.h>
+#endif
 #ifndef INCLUDED_backend_Paths
 #include <backend/Paths.h>
+#endif
+#ifndef INCLUDED_sys_io_File
+#include <sys/io/File.h>
+#endif
+#ifndef INCLUDED_backend_JsonFunctions
+#include <backend/JsonFunctions.h>
 #endif
 #ifndef INCLUDED__Xml_XmlType_Impl_
 #include <_Xml/XmlType_Impl_.h>
@@ -3606,6 +3615,7 @@ __files__boot();
 ::flixel::math::FlxRect_obj::__register();
 ::flixel::math::FlxBasePoint_obj::__register();
 ::flixel::FlxBasic_obj::__register();
+::backend::Input_obj::__register();
 ::Xml_obj::__register();
 ::haxe::SysTools_obj::__register();
 ::openfl::text::Font_obj::__register();
@@ -3631,7 +3641,6 @@ __files__boot();
 ::sys::io::_Process::Stdin_obj::__register();
 ::sys::io::FileOutput_obj::__register();
 ::sys::io::FileInput_obj::__register();
-::sys::io::File_obj::__register();
 ::sys::FileSystem_obj::__register();
 ::openfl::utils::_internal::format::amf3::AMF3Writer_obj::__register();
 ::openfl::utils::_internal::format::amf3::AMF3Tools_obj::__register();
@@ -4044,7 +4053,6 @@ __files__boot();
 ::haxe::io::Input_obj::__register();
 ::haxe::io::BytesBuffer_obj::__register();
 ::haxe::format::JsonPrinter_obj::__register();
-::haxe::format::JsonParser_obj::__register();
 ::haxe::exceptions::NotImplementedException_obj::__register();
 ::haxe::exceptions::PosException_obj::__register();
 ::haxe::ds::_GenericStack::GenericStackIterator_hscript_Token_obj::__register();
@@ -4258,7 +4266,11 @@ __files__boot();
 ::flixel::IFlxBasic_obj::__register();
 ::flixel::util::IFlxDestroyable_obj::__register();
 ::cpp::Lib_obj::__register();
+::backend::_Input::Input_Fields__obj::__register();
+::haxe::format::JsonParser_obj::__register();
 ::backend::Paths_obj::__register();
+::sys::io::File_obj::__register();
+::backend::JsonFunctions_obj::__register();
 ::_Xml::XmlType_Impl__obj::__register();
 ::_UnicodeString::UnicodeString_Impl__obj::__register();
 ::Type_obj::__register();
@@ -4376,6 +4388,7 @@ __files__boot();
 ::openfl::text::Font_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::Xml_obj::__boot();
+::backend::Input_obj::__boot();
 ::flixel::FlxBasic_obj::__boot();
 ::flixel::math::FlxBasePoint_obj::__boot();
 ::flixel::math::FlxRect_obj::__boot();

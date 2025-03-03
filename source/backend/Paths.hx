@@ -24,4 +24,8 @@ class Paths
     public static function sound(pth:String):String{
         return "assets/audio/sound/" + pth + ".ogg";
     }
+	public static function json(pth:String):String
+	{
+		return "assets/data/" + pth + ".json";
+	}
 }
