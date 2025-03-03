@@ -19,7 +19,6 @@ class MainMenu extends FlxState
 		bg = new FlxSprite().loadGraphic(Paths.stateAssets("mainMenu/menuBG"));
 		bg.screenCenter();
 		add(bg);
-		trace(Input.mainInputJson);
 	}
 
 	override public function update(elapsed:Float)

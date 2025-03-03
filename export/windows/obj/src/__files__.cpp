@@ -1613,7 +1613,6 @@ const char *__hxcpp_all_classes[] = {
 "backend.Paths",
 "haxe.format.JsonParser",
 "backend.Input",
-"backend._Input.Input_Fields_",
 "cpp.Lib",
 "flixel.FlxBasic",
 "flixel.util.FlxPool",

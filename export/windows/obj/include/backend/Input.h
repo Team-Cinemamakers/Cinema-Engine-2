@@ -53,6 +53,11 @@ class HXCPP_CLASS_ATTRIBUTES Input_obj : public ::hx::Object
 
 		static void __boot();
 		static ::String mainInputJson;
+		static  ::Dynamic inputs;
+		static ::Array< ::Dynamic> inputEvents;
+		static void loadInputs();
+		static ::Dynamic loadInputs_dyn();
+
 };
 
 } // end namespace backend

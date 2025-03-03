@@ -4,6 +4,9 @@
 #ifndef INCLUDED_Main
 #include <Main.h>
 #endif
+#ifndef INCLUDED_backend_Input
+#include <backend/Input.h>
+#endif
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
 #endif
@@ -59,7 +62,8 @@ void Main_obj::__construct(){
             	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_9_new)
 HXLINE(  10)		super::__construct();
 HXLINE(  12)		::flixel::FlxG_obj::autoPause = false;
-HXLINE(  13)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::funkinMain::states::MainMenu >()),60,60,true,null()));
+HXLINE(  13)		::backend::Input_obj::loadInputs();
+HXLINE(  15)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::funkinMain::states::MainMenu >()),60,60,true,null()));
             	}
 
 Dynamic Main_obj::__CreateEmpty() { return new Main_obj; }

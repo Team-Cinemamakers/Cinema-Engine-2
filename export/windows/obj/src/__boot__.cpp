@@ -3109,9 +3109,6 @@
 #ifndef INCLUDED_cpp_Lib
 #include <cpp/Lib.h>
 #endif
-#ifndef INCLUDED_backend__Input_Input_Fields_
-#include <backend/_Input/Input_Fields_.h>
-#endif
 #ifndef INCLUDED_haxe_format_JsonParser
 #include <haxe/format/JsonParser.h>
 #endif
@@ -4266,7 +4263,6 @@ __files__boot();
 ::flixel::IFlxBasic_obj::__register();
 ::flixel::util::IFlxDestroyable_obj::__register();
 ::cpp::Lib_obj::__register();
-::backend::_Input::Input_Fields__obj::__register();
 ::haxe::format::JsonParser_obj::__register();
 ::backend::Paths_obj::__register();
 ::sys::io::File_obj::__register();

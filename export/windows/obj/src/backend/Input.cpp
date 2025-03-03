@@ -7,8 +7,13 @@
 #ifndef INCLUDED_backend_JsonFunctions
 #include <backend/JsonFunctions.h>
 #endif
+#ifndef INCLUDED_haxe_format_JsonParser
+#include <haxe/format/JsonParser.h>
+#endif
 
-HX_LOCAL_STACK_FRAME(_hx_pos_9eabdfeb4eac1bd5_12_boot,"backend.Input","boot",0x328e2950,"backend.Input.boot","backend/Input.hx",12,0xec0a45af)
+HX_LOCAL_STACK_FRAME(_hx_pos_9eabdfeb4eac1bd5_17_loadInputs,"backend.Input","loadInputs",0x1919438d,"backend.Input.loadInputs","backend/Input.hx",17,0xec0a45af)
+HX_LOCAL_STACK_FRAME(_hx_pos_9eabdfeb4eac1bd5_10_boot,"backend.Input","boot",0x328e2950,"backend.Input.boot","backend/Input.hx",10,0xec0a45af)
+HX_LOCAL_STACK_FRAME(_hx_pos_9eabdfeb4eac1bd5_11_boot,"backend.Input","boot",0x328e2950,"backend.Input.boot","backend/Input.hx",11,0xec0a45af)
 namespace backend{
 
 void Input_obj::__construct() { }
@@ -30,6 +35,27 @@ bool Input_obj::_hx_isInstanceOf(int inClassId) {
 
 ::String Input_obj::mainInputJson;
 
+ ::Dynamic Input_obj::inputs;
+
+::Array< ::Dynamic> Input_obj::inputEvents;
+
+void Input_obj::loadInputs(){
+            	HX_STACKFRAME(&_hx_pos_9eabdfeb4eac1bd5_17_loadInputs)
+HXDLIN(  17)		int _g = 0;
+HXDLIN(  17)		int _g1 = ( (int)( ::Dynamic(::backend::Input_obj::inputs->__Field(HX_("controls",76,86,bc,37),::hx::paccDynamic))->__Field(HX_("length",e6,94,07,9f),::hx::paccDynamic)) );
+HXDLIN(  17)		while((_g < _g1)){
+HXDLIN(  17)			_g = (_g + 1);
+HXDLIN(  17)			int i = (_g - 1);
+HXLINE(  19)			 ::Dynamic newInput =  ::Dynamic(::hx::Anon_obj::Create(2)
+            				->setFixed(0,HX_("inputKey",b5,1f,aa,c6), ::Dynamic( ::Dynamic(::backend::Input_obj::inputs->__Field(HX_("controls",76,86,bc,37),::hx::paccDynamic))->__GetItem(i)->__Field(HX_("defaultKey",5e,97,fe,25),::hx::paccDynamic)))
+            				->setFixed(1,HX_("inputName",75,2f,2a,10), ::Dynamic( ::Dynamic(::backend::Input_obj::inputs->__Field(HX_("controls",76,86,bc,37),::hx::paccDynamic))->__GetItem(i)->__Field(HX_("name",4b,72,ff,48),::hx::paccDynamic))));
+HXLINE(  20)			::backend::Input_obj::inputEvents->push(newInput);
+            		}
+            	}
+
+
+STATIC_HX_DEFINE_DYNAMIC_FUNC0(Input_obj,loadInputs,(void))
+
 
 Input_obj::Input_obj()
 {
@@ -38,6 +64,15 @@ Input_obj::Input_obj()
 bool Input_obj::__GetStatic(const ::String &inName, Dynamic &outValue, ::hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 6:
+		if (HX_FIELD_EQ(inName,"inputs") ) { outValue = ( inputs ); return true; }
+		break;
+	case 10:
+		if (HX_FIELD_EQ(inName,"loadInputs") ) { outValue = loadInputs_dyn(); return true; }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"inputEvents") ) { outValue = ( inputEvents ); return true; }
+		break;
 	case 13:
 		if (HX_FIELD_EQ(inName,"mainInputJson") ) { outValue = ( mainInputJson ); return true; }
 	}
@@ -47,6 +82,12 @@ bool Input_obj::__GetStatic(const ::String &inName, Dynamic &outValue, ::hx::Pro
 bool Input_obj::__SetStatic(const ::String &inName,Dynamic &ioValue,::hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
+	case 6:
+		if (HX_FIELD_EQ(inName,"inputs") ) { inputs=ioValue.Cast<  ::Dynamic >(); return true; }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"inputEvents") ) { inputEvents=ioValue.Cast< ::Array< ::Dynamic> >(); return true; }
+		break;
 	case 13:
 		if (HX_FIELD_EQ(inName,"mainInputJson") ) { mainInputJson=ioValue.Cast< ::String >(); return true; }
 	}
@@ -57,17 +98,23 @@ bool Input_obj::__SetStatic(const ::String &inName,Dynamic &ioValue,::hx::Proper
 static ::hx::StorageInfo *Input_obj_sMemberStorageInfo = 0;
 static ::hx::StaticInfo Input_obj_sStaticStorageInfo[] = {
 	{::hx::fsString,(void *) &Input_obj::mainInputJson,HX_("mainInputJson",d9,57,1d,c7)},
+	{::hx::fsObject /*  ::Dynamic */ ,(void *) &Input_obj::inputs,HX_("inputs",29,c5,ed,9b)},
+	{::hx::fsObject /* ::Array< ::Dynamic> */ ,(void *) &Input_obj::inputEvents,HX_("inputEvents",c3,2a,9e,8b)},
 	{ ::hx::fsUnknown, 0, null()}
 };
 #endif
 
 static void Input_obj_sMarkStatics(HX_MARK_PARAMS) {
 	HX_MARK_MEMBER_NAME(Input_obj::mainInputJson,"mainInputJson");
+	HX_MARK_MEMBER_NAME(Input_obj::inputs,"inputs");
+	HX_MARK_MEMBER_NAME(Input_obj::inputEvents,"inputEvents");
 };
 
 #ifdef HXCPP_VISIT_ALLOCS
 static void Input_obj_sVisitStatics(HX_VISIT_PARAMS) {
 	HX_VISIT_MEMBER_NAME(Input_obj::mainInputJson,"mainInputJson");
+	HX_VISIT_MEMBER_NAME(Input_obj::inputs,"inputs");
+	HX_VISIT_MEMBER_NAME(Input_obj::inputEvents,"inputEvents");
 };
 
 #endif
@@ -76,6 +123,9 @@ static void Input_obj_sVisitStatics(HX_VISIT_PARAMS) {
 
 static ::String Input_obj_sStaticFields[] = {
 	HX_("mainInputJson",d9,57,1d,c7),
+	HX_("inputs",29,c5,ed,9b),
+	HX_("inputEvents",c3,2a,9e,8b),
+	HX_("loadInputs",ef,f3,18,51),
 	::String(null())
 };
 
@@ -109,8 +159,12 @@ void Input_obj::__register()
 void Input_obj::__boot()
 {
 {
-            	HX_STACKFRAME(&_hx_pos_9eabdfeb4eac1bd5_12_boot)
-HXDLIN(  12)		mainInputJson = ::backend::JsonFunctions_obj::loadJson(HX_("controls/controls",6f,c8,e4,7f));
+            	HX_STACKFRAME(&_hx_pos_9eabdfeb4eac1bd5_10_boot)
+HXDLIN(  10)		mainInputJson = ::backend::JsonFunctions_obj::loadJson(HX_("controls/controls",6f,c8,e4,7f));
+            	}
+{
+            	HX_GC_STACKFRAME(&_hx_pos_9eabdfeb4eac1bd5_11_boot)
+HXDLIN(  11)		inputs =  ::haxe::format::JsonParser_obj::__alloc( HX_CTX ,::backend::Input_obj::mainInputJson)->doParse();
             	}
 }
 

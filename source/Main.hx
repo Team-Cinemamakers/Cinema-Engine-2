@@ -10,6 +10,8 @@ class Main extends Sprite
 		super();
 
 		FlxG.autoPause = false;
+		Input.loadInputs();
+		
 		addChild(new FlxGame(0, 0, MainMenu, 60, 60, true));
 	}
 }

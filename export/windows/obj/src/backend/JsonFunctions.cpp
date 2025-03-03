@@ -7,14 +7,11 @@
 #ifndef INCLUDED_backend_Paths
 #include <backend/Paths.h>
 #endif
-#ifndef INCLUDED_haxe_format_JsonParser
-#include <haxe/format/JsonParser.h>
-#endif
 #ifndef INCLUDED_sys_io_File
 #include <sys/io/File.h>
 #endif
 
-HX_LOCAL_STACK_FRAME(_hx_pos_d2f89b62824f0d39_8_loadJson,"backend.JsonFunctions","loadJson",0x30636163,"backend.JsonFunctions.loadJson","backend/JsonFunctions.hx",8,0x6dc3e546)
+HX_LOCAL_STACK_FRAME(_hx_pos_d2f89b62824f0d39_7_loadJson,"backend.JsonFunctions","loadJson",0x30636163,"backend.JsonFunctions.loadJson","backend/JsonFunctions.hx",7,0x6dc3e546)
 namespace backend{
 
 void JsonFunctions_obj::__construct() { }
@@ -35,10 +32,9 @@ bool JsonFunctions_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 ::String JsonFunctions_obj::loadJson(::String jsonPath){
-            	HX_GC_STACKFRAME(&_hx_pos_d2f89b62824f0d39_8_loadJson)
-HXLINE(   9)		::String jsonVal = ::sys::io::File_obj::getContent(::backend::Paths_obj::json(jsonPath));
-HXLINE(  10)		::String json = ( (::String)( ::haxe::format::JsonParser_obj::__alloc( HX_CTX ,jsonVal)->doParse()) );
-HXLINE(  11)		return json;
+            	HX_STACKFRAME(&_hx_pos_d2f89b62824f0d39_7_loadJson)
+HXLINE(   8)		::String jsonVal = ::sys::io::File_obj::getContent(::backend::Paths_obj::json(jsonPath));
+HXLINE(   9)		return jsonVal;
             	}
 
 
