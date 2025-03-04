@@ -26,4 +26,27 @@ class CoolInput
         }
 		return false;
     }
+	public static function held(str:String):Bool
+	{
+		switch (str)
+		{
+			case "noteLeft":
+				return (FlxG.keys.pressed.D);
+			case "noteDown":
+				return (FlxG.keys.pressed.F);
+			case "noteUp":
+				return (FlxG.keys.pressed.J);
+			case "noteRight":
+				return (FlxG.keys.pressed.K);
+			case "uiUp":
+				return (FlxG.keys.pressed.UP || FlxG.keys.pressed.W);
+			case "uiDown":
+				return (FlxG.keys.pressed.DOWN || FlxG.keys.pressed.S);
+			case "uiLeft":
+				return (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A);
+			case "uiRight":
+				return (FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D);
+		}
+		return false;
+	}
 }
