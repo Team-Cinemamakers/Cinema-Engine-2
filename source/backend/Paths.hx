@@ -59,7 +59,7 @@ class Paths
 		SPECIALIZED ASSETS FUNCTIONS
 	 */
 	// get asset from a characters folder
-	public static function char(pth:String, isAtlas:Bool = false):String
+	public static function char(pth:String):String
 	{
 		return "game/characters/" + pth + "/" + pth;
 	}
