@@ -14,6 +14,7 @@ class MainMenu extends FlxState
 
 		FlxG.autoPause = false;
 
+		// plays conductor with bpm 102 according to the music bpm (102)
 		Conductor.play(102);
 
 		if(FlxG.sound.music == null){
@@ -30,7 +31,8 @@ class MainMenu extends FlxState
 	{
 		super.update(elapsed);
 
-		if (CoolInput.pressed("enter"))
+		// gets input from custom input callouts (CoolInput) and checks if it is just pressed
+		if (CoolInput.pressed("accept"))
 		{
 			FlxG.switchState(new PlayState());
 		}

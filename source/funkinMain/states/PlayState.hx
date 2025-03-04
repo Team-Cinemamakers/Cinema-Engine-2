@@ -15,6 +15,7 @@ class PlayState extends FlxState
 
 		MusicHandler.loadInstAndVoices('dad-battle');
 
+		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(180, true);
 	}
     

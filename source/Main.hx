@@ -11,6 +11,7 @@ class Main extends Sprite
 	{
 		super();
 
+		// create that conductor!
 		conductor = new Conductor();
 
 		FlxG.autoPause = false;

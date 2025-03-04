@@ -13,17 +13,21 @@ class Paths
         }
     }
 
+	// path for state specific asset folder
     public static function stateAssets(pth:String):String{
         return "assets/images/stateAssets/" + pth + ".png";
     }
 
+	// moosic lol, always ogg
     public static function music(pth:String):String{
         return "assets/audio/music/" + pth + ".ogg";
     }
 
+	// path for sound files, always ogg
     public static function sound(pth:String):String{
         return "assets/audio/sound/" + pth + ".ogg";
     }
+	// gets a json from the data folder
 	public static function json(pth:String):String
 	{
 		return "assets/data/" + pth + ".json";
