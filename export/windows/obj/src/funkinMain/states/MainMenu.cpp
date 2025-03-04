@@ -133,7 +133,7 @@ void MainMenu_obj::create(){
             	HX_GC_STACKFRAME(&_hx_pos_0602c95667eab96f_12_create)
 HXLINE(  13)		this->super::create();
 HXLINE(  15)		::flixel::FlxG_obj::autoPause = false;
-HXLINE(  17)		::backend::Conductor_obj::play(( (Float)(102) ));
+HXLINE(  17)		::backend::Conductor_obj::play(102,null());
 HXLINE(  19)		if (::hx::IsNull( ::flixel::FlxG_obj::sound->music )) {
 HXLINE(  20)			 ::flixel::_hx_system::frontEnds::SoundFrontEnd _hx_tmp = ::flixel::FlxG_obj::sound;
 HXDLIN(  20)			_hx_tmp->playMusic(::backend::Paths_obj::music(HX_("freakyMenu",15,c9,93,86)),null(),null(),null());
@@ -191,13 +191,15 @@ HXLINE(  35)			 ::Dynamic nextState = ::flixel::util::typeLimit::_NextState::Nex
 HXDLIN(  35)			 ::flixel::FlxState stateOnCall = ::flixel::FlxG_obj::game->_state;
 HXDLIN(  35)			::flixel::FlxG_obj::game->_state->startOutro( ::Dynamic(new _hx_Closure_0(nextState,stateOnCall)));
             		}
-HXLINE(  37)		::backend::Conductor_obj::addConductorTime(elapsed);
+HXLINE(  37)		::backend::Conductor_obj::addConductorTime(elapsed,::hx::ObjectPtr<OBJ_>(this));
             	}
 
 
 void MainMenu_obj::beatHit( ::openfl::events::Event e){
             	HX_STACKFRAME(&_hx_pos_0602c95667eab96f_42_beatHit)
-HXDLIN(  42)		::haxe::Log_obj::trace(HX_("I DID IT",43,4f,a1,e7),::hx::SourceInfo(HX_("source/funkinMain/states/MainMenu.hx",4a,d3,ef,c2),42,HX_("funkinMain.states.MainMenu",e0,5d,e8,87),HX_("beatHit",7d,ea,04,74)));
+HXDLIN(  42)		if (::hx::IsInstanceEq( ::flixel::FlxG_obj::game->_state,::hx::ObjectPtr<OBJ_>(this) )) {
+HXLINE(  44)			::haxe::Log_obj::trace(HX_("I DID IT",43,4f,a1,e7),::hx::SourceInfo(HX_("source/funkinMain/states/MainMenu.hx",4a,d3,ef,c2),44,HX_("funkinMain.states.MainMenu",e0,5d,e8,87),HX_("beatHit",7d,ea,04,74)));
+            		}
             	}
 
 

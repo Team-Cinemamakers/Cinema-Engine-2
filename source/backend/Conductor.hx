@@ -25,20 +25,28 @@ class Conductor{
         evDisp = new EventDispatcher();
     }
 
-    public static function play(bpmNew:Float){
+	public static function play(bpmNew:Float = 120, runMusicPlay:Bool = false)
+	{
         BPM = bpmNew;
         doConductorTime = true;
         beatVal = (60/BPM) * 1000;
+		if (runMusicPlay)
+			MusicHandler.play();
     }
 
     public static function pause(){
         doConductorTime = false;
     }
 
-    public static function reset(){
+	public static function reset(bpmNew:Float = 120, runMusicPlay:Bool = false)
+	{
+		BPM = bpmNew;
+		beatVal = (60 / BPM) * 1000;
         TIME = 0;
         curBeat = 0;
         lastBeatTime = 0;
+		if (runMusicPlay)
+			MusicHandler.play();
     }
 
     public static function cancel(){
@@ -53,20 +61,30 @@ class Conductor{
         beatVal = (60/BPM) * 1000;
     }
 
-    public static function addConductorTime(elapsed:Float){
-        if(doConductorTime){
-            TIME += elapsed*1000;
-        }
-
-        if(TIME >= lastBeatTime + beatVal){
-            curBeat++;
-            lastBeatTime += beatVal;
-            beatHit(curBeat);
-        }
-		if (FlxG.sound.music != null)
+	public static function addConductorTime(elapsed:Float, state:FlxState)
+	{
+		if (FlxG.state == state)
 		{
-			if (FlxG.sound.music.time > TIME + 50 || FlxG.sound.music.time < TIME - 50)
-				FlxG.sound.music.time = TIME;
+			if (doConductorTime)
+			{
+				TIME += elapsed * 1000;
+			}
+
+			if (TIME >= lastBeatTime + beatVal)
+			{
+				curBeat++;
+				lastBeatTime += beatVal;
+				beatHit(curBeat);
+			}
+			if (FlxG.sound.music != null && !MusicHandler.playing)
+			{
+				if (FlxG.sound.music.time > TIME + 50 || FlxG.sound.music.time < TIME - 50)
+					FlxG.sound.music.time = TIME;
+			}
+			else if (MusicHandler.inst != null && MusicHandler.voices != null && MusicHandler.playing)
+			{
+				MusicHandler.checkSync();
+			}
 		}
 	}
 

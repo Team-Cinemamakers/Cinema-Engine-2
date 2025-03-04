@@ -4,6 +4,9 @@
 #ifndef INCLUDED_backend_Conductor
 #include <backend/Conductor.h>
 #endif
+#ifndef INCLUDED_backend_MusicHandler
+#include <backend/MusicHandler.h>
+#endif
 #ifndef INCLUDED_backend_events_BeatEvent
 #include <backend/events/BeatEvent.h>
 #endif
@@ -13,6 +16,18 @@
 #ifndef INCLUDED_flixel_FlxG
 #include <flixel/FlxG.h>
 #endif
+#ifndef INCLUDED_flixel_FlxGame
+#include <flixel/FlxGame.h>
+#endif
+#ifndef INCLUDED_flixel_FlxState
+#include <flixel/FlxState.h>
+#endif
+#ifndef INCLUDED_flixel_group_FlxTypedContainer
+#include <flixel/group/FlxTypedContainer.h>
+#endif
+#ifndef INCLUDED_flixel_group_FlxTypedGroup
+#include <flixel/group/FlxTypedGroup.h>
+#endif
 #ifndef INCLUDED_flixel_sound_FlxSound
 #include <flixel/sound/FlxSound.h>
 #endif
@@ -21,6 +36,21 @@
 #endif
 #ifndef INCLUDED_flixel_util_IFlxDestroyable
 #include <flixel/util/IFlxDestroyable.h>
+#endif
+#ifndef INCLUDED_openfl_display_DisplayObject
+#include <openfl/display/DisplayObject.h>
+#endif
+#ifndef INCLUDED_openfl_display_DisplayObjectContainer
+#include <openfl/display/DisplayObjectContainer.h>
+#endif
+#ifndef INCLUDED_openfl_display_IBitmapDrawable
+#include <openfl/display/IBitmapDrawable.h>
+#endif
+#ifndef INCLUDED_openfl_display_InteractiveObject
+#include <openfl/display/InteractiveObject.h>
+#endif
+#ifndef INCLUDED_openfl_display_Sprite
+#include <openfl/display/Sprite.h>
 #endif
 #ifndef INCLUDED_openfl_events_Event
 #include <openfl/events/Event.h>
@@ -33,13 +63,13 @@
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_080e9a5446946e07_8_new,"backend.Conductor","new",0xa4883a5f,"backend.Conductor.new","backend/Conductor.hx",8,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_28_play,"backend.Conductor","play",0x54028315,"backend.Conductor.play","backend/Conductor.hx",28,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_35_pause,"backend.Conductor","pause",0x26f9feb5,"backend.Conductor.pause","backend/Conductor.hx",35,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_38_reset,"backend.Conductor","reset",0x506a718e,"backend.Conductor.reset","backend/Conductor.hx",38,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_44_cancel,"backend.Conductor","cancel",0xbc748cdb,"backend.Conductor.cancel","backend/Conductor.hx",44,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_51_setBPM,"backend.Conductor","setBPM",0x73a2cfbe,"backend.Conductor.setBPM","backend/Conductor.hx",51,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_56_addConductorTime,"backend.Conductor","addConductorTime",0x601eef54,"backend.Conductor.addConductorTime","backend/Conductor.hx",56,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_74_beatHit,"backend.Conductor","beatHit",0x284fbffc,"backend.Conductor.beatHit","backend/Conductor.hx",74,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_29_play,"backend.Conductor","play",0x54028315,"backend.Conductor.play","backend/Conductor.hx",29,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_38_pause,"backend.Conductor","pause",0x26f9feb5,"backend.Conductor.pause","backend/Conductor.hx",38,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_42_reset,"backend.Conductor","reset",0x506a718e,"backend.Conductor.reset","backend/Conductor.hx",42,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_52_cancel,"backend.Conductor","cancel",0xbc748cdb,"backend.Conductor.cancel","backend/Conductor.hx",52,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_59_setBPM,"backend.Conductor","setBPM",0x73a2cfbe,"backend.Conductor.setBPM","backend/Conductor.hx",59,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_66_addConductorTime,"backend.Conductor","addConductorTime",0x601eef54,"backend.Conductor.addConductorTime","backend/Conductor.hx",66,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_92_beatHit,"backend.Conductor","beatHit",0x284fbffc,"backend.Conductor.beatHit","backend/Conductor.hx",92,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_9_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",9,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_10_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",10,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_11_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",11,0x5443f372)
@@ -88,86 +118,126 @@ Float Conductor_obj::lastBeatTime;
 
 Float Conductor_obj::beatVal;
 
-void Conductor_obj::play(Float bpmNew){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_28_play)
-HXLINE(  29)		::backend::Conductor_obj::BPM = bpmNew;
-HXLINE(  30)		::backend::Conductor_obj::doConductorTime = true;
-HXLINE(  31)		::backend::Conductor_obj::beatVal = ((( (Float)(60) ) / ::backend::Conductor_obj::BPM) * ( (Float)(1000) ));
+void Conductor_obj::play(::hx::Null< Float >  __o_bpmNew,::hx::Null< bool >  __o_runMusicPlay){
+            		Float bpmNew = __o_bpmNew.Default(120);
+            		bool runMusicPlay = __o_runMusicPlay.Default(false);
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_29_play)
+HXLINE(  30)		::backend::Conductor_obj::BPM = bpmNew;
+HXLINE(  31)		::backend::Conductor_obj::doConductorTime = true;
+HXLINE(  32)		::backend::Conductor_obj::beatVal = ((( (Float)(60) ) / ::backend::Conductor_obj::BPM) * ( (Float)(1000) ));
+HXLINE(  33)		if (runMusicPlay) {
+HXLINE(  34)			::backend::MusicHandler_obj::play();
+            		}
             	}
 
 
-STATIC_HX_DEFINE_DYNAMIC_FUNC1(Conductor_obj,play,(void))
+STATIC_HX_DEFINE_DYNAMIC_FUNC2(Conductor_obj,play,(void))
 
 void Conductor_obj::pause(){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_35_pause)
-HXDLIN(  35)		::backend::Conductor_obj::doConductorTime = false;
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_38_pause)
+HXDLIN(  38)		::backend::Conductor_obj::doConductorTime = false;
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC0(Conductor_obj,pause,(void))
 
-void Conductor_obj::reset(){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_38_reset)
-HXLINE(  39)		::backend::Conductor_obj::TIME = ( (Float)(0) );
-HXLINE(  40)		::backend::Conductor_obj::curBeat = 0;
-HXLINE(  41)		::backend::Conductor_obj::lastBeatTime = ( (Float)(0) );
+void Conductor_obj::reset(::hx::Null< Float >  __o_bpmNew,::hx::Null< bool >  __o_runMusicPlay){
+            		Float bpmNew = __o_bpmNew.Default(120);
+            		bool runMusicPlay = __o_runMusicPlay.Default(false);
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_42_reset)
+HXLINE(  43)		::backend::Conductor_obj::BPM = bpmNew;
+HXLINE(  44)		::backend::Conductor_obj::beatVal = ((( (Float)(60) ) / ::backend::Conductor_obj::BPM) * ( (Float)(1000) ));
+HXLINE(  45)		::backend::Conductor_obj::TIME = ( (Float)(0) );
+HXLINE(  46)		::backend::Conductor_obj::curBeat = 0;
+HXLINE(  47)		::backend::Conductor_obj::lastBeatTime = ( (Float)(0) );
+HXLINE(  48)		if (runMusicPlay) {
+HXLINE(  49)			::backend::MusicHandler_obj::play();
+            		}
             	}
 
 
-STATIC_HX_DEFINE_DYNAMIC_FUNC0(Conductor_obj,reset,(void))
+STATIC_HX_DEFINE_DYNAMIC_FUNC2(Conductor_obj,reset,(void))
 
 void Conductor_obj::cancel(){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_44_cancel)
-HXLINE(  45)		::backend::Conductor_obj::doConductorTime = false;
-HXLINE(  46)		::backend::Conductor_obj::TIME = ( (Float)(0) );
-HXLINE(  47)		::backend::Conductor_obj::curBeat = 0;
-HXLINE(  48)		::backend::Conductor_obj::lastBeatTime = ( (Float)(0) );
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_52_cancel)
+HXLINE(  53)		::backend::Conductor_obj::doConductorTime = false;
+HXLINE(  54)		::backend::Conductor_obj::TIME = ( (Float)(0) );
+HXLINE(  55)		::backend::Conductor_obj::curBeat = 0;
+HXLINE(  56)		::backend::Conductor_obj::lastBeatTime = ( (Float)(0) );
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC0(Conductor_obj,cancel,(void))
 
 void Conductor_obj::setBPM(Float bpmNew){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_51_setBPM)
-HXLINE(  52)		::backend::Conductor_obj::BPM = bpmNew;
-HXLINE(  53)		::backend::Conductor_obj::beatVal = ((( (Float)(60) ) / ::backend::Conductor_obj::BPM) * ( (Float)(1000) ));
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_59_setBPM)
+HXLINE(  60)		::backend::Conductor_obj::BPM = bpmNew;
+HXLINE(  61)		::backend::Conductor_obj::beatVal = ((( (Float)(60) ) / ::backend::Conductor_obj::BPM) * ( (Float)(1000) ));
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(Conductor_obj,setBPM,(void))
 
-void Conductor_obj::addConductorTime(Float elapsed){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_56_addConductorTime)
-HXLINE(  57)		if (::backend::Conductor_obj::doConductorTime) {
-HXLINE(  58)			 ::Dynamic _hx_tmp = ::hx::ClassOf< ::backend::Conductor >();
-HXDLIN(  58)			::backend::Conductor_obj::TIME = (::backend::Conductor_obj::TIME + (elapsed * ( (Float)(1000) )));
-            		}
-HXLINE(  61)		if ((::backend::Conductor_obj::TIME >= (::backend::Conductor_obj::lastBeatTime + ::backend::Conductor_obj::beatVal))) {
-HXLINE(  62)			::backend::Conductor_obj::curBeat++;
-HXLINE(  63)			 ::Dynamic _hx_tmp1 = ::hx::ClassOf< ::backend::Conductor >();
-HXDLIN(  63)			::backend::Conductor_obj::lastBeatTime = (::backend::Conductor_obj::lastBeatTime + ::backend::Conductor_obj::beatVal);
-HXLINE(  64)			::backend::Conductor_obj::beatHit(::backend::Conductor_obj::curBeat);
-            		}
-HXLINE(  66)		if (::hx::IsNotNull( ::flixel::FlxG_obj::sound->music )) {
-HXLINE(  68)			bool _hx_tmp2;
-HXDLIN(  68)			if (!((::flixel::FlxG_obj::sound->music->_time > (::backend::Conductor_obj::TIME + 50)))) {
-HXLINE(  68)				_hx_tmp2 = (::flixel::FlxG_obj::sound->music->_time < (::backend::Conductor_obj::TIME - ( (Float)(50) )));
+void Conductor_obj::addConductorTime(Float elapsed, ::flixel::FlxState state){
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_66_addConductorTime)
+HXDLIN(  66)		if (::hx::IsInstanceEq( ::flixel::FlxG_obj::game->_state,state )) {
+HXLINE(  68)			if (::backend::Conductor_obj::doConductorTime) {
+HXLINE(  70)				 ::Dynamic _hx_tmp = ::hx::ClassOf< ::backend::Conductor >();
+HXDLIN(  70)				::backend::Conductor_obj::TIME = (::backend::Conductor_obj::TIME + (elapsed * ( (Float)(1000) )));
+            			}
+HXLINE(  73)			if ((::backend::Conductor_obj::TIME >= (::backend::Conductor_obj::lastBeatTime + ::backend::Conductor_obj::beatVal))) {
+HXLINE(  75)				::backend::Conductor_obj::curBeat++;
+HXLINE(  76)				 ::Dynamic _hx_tmp1 = ::hx::ClassOf< ::backend::Conductor >();
+HXDLIN(  76)				::backend::Conductor_obj::lastBeatTime = (::backend::Conductor_obj::lastBeatTime + ::backend::Conductor_obj::beatVal);
+HXLINE(  77)				::backend::Conductor_obj::beatHit(::backend::Conductor_obj::curBeat);
+            			}
+HXLINE(  79)			bool _hx_tmp2;
+HXDLIN(  79)			if (::hx::IsNotNull( ::flixel::FlxG_obj::sound->music )) {
+HXLINE(  79)				_hx_tmp2 = !(::backend::MusicHandler_obj::playing);
             			}
             			else {
-HXLINE(  68)				_hx_tmp2 = true;
+HXLINE(  79)				_hx_tmp2 = false;
             			}
-HXDLIN(  68)			if (_hx_tmp2) {
-HXLINE(  69)				::flixel::FlxG_obj::sound->music->set_time(::backend::Conductor_obj::TIME);
+HXDLIN(  79)			if (_hx_tmp2) {
+HXLINE(  81)				bool _hx_tmp3;
+HXDLIN(  81)				if (!((::flixel::FlxG_obj::sound->music->_time > (::backend::Conductor_obj::TIME + 50)))) {
+HXLINE(  81)					_hx_tmp3 = (::flixel::FlxG_obj::sound->music->_time < (::backend::Conductor_obj::TIME - ( (Float)(50) )));
+            				}
+            				else {
+HXLINE(  81)					_hx_tmp3 = true;
+            				}
+HXDLIN(  81)				if (_hx_tmp3) {
+HXLINE(  82)					::flixel::FlxG_obj::sound->music->set_time(::backend::Conductor_obj::TIME);
+            				}
+            			}
+            			else {
+HXLINE(  84)				bool _hx_tmp4;
+HXDLIN(  84)				bool _hx_tmp5;
+HXDLIN(  84)				if (::hx::IsNotNull( ::backend::MusicHandler_obj::inst )) {
+HXLINE(  84)					_hx_tmp5 = ::hx::IsNotNull( ::backend::MusicHandler_obj::voices );
+            				}
+            				else {
+HXLINE(  84)					_hx_tmp5 = false;
+            				}
+HXDLIN(  84)				if (_hx_tmp5) {
+HXLINE(  84)					_hx_tmp4 = ::backend::MusicHandler_obj::playing;
+            				}
+            				else {
+HXLINE(  84)					_hx_tmp4 = false;
+            				}
+HXDLIN(  84)				if (_hx_tmp4) {
+HXLINE(  86)					::backend::MusicHandler_obj::checkSync();
+            				}
             			}
             		}
             	}
 
 
-STATIC_HX_DEFINE_DYNAMIC_FUNC1(Conductor_obj,addConductorTime,(void))
+STATIC_HX_DEFINE_DYNAMIC_FUNC2(Conductor_obj,addConductorTime,(void))
 
 void Conductor_obj::beatHit(int beatNum){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_74_beatHit)
-HXDLIN(  74)		::backend::Conductor_obj::evDisp->dispatchEvent(::backend::Conductor_obj::mainBeatEvent);
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_92_beatHit)
+HXDLIN(  92)		::backend::Conductor_obj::evDisp->dispatchEvent(::backend::Conductor_obj::mainBeatEvent);
             	}
 
 

@@ -1156,6 +1156,9 @@
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
 #endif
+#ifndef INCLUDED_backend_MusicHandler
+#include <backend/MusicHandler.h>
+#endif
 #ifndef INCLUDED_backend_Conductor
 #include <backend/Conductor.h>
 #endif
@@ -3621,6 +3624,7 @@ __files__boot();
 ::flixel::math::FlxRect_obj::__register();
 ::flixel::math::FlxBasePoint_obj::__register();
 ::flixel::FlxBasic_obj::__register();
+::backend::MusicHandler_obj::__register();
 ::backend::Conductor_obj::__register();
 ::openfl::events::Event_obj::__register();
 ::Xml_obj::__register();
@@ -4398,6 +4402,7 @@ __files__boot();
 ::Xml_obj::__boot();
 ::openfl::events::Event_obj::__boot();
 ::backend::Conductor_obj::__boot();
+::backend::MusicHandler_obj::__boot();
 ::flixel::FlxBasic_obj::__boot();
 ::flixel::math::FlxBasePoint_obj::__boot();
 ::flixel::math::FlxRect_obj::__boot();

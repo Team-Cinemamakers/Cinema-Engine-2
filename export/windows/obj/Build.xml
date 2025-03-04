@@ -5926,6 +5926,8 @@
    <depend name="include/haxe/StackItem.h"/>
   </file>
   <file name="src/funkinMain/states/PlayState.cpp" >
+   <depend name="include/backend/Conductor.h"/>
+   <depend name="include/backend/MusicHandler.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxState.h"/>
@@ -5935,6 +5937,10 @@
    <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/funkinMain/states/PlayState.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
   </file>
   <file name="src/funkinMain/states/MainMenu.cpp" >
    <depend name="include/backend/Conductor.h"/>
@@ -9575,6 +9581,13 @@
   <file name="src/backend/Paths.cpp" >
    <depend name="include/backend/Paths.h"/>
   </file>
+  <file name="src/backend/MusicHandler.cpp" >
+   <depend name="include/backend/Conductor.h"/>
+   <depend name="include/backend/MusicHandler.h"/>
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/sound/FlxSound.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+  </file>
   <file name="src/backend/CoolInput.cpp" >
    <depend name="include/backend/CoolInput.h"/>
    <depend name="include/flixel/FlxG.h"/>
@@ -9587,12 +9600,22 @@
   </file>
   <file name="src/backend/Conductor.cpp" >
    <depend name="include/backend/Conductor.h"/>
+   <depend name="include/backend/MusicHandler.h"/>
    <depend name="include/backend/events/BeatEvent.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/FlxGame.h"/>
+   <depend name="include/flixel/FlxState.h"/>
+   <depend name="include/flixel/group/FlxTypedContainer.h"/>
+   <depend name="include/flixel/group/FlxTypedGroup.h"/>
    <depend name="include/flixel/sound/FlxSound.h"/>
    <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
@@ -10551,6 +10574,7 @@
    <depend name="include/flixel/math/FlxRect.h"/>
    <depend name="include/flixel/math/FlxBasePoint.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/backend/MusicHandler.h"/>
    <depend name="include/backend/Conductor.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/Xml.h"/>

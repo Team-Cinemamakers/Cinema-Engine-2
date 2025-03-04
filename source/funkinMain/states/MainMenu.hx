@@ -34,11 +34,14 @@ class MainMenu extends FlxState
 		{
 			FlxG.switchState(new PlayState());
 		}
-		Conductor.addConductorTime(elapsed);
+		Conductor.addConductorTime(elapsed, this);
 	}
 
 	function beatHit(e:Event)
 	{
-		trace("I DID IT");
+		if (FlxG.state == this)
+		{
+			trace("I DID IT");
+		}
 	}
 }

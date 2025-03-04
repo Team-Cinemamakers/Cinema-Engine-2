@@ -7,6 +7,11 @@
 #endif
 
 HX_DECLARE_CLASS1(backend,Conductor)
+HX_DECLARE_CLASS1(flixel,FlxBasic)
+HX_DECLARE_CLASS1(flixel,FlxState)
+HX_DECLARE_CLASS2(flixel,group,FlxTypedContainer)
+HX_DECLARE_CLASS2(flixel,group,FlxTypedGroup)
+HX_DECLARE_CLASS2(flixel,util,IFlxDestroyable)
 HX_DECLARE_CLASS2(openfl,events,Event)
 HX_DECLARE_CLASS2(openfl,events,EventDispatcher)
 HX_DECLARE_CLASS2(openfl,events,IEventDispatcher)
@@ -57,13 +62,13 @@ class HXCPP_CLASS_ATTRIBUTES Conductor_obj : public ::hx::Object
 		static int curBeat;
 		static Float lastBeatTime;
 		static Float beatVal;
-		static void play(Float bpmNew);
+		static void play(::hx::Null< Float >  bpmNew,::hx::Null< bool >  runMusicPlay);
 		static ::Dynamic play_dyn();
 
 		static void pause();
 		static ::Dynamic pause_dyn();
 
-		static void reset();
+		static void reset(::hx::Null< Float >  bpmNew,::hx::Null< bool >  runMusicPlay);
 		static ::Dynamic reset_dyn();
 
 		static void cancel();
@@ -72,7 +77,7 @@ class HXCPP_CLASS_ATTRIBUTES Conductor_obj : public ::hx::Object
 		static void setBPM(Float bpmNew);
 		static ::Dynamic setBPM_dyn();
 
-		static void addConductorTime(Float elapsed);
+		static void addConductorTime(Float elapsed, ::flixel::FlxState state);
 		static ::Dynamic addConductorTime_dyn();
 
 		static void beatHit(int beatNum);
