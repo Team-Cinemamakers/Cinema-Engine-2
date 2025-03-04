@@ -1,4 +1,4 @@
-package backend.data;
+package funkinMain.data;
 
 import openfl.Assets;
 
@@ -56,9 +56,7 @@ typedef SongChart =
 class Song
 {
     public static function fromFile(song:String):SongChart {
-        var jsonPath:String = Paths.json("game/songs/" + song + "/" + song);
-        var rawJson = Assets.getText(jsonPath);
-
+        var rawJson = JsonFunctions.loadJson("game/songs/" + song + "/" + song);
         var casted:SongChart = cast(Json.parse(rawJson));
         return casted;
     }

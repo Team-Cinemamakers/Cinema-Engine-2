@@ -1,0 +1,61 @@
+{
+    "name": "Boyfriend",
+    "icon": "bf",
+    "offset": [
+        0,
+        0
+    ],
+    "fileName": "bf",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "BF idle dance",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "BF NOTE LEFT",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "BF NOTE DOWN",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singUP",
+            "prefix": "BF NOTE UP",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "BF NOTE RIGHT",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}
