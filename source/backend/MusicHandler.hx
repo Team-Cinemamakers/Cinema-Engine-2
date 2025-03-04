@@ -7,9 +7,10 @@ class MusicHandler{
     public static var playing:Bool = false;
 
 	// loads the inst and voices for a song based on a song name
-    public static function loadInstAndVoices(songName:String){
-		inst = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/Inst"));
-		voices = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/Voices"));
+	public static function loadInstAndVoices(songName:String, instPath:String, vocalsPath:String)
+	{
+		inst = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/" + instPath));
+		voices = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/" + vocalsPath));
     }
 
 	// plays the inst and voices while also instantly fixing the time in case of conductor pausing

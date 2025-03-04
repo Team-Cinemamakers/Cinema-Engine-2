@@ -1,0 +1,34 @@
+{
+    "metadata": {
+        "name": "Dadbattle",
+        "bpm": 180,
+        "scrollSpeed": 2,
+        "songFiles": {
+            "inst": "Inst",
+            "vocals": "Vocals"
+        },
+        "stage": "stage",
+        "defaults": {
+            "player": "bf",
+            "opponent": "dad"
+        }
+    },
+    "strumlines": [
+        {
+            "character": "bf",
+            "notes": [
+                {
+                    "time": 1.5,
+                    "type": 0,
+                    "value": 1
+                },
+                {
+                    "time": 1.75,
+                    "type": 0,
+                    "value": 3
+                }
+            ]
+        }
+    ],
+    "events": []
+}
