@@ -11,8 +11,8 @@ What we are trying to do is to make an engine unbound by limitations of the past
 
 # Main Goals
 - Create an engine with the hindsight of modern FNF modding
-- Maintain latest library and Haxe versions
-- Remake systems and formats from scratch to streamline features that have been in engines for years and abandon obsolete designs that have plagued the modern engines
+- Maintain latest library and Haxe versions, and maintain code to use latest and non-deprecated features
+- Remake systems and formats from scratch to streamline features that have been in engines for years, creating new modern standards in the process
 - Create standalone editors for simpler use
 - Implement features the team finds useful from other engines
 - Create a clean codebase that seperates specific code into seperate softcoded files
