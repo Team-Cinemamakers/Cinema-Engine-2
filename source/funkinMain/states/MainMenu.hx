@@ -22,6 +22,7 @@ class MainMenu extends FlxState
 		bg = new FlxSprite().loadGraphic(Paths.stateImage("mainMenu/menuBG"));
 		bg.screenCenter();
 		add(bg);
+
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 	}
 
