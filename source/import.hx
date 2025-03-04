@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import funkinMain.states.*;
 import haxe.Json;
+import openfl.events.EventDispatcher;
 import sys.*;
 import sys.io.*;
 

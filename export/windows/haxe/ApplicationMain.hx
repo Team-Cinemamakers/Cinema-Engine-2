@@ -35,7 +35,7 @@ class ApplicationMain
 		ManifestResources.init(config);
 		#end
 
-		app.meta["build"] = "5";
+		app.meta["build"] = "6";
 		app.meta["company"] = "TeamCinemamakers";
 		app.meta["file"] = "CinemaEngine2";
 		app.meta["name"] = "Cinema Engine 2";

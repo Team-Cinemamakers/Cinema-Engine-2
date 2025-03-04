@@ -7,5 +7,6 @@ class CoolInput
             case "enter":
                 return(FlxG.keys.justPressed.ENTER);
         }
+		return false;
     }
 }

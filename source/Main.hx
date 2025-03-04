@@ -1,13 +1,17 @@
 package;
 
 import flixel.FlxGame;
+import flixel.system.debug.console.ConsoleHistory;
 import openfl.display.Sprite;
 
 class Main extends Sprite
 {
+	public static var conductor:Conductor;
 	public function new()
 	{
 		super();
+
+		conductor = new Conductor();
 
 		FlxG.autoPause = false;
 

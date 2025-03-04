@@ -17,6 +17,7 @@ HX_DECLARE_CLASS2(flixel,group,FlxTypedContainer)
 HX_DECLARE_CLASS2(flixel,group,FlxTypedGroup)
 HX_DECLARE_CLASS2(flixel,util,IFlxDestroyable)
 HX_DECLARE_CLASS2(funkinMain,states,MainMenu)
+HX_DECLARE_CLASS2(openfl,events,Event)
 
 namespace funkinMain{
 namespace states{
@@ -58,6 +59,9 @@ class HXCPP_CLASS_ATTRIBUTES MainMenu_obj : public  ::flixel::FlxState_obj
 		void create();
 
 		void update(Float elapsed);
+
+		void beatHit( ::openfl::events::Event e);
+		::Dynamic beatHit_dyn();
 
 };
 

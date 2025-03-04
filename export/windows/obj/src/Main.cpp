@@ -4,8 +4,8 @@
 #ifndef INCLUDED_Main
 #include <Main.h>
 #endif
-#ifndef INCLUDED_backend_Input
-#include <backend/Input.h>
+#ifndef INCLUDED_backend_Conductor
+#include <backend/Conductor.h>
 #endif
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
@@ -56,14 +56,14 @@
 #include <openfl/events/IEventDispatcher.h>
 #endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_9_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",9,0x087e5c05)
+HX_DEFINE_STACK_FRAME(_hx_pos_e47a9afac0942eb9_11_new,"Main","new",0x6616a5cb,"Main.new","Main.hx",11,0x087e5c05)
 
 void Main_obj::__construct(){
-            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_9_new)
-HXLINE(  10)		super::__construct();
-HXLINE(  12)		::flixel::FlxG_obj::autoPause = false;
-HXLINE(  13)		::backend::Input_obj::loadInputs();
-HXLINE(  15)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::funkinMain::states::MainMenu >()),60,60,true,null()));
+            	HX_GC_STACKFRAME(&_hx_pos_e47a9afac0942eb9_11_new)
+HXLINE(  12)		super::__construct();
+HXLINE(  14)		::Main_obj::conductor =  ::backend::Conductor_obj::__alloc( HX_CTX ,null());
+HXLINE(  16)		::flixel::FlxG_obj::autoPause = false;
+HXLINE(  18)		this->addChild( ::flixel::FlxGame_obj::__alloc( HX_CTX ,0,0,::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::fromType(::hx::ClassOf< ::funkinMain::states::MainMenu >()),60,60,true,null()));
             	}
 
 Dynamic Main_obj::__CreateEmpty() { return new Main_obj; }
@@ -97,6 +97,8 @@ bool Main_obj::_hx_isInstanceOf(int inClassId) {
 	}
 }
 
+ ::backend::Conductor Main_obj::conductor;
+
 
 ::hx::ObjectPtr< Main_obj > Main_obj::__new() {
 	::hx::ObjectPtr< Main_obj > __this = new Main_obj();
@@ -115,12 +117,49 @@ Main_obj::Main_obj()
 {
 }
 
+bool Main_obj::__GetStatic(const ::String &inName, Dynamic &outValue, ::hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 9:
+		if (HX_FIELD_EQ(inName,"conductor") ) { outValue = ( conductor ); return true; }
+	}
+	return false;
+}
+
+bool Main_obj::__SetStatic(const ::String &inName,Dynamic &ioValue,::hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 9:
+		if (HX_FIELD_EQ(inName,"conductor") ) { conductor=ioValue.Cast<  ::backend::Conductor >(); return true; }
+	}
+	return false;
+}
+
 #ifdef HXCPP_SCRIPTABLE
 static ::hx::StorageInfo *Main_obj_sMemberStorageInfo = 0;
-static ::hx::StaticInfo *Main_obj_sStaticStorageInfo = 0;
+static ::hx::StaticInfo Main_obj_sStaticStorageInfo[] = {
+	{::hx::fsObject /*  ::backend::Conductor */ ,(void *) &Main_obj::conductor,HX_("conductor",e7,97,ce,d9)},
+	{ ::hx::fsUnknown, 0, null()}
+};
+#endif
+
+static void Main_obj_sMarkStatics(HX_MARK_PARAMS) {
+	HX_MARK_MEMBER_NAME(Main_obj::conductor,"conductor");
+};
+
+#ifdef HXCPP_VISIT_ALLOCS
+static void Main_obj_sVisitStatics(HX_VISIT_PARAMS) {
+	HX_VISIT_MEMBER_NAME(Main_obj::conductor,"conductor");
+};
+
 #endif
 
 ::hx::Class Main_obj::__mClass;
+
+static ::String Main_obj_sStaticFields[] = {
+	HX_("conductor",e7,97,ce,d9),
+	::String(null())
+};
 
 void Main_obj::__register()
 {
@@ -131,11 +170,15 @@ void Main_obj::__register()
 	__mClass->mSuper = &super::__SGetClass();
 	__mClass->mConstructEmpty = &__CreateEmpty;
 	__mClass->mConstructArgs = &__Create;
-	__mClass->mGetStaticField = &::hx::Class_obj::GetNoStaticField;
-	__mClass->mSetStaticField = &::hx::Class_obj::SetNoStaticField;
-	__mClass->mStatics = ::hx::Class_obj::dupFunctions(0 /* sStaticFields */);
+	__mClass->mGetStaticField = &Main_obj::__GetStatic;
+	__mClass->mSetStaticField = &Main_obj::__SetStatic;
+	__mClass->mMarkFunc = Main_obj_sMarkStatics;
+	__mClass->mStatics = ::hx::Class_obj::dupFunctions(Main_obj_sStaticFields);
 	__mClass->mMembers = ::hx::Class_obj::dupFunctions(0 /* sMemberFields */);
 	__mClass->mCanCast = ::hx::TCanCast< Main_obj >;
+#ifdef HXCPP_VISIT_ALLOCS
+	__mClass->mVisitFunc = Main_obj_sVisitStatics;
+#endif
 #ifdef HXCPP_SCRIPTABLE
 	__mClass->mMemberStorageInfo = Main_obj_sMemberStorageInfo;
 #endif

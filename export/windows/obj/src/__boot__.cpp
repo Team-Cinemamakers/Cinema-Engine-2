@@ -424,9 +424,6 @@
 #ifndef INCLUDED_openfl_events_ActivityEvent
 #include <openfl/events/ActivityEvent.h>
 #endif
-#ifndef INCLUDED_openfl_events_Event
-#include <openfl/events/Event.h>
-#endif
 #ifndef INCLUDED_openfl_errors_Error
 #include <openfl/errors/Error.h>
 #endif
@@ -973,6 +970,9 @@
 #ifndef INCLUDED_flixel_system_debug_log_LogStyle
 #include <flixel/system/debug/log/LogStyle.h>
 #endif
+#ifndef INCLUDED_flixel_system_debug_console_ConsoleHistory
+#include <flixel/system/debug/console/ConsoleHistory.h>
+#endif
 #ifndef INCLUDED_flixel_system_debug_Window
 #include <flixel/system/debug/Window.h>
 #endif
@@ -1156,8 +1156,11 @@
 #ifndef INCLUDED_flixel_FlxBasic
 #include <flixel/FlxBasic.h>
 #endif
-#ifndef INCLUDED_backend_Input
-#include <backend/Input.h>
+#ifndef INCLUDED_backend_Conductor
+#include <backend/Conductor.h>
+#endif
+#ifndef INCLUDED_openfl_events_Event
+#include <openfl/events/Event.h>
 #endif
 #ifndef INCLUDED_Xml
 #include <Xml.h>
@@ -1233,6 +1236,9 @@
 #endif
 #ifndef INCLUDED_sys_io_FileInput
 #include <sys/io/FileInput.h>
+#endif
+#ifndef INCLUDED_sys_io_File
+#include <sys/io/File.h>
 #endif
 #ifndef INCLUDED_sys_FileSystem
 #include <sys/FileSystem.h>
@@ -2470,6 +2476,9 @@
 #ifndef INCLUDED_haxe_format_JsonPrinter
 #include <haxe/format/JsonPrinter.h>
 #endif
+#ifndef INCLUDED_haxe_format_JsonParser
+#include <haxe/format/JsonParser.h>
+#endif
 #ifndef INCLUDED_haxe_exceptions_NotImplementedException
 #include <haxe/exceptions/NotImplementedException.h>
 #endif
@@ -2556,6 +2565,9 @@
 #endif
 #ifndef INCLUDED_haxe__CallStack_CallStack_Impl_
 #include <haxe/_CallStack/CallStack_Impl_.h>
+#endif
+#ifndef INCLUDED_funkinMain_states_PlayState
+#include <funkinMain/states/PlayState.h>
 #endif
 #ifndef INCLUDED_funkinMain_states_MainMenu
 #include <funkinMain/states/MainMenu.h>
@@ -3109,17 +3121,14 @@
 #ifndef INCLUDED_cpp_Lib
 #include <cpp/Lib.h>
 #endif
-#ifndef INCLUDED_haxe_format_JsonParser
-#include <haxe/format/JsonParser.h>
-#endif
 #ifndef INCLUDED_backend_Paths
 #include <backend/Paths.h>
 #endif
-#ifndef INCLUDED_sys_io_File
-#include <sys/io/File.h>
+#ifndef INCLUDED_backend_CoolInput
+#include <backend/CoolInput.h>
 #endif
-#ifndef INCLUDED_backend_JsonFunctions
-#include <backend/JsonFunctions.h>
+#ifndef INCLUDED_backend_events_BeatEvent
+#include <backend/events/BeatEvent.h>
 #endif
 #ifndef INCLUDED__Xml_XmlType_Impl_
 #include <_Xml/XmlType_Impl_.h>
@@ -3368,7 +3377,6 @@ __files__boot();
 ::openfl::events::DataEvent_obj::__register();
 ::openfl::events::TextEvent_obj::__register();
 ::openfl::events::ActivityEvent_obj::__register();
-::openfl::events::Event_obj::__register();
 ::openfl::errors::Error_obj::__register();
 ::openfl::display3D::textures::Texture_obj::__register();
 ::openfl::display3D::textures::TextureBase_obj::__register();
@@ -3551,6 +3559,7 @@ __files__boot();
 ::flixel::text::FlxText_obj::__register();
 ::flixel::_hx_system::frontEnds::_AssetFrontEnd::FlxAssetType_Impl__obj::__register();
 ::flixel::_hx_system::debug::log::LogStyle_obj::__register();
+::flixel::_hx_system::debug::console::ConsoleHistory_obj::__register();
 ::flixel::_hx_system::debug::Window_obj::__register();
 ::flixel::_hx_system::FlxQuadTree_obj::__register();
 ::flixel::_hx_system::_FlxPreloader::GraphicLogoCorners_obj::__register();
@@ -3612,7 +3621,8 @@ __files__boot();
 ::flixel::math::FlxRect_obj::__register();
 ::flixel::math::FlxBasePoint_obj::__register();
 ::flixel::FlxBasic_obj::__register();
-::backend::Input_obj::__register();
+::backend::Conductor_obj::__register();
+::openfl::events::Event_obj::__register();
 ::Xml_obj::__register();
 ::haxe::SysTools_obj::__register();
 ::openfl::text::Font_obj::__register();
@@ -3638,6 +3648,7 @@ __files__boot();
 ::sys::io::_Process::Stdin_obj::__register();
 ::sys::io::FileOutput_obj::__register();
 ::sys::io::FileInput_obj::__register();
+::sys::io::File_obj::__register();
 ::sys::FileSystem_obj::__register();
 ::openfl::utils::_internal::format::amf3::AMF3Writer_obj::__register();
 ::openfl::utils::_internal::format::amf3::AMF3Tools_obj::__register();
@@ -4050,6 +4061,7 @@ __files__boot();
 ::haxe::io::Input_obj::__register();
 ::haxe::io::BytesBuffer_obj::__register();
 ::haxe::format::JsonPrinter_obj::__register();
+::haxe::format::JsonParser_obj::__register();
 ::haxe::exceptions::NotImplementedException_obj::__register();
 ::haxe::exceptions::PosException_obj::__register();
 ::haxe::ds::_GenericStack::GenericStackIterator_hscript_Token_obj::__register();
@@ -4079,6 +4091,7 @@ __files__boot();
 ::sys::thread::EventLoop_obj::__register();
 ::sys::thread::Mutex_obj::__register();
 ::haxe::_CallStack::CallStack_Impl__obj::__register();
+::funkinMain::states::PlayState_obj::__register();
 ::funkinMain::states::MainMenu_obj::__register();
 ::flixel::util::typeLimit::_NextState::InitialState_Impl__obj::__register();
 ::flixel::util::typeLimit::_NextState::NextState_Impl__obj::__register();
@@ -4263,10 +4276,9 @@ __files__boot();
 ::flixel::IFlxBasic_obj::__register();
 ::flixel::util::IFlxDestroyable_obj::__register();
 ::cpp::Lib_obj::__register();
-::haxe::format::JsonParser_obj::__register();
 ::backend::Paths_obj::__register();
-::sys::io::File_obj::__register();
-::backend::JsonFunctions_obj::__register();
+::backend::CoolInput_obj::__register();
+::backend::events::BeatEvent_obj::__register();
 ::_Xml::XmlType_Impl__obj::__register();
 ::_UnicodeString::UnicodeString_Impl__obj::__register();
 ::Type_obj::__register();
@@ -4384,7 +4396,8 @@ __files__boot();
 ::openfl::text::Font_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::Xml_obj::__boot();
-::backend::Input_obj::__boot();
+::openfl::events::Event_obj::__boot();
+::backend::Conductor_obj::__boot();
 ::flixel::FlxBasic_obj::__boot();
 ::flixel::math::FlxBasePoint_obj::__boot();
 ::flixel::math::FlxRect_obj::__boot();
@@ -4445,6 +4458,7 @@ __files__boot();
 ::flixel::_hx_system::_FlxPreloader::GraphicLogoCorners_obj::__boot();
 ::flixel::_hx_system::FlxQuadTree_obj::__boot();
 ::flixel::_hx_system::debug::Window_obj::__boot();
+::flixel::_hx_system::debug::console::ConsoleHistory_obj::__boot();
 ::flixel::_hx_system::debug::log::LogStyle_obj::__boot();
 ::flixel::_hx_system::frontEnds::_AssetFrontEnd::FlxAssetType_Impl__obj::__boot();
 ::flixel::text::FlxText_obj::__boot();
@@ -4627,7 +4641,6 @@ __files__boot();
 ::openfl::display3D::textures::TextureBase_obj::__boot();
 ::openfl::display3D::textures::Texture_obj::__boot();
 ::openfl::errors::Error_obj::__boot();
-::openfl::events::Event_obj::__boot();
 ::openfl::events::ActivityEvent_obj::__boot();
 ::openfl::events::TextEvent_obj::__boot();
 ::openfl::events::DataEvent_obj::__boot();

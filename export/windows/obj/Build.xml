@@ -62,6 +62,14 @@
    <depend name="include/haxe/io/Input.h"/>
    <depend name="include/sys/io/FileInput.h"/>
   </file>
+  <file name="src/sys/io/File.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+   <depend name="include/haxe/io/Input.h"/>
+   <depend name="include/haxe/io/Output.h"/>
+   <depend name="include/sys/io/File.h"/>
+   <depend name="include/sys/io/FileInput.h"/>
+   <depend name="include/sys/io/FileOutput.h"/>
+  </file>
   <file name="src/sys/FileSystem.cpp" >
    <depend name="include/Date.h"/>
    <depend name="include/haxe/io/Path.h"/>
@@ -1173,11 +1181,6 @@
   </file>
   <file name="src/openfl/events/ActivityEvent.cpp" tags="haxe,release">
    <depend name="include/openfl/events/ActivityEvent.h"/>
-   <depend name="include/openfl/events/Event.h"/>
-  </file>
-  <file name="src/openfl/events/Event.cpp" tags="haxe,release">
-   <depend name="include/Reflect.h"/>
-   <depend name="include/Std.h"/>
    <depend name="include/openfl/events/Event.h"/>
   </file>
   <file name="src/openfl/errors/TypeError.cpp" tags="haxe,release">
@@ -5721,6 +5724,12 @@
    <depend name="include/haxe/ds/StringMap.h"/>
    <depend name="include/haxe/format/JsonPrinter.h"/>
   </file>
+  <file name="src/haxe/format/JsonParser.cpp" >
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/haxe/format/JsonParser.h"/>
+  </file>
   <file name="src/haxe/exceptions/NotImplementedException.cpp" >
    <depend name="include/haxe/Exception.h"/>
    <depend name="include/haxe/exceptions/NotImplementedException.h"/>
@@ -5916,10 +5925,24 @@
   <file name="src/haxe/StackItem.cpp" >
    <depend name="include/haxe/StackItem.h"/>
   </file>
+  <file name="src/funkinMain/states/PlayState.cpp" >
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/FlxState.h"/>
+   <depend name="include/flixel/group/FlxTypedContainer.h"/>
+   <depend name="include/flixel/group/FlxTypedGroup.h"/>
+   <depend name="include/flixel/sound/FlxSound.h"/>
+   <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/funkinMain/states/PlayState.h"/>
+  </file>
   <file name="src/funkinMain/states/MainMenu.cpp" >
+   <depend name="include/backend/Conductor.h"/>
+   <depend name="include/backend/CoolInput.h"/>
    <depend name="include/backend/Paths.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/FlxGame.h"/>
    <depend name="include/flixel/FlxObject.h"/>
    <depend name="include/flixel/FlxSprite.h"/>
    <depend name="include/flixel/FlxState.h"/>
@@ -5927,9 +5950,22 @@
    <depend name="include/flixel/group/FlxTypedGroup.h"/>
    <depend name="include/flixel/sound/FlxSound.h"/>
    <depend name="include/flixel/sound/FlxSoundGroup.h"/>
+   <depend name="include/flixel/system/debug/log/LogStyle.h"/>
+   <depend name="include/flixel/system/frontEnds/LogFrontEnd.h"/>
    <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
    <depend name="include/flixel/util/IFlxDestroyable.h"/>
+   <depend name="include/flixel/util/typeLimit/_NextState/NextState_Impl_.h"/>
    <depend name="include/funkinMain/states/MainMenu.h"/>
+   <depend name="include/funkinMain/states/PlayState.h"/>
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/openfl/display/DisplayObject.h"/>
+   <depend name="include/openfl/display/DisplayObjectContainer.h"/>
+   <depend name="include/openfl/display/IBitmapDrawable.h"/>
+   <depend name="include/openfl/display/InteractiveObject.h"/>
+   <depend name="include/openfl/display/Sprite.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
   </file>
   <file name="src/flixel/util/typeLimit/_NextState/InitialState_Impl_.cpp" >
    <depend name="include/Std.h"/>
@@ -6958,6 +6994,13 @@
    <depend name="include/hscript/Expr.h"/>
    <depend name="include/hscript/Interp.h"/>
    <depend name="include/hscript/Parser.h"/>
+  </file>
+  <file name="src/flixel/system/debug/console/ConsoleHistory.cpp" >
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleHistory.h"/>
+   <depend name="include/flixel/util/FlxSave.h"/>
+   <depend name="include/flixel/util/FlxSaveStatus.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
   </file>
   <file name="src/flixel/system/debug/Window.cpp" >
    <depend name="include/Std.h"/>
@@ -9529,32 +9572,34 @@
   <file name="src/cpp/Lib.cpp" >
    <depend name="include/cpp/Lib.h"/>
   </file>
-  <file name="src/backend/Input.cpp" >
-   <depend name="include/backend/Input.h"/>
-   <depend name="include/backend/JsonFunctions.h"/>
-   <depend name="include/haxe/format/JsonParser.h"/>
-  </file>
-  <file name="src/haxe/format/JsonParser.cpp" >
-   <depend name="include/Reflect.h"/>
-   <depend name="include/Std.h"/>
-   <depend name="include/StringBuf.h"/>
-   <depend name="include/haxe/format/JsonParser.h"/>
-  </file>
   <file name="src/backend/Paths.cpp" >
    <depend name="include/backend/Paths.h"/>
   </file>
-  <file name="src/sys/io/File.cpp" >
-   <depend name="include/haxe/io/Bytes.h"/>
-   <depend name="include/haxe/io/Input.h"/>
-   <depend name="include/haxe/io/Output.h"/>
-   <depend name="include/sys/io/File.h"/>
-   <depend name="include/sys/io/FileInput.h"/>
-   <depend name="include/sys/io/FileOutput.h"/>
+  <file name="src/backend/CoolInput.cpp" >
+   <depend name="include/backend/CoolInput.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/input/FlxBaseKeyList.h"/>
+   <depend name="include/flixel/input/FlxKeyManager.h"/>
+   <depend name="include/flixel/input/IFlxInputManager.h"/>
+   <depend name="include/flixel/input/keyboard/FlxKeyList.h"/>
+   <depend name="include/flixel/input/keyboard/FlxKeyboard.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
   </file>
-  <file name="src/backend/JsonFunctions.cpp" >
-   <depend name="include/backend/JsonFunctions.h"/>
-   <depend name="include/backend/Paths.h"/>
-   <depend name="include/sys/io/File.h"/>
+  <file name="src/backend/Conductor.cpp" >
+   <depend name="include/backend/Conductor.h"/>
+   <depend name="include/backend/events/BeatEvent.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+   <depend name="include/openfl/events/EventDispatcher.h"/>
+   <depend name="include/openfl/events/IEventDispatcher.h"/>
+  </file>
+  <file name="src/backend/events/BeatEvent.cpp" >
+   <depend name="include/backend/events/BeatEvent.h"/>
+   <depend name="include/openfl/events/Event.h"/>
+  </file>
+  <file name="src/openfl/events/Event.cpp" tags="haxe,release">
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/openfl/events/Event.h"/>
   </file>
   <file name="src/Xml.cpp" >
    <depend name="include/Xml.h"/>
@@ -9782,7 +9827,7 @@
   </file>
   <file name="src/Main.cpp" >
    <depend name="include/Main.h"/>
-   <depend name="include/backend/Input.h"/>
+   <depend name="include/backend/Conductor.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
    <depend name="include/flixel/FlxG.h"/>
    <depend name="include/flixel/FlxGame.h"/>
@@ -10257,7 +10302,6 @@
    <depend name="include/openfl/events/DataEvent.h"/>
    <depend name="include/openfl/events/TextEvent.h"/>
    <depend name="include/openfl/events/ActivityEvent.h"/>
-   <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/errors/Error.h"/>
    <depend name="include/openfl/display3D/textures/Texture.h"/>
    <depend name="include/openfl/display3D/textures/TextureBase.h"/>
@@ -10440,6 +10484,7 @@
    <depend name="include/flixel/text/FlxText.h"/>
    <depend name="include/flixel/system/frontEnds/_AssetFrontEnd/FlxAssetType_Impl_.h"/>
    <depend name="include/flixel/system/debug/log/LogStyle.h"/>
+   <depend name="include/flixel/system/debug/console/ConsoleHistory.h"/>
    <depend name="include/flixel/system/debug/Window.h"/>
    <depend name="include/flixel/system/FlxQuadTree.h"/>
    <depend name="include/flixel/system/_FlxPreloader/GraphicLogoCorners.h"/>
@@ -10501,7 +10546,8 @@
    <depend name="include/flixel/math/FlxRect.h"/>
    <depend name="include/flixel/math/FlxBasePoint.h"/>
    <depend name="include/flixel/FlxBasic.h"/>
-   <depend name="include/backend/Input.h"/>
+   <depend name="include/backend/Conductor.h"/>
+   <depend name="include/openfl/events/Event.h"/>
    <depend name="include/Xml.h"/>
    <depend name="include/haxe/SysTools.h"/>
    <depend name="include/openfl/text/Font.h"/>

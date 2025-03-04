@@ -10,6 +10,7 @@
 #include <openfl/display/Sprite.h>
 #endif
 HX_DECLARE_CLASS0(Main)
+HX_DECLARE_CLASS1(backend,Conductor)
 HX_DECLARE_CLASS2(openfl,display,DisplayObject)
 HX_DECLARE_CLASS2(openfl,display,DisplayObjectContainer)
 HX_DECLARE_CLASS2(openfl,display,IBitmapDrawable)
@@ -43,10 +44,13 @@ class HXCPP_CLASS_ATTRIBUTES Main_obj : public  ::openfl::display::Sprite_obj
 		//~Main_obj();
 
 		HX_DO_RTTI_ALL;
+		static bool __GetStatic(const ::String &inString, Dynamic &outValue, ::hx::PropertyAccess inCallProp);
+		static bool __SetStatic(const ::String &inString, Dynamic &ioValue, ::hx::PropertyAccess inCallProp);
 		static void __register();
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("Main",59,64,2f,33); }
 
+		static  ::backend::Conductor conductor;
 };
 
 

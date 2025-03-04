@@ -7,12 +7,6 @@
 #ifndef INCLUDED_flixel_FlxG
 #include <flixel/FlxG.h>
 #endif
-#ifndef INCLUDED_flixel_FlxObject
-#include <flixel/FlxObject.h>
-#endif
-#ifndef INCLUDED_flixel_FlxSprite
-#include <flixel/FlxSprite.h>
-#endif
 #ifndef INCLUDED_flixel_FlxState
 #include <flixel/FlxState.h>
 #endif
@@ -22,8 +16,11 @@
 #ifndef INCLUDED_flixel_group_FlxTypedGroup
 #include <flixel/group/FlxTypedGroup.h>
 #endif
-#ifndef INCLUDED_flixel_text_FlxText
-#include <flixel/text/FlxText.h>
+#ifndef INCLUDED_flixel_sound_FlxSound
+#include <flixel/sound/FlxSound.h>
+#endif
+#ifndef INCLUDED_flixel_system_frontEnds_SoundFrontEnd
+#include <flixel/system/frontEnds/SoundFrontEnd.h>
 #endif
 #ifndef INCLUDED_flixel_util_IFlxDestroyable
 #include <flixel/util/IFlxDestroyable.h>
@@ -32,15 +29,15 @@
 #include <funkinMain/states/PlayState.h>
 #endif
 
-HX_DEFINE_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_5_new,"funkinMain.states.PlayState","new",0x7f314a87,"funkinMain.states.PlayState.new","funkinMain/states/PlayState.hx",5,0x2666c4e9)
-HX_LOCAL_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_9_create,"funkinMain.states.PlayState","create",0xa3217f35,"funkinMain.states.PlayState.create","funkinMain/states/PlayState.hx",9,0x2666c4e9)
-HX_LOCAL_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_19_update,"funkinMain.states.PlayState","update",0xae179e42,"funkinMain.states.PlayState.update","funkinMain/states/PlayState.hx",19,0x2666c4e9)
+HX_DEFINE_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_3_new,"funkinMain.states.PlayState","new",0x7f314a87,"funkinMain.states.PlayState.new","funkinMain/states/PlayState.hx",3,0x2666c4e9)
+HX_LOCAL_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_6_create,"funkinMain.states.PlayState","create",0xa3217f35,"funkinMain.states.PlayState.create","funkinMain/states/PlayState.hx",6,0x2666c4e9)
+HX_LOCAL_STACK_FRAME(_hx_pos_b6e4d7b2b91da403_16_update,"funkinMain.states.PlayState","update",0xae179e42,"funkinMain.states.PlayState.update","funkinMain/states/PlayState.hx",16,0x2666c4e9)
 namespace funkinMain{
 namespace states{
 
 void PlayState_obj::__construct(){
-            	HX_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_5_new)
-HXDLIN(   5)		super::__construct();
+            	HX_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_3_new)
+HXDLIN(   3)		super::__construct();
             	}
 
 Dynamic PlayState_obj::__CreateEmpty() { return new PlayState_obj; }
@@ -71,42 +68,18 @@ bool PlayState_obj::_hx_isInstanceOf(int inClassId) {
 }
 
 void PlayState_obj::create(){
-            	HX_GC_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_9_create)
-HXLINE(  10)		this->super::create();
-HXLINE(  12)		this->testText =  ::flixel::text::FlxText_obj::__alloc( HX_CTX ,0,0,0,HX_("Testing",b0,eb,27,8b),12,true);
-HXLINE(  13)		{
-HXLINE(  13)			 ::flixel::text::FlxText _this = this->testText;
-HXDLIN(  13)			int axes = 17;
-HXDLIN(  13)			bool _hx_tmp;
-HXDLIN(  13)			if ((axes != 1)) {
-HXLINE(  13)				_hx_tmp = (axes == 17);
-            			}
-            			else {
-HXLINE(  13)				_hx_tmp = true;
-            			}
-HXDLIN(  13)			if (_hx_tmp) {
-HXLINE(  13)				int _hx_tmp1 = ::flixel::FlxG_obj::width;
-HXDLIN(  13)				_this->set_x(((( (Float)(_hx_tmp1) ) - _this->get_width()) / ( (Float)(2) )));
-            			}
-HXDLIN(  13)			bool _hx_tmp2;
-HXDLIN(  13)			if ((axes != 16)) {
-HXLINE(  13)				_hx_tmp2 = (axes == 17);
-            			}
-            			else {
-HXLINE(  13)				_hx_tmp2 = true;
-            			}
-HXDLIN(  13)			if (_hx_tmp2) {
-HXLINE(  13)				int _hx_tmp3 = ::flixel::FlxG_obj::height;
-HXDLIN(  13)				_this->set_y(((( (Float)(_hx_tmp3) ) - _this->get_height()) / ( (Float)(2) )));
-            			}
+            	HX_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_6_create)
+HXLINE(   7)		this->super::create();
+HXLINE(   8)		if (::hx::IsNotNull( ::flixel::FlxG_obj::sound->music )) {
+HXLINE(   9)			 ::flixel::sound::FlxSound _this = ::flixel::FlxG_obj::sound->music;
+HXDLIN(   9)			_this->cleanup(_this->autoDestroy,true);
             		}
-HXLINE(  14)		this->add(this->testText);
             	}
 
 
 void PlayState_obj::update(Float elapsed){
-            	HX_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_19_update)
-HXDLIN(  19)		this->super::update(elapsed);
+            	HX_STACKFRAME(&_hx_pos_b6e4d7b2b91da403_16_update)
+HXDLIN(  16)		this->super::update(elapsed);
             	}
 
 
@@ -128,58 +101,22 @@ PlayState_obj::PlayState_obj()
 {
 }
 
-void PlayState_obj::__Mark(HX_MARK_PARAMS)
-{
-	HX_MARK_BEGIN_CLASS(PlayState);
-	HX_MARK_MEMBER_NAME(testText,"testText");
-	 ::flixel::FlxState_obj::__Mark(HX_MARK_ARG);
-	HX_MARK_END_CLASS();
-}
-
-void PlayState_obj::__Visit(HX_VISIT_PARAMS)
-{
-	HX_VISIT_MEMBER_NAME(testText,"testText");
-	 ::flixel::FlxState_obj::__Visit(HX_VISIT_ARG);
-}
-
 ::hx::Val PlayState_obj::__Field(const ::String &inName,::hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
 	case 6:
 		if (HX_FIELD_EQ(inName,"create") ) { return ::hx::Val( create_dyn() ); }
 		if (HX_FIELD_EQ(inName,"update") ) { return ::hx::Val( update_dyn() ); }
-		break;
-	case 8:
-		if (HX_FIELD_EQ(inName,"testText") ) { return ::hx::Val( testText ); }
 	}
 	return super::__Field(inName,inCallProp);
 }
 
-::hx::Val PlayState_obj::__SetField(const ::String &inName,const ::hx::Val &inValue,::hx::PropertyAccess inCallProp)
-{
-	switch(inName.length) {
-	case 8:
-		if (HX_FIELD_EQ(inName,"testText") ) { testText=inValue.Cast<  ::flixel::text::FlxText >(); return inValue; }
-	}
-	return super::__SetField(inName,inValue,inCallProp);
-}
-
-void PlayState_obj::__GetFields(Array< ::String> &outFields)
-{
-	outFields->push(HX_("testText",1f,52,2c,50));
-	super::__GetFields(outFields);
-};
-
 #ifdef HXCPP_SCRIPTABLE
-static ::hx::StorageInfo PlayState_obj_sMemberStorageInfo[] = {
-	{::hx::fsObject /*  ::flixel::text::FlxText */ ,(int)offsetof(PlayState_obj,testText),HX_("testText",1f,52,2c,50)},
-	{ ::hx::fsUnknown, 0, null()}
-};
+static ::hx::StorageInfo *PlayState_obj_sMemberStorageInfo = 0;
 static ::hx::StaticInfo *PlayState_obj_sStaticStorageInfo = 0;
 #endif
 
 static ::String PlayState_obj_sMemberFields[] = {
-	HX_("testText",1f,52,2c,50),
 	HX_("create",fc,66,0f,7c),
 	HX_("update",09,86,05,87),
 	::String(null()) };
