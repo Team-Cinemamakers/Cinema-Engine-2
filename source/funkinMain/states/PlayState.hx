@@ -3,10 +3,13 @@ package funkinMain.states;
 import backend.events.BeatEvent;
 import funkinMain.data.Song;
 import funkinMain.objects.Character;
+import funkinMain.objects.StrumNote;
 
 class PlayState extends FlxState
 {
 	var bf:Character;
+	var testStrum:StrumNote;
+
 	public static var song:SongChart;
 
 	override public function create()
@@ -29,6 +32,9 @@ class PlayState extends FlxState
 		bf = new Character('bf');
 		bf.animation.play("Idle", true);
 		ZOrder.addToCharacters(bf);
+		// testing testing
+		testStrum = new StrumNote("noteUp");
+		ZOrder.addToUIForeground(testStrum, 1);
 	}
     
 	override public function update(elapsed:Float)
