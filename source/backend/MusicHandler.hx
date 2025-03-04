@@ -25,10 +25,7 @@ class MusicHandler{
         if(inst != null && voices != null){
             inst.play();
             voices.play();
-            playing = true;
-
-            inst.time = Conductor.TIME;
-            voices.time = Conductor.TIME;
+			playing = true;
         }
     }
 
