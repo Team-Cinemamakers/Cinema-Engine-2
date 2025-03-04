@@ -32,4 +32,8 @@ class Paths
 	{
 		return "assets/data/" + pth + ".json";
 	}
+	public static function sharedImage(pth:String):String
+	{
+		return "assets/images/shared/" + pth + ".png";
+	}
 }
