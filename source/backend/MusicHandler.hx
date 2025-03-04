@@ -8,8 +8,8 @@ class MusicHandler{
 
 	// loads the inst and voices for a song based on a song name
     public static function loadInstAndVoices(songName:String){
-		inst = FlxG.sound.load('assets/audio/songs/' + songName + "/Inst.ogg");
-		voices = FlxG.sound.load('assets/audio/songs/' + songName + "/Voices.ogg");
+		inst = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/Inst"));
+		voices = FlxG.sound.load(Paths.audio('game/songs/' + songName + "/Voices"));
     }
 
 	// plays the inst and voices while also instantly fixing the time in case of conductor pausing

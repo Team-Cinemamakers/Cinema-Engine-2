@@ -1,10 +1,6 @@
 package funkinMain.states;
 
 import backend.events.BeatEvent;
-import backend.events.StepEvent;
-// import backend.events.StepEvent;
-import openfl.events.Event;
-import openfl.events.EventDispatcher;
 
 class PlayState extends FlxState
 {
@@ -12,7 +8,6 @@ class PlayState extends FlxState
 	{
 		super.create();
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
-		Conductor.evDisp.addEventListener(Conductor.stepEvent.type, stepHit);
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -33,10 +28,5 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
-		trace("I DID IT");
-	}
-	function stepHit(e:StepEvent)
-	{
-		trace("STEP");
 	}
 }

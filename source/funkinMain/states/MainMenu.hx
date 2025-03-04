@@ -16,10 +16,8 @@ class MainMenu extends FlxState
 		Conductor.start(102);
 
 		if(FlxG.sound.music == null){
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.audio('audio/music/freakyMenu'));
 		}
-
-		trace(Paths.exists("assets/images/stateAssets/mainMenu/menuBG.png"));
 
 		bg = new FlxSprite().loadGraphic(Paths.stateImage("mainMenu/menuBG"));
 		bg.screenCenter();

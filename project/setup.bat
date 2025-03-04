@@ -8,6 +8,7 @@ echo Installing Libraries!
 haxelib install flixel
 haxelib install flixel-addons
 haxelib install hxcpp
+haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
 
 echo Done!
 color 7
