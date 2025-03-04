@@ -12,17 +12,19 @@ class MainMenu extends FlxState
 	{
 		super.create();
 
-		// plays conductor with bpm 102 according to the music bpm (102)
-		Conductor.play(102);
+		// starts conductor with bpm 102 according to the music bpm (102)
+		Conductor.start(102);
 
 		if(FlxG.sound.music == null){
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
 
-		bg = new FlxSprite().loadGraphic(Paths.stateAssets("mainMenu/menuBG"));
+		trace(Paths.exists("assets/images/stateAssets/mainMenu/menuBG.png"));
+
+		bg = new FlxSprite().loadGraphic(Paths.stateImage("mainMenu/menuBG"));
 		bg.screenCenter();
 		add(bg);
-		Conductor.evDisp.addEventListener(Conductor.mainBeatEvent.type, beatHit);
+		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 	}
 
 	override public function update(elapsed:Float)
@@ -37,11 +39,15 @@ class MainMenu extends FlxState
 		Conductor.addConductorTime(elapsed, this);
 	}
 
-	function beatHit(e:Event)
+	override function destroy()
 	{
-		if (FlxG.state == this)
-		{
-			trace("I DID IT");
-		}
+		super.destroy();
+
+		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
+	}
+
+	function beatHit(e:BeatEvent)
+	{
+		trace("I DID IT");
 	}
 }
