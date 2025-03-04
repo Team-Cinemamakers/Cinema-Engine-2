@@ -14,7 +14,15 @@ class CoolInput
 			case "noteUp":
 				return (FlxG.keys.justPressed.J);
 			case "noteRight":
-				return (FlxG.keys.justPressed.K);    
+				return (FlxG.keys.justPressed.K);
+			case "uiUp":
+				return (FlxG.keys.justPressed.UP || FlxG.keys.justPressed.W);
+			case "uiDown":
+				return (FlxG.keys.justPressed.DOWN || FlxG.keys.justPressed.S);
+			case "uiLeft":
+				return (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A);
+			case "uiRight":
+				return (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D);
         }
 		return false;
     }
