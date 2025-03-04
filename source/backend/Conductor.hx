@@ -26,8 +26,9 @@ class Conductor{
     static var beatVal:Float = (60/BPM) * 1000;
 
 	// creates conductor (does this on main)
-    public function new(startImmedietally:Bool = false){
-        doConductorTime = startImmedietally;
+	public function new(startImedietally:Bool = false)
+	{
+		doConductorTime = startImedietally;
         evDisp = new EventDispatcher();
     }
 
@@ -80,6 +81,7 @@ class Conductor{
 			if (doConductorTime)
 			{
 				TIME += elapsed * 1000;
+				trace(TIME);
 			}
 
 			if (TIME >= lastBeatTime + beatVal)
@@ -95,7 +97,7 @@ class Conductor{
 			}
 			else if (MusicHandler.inst != null && MusicHandler.voices != null && MusicHandler.playing)
 			{
-				MusicHandler.checkSync();
+				MusicHandler.checkSync(TIME);
 			}
 		}
 	}

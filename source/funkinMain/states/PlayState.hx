@@ -23,6 +23,8 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		Conductor.addConductorTime(elapsed, this);
+		trace(MusicHandler.inst.time);
+		trace(MusicHandler.voices.time);
 	}
 
 	function beatHit(e:Event)
