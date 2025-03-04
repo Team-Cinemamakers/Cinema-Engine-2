@@ -7,6 +7,21 @@
 #ifndef INCLUDED_backend_events_BeatEvent
 #include <backend/events/BeatEvent.h>
 #endif
+#ifndef INCLUDED_flixel_FlxBasic
+#include <flixel/FlxBasic.h>
+#endif
+#ifndef INCLUDED_flixel_FlxG
+#include <flixel/FlxG.h>
+#endif
+#ifndef INCLUDED_flixel_sound_FlxSound
+#include <flixel/sound/FlxSound.h>
+#endif
+#ifndef INCLUDED_flixel_system_frontEnds_SoundFrontEnd
+#include <flixel/system/frontEnds/SoundFrontEnd.h>
+#endif
+#ifndef INCLUDED_flixel_util_IFlxDestroyable
+#include <flixel/util/IFlxDestroyable.h>
+#endif
 #ifndef INCLUDED_openfl_events_Event
 #include <openfl/events/Event.h>
 #endif
@@ -24,7 +39,7 @@ HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_38_reset,"backend.Conductor","rese
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_44_cancel,"backend.Conductor","cancel",0xbc748cdb,"backend.Conductor.cancel","backend/Conductor.hx",44,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_51_setBPM,"backend.Conductor","setBPM",0x73a2cfbe,"backend.Conductor.setBPM","backend/Conductor.hx",51,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_56_addConductorTime,"backend.Conductor","addConductorTime",0x601eef54,"backend.Conductor.addConductorTime","backend/Conductor.hx",56,0x5443f372)
-HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_69_beatHit,"backend.Conductor","beatHit",0x284fbffc,"backend.Conductor.beatHit","backend/Conductor.hx",69,0x5443f372)
+HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_74_beatHit,"backend.Conductor","beatHit",0x284fbffc,"backend.Conductor.beatHit","backend/Conductor.hx",74,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_9_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",9,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_10_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",10,0x5443f372)
 HX_LOCAL_STACK_FRAME(_hx_pos_080e9a5446946e07_11_boot,"backend.Conductor","boot",0x4ac3d953,"backend.Conductor.boot","backend/Conductor.hx",11,0x5443f372)
@@ -133,14 +148,26 @@ HXLINE(  63)			 ::Dynamic _hx_tmp1 = ::hx::ClassOf< ::backend::Conductor >();
 HXDLIN(  63)			::backend::Conductor_obj::lastBeatTime = (::backend::Conductor_obj::lastBeatTime + ::backend::Conductor_obj::beatVal);
 HXLINE(  64)			::backend::Conductor_obj::beatHit(::backend::Conductor_obj::curBeat);
             		}
+HXLINE(  66)		if (::hx::IsNotNull( ::flixel::FlxG_obj::sound->music )) {
+HXLINE(  68)			bool _hx_tmp2;
+HXDLIN(  68)			if (!((::flixel::FlxG_obj::sound->music->_time > (::backend::Conductor_obj::TIME + 50)))) {
+HXLINE(  68)				_hx_tmp2 = (::flixel::FlxG_obj::sound->music->_time < (::backend::Conductor_obj::TIME - ( (Float)(50) )));
+            			}
+            			else {
+HXLINE(  68)				_hx_tmp2 = true;
+            			}
+HXDLIN(  68)			if (_hx_tmp2) {
+HXLINE(  69)				::flixel::FlxG_obj::sound->music->set_time(::backend::Conductor_obj::TIME);
+            			}
+            		}
             	}
 
 
 STATIC_HX_DEFINE_DYNAMIC_FUNC1(Conductor_obj,addConductorTime,(void))
 
 void Conductor_obj::beatHit(int beatNum){
-            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_69_beatHit)
-HXDLIN(  69)		::backend::Conductor_obj::evDisp->dispatchEvent(::backend::Conductor_obj::mainBeatEvent);
+            	HX_STACKFRAME(&_hx_pos_080e9a5446946e07_74_beatHit)
+HXDLIN(  74)		::backend::Conductor_obj::evDisp->dispatchEvent(::backend::Conductor_obj::mainBeatEvent);
             	}
 
 

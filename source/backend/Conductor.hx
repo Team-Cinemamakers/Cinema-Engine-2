@@ -63,7 +63,12 @@ class Conductor{
             lastBeatTime += beatVal;
             beatHit(curBeat);
         }
-    }
+		if (FlxG.sound.music != null)
+		{
+			if (FlxG.sound.music.time > TIME + 50 || FlxG.sound.music.time < TIME - 50)
+				FlxG.sound.music.time = TIME;
+		}
+	}
 
     static function beatHit(beatNum:Int):Void{
         evDisp.dispatchEvent(mainBeatEvent);

@@ -9588,6 +9588,11 @@
   <file name="src/backend/Conductor.cpp" >
    <depend name="include/backend/Conductor.h"/>
    <depend name="include/backend/events/BeatEvent.h"/>
+   <depend name="include/flixel/FlxBasic.h"/>
+   <depend name="include/flixel/FlxG.h"/>
+   <depend name="include/flixel/sound/FlxSound.h"/>
+   <depend name="include/flixel/system/frontEnds/SoundFrontEnd.h"/>
+   <depend name="include/flixel/util/IFlxDestroyable.h"/>
    <depend name="include/openfl/events/Event.h"/>
    <depend name="include/openfl/events/EventDispatcher.h"/>
    <depend name="include/openfl/events/IEventDispatcher.h"/>
