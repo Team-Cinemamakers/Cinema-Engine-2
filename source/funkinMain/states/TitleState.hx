@@ -26,9 +26,6 @@ class TitleState extends FlxState{
 			FlxG.sound.playMusic(Paths.audio('audio/music/freakyMenu'));
 		}
 
-        introText = new FlxTypedGroup<FlxText>();
-        add(introText);
-
         titleBump = new FlxSprite();
         titleBump.frames = Paths.sparrow(path + 'logoBumpin');
         titleBump.animation.addByPrefix("bump", 'logo bumpin', 24, false);
@@ -86,25 +83,25 @@ class TitleState extends FlxState{
         if(!titleFinished){
             switch (Conductor.curBeat){
                 case 2:
-					makeIntroText("Made By");
+					makeIntroText("Made By", true);
                 case 4:
 					makeIntroText("Team CinemaMakers");
 				case 5:
 					removeIntroText();
 				case 6:
-					makeIntroText("Original By");
+					makeIntroText("Original By", true);
 				case 8:
 					makeIntroText("Terrible Developers IDK");
 				case 9:
                     removeIntroText();
 				case 10:
-					makeIntroText("I");
+					makeIntroText("I", true);
 				case 12:
 					makeIntroText("FART");
 				case 13:
 					removeIntroText();
 				case 15:
-					makeIntroText("FRIDAY");
+					makeIntroText("FRIDAY", true);
 				case 16:
 					makeIntroText("NIGHT");
 				case 17:
@@ -130,16 +127,21 @@ class TitleState extends FlxState{
     }
 
     //someone get the fnf font and apply formatting pls
-    function makeIntroText(string:String){
-        var newText:FlxText = new FlxText(0, 0, 0, "I'm Gay", coolTextHeight, true);
+	function makeIntroText(string:String, createNewTypedGroup:Bool = false)
+	{
+		if (createNewTypedGroup)
+		{
+			introText = new FlxTypedGroup<FlxText>();
+			add(introText);
+		}
+
+		var newText:FlxText = new FlxText(0, 0, 0, string, coolTextHeight, true);
         newText.screenCenter(X);
-        introText.add(newText);
+		introText.add(newText);
         reposIntroText();
     }
     function removeIntroText(){
-        for(i in 0...introText.length){
-            introText.members[i].destroy();
-        }
+		introText.destroy();
     }
 
     function reposIntroText(){
