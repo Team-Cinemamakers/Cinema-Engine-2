@@ -12,7 +12,7 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 	var notes:FlxTypedGroup<Note>;
-	var chartNotes:Array<Note>;
+	var chartNotes:Array<Note> = [];
 
 	public static var song:SongData;
 
@@ -39,6 +39,8 @@ class PlayState extends FlxState
 		// Load in strums
 
 		strumlines = new FlxTypedGroup<Strumline>();
+
+		notes = new FlxTypedGroup<Note>();
 
 		// Create strumlines
 		for (i in 0...song.metadata.strumlines.length)
