@@ -3,10 +3,12 @@ package backend;
 class CoolInput
 {
 	// custom names for inputs (will be important later)
-    public static function pressed(str:String):Bool{
-        switch (str) {
+	public static function pressed(str:String):Bool
+	{
+		switch (str)
+		{
 			case "accept":
-                return(FlxG.keys.justPressed.ENTER);
+				return (FlxG.keys.justPressed.ENTER);
 			case "noteLeft":
 				return (FlxG.keys.justPressed.D);
 			case "noteDown":
@@ -23,9 +25,10 @@ class CoolInput
 				return (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A);
 			case "uiRight":
 				return (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D);
-        }
+		}
 		return false;
-    }
+	}
+
 	public static function held(str:String):Bool
 	{
 		switch (str)
@@ -46,6 +49,30 @@ class CoolInput
 				return (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A);
 			case "uiRight":
 				return (FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D);
+		}
+		return false;
+	}
+
+	public static function released(str:String):Bool
+	{
+		switch (str)
+		{
+			case "noteLeft":
+				return (FlxG.keys.justReleased.D);
+			case "noteDown":
+				return (FlxG.keys.justReleased.F);
+			case "noteUp":
+				return (FlxG.keys.justReleased.J);
+			case "noteRight":
+				return (FlxG.keys.justReleased.K);
+			case "uiUp":
+				return (FlxG.keys.justReleased.UP || FlxG.keys.justReleased.W);
+			case "uiDown":
+				return (FlxG.keys.justReleased.DOWN || FlxG.keys.justReleased.S);
+			case "uiLeft":
+				return (FlxG.keys.justReleased.LEFT || FlxG.keys.justReleased.A);
+			case "uiRight":
+				return (FlxG.keys.justReleased.RIGHT || FlxG.keys.justReleased.D);
 		}
 		return false;
 	}

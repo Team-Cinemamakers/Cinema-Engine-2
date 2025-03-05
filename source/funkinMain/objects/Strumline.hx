@@ -31,7 +31,7 @@ class Strumline extends FlxTypedGroup<StrumNote>
 	public var character:String;
 	public var playable:Bool;
 
-	public var allowUpdateStrums:Bool = false;
+	public var allowUpdateStrums:Bool = true;
 
 	public function new(strumNotes:Array<StrumNoteData>, character:String = "bf", playable:Bool = false, kerning:Float = 200, x:Float = 0, y:Float = 0)
 	{

@@ -3,7 +3,7 @@
 
 # What and why?
 Modern FNF engines have been directly and indirectly based on the original game for years. While there isn't anything inherently wrong with that the issues come when you look at how things are organized:
-- The formats are a pain to work with and are based on old formats
+- The formats are a pain to work with and are based on old, limited formats
 - The assets are disorganized due to not being moved in years
 - Engine developers are afraid of fixing the above issues due to having to maintain backwards compatibility
 

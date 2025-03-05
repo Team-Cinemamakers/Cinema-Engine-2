@@ -45,7 +45,7 @@ class ZOrder{
         if(backgroundLayer[zOrder] == null) return;
 
         backgroundLayer[zOrder].add(spr);
-        trace("added BG Sprite");
+		// trace("added BG Sprite");
     }
 
 	public static function addToCharacters(spr:FlxBasic)
@@ -53,31 +53,31 @@ class ZOrder{
         if(characterLayer == null) return;
 
         characterLayer.add(spr);
-        trace("added char Sprite");
+		// trace("added char Sprite");
     }
 
-	public static function addToForeground(spr:FlxBasic, zOrder:Int)
+	public static function addToForeground(spr:FlxBasic, zOrder:Int = 0)
 	{
         if(foregroundLayer[zOrder] == null) return;
 
         foregroundLayer[zOrder].add(spr);
-        trace("added foreground Sprite");
+		// trace("added foreground Sprite");
     }
 
-	public static function addToUIBackground(spr:FlxBasic, zOrder:Int)
+	public static function addToUIBackground(spr:FlxBasic, zOrder:Int = 0)
 	{
         if(backgroundUILayer[zOrder] == null) return;
 
         backgroundUILayer[zOrder].add(spr);
-        trace("added UI BG Sprite");
+		// trace("added UI BG Sprite");
     }
 
-	public static function addToUIForeground(spr:FlxBasic, zOrder:Int)
+	public static function addToUIForeground(spr:FlxBasic, zOrder:Int = 0)
 	{
         if(foregroundUILayer[zOrder] == null) return;
 
         foregroundUILayer[zOrder].add(spr);
-        trace("added UI FG Sprite");
+		// trace("added UI FG Sprite");
     }
 
     //this runs thru all the arrays and destroys all the sprites to save ram usage

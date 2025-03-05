@@ -63,7 +63,7 @@ class PlayState extends FlxState
 
 				note.scale.set(strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y);
 				ZOrder.addToUIBackground(note, 2);
-				FlxTween.tween(note, {y: strumlines.members[i].members[j].y}, song.strumlines[i].notes[j].time);
+				FlxTween.tween(note, {y: strumlines.members[i].members[j].y}, song.strumlines[i].notes[j].time, {type: PINGPONG});
 			}
 		}
 	}
