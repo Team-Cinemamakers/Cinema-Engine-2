@@ -24,7 +24,9 @@ class Note extends FlxSprite {
 
         frames = Paths.sparrow('images/shared/notes');
 
-        animation.addByPrefix('note', 'up', 24);
+		animation.addByPrefix('note', 'noteUp', 24);
+		animation.play('note', true);
+        
     }
 
     override function update(elapsed:Float) {

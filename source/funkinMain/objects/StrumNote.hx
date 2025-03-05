@@ -10,6 +10,8 @@ class StrumNote extends FlxSprite {
 	public var playable:Bool;
 	public var animOffsets:Map<String, Array<Float>> = new Map();
 
+	public var scrollDirection:String = "auto";
+
 	public function new(input:String = "noteLeft", angle:Float = 0, character:String = "bf", playable:Bool = false, x:Float = 0, y:Float = 0)
 	{
         super(x, y);

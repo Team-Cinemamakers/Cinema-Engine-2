@@ -34,8 +34,8 @@
                 }
             ],
             "position": [0, 0],
-            "scale": [1, 0.2],
-            "kerning": 150,
+            "scale": [0.75, 0.75],
+            "kerning": 125,
             "character": "bf",
             "playable": true,
             "notes": [
@@ -70,9 +70,9 @@
                     "angle": 90
                 }
             ],
-            "position": [0, 300],
-            "scale": [0.25, 5],
-            "kerning": 150,
+            "position": [700, 0],
+            "scale": [0.75, 0.75],
+            "kerning": 125,
             "character": "dad",
             "playable": false,
             "notes": [

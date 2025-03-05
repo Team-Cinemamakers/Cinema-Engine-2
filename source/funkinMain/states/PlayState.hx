@@ -49,6 +49,18 @@ class PlayState extends FlxState
 		}
 
 		ZOrder.addToUIForeground(strumlines, 1);
+		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
+		{
+			for (j in 0...song.strumlines[i].notes.length)
+			{
+				var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j].value,
+					song.strumlines[i].notes[j].type, 0, 1300);
+
+				note.scale.set(strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y);
+				ZOrder.addToUIForeground(note, 2);
+				FlxTween.tween(note, {y: strumlines.members[i].members[j].y}, song.strumlines[i].notes[j].time);
+			}
+		}
 	}
     
 	override public function update(elapsed:Float)
@@ -73,18 +85,7 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
-		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
-		{
-			for (j in 0...song.strumlines[i].notes.length)
-			{
-				if (song.strumlines[i].notes[j].time == Conductor.TIME)
-				{
-					var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j].value,
-						song.strumlines[i].notes[j].type, 10 * j);
-					ZOrder.addToUIForeground(note, 2);
-				}
-			}
-		}
+
 	}
 
 	function beatHit(e:BeatEvent)
