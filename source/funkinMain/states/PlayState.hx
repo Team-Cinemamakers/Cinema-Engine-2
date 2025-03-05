@@ -11,6 +11,8 @@ class PlayState extends FlxState
 {
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
+	var notes:FlxTypedGroup<Note>;
+	var chartNotes:Array<Note>;
 
 	public static var song:SongData;
 
@@ -53,17 +55,20 @@ class PlayState extends FlxState
 		}
 
 		ZOrder.addToUIBackground(strumlines, 1);
+		ZOrder.addToUIBackground(notes, 2);
 		// Create notes
-		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
+		for (i in 0...song.strumlines.length) // preloads all note info but not graphics
 		{
 			for (j in 0...song.strumlines[i].notes.length)
 			{
 				var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j].value,
-					song.strumlines[i].notes[j].type, 0, 1300);
+					song.strumlines[i].notes[j].type, 0, 1300, strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y,
+					song.strumlines[i].notes[j].time);
 
-				note.scale.set(strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y);
-				ZOrder.addToUIBackground(note, 2);
-				FlxTween.tween(note, {y: strumlines.members[i].members[j].y}, song.strumlines[i].notes[j].time, {type: PINGPONG});
+				chartNotes.push(note);
+
+				// loading all the graphics immedietally anyway for testing purposes before adding the calculated load
+				// loadNote(note);
 			}
 		}
 	}
@@ -90,6 +95,26 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
+		if (notes.length != 0 && notes != null)
+		{
+			for (i in 0...notes.length)
+			{
+				if (notes.members[i].time <= Conductor.TIME && !notes.members[i].moving)
+				{
+					notes.members[i].moving = true;
+					FlxTween.tween(notes.members[i], {y: -100}, 3 * 1 / song.metadata.scrollSpeed, {
+						onComplete: function(twn:FlxTween)
+						{
+							var noteToRemove:Note = notes.members[i];
+							notes.members.remove(noteToRemove);
+							chartNotes.remove(noteToRemove);
+							noteToRemove.destroy();
+							// clears note from memory
+						}
+					});
+				}
+			}
+		}
 	}
 
 	function beatHit(e:BeatEvent)
@@ -107,5 +132,10 @@ class PlayState extends FlxState
 	{
 		// letting you know for some reason bfs animations are all only his misses
 		// char.animation.play(anim, true);
+	}
+	// calls note graphics and adds them
+	function loadNote(note:Note)
+	{
+		note.loadNoteGraphic(notes);
 	}
 }
