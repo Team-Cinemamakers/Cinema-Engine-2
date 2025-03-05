@@ -1,14 +1,8 @@
 package funkinMain.data;
 
+import funkinMain.data.SongEvent.SongEventData;
 import funkinMain.objects.Strumline.StrumlineData;
 import funkinMain.objects.Strumline.StrumlineInfo;
-
-// FIXME: get this shit out of here when events are being properly worked on, HIGHLY wip
-typedef EventData =
-{
-	var time:Float; // time at which the event occurs
-	var values:Array<Dynamic>; // event values
-}
 
 typedef SongDefaults =
 {
@@ -38,8 +32,8 @@ typedef SongInfo =
 typedef SongData =
 {
 	var metadata:SongInfo;
-	var strumlines:Array<StrumlineData>;
-	var events:Array<EventData>;
+	var strumlines:Array<StrumlineData>; // each strumline contains its own chart for that strumline only
+	var events:Array<SongEventData>;
 }
 
 class Song

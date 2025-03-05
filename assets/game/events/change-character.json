@@ -1,0 +1,18 @@
+{
+    "name": "Change Character",
+    "description": "Changes a specified character into another one",
+    "values": [
+        {
+            "name": "To Replace",
+            "description": "Character to replace (Specify the filename)",
+            "type": "character",
+            "optional": false
+        },
+        {
+            "name": "Replacement",
+            "description": "The replacement character (Specify the filename)",
+            "type": "character",
+            "optional": false
+        }
+    ]
+}

@@ -115,5 +115,20 @@
             ]
         }
     ],
-    "events": []
+    "events": [
+        {
+            "time": 2,
+            "name": "Change Character",
+            "values": [
+                {
+                    "name": "To Replace",
+                    "value": "bf"
+                },
+                {
+                    "name": "Replacement",
+                    "value": "dad"
+                }
+            ]
+        }
+    ]
 }

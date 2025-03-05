@@ -2,6 +2,7 @@ package funkinMain.states;
 
 import backend.events.BeatEvent;
 import funkinMain.data.Song;
+import funkinMain.data.SongEvent;
 import funkinMain.objects.Character;
 import funkinMain.objects.Note;
 import funkinMain.objects.Strumline;
