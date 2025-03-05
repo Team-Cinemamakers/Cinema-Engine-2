@@ -38,7 +38,11 @@ class MainMenu extends FlxState
 		// gets input from custom input callouts (CoolInput) and checks if it is just pressed
 		if (CoolInput.pressed("accept"))
 		{
-			FlxG.switchState(() -> new PlayState());
+			switch (mainMenu.curItem)
+			{
+				case 0:
+					FlxG.switchState(() -> new PlayState());
+			}
 		}
 		if (CoolInput.pressed("uiDown"))
 		{

@@ -8,6 +8,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var desiredY:Float = 0;
 
 	var heightMain:Float = 0;
+	var ogHeight:Float = 0;
     //this isnt done
 	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true)
 	{
@@ -48,12 +49,13 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 				return;
 		}
 
+		ogHeight = this.members[0].height;
 		setPositioning();
 	}
 
-	function setPositioning():Void
+	public function setPositioning(scale:Float = 1):Void
 	{
-		var scaleVal:Float = heightMain / this.members[0].height;
+		var scaleVal:Float = (heightMain / ogHeight) * scale;
 		for (i in 0...this.length)
 		{
 			this.members[i].scale.set(scaleVal, scaleVal);

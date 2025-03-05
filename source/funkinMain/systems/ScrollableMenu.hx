@@ -9,7 +9,7 @@ class ScrollableMenu {
 	static var spacingMain:Float = 0;
 	static var itemHeight:Float = 0;
 
-	public static var curItem:Int = 0;
+	public var curItem:Int = 0;
 
 	public function new(itemArray:Array<String>, height:Float, spacing:Float, y:Float)
 	{
@@ -24,9 +24,11 @@ class ScrollableMenu {
 			menuItems.push(newAlphabet);
 			FlxG.state.add(newAlphabet);
         }
+		menuItems[0].setPositioning(1.2);
 	}
 	public function scroll(value:Int)
 	{
+		value *= -1;
 		if (curItem + value >= menuItems.length)
 		{
 			curItem = 0;
@@ -40,6 +42,19 @@ class ScrollableMenu {
 			curItem += value;
 		}
 		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
+
+		for (i in 0...menuItems.length)
+		{
+			if (i == curItem)
+			{
+				menuItems[i].setPositioning(1.2);
+			}
+			else
+			{
+				menuItems[i].setPositioning(1);
+			}
+		}
+		
 
 		trace("scroll");
 	}
