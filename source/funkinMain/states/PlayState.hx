@@ -48,7 +48,7 @@ class PlayState extends FlxState
 			strumlines.add(strumLine);
 		}
 
-		ZOrder.addToUIForeground(strumlines, 1);
+		ZOrder.addToUIBackground(strumlines, 1);
 		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
 		{
 			for (j in 0...song.strumlines[i].notes.length)
@@ -57,7 +57,7 @@ class PlayState extends FlxState
 					song.strumlines[i].notes[j].type, 0, 1300);
 
 				note.scale.set(strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y);
-				ZOrder.addToUIForeground(note, 2);
+				ZOrder.addToUIBackground(note, 2);
 				FlxTween.tween(note, {y: strumlines.members[i].members[j].y}, song.strumlines[i].notes[j].time);
 			}
 		}
