@@ -1,11 +1,11 @@
 package backend;
 
 class ZOrder{
-    public static var backgroundLayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var characterLayer:FlxTypedGroup<FlxSprite>;
-    public static var foregroundLayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var backgroundUILayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var foregroundUILayer:Array<FlxTypedGroup<FlxSprite>> = [];
+	public static var backgroundLayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var characterLayer:FlxTypedGroup<FlxBasic>;
+	public static var foregroundLayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var backgroundUILayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var foregroundUILayer:Array<FlxTypedGroup<FlxBasic>> = [];
     public static var indexes:Int = 0;
 
 
@@ -15,13 +15,13 @@ class ZOrder{
     //adds zOrder sprite layers, allows modder to decide to increase zIndexes per layer if desired
     public static function initiateScreenSpace(zIndexes:Int){
         for(i in 0...zIndexes){
-            backgroundLayer.push(new FlxTypedGroup<FlxSprite>());
-            foregroundLayer.push(new FlxTypedGroup<FlxSprite>());
-            backgroundUILayer.push(new FlxTypedGroup<FlxSprite>());
-            foregroundUILayer.push(new FlxTypedGroup<FlxSprite>());
+			backgroundLayer.push(new FlxTypedGroup<FlxBasic>());
+			foregroundLayer.push(new FlxTypedGroup<FlxBasic>());
+			backgroundUILayer.push(new FlxTypedGroup<FlxBasic>());
+			foregroundUILayer.push(new FlxTypedGroup<FlxBasic>());
         }
 
-        characterLayer = new FlxTypedGroup<FlxSprite>();
+		characterLayer = new FlxTypedGroup<FlxBasic>();
 
         indexes = zIndexes;
 
@@ -79,7 +79,7 @@ class ZOrder{
     //may be a slow function but overall should save performance majorly instead of running killMembers
     public static function flushSprites(){
         for(i in 0...4){
-            var clearArray:Array<FlxTypedGroup<FlxSprite>>;
+			var clearArray:Array<FlxTypedGroup<FlxBasic>>;
             switch(i){
                 case 0:
                     clearArray = backgroundLayer;
@@ -91,7 +91,7 @@ class ZOrder{
                     clearArray = backgroundUILayer;
                 default:
                     //to shut up syntax
-                    clearArray = new Array<FlxTypedGroup<FlxSprite>>();
+					clearArray = new Array<FlxTypedGroup<FlxBasic>>();
                     return;
             }
 
