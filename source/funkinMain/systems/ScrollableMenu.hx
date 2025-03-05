@@ -19,16 +19,15 @@ class ScrollableMenu {
 
         for(i in 0...items.length){
 			var yIterator:Float = (i * (itemHeight + spacingMain)) + y;
-			trace(yIterator);
 			var newAlphabet = new Alphabet(items[i], i, 50, 0, yIterator, true);
 			menuItems.push(newAlphabet);
 			FlxG.state.add(newAlphabet);
         }
-		menuItems[0].setPositioning(1.2);
+		menuItems[0].setScale(true);
 	}
 	public function scroll(value:Int)
 	{
-		menuItems[curItem].setPositioning(1);
+		menuItems[curItem].setScale(false);
 		value *= -1;
 		if (curItem + value >= menuItems.length)
 		{
@@ -44,7 +43,7 @@ class ScrollableMenu {
 		}
 		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
 
-		menuItems[curItem].setPositioning(1.1);
+		menuItems[curItem].setScale(true);
 
 		trace("scroll");
 	}

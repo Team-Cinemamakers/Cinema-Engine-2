@@ -9,8 +9,14 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 
 	var heightMain:Float = 0;
 	var ogHeight:Float = 0;
+	//
+	var letterX:Array<Float> = [];
+	var letterXScaled:Array<Float> = [];
+	var letterY:Array<Float> = [];
+	var letterYScaled:Array<Float> = [];
+	var scaleMain:Float = 0;
     //this isnt done
-	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true)
+	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2)
 	{
 		super();
 
@@ -48,14 +54,43 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			else
 				return;
 		}
-
 		ogHeight = this.members[0].height;
-		setPositioning();
+		preloadPositioning(1);
+		preloadPositioning(onSelectScale);
 	}
 
-	public function setPositioning(scale:Float = 1):Void
+	public function setScale(selected:Bool):Void
+	{
+		var scale:Float = 1;
+		if (selected)
+		{
+			scale = 1.2;
+			for (i in 0...letterXScaled.length)
+			{
+				this.members[i].scale.set(scaleMain * scale, scaleMain * scale);
+				this.members[i].updateHitbox();
+
+				this.members[i].x = letterXScaled[i];
+				this.members[i].y = letterYScaled[i];
+			}
+		}
+		else
+		{
+			for (i in 0...letterX.length)
+			{
+				this.members[i].scale.set(scaleMain * scale, scaleMain * scale);
+				this.members[i].updateHitbox();
+
+				this.members[i].x = letterX[i];
+				this.members[i].y = letterY[i];
+			}
+		}
+	}
+
+	function preloadPositioning(scale:Float = 1):Void
 	{
 		var scaleVal:Float = (heightMain / ogHeight) * scale;
+		scaleMain = heightMain / ogHeight;
 		for (i in 0...this.length)
 		{
 			this.members[i].scale.set(scaleVal, scaleVal);
@@ -70,9 +105,15 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			for (i in 0...this.length)
 			{
 				this.members[i].x = (FlxG.width / 2 - totalLength) + halfLength;
+				if (scale == 1)
+				{
+					letterX[i] = this.members[i].x;
+				}
+				else
+				{
+					letterXScaled[i] = this.members[i].x;
+				}
 				totalLength -= this.members[i].width;
-
-				trace(FlxG.width / 2 - totalLength / 2);
 			}
 		}
 		else
@@ -88,6 +129,14 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 					}
 				}
 				this.members[i].x = desiredX + xShit;
+				if (scale == 1)
+				{
+					letterX[i] = desiredX + xShit;
+				}
+				else
+				{
+					letterXScaled[i] = desiredX + xShit;
+				}
 			}
 		}
 
@@ -96,10 +145,26 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			if (i != 0)
 			{
 				this.members[i].y = this.members[i - 1].y + this.members[i - 1].height - this.members[i].height;
+				if (scale == 1)
+				{
+					letterY[i] = (this.members[i - 1].y + this.members[i - 1].height - this.members[i].height);
+				}
+				else
+				{
+					letterYScaled[i] = (this.members[i - 1].y + this.members[i - 1].height - this.members[i].height);
+				}
 			}
 			else
 			{
 				this.members[i].y = desiredY;
+				if (scale == 1)
+				{
+					letterY[i] = desiredY;
+				}
+				else
+				{
+					letterYScaled[i] = desiredY;
+				}
 			}
 			
 		}
