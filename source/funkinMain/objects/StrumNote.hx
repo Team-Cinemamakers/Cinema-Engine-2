@@ -3,6 +3,12 @@ package funkinMain.objects;
 import backend.CoolInput;
 import backend.Paths;
 
+typedef StrumNoteData =
+{
+	var input:String; // input, or animation
+	var angle:Float; // angle at which the note should be rotated, will be useful in the future when we switch to a single color note sprite and just recolor it
+}
+
 class StrumNote extends FlxSprite {
 
     public var input:String;

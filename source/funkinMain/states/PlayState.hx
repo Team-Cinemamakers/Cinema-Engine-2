@@ -11,7 +11,7 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 
-	public static var song:SongChart;
+	public static var song:SongData;
 
 	override public function create()
 	{

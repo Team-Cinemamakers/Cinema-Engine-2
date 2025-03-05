@@ -1,79 +1,53 @@
 package funkinMain.data;
 
-import openfl.Assets;
+import funkinMain.objects.Strumline.StrumlineData;
+import funkinMain.objects.Strumline.StrumlineInfo;
 
-// FIXME: get this shit out of here when strumlines/notes/events are being properly worked on, HIGHLY wip
-typedef Note =
-{
-	var time:Float; // time at which the note is supposed to be pressed
-	var type:Int; // note type (0 for normal)
-	var value:Int; // value (corresponds to the place in the strumline, so on 4k its from 0-3 and on 7k its from 0-6 and so on)
-}
-
-private typedef ChartEvent =
+// FIXME: get this shit out of here when events are being properly worked on, HIGHLY wip
+typedef EventData =
 {
 	var time:Float; // time at which the event occurs
 	var values:Array<Dynamic>; // event values
 }
 
-typedef StrumNotes =
-{
-	var input:String;
-	var angle:Float;
-}
-
-private typedef ChartStrumline =
-{
-	var character:String;
-	var notes:Array<Note>;
-}
-
-private typedef MetaStrumline =
-{
-	var character:String;
-	var strumNotes:Array<StrumNotes>;
-	var position:Array<Float>;
-	var scale:Array<Float>;
-	var kerning:Float;
-	var playable:Bool;
-}
-
-private typedef SongDefaults =
+typedef SongDefaults =
 {
 	var player:String;
 	var opponent:String;
 }
 
-typedef SongFiles = {
+typedef SongTracks =
+{
     var inst:String;
     var vocals:String;
 }
 
-typedef SongMetadata =
+typedef SongInfo =
 {
 	var name:String;
 	var bpm:Float;
 	var scrollSpeed:Float;
-	var songFiles:SongFiles;
-	var strumlines:Array<MetaStrumline>; // TODO: not implemented yet
+	var songFiles:SongTracks;
+	var strumlines:Array<StrumlineInfo>;
 	var stage:String;
 	// var characters; // TODO: not implemented yet
 	var defaults:SongDefaults;
 	// var scripts; // TODO: not implemented yet
 }
 
-typedef SongChart =
+typedef SongData =
 {
-    var metadata:SongMetadata;
-	var strumlines:Array<ChartStrumline>;
-    var events:Array<ChartEvent>;
+	var metadata:SongInfo;
+	var strumlines:Array<StrumlineData>;
+	var events:Array<EventData>;
 }
 
 class Song
 {
-    public static function fromFile(song:String):SongChart {
+	public static function fromFile(song:String):SongData
+	{
         var rawJson = JsonFunctions.loadJson("game/songs/" + song + "/" + song);
-        var casted:SongChart = cast(Json.parse(rawJson));
+		var casted:SongData = cast(Json.parse(rawJson));
         return casted;
     }
 }
