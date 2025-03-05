@@ -15,6 +15,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var letterY:Array<Float> = [];
 	var letterYScaled:Array<Float> = [];
 	var scaleMain:Float = 0;
+	var onSelectScale:Float = 0;
     //this isnt done
 	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2)
 	{
@@ -25,6 +26,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 		desiredY = y;
 
 		heightMain = height;
+		this.onSelectScale = onSelectScale;
 
 		for (i in 0...text.length)
 		{
@@ -64,7 +66,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 		var scale:Float = 1;
 		if (selected)
 		{
-			scale = 1.2;
+			scale = onSelectScale;
 			for (i in 0...letterXScaled.length)
 			{
 				this.members[i].scale.set(scaleMain * scale, scaleMain * scale);
