@@ -16,9 +16,20 @@ private typedef ChartEvent =
 	var values:Array<Dynamic>; // event values
 }
 
+typedef StrumNotes =
+{
+	var input:String;
+	var angle:Float;
+}
+
 private typedef ChartStrumline =
 {
+	var strumNotes:Array<StrumNotes>;
+	var position:Array<Float>;
+	var scale:Array<Float>;
+	var kerning:Float;
 	var character:String;
+	var playable:Bool;
 	var notes:Array<Note>;
 }
 
@@ -49,7 +60,7 @@ typedef SongMetadata =
 typedef SongChart =
 {
     var metadata:SongMetadata;
-	var strumLines:Array<ChartStrumline>;
+	var strumlines:Array<ChartStrumline>;
     var events:Array<ChartEvent>;
 }
 

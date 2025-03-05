@@ -1,11 +1,11 @@
 package backend;
 
 class ZOrder{
-    public static var backgroundLayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var characterLayer:FlxTypedGroup<FlxSprite>;
-    public static var foregroundLayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var backgroundUILayer:Array<FlxTypedGroup<FlxSprite>> = [];
-    public static var foregroundUILayer:Array<FlxTypedGroup<FlxSprite>> = [];
+	public static var backgroundLayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var characterLayer:FlxTypedGroup<FlxBasic>;
+	public static var foregroundLayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var backgroundUILayer:Array<FlxTypedGroup<FlxBasic>> = [];
+	public static var foregroundUILayer:Array<FlxTypedGroup<FlxBasic>> = [];
     public static var indexes:Int = 0;
 
 
@@ -15,13 +15,13 @@ class ZOrder{
     //adds zOrder sprite layers, allows modder to decide to increase zIndexes per layer if desired
     public static function initiateScreenSpace(zIndexes:Int){
         for(i in 0...zIndexes){
-            backgroundLayer.push(new FlxTypedGroup<FlxSprite>());
-            foregroundLayer.push(new FlxTypedGroup<FlxSprite>());
-            backgroundUILayer.push(new FlxTypedGroup<FlxSprite>());
-            foregroundUILayer.push(new FlxTypedGroup<FlxSprite>());
+			backgroundLayer.push(new FlxTypedGroup<FlxBasic>());
+			foregroundLayer.push(new FlxTypedGroup<FlxBasic>());
+			backgroundUILayer.push(new FlxTypedGroup<FlxBasic>());
+			foregroundUILayer.push(new FlxTypedGroup<FlxBasic>());
         }
 
-        characterLayer = new FlxTypedGroup<FlxSprite>();
+		characterLayer = new FlxTypedGroup<FlxBasic>();
 
         indexes = zIndexes;
 
@@ -40,35 +40,40 @@ class ZOrder{
     }
 
     //creating seperate functions for the additions to prevent needing an int or string argument (to simplify zOrdering for not just us but other developers)
-    public static function addToBackground(spr:FlxSprite, zOrder:Int){
+	public static function addToBackground(spr:FlxBasic, zOrder:Int)
+	{
         if(backgroundLayer[zOrder] == null) return;
 
         backgroundLayer[zOrder].add(spr);
         trace("added BG Sprite");
     }
 
-    public static function addToCharacters(spr:FlxSprite){
+	public static function addToCharacters(spr:FlxBasic)
+	{
         if(characterLayer == null) return;
 
         characterLayer.add(spr);
         trace("added char Sprite");
     }
 
-    public static function addToForeground(spr:FlxSprite, zOrder:Int){
+	public static function addToForeground(spr:FlxBasic, zOrder:Int)
+	{
         if(foregroundLayer[zOrder] == null) return;
 
         foregroundLayer[zOrder].add(spr);
         trace("added foreground Sprite");
     }
 
-    public static function addToUIBackground(spr:FlxSprite, zOrder:Int){
+	public static function addToUIBackground(spr:FlxBasic, zOrder:Int)
+	{
         if(backgroundUILayer[zOrder] == null) return;
 
         backgroundUILayer[zOrder].add(spr);
         trace("added UI BG Sprite");
     }
 
-    public static function addToUIForeground(spr:FlxSprite, zOrder:Int){
+	public static function addToUIForeground(spr:FlxBasic, zOrder:Int)
+	{
         if(foregroundUILayer[zOrder] == null) return;
 
         foregroundUILayer[zOrder].add(spr);
@@ -79,7 +84,7 @@ class ZOrder{
     //may be a slow function but overall should save performance majorly instead of running killMembers
     public static function flushSprites(){
         for(i in 0...4){
-            var clearArray:Array<FlxTypedGroup<FlxSprite>>;
+			var clearArray:Array<FlxTypedGroup<FlxBasic>>;
             switch(i){
                 case 0:
                     clearArray = backgroundLayer;
@@ -91,7 +96,7 @@ class ZOrder{
                     clearArray = backgroundUILayer;
                 default:
                     //to shut up syntax
-                    clearArray = new Array<FlxTypedGroup<FlxSprite>>();
+					clearArray = new Array<FlxTypedGroup<FlxBasic>>();
                     return;
             }
 

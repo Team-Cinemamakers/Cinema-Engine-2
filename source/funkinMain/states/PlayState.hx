@@ -3,12 +3,13 @@ package funkinMain.states;
 import backend.events.BeatEvent;
 import funkinMain.data.Song;
 import funkinMain.objects.Character;
-import funkinMain.objects.StrumNote;
+import funkinMain.objects.Note;
+import funkinMain.objects.Strumline;
 
 class PlayState extends FlxState
 {
 	var bf:Character;
-	var testStrum:StrumNote;
+	var strumlines:FlxTypedGroup<Strumline>;
 
 	public static var song:SongChart;
 
@@ -32,9 +33,22 @@ class PlayState extends FlxState
 		bf = new Character('bf');
 		bf.animation.play("Idle", true);
 		ZOrder.addToCharacters(bf);
-		// testing testing
-		testStrum = new StrumNote("noteUp");
-		ZOrder.addToUIForeground(testStrum, 1);
+		// Load in strums
+
+		strumlines = new FlxTypedGroup<Strumline>();
+
+		for (i in 0...song.strumlines.length)
+		{
+			var strumLine:Strumline = new Strumline(song.strumlines[i].strumNotes, song.strumlines[i].character, song.strumlines[i].playable,
+				song.strumlines[i].kerning, song.strumlines[i].position[0], song.strumlines[i].position[1]);
+
+			strumLine.scale = song.strumlines[i].scale;
+			strumLine.updateStrums();
+
+			strumlines.add(strumLine);
+		}
+
+		ZOrder.addToUIForeground(strumlines, 1);
 	}
     
 	override public function update(elapsed:Float)
@@ -58,6 +72,18 @@ class PlayState extends FlxState
 		if (CoolInput.pressed("noteRight"))
 		{
 			activateNote(3, 'singRIGHT');
+		}
+		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
+		{
+			for (j in 0...song.strumlines[i].notes.length)
+			{
+				if (song.strumlines[i].notes[j].time == Conductor.TIME)
+				{
+					var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j].value,
+						song.strumlines[i].notes[j].type, 10 * j);
+					ZOrder.addToUIForeground(note, 2);
+				}
+			}
 		}
 	}
 

@@ -15,7 +15,66 @@
     },
     "strumlines": [
         {
+            "strumNotes": [
+                {
+                    "input": "noteLeft",
+                    "angle": 270
+                },
+                {
+                    "input": "noteDown",
+                    "angle": 180
+                },
+                {
+                    "input": "noteUp",
+                    "angle": 0
+                },
+                {
+                    "input": "noteRight",
+                    "angle": 90
+                }
+            ],
+            "position": [0, 0],
+            "scale": [1, 0.2],
+            "kerning": 150,
             "character": "bf",
+            "playable": true,
+            "notes": [
+                {
+                    "time": 1.5,
+                    "type": 0,
+                    "value": 1
+                },
+                {
+                    "time": 1.75,
+                    "type": 0,
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "strumNotes": [
+                {
+                    "input": "noteLeft",
+                    "angle": 270
+                },
+                {
+                    "input": "noteDown",
+                    "angle": 180
+                },
+                {
+                    "input": "noteUp",
+                    "angle": 0
+                },
+                {
+                    "input": "noteRight",
+                    "angle": 90
+                }
+            ],
+            "position": [0, 300],
+            "scale": [0.25, 5],
+            "kerning": 150,
+            "character": "dad",
+            "playable": false,
             "notes": [
                 {
                     "time": 1.5,
