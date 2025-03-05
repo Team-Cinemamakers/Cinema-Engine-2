@@ -1,16 +1,61 @@
 package funkinMain.systems;
 
 import funkinMain.objects.Alphabet;
+import openfl.net.Socket;
 
 class ScrollableMenu {
     public static var items:Array<String> = [];
 	public static var menuItems:Array<Alphabet> = [];
+	static var spacingMain:Float = 0;
+	static var itemHeight:Float = 0;
 
-    //this is also not done
-    public static function addToScreen(itemArray:Array<String>){
-        items = itemArray;
+	public var curItem:Int = 0;
+
+	public function new(itemArray:Array<String>, height:Float, spacing:Float, y:Float)
+	{
+		items = itemArray;
+		spacingMain = spacing;
+		itemHeight = height;
+
         for(i in 0...items.length){
-			menuItems.push(new Alphabet(items[i], i, 20, 50, 0, 0, true));
+			var yIterator:Float = (i * (itemHeight + spacingMain)) + y;
+			trace(yIterator);
+			var newAlphabet = new Alphabet(items[i], i, 50, 0, yIterator, true);
+			menuItems.push(newAlphabet);
+			FlxG.state.add(newAlphabet);
         }
-    }
+		menuItems[0].setPositioning(1.2);
+	}
+	public function scroll(value:Int)
+	{
+		value *= -1;
+		if (curItem + value >= menuItems.length)
+		{
+			curItem = 0;
+		}
+		else if (curItem + value < 0)
+		{
+			curItem = menuItems.length - 1;
+		}
+		else
+		{
+			curItem += value;
+		}
+		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
+
+		for (i in 0...menuItems.length)
+		{
+			if (i == curItem)
+			{
+				menuItems[i].setPositioning(1.2);
+			}
+			else
+			{
+				menuItems[i].setPositioning(1);
+			}
+		}
+		
+
+		trace("scroll");
+	}
 }
