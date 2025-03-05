@@ -11,7 +11,7 @@ class Strumline extends FlxTypedGroup<StrumNote> {
 
     public var scale:Array<Float> = [1, 1];
 
-    public var kerning:Float;
+	public var kerning:Float; // distance between notes
     public var character:String;
     public var playable:Bool;
 

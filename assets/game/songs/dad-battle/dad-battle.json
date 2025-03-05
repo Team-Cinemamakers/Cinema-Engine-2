@@ -11,10 +11,63 @@
         "defaults": {
             "player": "bf",
             "opponent": "dad"
-        }
+        },
+        "strumlines": [
+            {
+                "position": [0, 0],
+                "scale": [0.75, 0.75],
+                "kerning": 125,
+                "character": "bf",
+                "playable": true,
+                "strumNotes": [
+                    {
+                        "input": "noteLeft",
+                        "angle": 270
+                    },
+                    {
+                        "input": "noteDown",
+                        "angle": 180
+                    },
+                    {
+                        "input": "noteUp",
+                        "angle": 0
+                    },
+                    {
+                        "input": "noteRight",
+                        "angle": 90
+                    }
+                ]
+            },
+            {
+                "position": [700, 0],
+                "scale": [0.75, 0.75],
+                "kerning": 125,
+                "character": "dad",
+                "playable": false,
+                "strumNotes": [
+                    {
+                        "input": "noteLeft",
+                        "angle": 270
+                    },
+                    {
+                        "input": "noteDown",
+                        "angle": 180
+                    },
+                    {
+                        "input": "noteUp",
+                        "angle": 0
+                    },
+                    {
+                        "input": "noteRight",
+                        "angle": 90
+                    }
+                ]
+            }
+        ]
     },
     "strumlines": [
         {
+            "character": "bf",
             "strumNotes": [
                 {
                     "input": "noteLeft",
@@ -33,11 +86,6 @@
                     "angle": 90
                 }
             ],
-            "position": [0, 0],
-            "scale": [0.75, 0.75],
-            "kerning": 125,
-            "character": "bf",
-            "playable": true,
             "notes": [
                 {
                     "time": 1.5,
@@ -52,29 +100,7 @@
             ]
         },
         {
-            "strumNotes": [
-                {
-                    "input": "noteLeft",
-                    "angle": 270
-                },
-                {
-                    "input": "noteDown",
-                    "angle": 180
-                },
-                {
-                    "input": "noteUp",
-                    "angle": 0
-                },
-                {
-                    "input": "noteRight",
-                    "angle": 90
-                }
-            ],
-            "position": [700, 0],
-            "scale": [0.75, 0.75],
-            "kerning": 125,
             "character": "dad",
-            "playable": false,
             "notes": [
                 {
                     "time": 1.5,

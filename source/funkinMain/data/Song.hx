@@ -24,13 +24,18 @@ typedef StrumNotes =
 
 private typedef ChartStrumline =
 {
+	var character:String;
+	var notes:Array<Note>;
+}
+
+private typedef MetaStrumline =
+{
+	var character:String;
 	var strumNotes:Array<StrumNotes>;
 	var position:Array<Float>;
 	var scale:Array<Float>;
 	var kerning:Float;
-	var character:String;
 	var playable:Bool;
-	var notes:Array<Note>;
 }
 
 private typedef SongDefaults =
@@ -50,7 +55,7 @@ typedef SongMetadata =
 	var bpm:Float;
 	var scrollSpeed:Float;
 	var songFiles:SongFiles;
-	// var strumLines:Array<MetaStrumline>; // TODO: not implemented yet
+	var strumlines:Array<MetaStrumline>; // TODO: not implemented yet
 	var stage:String;
 	// var characters; // TODO: not implemented yet
 	var defaults:SongDefaults;

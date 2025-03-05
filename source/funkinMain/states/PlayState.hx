@@ -37,18 +37,22 @@ class PlayState extends FlxState
 
 		strumlines = new FlxTypedGroup<Strumline>();
 
-		for (i in 0...song.strumlines.length)
+		// Create strumlines
+		for (i in 0...song.metadata.strumlines.length)
 		{
-			var strumLine:Strumline = new Strumline(song.strumlines[i].strumNotes, song.strumlines[i].character, song.strumlines[i].playable,
-				song.strumlines[i].kerning, song.strumlines[i].position[0], song.strumlines[i].position[1]);
+			trace(song.metadata.strumlines[i]);
+			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].character,
+				song.metadata.strumlines[i].playable, song.metadata.strumlines[i].kerning, song.metadata.strumlines[i].position[0],
+				song.metadata.strumlines[i].position[1]);
 
-			strumLine.scale = song.strumlines[i].scale;
+			strumLine.scale = song.metadata.strumlines[i].scale;
 			strumLine.updateStrums();
 
 			strumlines.add(strumLine);
 		}
 
 		ZOrder.addToUIBackground(strumlines, 1);
+		// Create notes
 		for (i in 0...song.strumlines.length) // TODO: MAKE THIS MORE OPTIMIZED
 		{
 			for (j in 0...song.strumlines[i].notes.length)
@@ -62,7 +66,7 @@ class PlayState extends FlxState
 			}
 		}
 	}
-    
+
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -85,7 +89,6 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
-
 	}
 
 	function beatHit(e:BeatEvent)
@@ -93,6 +96,7 @@ class PlayState extends FlxState
 		if (Conductor.curBeat % 2 == 0)
 			bf.animation.play("Idle", true);
 	}
+
 	function activateNote(note:Int, animation:String)
 	{
 		playAnimation(bf, animation);
