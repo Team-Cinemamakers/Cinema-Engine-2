@@ -7,6 +7,7 @@ import openfl.events.EventType;
 class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
+	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
 
 	override public function create()
 	{
@@ -22,6 +23,8 @@ class MainMenu extends FlxState
 		bg = new FlxSprite().loadGraphic(Paths.stateImage("mainMenu/menuBG"));
 		bg.screenCenter();
 		add(bg);
+
+		var mainMenu:ScrollableMenu = new ScrollableMenu(mainMenuOptions, 50, 20, 100);
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 	}
