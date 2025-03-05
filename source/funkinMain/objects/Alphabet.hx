@@ -59,6 +59,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 		ogHeight = this.members[0].height;
 		preloadPositioning(1);
 		preloadPositioning(onSelectScale);
+		setScale(false);
 	}
 
 	public function setScale(selected:Bool):Void

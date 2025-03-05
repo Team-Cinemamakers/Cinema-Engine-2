@@ -15,10 +15,8 @@ class MainMenu extends FlxState
 	{
 		super.create();
 
-		// starts conductor with bpm 102 according to the music bpm (102)
-		Conductor.start(102);
-
-		if(FlxG.sound.music == null){
+		if (!FlxG.sound.music.playing || FlxG.sound.music == null)
+		{
 			FlxG.sound.playMusic(Paths.audio('audio/music/freakyMenu'));
 		}
 
