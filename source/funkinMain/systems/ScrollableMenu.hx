@@ -28,6 +28,7 @@ class ScrollableMenu {
 	}
 	public function scroll(value:Int)
 	{
+		menuItems[curItem].setPositioning(1);
 		value *= -1;
 		if (curItem + value >= menuItems.length)
 		{
@@ -43,18 +44,7 @@ class ScrollableMenu {
 		}
 		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
 
-		for (i in 0...menuItems.length)
-		{
-			if (i == curItem)
-			{
-				menuItems[i].setPositioning(1.2);
-			}
-			else
-			{
-				menuItems[i].setPositioning(1);
-			}
-		}
-		
+		menuItems[curItem].setPositioning(1.1);
 
 		trace("scroll");
 	}
