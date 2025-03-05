@@ -7,6 +7,7 @@ import openfl.events.EventType;
 class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
+	static var mainMenu:ScrollableMenu;
 	// DONT ADD SPACES IT WILL FUCKING NOT ADD THEM (I gotta make that work but later cuz im lazy)
 	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
 
@@ -25,7 +26,7 @@ class MainMenu extends FlxState
 		bg.screenCenter();
 		add(bg);
 
-		var mainMenu:ScrollableMenu = new ScrollableMenu(mainMenuOptions, 50, 20, 100);
+		mainMenu = new ScrollableMenu(mainMenuOptions, 50, 20, 100);
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 	}
@@ -38,6 +39,14 @@ class MainMenu extends FlxState
 		if (CoolInput.pressed("accept"))
 		{
 			FlxG.switchState(() -> new PlayState());
+		}
+		if (CoolInput.pressed("uiDown"))
+		{
+			mainMenu.scroll(-1);
+		}
+		else if (CoolInput.pressed("uiUp"))
+		{
+			mainMenu.scroll(1);
 		}
 		Conductor.addConductorTime(elapsed, this);
 	}

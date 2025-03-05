@@ -9,6 +9,8 @@ class ScrollableMenu {
 	static var spacingMain:Float = 0;
 	static var itemHeight:Float = 0;
 
+	public static var curItem:Int = 0;
+
 	public function new(itemArray:Array<String>, height:Float, spacing:Float, y:Float)
 	{
 		items = itemArray;
@@ -22,5 +24,23 @@ class ScrollableMenu {
 			menuItems.push(newAlphabet);
 			FlxG.state.add(newAlphabet);
         }
+	}
+	public function scroll(value:Int)
+	{
+		if (curItem + value >= menuItems.length)
+		{
+			curItem = 0;
+		}
+		else if (curItem + value < 0)
+		{
+			curItem = menuItems.length - 1;
+		}
+		else
+		{
+			curItem += value;
+		}
+		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
+
+		trace("scroll");
 	}
 }
