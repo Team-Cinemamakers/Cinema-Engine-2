@@ -86,12 +86,30 @@ class TitleState extends FlxState{
         if(!titleFinished){
             switch (Conductor.curBeat){
                 case 2:
-                    makeIntroText("I'm Gay");
+					makeIntroText("Made By");
                 case 4:
-                    makeIntroText("AAAAAAA");
-                case 6:
+					makeIntroText("Team CinemaMakers");
+				case 5:
+					removeIntroText();
+				case 6:
+					makeIntroText("Original By");
+				case 8:
+					makeIntroText("Terrible Developers IDK");
+				case 9:
                     removeIntroText();
-                case 8:
+				case 10:
+					makeIntroText("I");
+				case 12:
+					makeIntroText("FART");
+				case 13:
+					removeIntroText();
+				case 15:
+					makeIntroText("FRIDAY");
+				case 16:
+					makeIntroText("NIGHT");
+				case 17:
+					makeIntroText("FUCKING");
+				case 18:
                     skipIntro();
             }
         } else {
