@@ -13,6 +13,8 @@ class TitleState extends FlxState{
     var gf:FlxSprite;
     var titleEnter:FlxSprite;
 
+	var screenFlashMain:ScreenFlash;
+
     var selected:Bool = false;
 
     static var path:String = 'images/stateAssets/titleState/';
@@ -63,10 +65,14 @@ class TitleState extends FlxState{
             {
                 if(titleFinished && !selected){
                     selected = true;
+				screenFlashMain.play(0.15, true);
                     titleEnter.animation.play('pressed');
                     Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
+				// for some reason visual studio wants this indented back and it wont let me stop it
+				// preloading the main menu before the timer to stop stuttering
+				var mm:MainMenu = new MainMenu();
                     new FlxTimer().start(1, function(tmr:FlxTimer){
-                        FlxG.switchState(() -> new MainMenu());
+					FlxG.switchState(() -> mm);
                     });
                 } else if (!selected){
                     skipIntro();
@@ -102,6 +108,7 @@ class TitleState extends FlxState{
         add(titleBump);
         add(gf);
         add(titleEnter);
+		screenFlashMain = new ScreenFlash(0.15, true, false);
     }
 
     //someone get the fnf font and apply formatting pls
