@@ -68,51 +68,32 @@
     "strumlines": [
         {
             "character": "bf",
-            "strumNotes": [
-                {
-                    "input": "noteLeft",
-                    "angle": 270
-                },
-                {
-                    "input": "noteDown",
-                    "angle": 180
-                },
-                {
-                    "input": "noteUp",
-                    "angle": 0
-                },
-                {
-                    "input": "noteRight",
-                    "angle": 90
-                }
-            ],
             "notes": [
                 {
-                    "time": 1.5,
+                    "time": 13333.334,
+                    "type": 0,
+                    "value": 2
+                },
+                {
+                    "time": 13666.667,
+                    "type": 0,
+                    "value": 0
+                },
+                {
+                    "time": 13833.334,
                     "type": 0,
                     "value": 1
                 },
                 {
-                    "time": 1.75,
+                    "time": 14000.0,
                     "type": 0,
-                    "value": 3
+                    "value": 2
                 }
             ]
         },
         {
             "character": "dad",
-            "notes": [
-                {
-                    "time": 1.5,
-                    "type": 0,
-                    "value": 1
-                },
-                {
-                    "time": 1.75,
-                    "type": 0,
-                    "value": 3
-                }
-            ]
+            "notes": []
         }
     ],
     "events": [

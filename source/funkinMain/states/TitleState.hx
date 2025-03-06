@@ -17,6 +17,8 @@ class TitleState extends FlxState{
 
     var selected:Bool = false;
 
+	var bopDeb:Bool = false;
+
     static var path:String = 'images/stateAssets/titleState/';
 
     override public function create(){
@@ -100,18 +102,19 @@ class TitleState extends FlxState{
 					makeIntroText("FART");
 				case 13:
 					removeIntroText();
-				case 15:
 					makeIntroText("FRIDAY", true);
-				case 16:
+				case 14:
 					makeIntroText("NIGHT");
-				case 17:
+				case 15:
 					makeIntroText("FUCKING");
-				case 18:
+				case 16:
                     skipIntro();
             }
         } else {
             if(titleBump != null) titleBump.animation.play("bump", true);
-            if(gf != null) gf.animation.play("dance");   
+			if (!bopDeb)
+				gf.animation.play("dance", true);
+			bopDeb = !bopDeb;
         }
         trace("I DID IT");
     }
@@ -141,7 +144,8 @@ class TitleState extends FlxState{
         reposIntroText();
     }
     function removeIntroText(){
-		introText.destroy();
+		if (introText != null)
+			introText.destroy();
     }
 
     function reposIntroText(){

@@ -63,14 +63,13 @@ class PlayState extends FlxState
 		{
 			for (j in 0...song.strumlines[i].notes.length)
 			{
-				var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j].value,
-					song.strumlines[i].notes[j].type, 0, 1300, strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y,
-					song.strumlines[i].notes[j].time);
+				var note:Note = new Note(strumlines.members[i].members[j].angle, strumlines.members[i], song.strumlines[i].notes[j], 0, 0,
+					strumlines.members[i].members[j].scale.x, strumlines.members[i].members[j].scale.y);
 
 				chartNotes.push(note);
 
 				// loading all the graphics immedietally anyway for testing purposes before adding the calculated load
-				// loadNote(note);
+				loadNote(note);
 			}
 		}
 	}
@@ -99,21 +98,20 @@ class PlayState extends FlxState
 		}
 		if (notes.length != 0 && notes != null)
 		{
+			var scrollAmount:Float = 3 * song.metadata.scrollSpeed * (elapsed * 100);
 			for (i in 0...notes.length)
 			{
-				if (notes.members[i].time <= Conductor.TIME && !notes.members[i].moving)
+				var curNote:Note = notes.members[i];
+				if (curNote != null
+					&& curNote.noteData.time - (scrollAmount * (FlxG.height
+						- (curNote.strumline.members[curNote.noteData.value].y
+							+ curNote.strumline.members[curNote.noteData.value].height / 2))) <= Conductor.TIME)
 				{
-					notes.members[i].moving = true;
-					FlxTween.tween(notes.members[i], {y: -100}, 3 * 1 / song.metadata.scrollSpeed, {
-						onComplete: function(twn:FlxTween)
-						{
-							var noteToRemove:Note = notes.members[i];
-							notes.members.remove(noteToRemove);
-							chartNotes.remove(noteToRemove);
-							noteToRemove.destroy();
-							// clears note from memory
-						}
-					});
+					curNote.y -= scrollAmount;
+					if (curNote.y <= -1 * curNote.height)
+					{
+						notes.remove(curNote, true);
+					}
 				}
 			}
 		}
@@ -138,6 +136,7 @@ class PlayState extends FlxState
 	// calls note graphics and adds them
 	function loadNote(note:Note)
 	{
-		note.loadNoteGraphic(notes);
+		notes.add(note.loadNoteGraphic());
+		chartNotes.remove(note);
 	}
 }
