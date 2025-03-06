@@ -167,7 +167,7 @@ class PlayState extends FlxState
 	// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
 	function renderNotes()
 	{
-		if (!notesLoaded && song != null && strumlines != null && song.strumlines.length != 0)
+		if (!notesLoaded && notes != null && song != null && strumlines != null && song.strumlines.length != 0 && notes.length < 50)
 		{
 			// set to shut up syntax
 			var lowest:StrumlineData = song.strumlines[0];
@@ -175,6 +175,9 @@ class PlayState extends FlxState
 			var timeToCheck:Float = -1;
 			for (i in 0...song.strumlines.length)
 			{
+				if (song.strumlines[i].notes[amntLoaded[i]] == null)
+					return;
+				
 				if (timeToCheck == -1)
 				{
 					timeToCheck = song.strumlines[i].notes[amntLoaded[i]].time;
@@ -188,7 +191,7 @@ class PlayState extends FlxState
 					int = i;
 				}
 			}
-			if (notes != null && notes.length < 50 && song.strumlines[0] != null)
+			if (song.strumlines[0] != null)
 			{
 				loadNote(lowest, int, lowest.notes[amntLoaded[int]]);
 				amntLoaded[int]++;
