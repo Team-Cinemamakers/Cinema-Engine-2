@@ -18,13 +18,19 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 	var notes:FlxTypedGroup<Note>;
-	var chartNotes:Array<Note> = [];
+	// chart note array of array to allow support for more than 2 characters
+	var chartNotesArray:Array<Array<Note>> = [];
 
 	var fnd:FailedNoteData;
 
 	var notesLoaded:Bool = false;
 
 	public var song:SongData;
+
+	var loadAhead:Int = 50;
+	var totalNotes:Float = 0;
+
+	var amntLoaded:Array<Int> = [];
 
 	override public function create()
 	{
@@ -44,6 +50,11 @@ class PlayState extends FlxState
 		notes = new FlxTypedGroup<Note>();
 
 		song = Song.fromFile('dad-battle');
+		for (i in 0...song.strumlines.length)
+		{
+			totalNotes += song.strumlines[i].notes.length;
+		}
+		loadAhead = Std.int(totalNotes / 5);
 		
 		// Create strumlines
 		for (i in 0...song.metadata.strumlines.length)
@@ -57,6 +68,9 @@ class PlayState extends FlxState
 			strumLine.updateStrums();
 
 			strumlines.add(strumLine);
+			var na:Array<Note> = [];
+			chartNotesArray.push(na);
+			amntLoaded.push(0);
 		}
 
 		MusicHandler.loadInstAndVoices('dad-battle', song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
@@ -95,6 +109,7 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
+		// checks for notes that are rendered and if it is time to move them, if so, moves them up based on funky shit
 		if (notes.length != 0 && notes != null)
 		{
 			var scrollAmount:Float = 3 * song.metadata.scrollSpeed * (elapsed * 100);
@@ -108,27 +123,39 @@ class PlayState extends FlxState
 					curNote.y -= scrollAmount;
 					if (curNote.y <= -1 * curNote.height)
 					{
+						// for some reason this doesnt remove the notes from memory, i have no idea why
 						notes.remove(curNote, true);
+						curNote.destroy();
 					}
 				}
 			}
 		}
-		if (!notesLoaded && song != null && strumlines != null)
+		// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
+		if (!notesLoaded && song != null && strumlines != null && song.strumlines.length != 0)
 		{
-			notesLoaded = true;
-			for (i in 0...song.strumlines.length) // preloads all note info but not graphics
+			// set to shut up syntax
+			var lowest:StrumlineData = song.strumlines[0];
+			var int:Int = 0;
+			var timeToCheck:Float = -1;
+			for (i in 0...song.strumlines.length)
 			{
-				for (j in 0...song.strumlines[i].notes.length)
+				if (timeToCheck == -1)
 				{
-					var note:Note = new Note(strumlines.members[i].members[song.strumlines[i].notes[j].value].angle, strumlines.members[i],
-						song.strumlines[i].notes[j], 0, 0, strumlines.members[i].members[song.strumlines[i].notes[j].value].scale.x,
-						strumlines.members[i].members[song.strumlines[i].notes[j].value].scale.y);
-
-					chartNotes.push(note);
-
-					// loading all the graphics immedietally anyway for testing purposes before adding the calculated load
-					loadNote(note);
+					timeToCheck = song.strumlines[i].notes[amntLoaded[i]].time;
+					lowest = song.strumlines[i];
+					int = i;
 				}
+				else if (timeToCheck > song.strumlines[i].notes[amntLoaded[i]].time)
+				{
+					timeToCheck = song.strumlines[i].notes[amntLoaded[i]].time;
+					lowest = song.strumlines[i];
+					int = i;
+				}
+			}
+			if (notes != null && notes.length < 50 && song.strumlines[0] != null)
+			{
+				loadNote(lowest, int, lowest.notes[amntLoaded[int]]);
+				amntLoaded[int]++;
 			}
 		}
 	}
@@ -150,9 +177,11 @@ class PlayState extends FlxState
 		// char.animation.play(anim, true);
 	}
 	// calls note graphics and adds them
-	function loadNote(note:Note)
+	function loadNote(lowest:StrumlineData, i:Int, note:NoteData)
 	{
+		var note:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
+
 		notes.add(note.loadNoteGraphic());
-		chartNotes.remove(note);
 	}
 }
