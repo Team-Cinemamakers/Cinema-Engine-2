@@ -39,6 +39,7 @@ class MainMenu extends FlxState
 			switch (mainMenu.curItem)
 			{
 				case 0:
+					mainMenu.selectDestroy();
 					FlxG.switchState(() -> new PlayState());
 			}
 		}

@@ -47,4 +47,15 @@ class ScrollableMenu {
 
 		trace("scroll");
 	}
+	public function selectDestroy()
+	{
+		for (i in 0...menuItems.length)
+		{
+			for (j in 0...menuItems[i].length)
+			{
+				menuItems[i].members[j].destroy();
+			}
+			menuItems[i].destroy();
+		}
+	}
 }
