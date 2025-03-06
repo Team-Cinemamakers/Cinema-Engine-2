@@ -3,6 +3,7 @@ package funkinMain.data;
 import funkinMain.data.SongEvent.SongEventData;
 import funkinMain.objects.Strumline.StrumlineData;
 import funkinMain.objects.Strumline.StrumlineInfo;
+import funkinMain.states.PlayState;
 
 typedef SongDefaults =
 {
@@ -42,6 +43,6 @@ class Song
 	{
         var rawJson = JsonFunctions.loadJson("game/songs/" + song + "/" + song);
 		var casted:SongData = cast(Json.parse(rawJson));
-        return casted;
+		return casted;
     }
 }
