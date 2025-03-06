@@ -19,7 +19,7 @@
         },
         {
             "name": "singLEFT",
-            "prefix": "BF NOTE LEFT",
+            "prefix": "BF NOTE LEFT0",
             "offset": [
                 0,
                 0
@@ -29,7 +29,7 @@
         },
         {
             "name": "singDOWN",
-            "prefix": "BF NOTE DOWN",
+            "prefix": "BF NOTE DOWN0",
             "offset": [
                 0,
                 0
@@ -39,7 +39,7 @@
         },
         {
             "name": "singUP",
-            "prefix": "BF NOTE UP",
+            "prefix": "BF NOTE UP0",
             "offset": [
                 0,
                 0
@@ -49,7 +49,47 @@
         },
         {
             "name": "singRIGHT",
-            "prefix": "BF NOTE RIGHT",
+            "prefix": "BF NOTE RIGHT0",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "BF NOTE LEFT MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "BF NOTE DOWN MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "BF NOTE UP MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "BF NOTE RIGHT MISS",
             "offset": [
                 0,
                 0

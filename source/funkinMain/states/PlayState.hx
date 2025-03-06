@@ -21,7 +21,11 @@ class PlayState extends FlxState
 	// chart note array of array to allow support for more than 2 characters
 	var chartNotesArray:Array<Array<Note>> = [];
 
+	var debTimer:FlxTimer;
+
 	var fnd:FailedNoteData;
+
+	var bopDeb:Bool = false;
 
 	var notesLoaded:Bool = false;
 
@@ -48,6 +52,8 @@ class PlayState extends FlxState
 		strumlines = new FlxTypedGroup<Strumline>();
 
 		notes = new FlxTypedGroup<Note>();
+
+		debTimer = new FlxTimer();
 
 		song = Song.fromFile('dad-battle');
 		for (i in 0...song.strumlines.length)
@@ -78,7 +84,8 @@ class PlayState extends FlxState
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
 		bf = new Character('bf');
-		bf.animation.play("Idle", true);
+		if (!bopDeb)
+			bf.animation.play("Idle", true);
 		ZOrder.addToCharacters(bf);
 		// Load in strums
 
@@ -99,7 +106,7 @@ class PlayState extends FlxState
 		}
 		if (CoolInput.pressed("noteDown"))
 		{
-			activateNote(1, 'signDOWN');
+			activateNote(1, 'singDOWN');
 		}
 		if (CoolInput.pressed("noteUp"))
 		{
@@ -109,28 +116,57 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
-		// checks for notes that are rendered and if it is time to move them, if so, moves them up based on funky shit
-		if (notes.length != 0 && notes != null)
+		moveNotes(elapsed);
+		renderNotes();
+	}
+
+	function beatHit(e:BeatEvent)
+	{
+		if (Conductor.curBeat % 2 == 0)
+			bf.animation.play("Idle", true);
+	}
+
+	function activateNote(note:Int, animation:String)
+	{
+		for (i in 0...notes.length)
 		{
-			var scrollAmount:Float = 3 * song.metadata.scrollSpeed * (elapsed * 100);
-			for (i in 0...notes.length)
+			if (notes.members[i] != null && notes.members[i].strumline.playable && notes.members[i].moving && notes.members[i].noteData.value == note)
 			{
-				var curNote:Note = notes.members[i];
-				if (curNote != null
-					&& curNote.noteData.time - ((FlxG.height + curNote.height)
-						- (curNote.strumline.members[curNote.noteData.value].y) / scrollAmount) <= Conductor.TIME)
+				var currentNote:Note = notes.members[i];
+				var hitPoint:Float = currentNote.strumline.members[currentNote.noteData.value].y;
+				if (currentNote != null && currentNote.y >= hitPoint - 80 && currentNote.y <= hitPoint + 80)
 				{
-					curNote.y -= scrollAmount;
-					if (curNote.y <= -1 * curNote.height)
-					{
-						// for some reason this doesnt remove the notes from memory, i have no idea why
-						notes.remove(curNote, true);
-						curNote.destroy();
-					}
+					playAnimation(bf, animation);
+
+					notes.remove(currentNote, true);
+					currentNote.destroy();
 				}
 			}
 		}
-		// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
+	}
+
+	function playAnimation(char:Character, anim:String)
+	{
+		// letting you know for some reason bfs animations are all only his misses
+		bopDeb = true;
+		char.animation.play(anim, true);
+		debTimer.start(0.75, function(tmr:FlxTimer)
+		{
+			bopDeb = false;
+		});
+	}
+	// calls note graphics and adds them
+	function loadNote(lowest:StrumlineData, i:Int, note:NoteData)
+	{
+		var note:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
+
+		notes.add(note.loadNoteGraphic());
+	}
+
+	// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
+	function renderNotes()
+	{
 		if (!notesLoaded && song != null && strumlines != null && song.strumlines.length != 0)
 		{
 			// set to shut up syntax
@@ -160,28 +196,30 @@ class PlayState extends FlxState
 		}
 	}
 
-	function beatHit(e:BeatEvent)
+	// checks for notes that are rendered and if it is time to move them, if so, moves them up based on funky shit
+	function moveNotes(elapsed:Float)
 	{
-		if (Conductor.curBeat % 2 == 0)
-			bf.animation.play("Idle", true);
-	}
-
-	function activateNote(note:Int, animation:String)
-	{
-		playAnimation(bf, animation);
-	}
-
-	function playAnimation(char:Character, anim:String)
-	{
-		// letting you know for some reason bfs animations are all only his misses
-		// char.animation.play(anim, true);
-	}
-	// calls note graphics and adds them
-	function loadNote(lowest:StrumlineData, i:Int, note:NoteData)
-	{
-		var note:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
-			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
-
-		notes.add(note.loadNoteGraphic());
+		if (notes.length != 0 && notes != null)
+		{
+			var scrollAmount:Float = 3 * song.metadata.scrollSpeed * (elapsed * 100);
+			for (i in 0...notes.length)
+			{
+				var curNote:Note = notes.members[i];
+				if (curNote != null
+					&& curNote.noteData.time - ((FlxG.height + curNote.height)
+						- (curNote.strumline.members[curNote.noteData.value].y) / scrollAmount) <= Conductor.TIME)
+				{
+					if (!curNote.moving)
+						curNote.moving = true;
+					curNote.y -= scrollAmount;
+					if (curNote.y <= -1 * curNote.height)
+					{
+						// for some reason this doesnt remove the notes from memory, i have no idea why
+						notes.remove(curNote, true);
+						curNote.destroy();
+					}
+				}
+			}
+		}		
 	}
 }
