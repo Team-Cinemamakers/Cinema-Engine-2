@@ -1,13 +1,14 @@
 package funkinMain.states;
 
 import backend.events.*;
+import cpp.vm.Gc;
 import openfl.events.Event;
 import openfl.events.EventType;
 
 class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
-	static var mainMenu:ScrollableMenu;
+	var mainMenu:ScrollableMenu;
 	// DONT ADD SPACES IT WILL FUCKING NOT ADD THEM (I gotta make that work but later cuz im lazy)
 	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
 
@@ -39,7 +40,6 @@ class MainMenu extends FlxState
 			switch (mainMenu.curItem)
 			{
 				case 0:
-					mainMenu.selectDestroy();
 					FlxG.switchState(() -> new PlayState());
 			}
 		}
@@ -57,6 +57,10 @@ class MainMenu extends FlxState
 	override function destroy()
 	{
 		super.destroy();
+		mainMenu.selectDestroy();
+		// mainMenu.destroy();
+
+		Gc.run(true);
 
 		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
 	}

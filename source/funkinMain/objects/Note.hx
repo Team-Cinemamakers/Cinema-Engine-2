@@ -57,7 +57,6 @@ class Note extends FlxSprite {
 
 		y = FlxG.height + this.height / 2;
 
-		trace("note loaded");
 		return this;
 	}
 }

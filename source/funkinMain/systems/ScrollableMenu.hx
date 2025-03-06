@@ -1,9 +1,9 @@
 package funkinMain.systems;
 
 import funkinMain.objects.Alphabet;
-import openfl.net.Socket;
 
-class ScrollableMenu {
+class ScrollableMenu extends FlxBasic
+{
     public static var items:Array<String> = [];
 	public static var menuItems:Array<Alphabet> = [];
 	static var spacingMain:Float = 0;
@@ -13,6 +13,8 @@ class ScrollableMenu {
 
 	public function new(itemArray:Array<String>, height:Float, spacing:Float, y:Float)
 	{
+		super();
+		
 		items = itemArray;
 		spacingMain = spacing;
 		itemHeight = height;
@@ -49,6 +51,7 @@ class ScrollableMenu {
 	}
 	public function selectDestroy()
 	{
+		trace('select');
 		for (i in 0...menuItems.length)
 		{
 			for (j in 0...menuItems[i].length)
@@ -57,5 +60,12 @@ class ScrollableMenu {
 			}
 			menuItems[i].destroy();
 		}
+	}
+	public override function destroy()
+	{
+		super.destroy();
+
+		trace('destroyed');
+		// selectDestroy();
 	}
 }
