@@ -1,6 +1,7 @@
 package funkinMain.states;
 
 import backend.events.BeatEvent;
+import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
 import funkinMain.data.SongEvent;
 import funkinMain.objects.Character;
@@ -78,6 +79,7 @@ class PlayState extends FlxState
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notes, 2);
 		// Create notes
+		song.metadata.scrollSpeed *= 0.25;
 	}
 
 	override public function update(elapsed:Float)
@@ -120,7 +122,7 @@ class PlayState extends FlxState
 			{
 				var currentNote:Note = notes.members[i];
 				var hitPoint:Float = currentNote.strumline.members[currentNote.noteData.value].y;
-				if (currentNote != null && currentNote.y >= hitPoint - 80 && currentNote.y <= hitPoint + 80)
+				if (currentNote != null && isInRange(currentNote.y, hitPoint, 100))
 				{
 					noteHit(currentNote, animation);
 				}
@@ -185,15 +187,15 @@ class PlayState extends FlxState
 	{
 		if (notes.length == 0 || notes == null)
 			return;
-		var scrollAmount:Float = 3 * song.metadata.scrollSpeed * (elapsed * 100);
+		var scrollAmount:Float = (song.metadata.scrollSpeed * elapsed) * 1000;
 		for (i in 0...notes.length)
 		{
 			if (notes.members[i] == null)
 				return;
 			var curNote:Note = notes.members[i];
 			if (curNote.noteData.time
-				- ((FlxG.height + curNote.height)
-						- (curNote.strumline.members[curNote.noteData.value].y) / scrollAmount) <= Conductor.TIME)
+				- (((FlxG.height +
+					curNote.height / 2) - curNote.strumline.members[curNote.noteData.value].y) / ((song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
 				{
 					if (!curNote.moving)
 						curNote.moving = true;
@@ -218,5 +220,9 @@ class PlayState extends FlxState
 	{
 		notes.remove(note, true);
 		note.destroy();
+	}
+	function isInRange(val1:Float, val2:Float, range:Float):Bool
+	{
+		return (val1 >= val2 - range && val1 <= val2 + range);
 	}
 }

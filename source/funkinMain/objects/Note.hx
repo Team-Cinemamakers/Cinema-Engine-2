@@ -18,6 +18,8 @@ class Note extends FlxSprite {
 	var scaleX:Float;
 	var scaleY:Float;
 
+	public var startY:Float = 0;
+
 	public var moving:Bool = false;
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float)
@@ -56,6 +58,7 @@ class Note extends FlxSprite {
 		animation.play('note', true);
 
 		y = FlxG.height + this.height / 2;
+		this.startY = y;
 
 		return this;
 	}

@@ -2,7 +2,7 @@ package funkinMain.systems;
 
 import funkinMain.objects.Alphabet;
 
-class ScrollableMenu extends FlxBasic
+class ScrollableMenu
 {
     public static var items:Array<String> = [];
 	public static var menuItems:Array<Alphabet> = [];
@@ -13,7 +13,6 @@ class ScrollableMenu extends FlxBasic
 
 	public function new(itemArray:Array<String>, height:Float, spacing:Float, y:Float)
 	{
-		super();
 		
 		items = itemArray;
 		spacingMain = spacing;
@@ -60,12 +59,5 @@ class ScrollableMenu extends FlxBasic
 			}
 			menuItems[i].destroy();
 		}
-	}
-	public override function destroy()
-	{
-		super.destroy();
-
-		trace('destroyed');
-		// selectDestroy();
 	}
 }

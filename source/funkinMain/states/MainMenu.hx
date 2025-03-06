@@ -56,9 +56,8 @@ class MainMenu extends FlxState
 
 	override function destroy()
 	{
-		super.destroy();
 		mainMenu.selectDestroy();
-		// mainMenu.destroy();
+		super.destroy();
 
 		Gc.run(true);
 
