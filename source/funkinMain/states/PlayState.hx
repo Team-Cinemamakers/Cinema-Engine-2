@@ -1,6 +1,7 @@
 package funkinMain.states;
 
 import backend.events.BeatEvent;
+import cpp.vm.Gc;
 import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
 import funkinMain.data.SongEvent;
@@ -27,10 +28,13 @@ class PlayState extends FlxState
 	var totalNotes:Float = 0;
 
 	var amntLoaded:Array<Int> = [];
+	var preloadedNotes:Array<NoteData> = [];
 
 	override public function create()
 	{
 		super.create();
+		Gc.run(true);
+
 		ZOrder.flushSprites();
 		ZOrder.addScreenSpace(this);
 
@@ -80,6 +84,30 @@ class PlayState extends FlxState
 		ZOrder.addToUIBackground(notes, 2);
 		// Create notes
 		song.metadata.scrollSpeed *= 0.25;
+		// preloads notes which are within 3 beats of eachother on song load
+		for (i in 0...song.strumlines.length)
+		{
+			for (j in 0...song.strumlines[i].notes.length)
+			{
+				if (song.strumlines[i].notes[j] == null
+					|| song.strumlines[i].notes[j + 1] == null
+					|| song.strumlines[i].notes[j + 2] == null
+					|| preloadedNotes.contains(song.strumlines[i].notes[j + 2]))
+					return;
+
+				if (isInRange(song.strumlines[i].notes[j].time, song.strumlines[i].notes[j + 1].time, (60 / song.metadata.bpm) * 1000)
+					&& isInRange(song.strumlines[i].notes[j + 1].time, song.strumlines[i].notes[j + 2].time, (60 / song.metadata.bpm) * 1000))
+				{
+					preloadedNotes.push(song.strumlines[i].notes[j]);
+					preloadedNotes.push(song.strumlines[i].notes[j + 1]);
+					preloadedNotes.push(song.strumlines[i].notes[j + 2]);
+					loadNote(i, song.strumlines[i].notes[j], true);
+					loadNote(i, song.strumlines[i].notes[j + 1], true);
+					loadNote(i, song.strumlines[i].notes[j + 2], true);
+					trace("loaded group of 3");
+				}
+			}
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -141,12 +169,16 @@ class PlayState extends FlxState
 		});
 	}
 	// calls note graphics and adds them
-	function loadNote(lowest:StrumlineData, i:Int, note:NoteData)
+	function loadNote(i:Int, note:NoteData, bool:Bool = false)
 	{
+		if (!bool && preloadedNotes.contains(note))
+			return;
+
 		var note:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
 
 		notes.add(note.loadNoteGraphic());
+		trace("note loaded");
 	}
 
 	// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
@@ -178,7 +210,7 @@ class PlayState extends FlxState
 					int = i;
 				}
 		}
-		loadNote(lowest, int, lowest.notes[amntLoaded[int]]);
+		loadNote(int, lowest.notes[amntLoaded[int]]);
 		amntLoaded[int]++;
 	}
 
@@ -214,12 +246,14 @@ class PlayState extends FlxState
 
 		notes.remove(note, true);
 		note.destroy();
+		Gc.run(true);
 	}
 
 	function noteMiss(note:Note, animation:String)
 	{
 		notes.remove(note, true);
 		note.destroy();
+		Gc.run(true);
 	}
 	function isInRange(val1:Float, val2:Float, range:Float):Bool
 	{
