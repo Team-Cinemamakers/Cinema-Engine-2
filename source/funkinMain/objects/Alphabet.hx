@@ -2,12 +2,6 @@ package funkinMain.objects;
 
 class Alphabet extends FlxTypedGroup<FlxSprite>
 {
-	var totalLength:Float = 0;
-	var centered:Bool = true;
-	var desiredX:Float = 0;
-	var desiredY:Float = 0;
-
-	var heightMain:Float = 0;
 	var ogHeight:Float = 0;
 	//
 	var letterX:Array<Float> = [];
@@ -21,11 +15,6 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 
-		centered = xCentered;
-		desiredX = x;
-		desiredY = y;
-
-		heightMain = height;
 		this.onSelectScale = onSelectScale;
 
 		for (i in 0...text.length)
@@ -57,8 +46,8 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 				return;
 		}
 		ogHeight = this.members[0].height;
-		preloadPositioning(1);
-		preloadPositioning(onSelectScale);
+		preloadPositioning(1, xCentered, x, y, height);
+		preloadPositioning(onSelectScale, xCentered, x, y, height);
 		setScale(false);
 	}
 
@@ -90,8 +79,9 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 		}
 	}
 
-	function preloadPositioning(scale:Float = 1):Void
+	function preloadPositioning(scale:Float = 1, centered:Bool, desiredX:Float, desiredY:Float, heightMain:Float):Void
 	{
+		var totalLength:Float = 0;
 		var scaleVal:Float = (heightMain / ogHeight) * scale;
 		scaleMain = heightMain / ogHeight;
 		for (i in 0...this.length)

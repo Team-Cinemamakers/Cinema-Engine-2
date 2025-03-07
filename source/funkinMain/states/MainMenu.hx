@@ -40,6 +40,7 @@ class MainMenu extends FlxState
 			switch (mainMenu.curItem)
 			{
 				case 0:
+					mainMenu.selectDestroy();
 					FlxG.switchState(() -> new PlayState());
 			}
 		}
@@ -56,10 +57,11 @@ class MainMenu extends FlxState
 
 	override function destroy()
 	{
-		mainMenu.selectDestroy();
-		super.destroy();
-
 		Gc.run(true);
+
+		mainMenu = null;
+
+		super.destroy();
 
 		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
 	}

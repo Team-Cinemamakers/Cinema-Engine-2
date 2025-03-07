@@ -4,8 +4,8 @@ import funkinMain.objects.Alphabet;
 
 class ScrollableMenu
 {
-    public static var items:Array<String> = [];
-	public static var menuItems:Array<Alphabet> = [];
+	public var items:Array<String> = [];
+	public var menuItems:Array<Alphabet> = [];
 	static var spacingMain:Float = 0;
 	static var itemHeight:Float = 0;
 
@@ -50,14 +50,7 @@ class ScrollableMenu
 	}
 	public function selectDestroy()
 	{
-		trace('select');
-		for (i in 0...menuItems.length)
-		{
-			for (j in 0...menuItems[i].length)
-			{
-				menuItems[i].members[j].destroy();
-			}
-			menuItems[i].destroy();
-		}
+		items = null;
+		menuItems = null;
 	}
 }
