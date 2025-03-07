@@ -16,6 +16,8 @@ class Main extends Sprite
 
 		zOrder = new ZOrder(5);
 
+		FlxSprite.defaultAntialiasing = true;
+
 		// create that conductor!
 		conductor = new Conductor();
 
