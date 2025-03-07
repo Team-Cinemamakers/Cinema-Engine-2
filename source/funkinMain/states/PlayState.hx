@@ -112,18 +112,19 @@ class PlayState extends FlxState
 			bf.animation.play("Idle", true);
 	}
 
+	// someone fix input system pls
 	function activateNote(note:Int, animation:String)
 	{
 		for (i in 0...notes.length)
 		{
-			if (notes.members[i] != null && notes.members[i].strumline.playable && notes.members[i].moving && notes.members[i].noteData.value == note)
+			if (notes.members[i] == null || notes.members[i].strumline.playable == false || notes.members[i].noteData.value != note)
+				return;
+
+			if (notes.members[i].clickedOnRow())
 			{
-				var currentNote:Note = notes.members[i];
-				var hitPoint:Float = currentNote.strumline.members[currentNote.noteData.value].y;
-				if (currentNote != null && isInRange(currentNote.y, hitPoint, 100))
-				{
-					noteHit(currentNote, animation);
-				}
+				var ah:Note = notes.members[i];
+				notes.remove(ah);
+				ah.destroy();
 			}
 		}
 	}
@@ -198,9 +199,5 @@ class PlayState extends FlxState
 	{
 		notes.remove(note, true);
 		note.destroy();
-	}
-	function isInRange(val1:Float, val2:Float, range:Float):Bool
-	{
-		return (val1 >= val2 - range && val1 <= val2 + range);
 	}
 }

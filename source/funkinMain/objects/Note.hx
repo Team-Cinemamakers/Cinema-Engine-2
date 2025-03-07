@@ -75,4 +75,13 @@ class Note extends FlxSprite {
 			}
 		}
 	}
+	public function clickedOnRow():Bool
+	{
+		if (MathFunctions.isInRange(y, strumline.members[noteData.value].y, 100))
+		{
+			return true;
+		}
+		else
+			return false;
+	}
 }

@@ -21,7 +21,7 @@
             "name": "singLEFT",
             "prefix": "BF NOTE LEFT0",
             "offset": [
-                0,
+                -50,
                 0
             ],
             "fps": 24,
@@ -51,7 +51,7 @@
             "name": "singRIGHT",
             "prefix": "BF NOTE RIGHT0",
             "offset": [
-                0,
+                50,
                 0
             ],
             "fps": 24,
