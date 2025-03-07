@@ -21,9 +21,14 @@ class Note extends FlxSprite {
 	public var startY:Float = 0;
 
 	public var moving:Bool = false;
+	var offsetNote:Float;
+	var strumnote:StrumNote;
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float)
 	{
+		y = FlxG.height + this.height / 2;
+		this.startY = y;
+
         super(x, y);
 
 		centerOrigin();
@@ -38,6 +43,14 @@ class Note extends FlxSprite {
 
         this.strumline = strumline;
 
+		this.scale.set(scaleX, scaleY);
+		frames = Paths.sparrow('images/shared/notes');
+
+		animation.addByPrefix('note', 'noteUp', 24);
+		animation.play('note', true);
+
+		offsetNote = this.width / 4;
+		strumnote = strumline.members[noteData.value];
 		// y += strumline.members[noteData].y;
 	}
 
@@ -45,21 +58,21 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-		x = strumline.members[noteData.value].x + this.width / 4;
-	}
+		var scrollAmount:Float = (PlayState.song.metadata.scrollSpeed * elapsed) * 1000;
 
-	// we call this to load the note so theres not 1 zillion notes in memory when loading the chart
-	public function loadNoteGraphic():Note
-	{
-		this.scale.set(scaleX, scaleY);
-		frames = Paths.sparrow('images/shared/notes');
+		x = strumnote.x + offsetNote;
 
-		animation.addByPrefix('note', 'noteUp', 24);
-		animation.play('note', true);
-
-		y = FlxG.height + this.height / 2;
-		this.startY = y;
-
-		return this;
+		if (noteData.time
+			- (((FlxG.height +
+				this.height / 2) - strumline.members[noteData.value].y) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
+		{
+			if (!moving)
+				moving = true;
+			y -= scrollAmount;
+			if (y <= -1 * height)
+			{
+				this.destroy();
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ package funkinMain.states;
 
 import backend.events.*;
 import cpp.vm.Gc;
+import funkinMain.objects.Alphabet;
 import openfl.events.Event;
 import openfl.events.EventType;
 
@@ -9,6 +10,8 @@ class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
 	var mainMenu:ScrollableMenu;
+	var menuOptions:FlxTypedGroup<Alphabet>;
+	var curItem:Int = 0;
 	// DONT ADD SPACES IT WILL FUCKING NOT ADD THEM (I gotta make that work but later cuz im lazy)
 	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
 
@@ -25,7 +28,17 @@ class MainMenu extends FlxState
 		bg.screenCenter();
 		add(bg);
 
-		mainMenu = new ScrollableMenu(mainMenuOptions, 50, 20, 100);
+		menuOptions = new FlxTypedGroup<Alphabet>();
+		add(menuOptions);
+
+		for (i in 0...mainMenuOptions.length)
+		{
+			var yIterator:Float = (i * (100 + 75)) + 62.5;
+			var newAlphabet = new Alphabet(mainMenuOptions[i], i, 50, 0, yIterator, true);
+			menuOptions.add(newAlphabet);
+			add(newAlphabet);
+		}
+		menuOptions.members[0].setScale(true);
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 	}
@@ -37,20 +50,19 @@ class MainMenu extends FlxState
 		// gets input from custom input callouts (CoolInput) and checks if it is just pressed
 		if (CoolInput.pressed("accept"))
 		{
-			switch (mainMenu.curItem)
+			switch (curItem)
 			{
 				case 0:
-					mainMenu.selectDestroy();
 					FlxG.switchState(() -> new PlayState());
 			}
 		}
 		if (CoolInput.pressed("uiDown"))
 		{
-			mainMenu.scroll(-1);
+			scroll(-1);
 		}
 		else if (CoolInput.pressed("uiUp"))
 		{
-			mainMenu.scroll(1);
+			scroll(1);
 		}
 		Conductor.addConductorTime(elapsed, this);
 	}
@@ -58,16 +70,33 @@ class MainMenu extends FlxState
 	override function destroy()
 	{
 		Gc.run(true);
-
-		mainMenu = null;
+		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
 
 		super.destroy();
-
-		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
 	}
 
-	function beatHit(e:BeatEvent)
+	public function scroll(value:Int)
 	{
-		trace("I DID IT");
+		menuOptions.members[curItem].setScale(false);
+		value *= -1;
+		if (curItem + value >= menuOptions.length)
+		{
+			curItem = 0;
+		}
+		else if (curItem + value < 0)
+		{
+			curItem = menuOptions.length - 1;
+		}
+		else
+		{
+			curItem += value;
+		}
+		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
+
+		menuOptions.members[curItem].setScale(true);
+	}
+
+	function beatHit(e:Event) {
+		
 	}
 }

@@ -22,7 +22,7 @@ class PlayState extends FlxState
 
 	var notesLoaded:Bool = false;
 
-	public var song:SongData;
+	public static var song:SongData;
 
 	var loadAhead:Int = 50;
 	var totalNotes:Float = 0;
@@ -49,16 +49,10 @@ class PlayState extends FlxState
 		debTimer = new FlxTimer();
 
 		song = Song.fromFile('dad-battle');
-		for (i in 0...song.strumlines.length)
-		{
-			totalNotes += song.strumlines[i].notes.length;
-		}
-		loadAhead = Std.int(totalNotes / 5);
 		
 		// Create strumlines
 		for (i in 0...song.metadata.strumlines.length)
 		{
-			trace(song.metadata.strumlines[i]);
 			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].character,
 				song.metadata.strumlines[i].playable, song.metadata.strumlines[i].kerning, song.metadata.strumlines[i].position[0],
 				song.metadata.strumlines[i].position[1]);
@@ -81,16 +75,17 @@ class PlayState extends FlxState
 
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notes, 2);
-		// Create notes
+
 		song.metadata.scrollSpeed *= 0.25;
+		renderNotes();
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
 		Conductor.addConductorTime(elapsed, this);
-		// trace(MusicHandler.inst.time);
-		// trace(MusicHandler.voices.time);
+
 		if (CoolInput.pressed("noteLeft"))
 		{
 			activateNote(0, 'singLEFT');
@@ -107,8 +102,8 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
-		moveNotes(elapsed);
-		renderNotes();
+		// calls function to move the loaded notes (putting this in strumlines actually might be less optimized)
+		// why the FUCK did move notes in the playstate and not the fuckin note itself
 	}
 
 	function beatHit(e:BeatEvent)
@@ -146,44 +141,23 @@ class PlayState extends FlxState
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData)
 	{
-		var note:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
+		// optimized this by removing the need for stupid ass functions n shit
+		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
 
-		notes.add(note.loadNoteGraphic());
-		trace("note loaded");
+		notes.add(noteNew);
 	}
 
-	// function to check for soonest non-rendered note across all strums if there is space for a new note to load, and then renders it
+	// just pre-renders all notes cuz FUCK whatever I had before
 	function renderNotes()
 	{
-		if (notes.length >= loadAhead || notes == null || song == null || strumlines == null || song.strumlines.length == 0)
-			return;
-			// set to shut up syntax
-		if (song.strumlines[0] == null)
-			return;
-			var lowest:StrumlineData = song.strumlines[0];
-			var int:Int = 0;
-			var timeToCheck:Float = -1;
-			for (i in 0...song.strumlines.length)
+		for (i in 0...song.strumlines.length)
+		{
+			for (j in 0...song.strumlines[i].notes.length)
 			{
-				if (song.strumlines[i].notes[amntLoaded[i]] == null)
-					return;
-				
-				if (timeToCheck == -1)
-				{
-					timeToCheck = song.strumlines[i].notes[amntLoaded[i]].time;
-					lowest = song.strumlines[i];
-					int = i;
-				}
-				else if (timeToCheck > song.strumlines[i].notes[amntLoaded[i]].time)
-				{
-					timeToCheck = song.strumlines[i].notes[amntLoaded[i]].time;
-					lowest = song.strumlines[i];
-					int = i;
-				}
+				loadNote(i, song.strumlines[i].notes[j]);
+			}
 		}
-		loadNote(int, lowest.notes[amntLoaded[int]]);
-		amntLoaded[int]++;
 	}
 
 	// checks for notes that are rendered and if it is time to move them, if so, moves them up based on funky shit
@@ -191,6 +165,7 @@ class PlayState extends FlxState
 	{
 		if (notes.length == 0 || notes == null)
 			return;
+
 		var scrollAmount:Float = (song.metadata.scrollSpeed * elapsed) * 1000;
 		for (i in 0...notes.length)
 		{
@@ -205,8 +180,7 @@ class PlayState extends FlxState
 						curNote.moving = true;
 					curNote.y -= scrollAmount;
 					if (curNote.y <= -1 * curNote.height)
-					{
-						// for some reason this doesnt remove the notes from memory, i have no idea why
+				{
 					noteMiss(curNote, "");
 					}
 			}
