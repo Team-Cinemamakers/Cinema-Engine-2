@@ -5,6 +5,7 @@ import cpp.vm.Gc;
 import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
 import funkinMain.data.SongEvent;
+import funkinMain.data.Stage;
 import funkinMain.objects.Character;
 import funkinMain.objects.Note;
 import funkinMain.objects.Strumline;
@@ -28,12 +29,25 @@ class PlayState extends FlxState
 	var loadAhead:Int = 50;
 	var totalNotes:Float = 0;
 
+	var camGame:FlxCamera;
+	var camUI:FlxCamera;
+
 	var amntLoaded:Array<Int> = [];
+
+	var mainStage:Stage = new Stage();
 
 	override public function create()
 	{
 		super.create();
 		Gc.run(true);
+
+		camUI = new FlxCamera(0, 0, 1280, 720, 1);
+		camUI.bgColor = FlxColor.TRANSPARENT;
+
+		camGame = FlxG.camera;
+		FlxG.cameras.add(camUI, false);
+
+		camGame.zoom = 0.7;
 
 		ZOrder.flushSprites();
 		ZOrder.addScreenSpace(this);
@@ -61,21 +75,27 @@ class PlayState extends FlxState
 			strumLine.scale = song.metadata.strumlines[i].scale;
 			strumLine.updateStrums();
 
+			strumLine.cameras = [camUI];
+
 			strumlines.add(strumLine);
 			amntLoaded.push(0);
 		}
 
-		ZOrder.addToBackground(Stage, 0);
+		ZOrder.addToBackground(mainStage, 0);
 
-		stage = Stage.load(song.metadata.stage);
+		stage = mainStage.load(song.metadata.stage);
 		loadStage();
 
 		MusicHandler.loadInstAndVoices('dad-battle', song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
+
 		bf = new Character('bf');
 		bf.animation.play("Idle", true);
+		bf.x = stage.charData[0].position[0];
+		bf.y = stage.charData[0].position[1];
+		
 		ZOrder.addToCharacters(bf);
 		// Load in strums
 
@@ -153,6 +173,7 @@ class PlayState extends FlxState
 		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
 
+		noteNew.cameras = [camUI];
 		notes.add(noteNew);
 	}
 
@@ -209,15 +230,18 @@ class PlayState extends FlxState
 	}
 
 	function loadStage(){
-		for(i in 0...stage.objects){
+		for(i in 0...stage.objects.length){
 			var curStageObject:StageObject = stage.objects[i];
-			if(!Paths.exists(Paths.image(curStageObject.path))) return;
-			var stageSprite:FlxSprite = new FlxSprite().loadGraphic(Paths.image(curStageObject.path));
-			stageSprite.scale.set(curStageObject.scale[0], curStageObject.scale[1]);
-			stageSprite.updateHitbox();
-			stageSprite.x = curStageObject.position[0];
-			stageSprite.y = curStageObject.position[1];
-			Stage.add(stageSprite);
+			if(Paths.exists(Paths.image(curStageObject.path))){
+				var stageSprite:FlxSprite = new FlxSprite().loadGraphic(Paths.image(curStageObject.path));
+				stageSprite.scale.set(curStageObject.scale[0], curStageObject.scale[1]);
+				stageSprite.updateHitbox();
+				stageSprite.x = curStageObject.position[0];
+				stageSprite.y = curStageObject.position[1];
+				mainStage.add(stageSprite);
+			} else {
+				trace("Couldn't find asset at" + Paths.image(curStageObject.path));
+			}
 		}
 	}
 }

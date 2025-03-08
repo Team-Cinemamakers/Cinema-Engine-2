@@ -31,6 +31,9 @@ typedef AnimationData = {
 //boom, there goes your tower
 class Stage extends FlxSpriteGroup
 {
+    public function new(){
+        super(x,y);
+    }
 	public function load(stage:String):StageFile 
     {
         var json = JsonFunctions.loadJson("game/stages/" + stage);
