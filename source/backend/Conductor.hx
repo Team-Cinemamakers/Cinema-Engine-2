@@ -51,6 +51,9 @@ class Conductor
 	// resets conductor but does not stop or start it
 	public static function reset(bpmNew:Float = 120, runMusicPlay:Bool = false)
 	{
+		if (runMusicPlay)
+			MusicHandler.play();
+		
 		BPM = bpmNew;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
@@ -60,9 +63,6 @@ class Conductor
 		lastBeatTime = 0;
 		curStep = 0;
 		lastStepTime = 0;
-
-		if (runMusicPlay)
-			MusicHandler.play();
 	}
 
 	// stops conductor completely and resets all values
