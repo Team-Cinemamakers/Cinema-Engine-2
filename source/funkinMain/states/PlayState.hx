@@ -23,6 +23,7 @@ class PlayState extends FlxState
 	var notesLoaded:Bool = false;
 
 	public static var song:SongData;
+	public var stage:StageFile;
 
 	var loadAhead:Int = 50;
 	var totalNotes:Float = 0;
@@ -63,6 +64,11 @@ class PlayState extends FlxState
 			strumlines.add(strumLine);
 			amntLoaded.push(0);
 		}
+
+		ZOrder.addToBackground(Stage, 0);
+
+		stage = Stage.load(song.metadata.stage);
+		loadStage();
 
 		MusicHandler.loadInstAndVoices('dad-battle', song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
 
@@ -200,5 +206,18 @@ class PlayState extends FlxState
 	{
 		notes.remove(note, true);
 		note.destroy();
+	}
+
+	function loadStage(){
+		for(i in 0...stage.objects){
+			var curStageObject:StageObject = stage.objects[i];
+			if(!Paths.exists(Paths.image(curStageObject.path))) return;
+			var stageSprite:FlxSprite = new FlxSprite().loadGraphic(Paths.image(curStageObject.path));
+			stageSprite.scale.set(curStageObject.scale[0], curStageObject.scale[1]);
+			stageSprite.updateHitbox();
+			stageSprite.x = curStageObject.position[0];
+			stageSprite.y = curStageObject.position[1];
+			Stage.add(stageSprite);
+		}
 	}
 }
