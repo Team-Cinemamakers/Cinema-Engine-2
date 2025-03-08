@@ -1,0 +1,72 @@
+// Cinema Engine 2 Chart Format (Version 1)
+// Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
+{
+    "metadata": {
+        "name": "Dadbattle", // Song name as shown in-game
+        "bpm": 180, // Initial song BPM
+        "scrollSpeed": 3.2, // Initial song scroll speed
+        "songFiles": { // The vocal and instrumental track of the song
+            "inst": "Inst",
+            "vocals": "Vocals" // Should be left unspecified if using per-character voices (Not added to the format yet)
+        },
+        "stage": "stage", // Stage to use (specify filename),
+        "defaults": { // Default characters to start the song with
+            "player": "bf",
+            "opponent": "dad",
+            "speaker": "gf" // (Optional)
+        },
+        "strumlines": [ // Specifies individual strumlines for every (singing) character in the song
+            {
+                "character": "bf", // Owner of the strumline
+                "strumnotes": [ // List of strumnotes, mostly generated through presets in the chart editor
+                    {
+                        "angle": 270, // Rotation of the note
+                        "input": "noteLeft" // Corresponding input (animation)
+                    },
+                    {
+                        "angle": 180,
+                        "input": "noteDown"
+                    },
+                    {
+                        "angle": 0,
+                        "input": "noteUp"
+                    },
+                    {
+                        "angle": 90,
+                        "input": "noteRight"
+                    }
+                ],
+                "position": [700, 0], // Position of the strumline,
+                "scale": [0.75, 0.75], // Scale of the strumline,
+                "kerning": 125, // Distance between strumnotes
+                "playable": true, // Whether notes from this strumline are pressable or not,
+                "viewable": true // Whether this strumline is visible at all
+            }
+        ]
+    },
+    "events": [
+        {
+            "name": "Change Focus", // Event name,
+            "time": 1.33, // Time (in milliseconds) at which this event occurs
+            "values": [
+                {
+                    "name": "Focus On",
+                    "value": "player"
+                }
+            ]
+        }
+    ],
+    "strumlines": [ // The actual notes, per-strumline
+        {
+            "character": "bf", // Name of the character who owns this strumline, might be replaced in the future by just going through the metadata strumlines and seeing which character this would correspond to by index
+            "notes": [
+                {
+                    "time": 0, // Time (in milliseconds) at which the note is supposed to be hit
+                    "type": "", // (Optional) Custom note type. Should be left out if the note isn't special
+                    "value": 3, // Note value, corresponds to the index of a strumnote it represents (e.g. Index of 3 corresponds to the up note, which is what this note is)
+                    "length": 0 // (Optional) Length of a note (in steps), values above 0 make the note into a sustain. Should be left out if the note isn't a sustain
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+// Cinema Engine 2 Event Format (Version 1)
+// Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
+{
+    "name": "Change Focus", // Name of the event as shown in the chart editor
+    "description": "Changes the camera's focused character", // Description of the event as shown in the chart editor
+    "values": [ // Event values, supports up to an arbitrary amount
+        {
+            "name": "Focus On", // Name of the value 
+            "description": "Character to focus on", // Description of the value
+            "type": "character", // Type of the value, can be either generic (string, bool, float) or more specialized (character, color). No full list of supported values yet.
+            "optional": false // Is the value optional, if yes it doesn't have to be specified, but can be
+        }
+    ]
+}

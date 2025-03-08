@@ -1,0 +1,63 @@
+// Cinema Engine 2 Character Format (Version 1)
+// Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
+{
+    "name": "Boyfriend", // Name of the character
+    "icon": "bf", // Character's icon name
+    "offset": [ // Offset of the character, can also be seen as it's position, stage files should be used for the main positioning however
+        0,
+        0
+    ],
+    "fileName": "bf", // Filename of the character's spritesheet
+    "animations": [ // Animations
+        {
+            "name": "Idle", // Animation name
+            "prefix": "BF idle dance", // Animation prefix (in the spritesheet)
+            "offset": [ // Offset
+                -5,
+                0
+            ],
+            "fps": 24, // FPS
+            "loop": false // Whether it should loop
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "BF NOTE LEFT0",
+            "offset": [
+                5,
+                -6
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "BF NOTE DOWN0",
+            "offset": [
+                -20,
+                -51
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singUP",
+            "prefix": "BF NOTE UP0",
+            "offset": [
+                -46,
+                27
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "BF NOTE RIGHT0",
+            "offset": [
+                -48,
+                -7
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

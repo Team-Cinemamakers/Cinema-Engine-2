@@ -17,6 +17,7 @@ typedef StrumlineInfo =
 	var scale:Array<Float>; // scale of the strumline
 	var kerning:Float; // distance between notes
 	var playable:Bool; // whether this strumline should react to player input basically
+	var viewable:Bool; // whether this strumline is even visible
 }
 
 class Strumline extends FlxTypedGroup<StrumNote>
@@ -30,6 +31,7 @@ class Strumline extends FlxTypedGroup<StrumNote>
 	public var kerning:Float; // distance between notes
 	public var character:String;
 	public var playable:Bool;
+	public var viewable:Bool;
 
 	public var allowUpdateStrums:Bool = true;
 

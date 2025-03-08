@@ -1,0 +1,65 @@
+// Cinema Engine 2 Stage Format (Version 1)
+// Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
+{
+    "name": "Stage", // Name of the stage
+    "objects": [ // Objects in the stage (regular/animated sprites)
+        { // Example of a static sprite
+            "name": "bg", // Name of the object, by which it can be accessed later
+            "path": "images/stageAssets/stage/stageback", // Path to the sprite
+            "scale": [1, 1], // (Optional) Object's scale. Default: (1, 1)
+            "position": [-600, 0], // Object's position,
+            "flipX": false // (Optional) Whether the object should be flipped horizontally. Default: false (no)
+        },
+        { // Example of an animated sprite using sparrow sheets
+            "name": "santa",
+            "path": "images/stageAssets/stage/santa",
+            "scale": [1, 1],
+            "position": [-300, 0],
+            "flipX": false,
+
+            "animations": [
+                {
+                    "name": "idle", // Name of the animation
+                    "prefix": "santa idle in fear", // Prefix as stated in the XML,
+                    "indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], // (Optional) Indices to use,
+                    "framerate": 24, // FPS
+                    "loop": true // Whether the animation should loop or not
+                }
+            ],
+            "defaultAnimation": "idle" // (Optional) Default animation to play upon loading, if not specified doesn't play any
+        },
+        { // Example of an animated sprite using frame size
+            "name": "door",
+            "path": "images/stageAssets/stage/door",
+            "scale": [1, 1],
+            "position": [500, 300],
+            "flipX": false,
+
+            "frameSize": [150, 150], // Specifies the frame width and height,
+            "animations": [
+                {
+                    "name": "idle",
+                    "indices": [0, 1, 2],
+                    "framerate": 8,
+                    "loop": true
+                },
+                {
+                    "name": "open",
+                    "indices": [3, 4, 5, 6, 7, 8],
+                    "framerate": 8,
+                    "loop": false
+                }
+            ]
+        }
+    ],
+    "characters": [ // Characters and their positions
+        {
+            "name": "bf", // Character filename
+            "position": [770, 100] // Position in the stage
+        },
+        {
+            "name": "dad",
+            "position": [100, 100]
+        }
+    ]
+}
