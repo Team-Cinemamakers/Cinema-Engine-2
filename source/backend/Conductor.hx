@@ -53,7 +53,7 @@ class Conductor
 	{
 		if (runMusicPlay)
 			MusicHandler.play();
-		
+
 		BPM = bpmNew;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
@@ -108,7 +108,6 @@ class Conductor
 			stepHit(curStep);
 		}
 
-		
 		if (FlxG.sound.music != null && !MusicHandler.playing)
 		{
 			if (FlxG.sound.music.time > TIME + 50 || FlxG.sound.music.time < TIME - 50)

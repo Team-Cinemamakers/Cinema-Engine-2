@@ -34,7 +34,7 @@ class PlayState extends FlxState
 
 	var amntLoaded:Array<Int> = [];
 
-	var mainStage:Stage = new Stage();
+	var mainStage:Stage = new Stage("stage");
 
 	override public function create()
 	{
@@ -83,8 +83,8 @@ class PlayState extends FlxState
 
 		ZOrder.addToBackground(mainStage, 0);
 
-		stage = mainStage.load(song.metadata.stage);
-		loadStage();
+		mainStage.build();
+		ZOrder.addToBackground(mainStage);
 
 		MusicHandler.loadInstAndVoices('dad-battle', song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
 
@@ -93,8 +93,8 @@ class PlayState extends FlxState
 
 		bf = new Character('bf');
 		bf.animation.play("Idle", true);
-		bf.x = stage.charData[0].position[0];
-		bf.y = stage.charData[0].position[1];
+		bf.x = mainStage.data.characters[0].position[0];
+		bf.y = mainStage.data.characters[0].position[1];
 		
 		ZOrder.addToCharacters(bf);
 		// Load in strums
@@ -227,21 +227,5 @@ class PlayState extends FlxState
 	{
 		notes.remove(note, true);
 		note.destroy();
-	}
-
-	function loadStage(){
-		for(i in 0...stage.objects.length){
-			var curStageObject:StageObject = stage.objects[i];
-			if(Paths.exists(Paths.image(curStageObject.path))){
-				var stageSprite:FlxSprite = new FlxSprite().loadGraphic(Paths.image(curStageObject.path));
-				stageSprite.scale.set(curStageObject.scale[0], curStageObject.scale[1]);
-				stageSprite.updateHitbox();
-				stageSprite.x = curStageObject.position[0];
-				stageSprite.y = curStageObject.position[1];
-				mainStage.add(stageSprite);
-			} else {
-				trace("Couldn't find asset at" + Paths.image(curStageObject.path));
-			}
-		}
 	}
 }

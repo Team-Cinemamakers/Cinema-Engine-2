@@ -28,6 +28,7 @@ class Paths
 	{
 		return "assets/" + pth + ".ogg";
 	}
+
 	// gets a json
 	public static function json(pth:String):String
 	{

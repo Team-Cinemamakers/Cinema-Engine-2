@@ -40,7 +40,7 @@ class ZOrder{
     }
 
     //creating seperate functions for the additions to prevent needing an int or string argument (to simplify zOrdering for not just us but other developers)
-	public static function addToBackground(spr:FlxBasic, zOrder:Int)
+	public static function addToBackground(spr:FlxBasic, zOrder:Int = 0)
 	{
         if(backgroundLayer[zOrder] == null) return;
 
