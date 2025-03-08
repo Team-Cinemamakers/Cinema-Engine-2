@@ -64,7 +64,7 @@ class Note extends FlxSprite {
 
 		if (noteData.time
 			- (((FlxG.height +
-				this.height / 2) - strumline.members[noteData.value].y) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
+				this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
 		{
 			if (!moving)
 				moving = true;

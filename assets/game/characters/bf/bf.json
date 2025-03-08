@@ -11,7 +11,7 @@
             "name": "Idle",
             "prefix": "BF idle dance",
             "offset": [
-                0,
+                -5,
                 0
             ],
             "fps": 24,
@@ -21,8 +21,8 @@
             "name": "singLEFT",
             "prefix": "BF NOTE LEFT0",
             "offset": [
-                -50,
-                0
+                5,
+                -6
             ],
             "fps": 24,
             "loop": false
@@ -31,8 +31,8 @@
             "name": "singDOWN",
             "prefix": "BF NOTE DOWN0",
             "offset": [
-                0,
-                0
+                -20,
+                -51
             ],
             "fps": 24,
             "loop": false
@@ -41,8 +41,8 @@
             "name": "singUP",
             "prefix": "BF NOTE UP0",
             "offset": [
-                0,
-                0
+                -46,
+                27
             ],
             "fps": 24,
             "loop": false
@@ -51,8 +51,8 @@
             "name": "singRIGHT",
             "prefix": "BF NOTE RIGHT0",
             "offset": [
-                50,
-                0
+                -48,
+                -7
             ],
             "fps": 24,
             "loop": false

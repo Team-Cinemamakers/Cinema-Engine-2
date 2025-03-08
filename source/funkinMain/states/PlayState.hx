@@ -117,23 +117,24 @@ class PlayState extends FlxState
 	{
 		for (i in 0...notes.length)
 		{
-			if (notes.members[i] == null || notes.members[i].strumline.playable == false || notes.members[i].noteData.value != note)
-				return;
+			if (notes.members[i] != null && notes.members[i].strumline.playable != false && notes.members[i].noteData.value == note){
+				if (notes.members[i].clickedOnRow())
+					{
+						var ah:Note = notes.members[i];
+						notes.remove(ah);
+						ah.destroy();
 
-			if (notes.members[i].clickedOnRow())
-			{
-				var ah:Note = notes.members[i];
-				notes.remove(ah);
-				ah.destroy();
+						playAnimation(bf, animation, true);
+					}
 			}
 		}
 	}
 
-	function playAnimation(char:Character, anim:String)
+	function playAnimation(char:Character, anim:String, force:Bool = false)
 	{
 		// letting you know for some reason bfs animations are all only his misses
 		bopDeb = true;
-		char.animation.play(anim, true);
+		char.playAnimation(anim, force);
 		debTimer.start(1, function(tmr:FlxTimer)
 		{
 			bopDeb = false;
@@ -189,7 +190,7 @@ class PlayState extends FlxState
 	}
 	function noteHit(note:Note, animation:String)
 	{
-		playAnimation(bf, animation);
+		playAnimation(bf, animation, true);
 
 		notes.remove(note, true);
 		note.destroy();

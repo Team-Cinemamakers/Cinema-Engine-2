@@ -68,6 +68,7 @@ class TitleState extends FlxState{
 				screenFlashMain.play(0.15, true);
                     titleEnter.animation.play('pressed');
                     Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
+				FlxG.sound.play(Paths.audio('audio/sounds/confirmMenu'));
 				// for some reason visual studio wants this indented back and it wont let me stop it
 				// preloading the main menu before the timer to stop stuttering
                     new FlxTimer().start(1, function(tmr:FlxTimer){
