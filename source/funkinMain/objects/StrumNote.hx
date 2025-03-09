@@ -18,6 +18,8 @@ class StrumNote extends FlxSprite {
 
 	public var scrollDirection:String = "auto";
 
+	public var pressedOnNote:Bool = false;
+
 	public function new(input:String = "noteLeft", angle:Float = 0, character:String = "bf", playable:Bool = false, x:Float = 0, y:Float = 0)
 	{
         super(x, y);
@@ -38,10 +40,17 @@ class StrumNote extends FlxSprite {
 
 		if (CoolInput.held(input) && playable)
 		{
-			if (animation.curAnim.name != 'press')
-				playAnim('press');
+			if (!pressedOnNote) {
+				if (animation.curAnim.name != 'press')
+					playAnim('press');
+			} else {
+				if (animation.curAnim.name != 'confirm')
+					playAnim('confirm');
+			}
+			
         } else {
 			playAnim('static');
+			pressedOnNote = false;
 		}
 	}
 

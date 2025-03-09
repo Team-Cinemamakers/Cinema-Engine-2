@@ -146,6 +146,7 @@ class PlayState extends FlxState
 			if (notes.members[i] != null && notes.members[i].strumline.playable != false && notes.members[i].noteData.value == note){
 				if (notes.members[i].clickedOnRow())
 					{
+						notes.members[i].strumline.members[notes.members[i].noteData.value].pressedOnNote = true;
 						var ah:Note = notes.members[i];
 						notes.remove(ah);
 						ah.destroy();
