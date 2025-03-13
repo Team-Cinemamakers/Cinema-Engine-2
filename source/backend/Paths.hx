@@ -41,6 +41,10 @@ class Paths
 		return "assets/" + pth + ".xml";
 	}
 
+	public static function hscript(pth:String):String {
+		return "assets/" + pth + ".hxs";
+	}
+
 	/*
 		SPECIFIC ASSETS FUNCTIONS
 	 */
@@ -69,5 +73,10 @@ class Paths
 	public static function stateImage(pth:String):String
 	{
 		return image("images/stateAssets/" + pth);
+	}
+
+	// hscript scripts
+	public static function script(pth:String):String {
+		return hscript("game/scripts/"+ pth);
 	}
 }

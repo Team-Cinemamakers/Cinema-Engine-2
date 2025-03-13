@@ -1,0 +1,4 @@
+function main() {
+    var sprite:FlxSprite = new FlxSprite(50, 50).makeGraphic(500, 500, FlxColor["black"]);
+    ZOrder.addToUIForeground(sprite);
+}

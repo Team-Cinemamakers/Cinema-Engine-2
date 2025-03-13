@@ -104,6 +104,10 @@ class PlayState extends FlxState
 
 		song.metadata.scrollSpeed *= 0.25;
 		renderNotes();
+
+		var stageScript:HScript = new HScript("stageScript");
+        stageScript.load("test");
+        stageScript.run("main");
 	}
 
 	override public function update(elapsed:Float)

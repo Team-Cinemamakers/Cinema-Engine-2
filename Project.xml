@@ -39,6 +39,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="hxcpp" />
 	<haxelib name="flxanimate" />
+	<haxelib name="hscript-iris"/>
 
 	<!--<haxelib name="flixel-ui" />-->
 
@@ -47,6 +48,9 @@
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
+	<!--Detailed HScript traces and errors-->
+	<haxedef name="hscriptPos"/>
+	
 	<!--Remove the legacy health system-->
 	<haxedef name="FLX_NO_HEALTH" />
 	
