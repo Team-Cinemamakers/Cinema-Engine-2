@@ -10,6 +10,8 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var letterYScaled:Array<Float> = [];
 	var scaleMain:Float = 0;
 	var onSelectScale:Float = 0;
+
+	var sparrow:flixel.graphics.frames.FlxAtlasFrames = Paths.sparrow('images/shared/alphabet');
     //this isnt done
 	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2)
 	{
@@ -22,7 +24,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			var letter:FlxSprite = new FlxSprite();
 			var char = text.charAt(i);
 
-			letter.frames = Paths.sparrow('images/shared/alphabet');
+			letter.frames = sparrow;
 
 			if (StaticVariables.alphabetLowercase.contains(char))
 			{
