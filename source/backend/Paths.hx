@@ -7,6 +7,14 @@ import openfl.display.BitmapData;
 
 class Paths
 {
+	public static function readFolder(pth:String):Array<String> {
+		#if desktop
+		return sys.FileSystem.readDirectory(pth);
+		#else
+		trace("Not supported", "error");
+		return null;
+		#end
+	}
 	/*
 		GENERIC ASSET FUNCTIONS
 		To use specify the exact path from the "assets" folder (sans extension... hehe... sans)

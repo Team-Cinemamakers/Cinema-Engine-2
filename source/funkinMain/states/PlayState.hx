@@ -1,10 +1,8 @@
 package funkinMain.states;
 
+import backend.HScript.HScriptManager;
 import backend.events.BeatEvent;
-import cpp.vm.Gc;
-import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
-import funkinMain.data.SongEvent;
 import funkinMain.data.Stage;
 import funkinMain.objects.Character;
 import funkinMain.objects.Note;
@@ -12,6 +10,8 @@ import funkinMain.objects.Strumline;
 
 class PlayState extends FlxState
 {
+	public static var instance:PlayState;
+
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 	var notes:FlxTypedGroup<Note>;
@@ -39,7 +39,8 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		Gc.run(true);
+
+		instance = this;
 
 		camUI = new FlxCamera(0, 0, 1280, 720, 1);
 		camUI.bgColor = FlxColor.TRANSPARENT;
@@ -105,9 +106,9 @@ class PlayState extends FlxState
 		song.metadata.scrollSpeed *= 0.25;
 		renderNotes();
 
-		var stageScript:HScript = new HScript("stageScript");
-        stageScript.load("test");
-        stageScript.run("main");
+		for (h in Paths.readFolder("assets/scripts/global")) {
+			trace(h);
+		}
 	}
 
 	override public function update(elapsed:Float)

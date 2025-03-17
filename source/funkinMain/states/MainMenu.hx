@@ -1,10 +1,7 @@
 package funkinMain.states;
 
-import backend.events.*;
-import cpp.vm.Gc;
 import funkinMain.objects.Alphabet;
 import openfl.events.Event;
-import openfl.events.EventType;
 
 class MainMenu extends FlxState
 {
@@ -70,7 +67,6 @@ class MainMenu extends FlxState
 	override function destroy()
 	{
 		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
-		Gc.run(true);
 		menuOptions = null;
 
 		super.destroy();

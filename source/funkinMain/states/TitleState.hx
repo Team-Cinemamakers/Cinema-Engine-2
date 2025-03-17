@@ -1,7 +1,6 @@
 package funkinMain.states;
 
 import backend.events.*;
-import cpp.vm.Gc;
 
 class TitleState extends FlxState{
 
@@ -72,7 +71,6 @@ class TitleState extends FlxState{
 				// for some reason visual studio wants this indented back and it wont let me stop it
 				// preloading the main menu before the timer to stop stuttering
                     new FlxTimer().start(1, function(tmr:FlxTimer){
-					Gc.run(true);
 					FlxG.switchState(() -> new MainMenu());
                     });
                 } else if (!selected){
@@ -118,7 +116,6 @@ class TitleState extends FlxState{
 				gf.animation.play("dance", true);
 			bopDeb = !bopDeb;
         }
-        trace("I DID IT");
     }
 
     function skipIntro(){
