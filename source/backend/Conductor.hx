@@ -86,11 +86,11 @@ class Conductor
 	}
 
 	// ran on update in the flxstate, adds the elapsed time to the conductor and then checks if music needs sync, also calculates curBeat
-	public static function addConductorTime(elapsed:Float, state:FlxState)
+	public static function setConductorTime(timeNew:Float, state:FlxState)
 	{
 		if (doConductorTime)
 		{
-			TIME += elapsed * 1000;
+			TIME = timeNew;
 			// trace(TIME);
 		}
 
@@ -108,14 +108,9 @@ class Conductor
 			stepHit(curStep);
 		}
 
-		if (FlxG.sound.music != null && !MusicHandler.playing)
-		{
-			if (FlxG.sound.music.time > TIME + 50 || FlxG.sound.music.time < TIME - 50)
-				FlxG.sound.music.time = TIME;
-		}
 		else if (MusicHandler.inst != null && MusicHandler.voices != null && MusicHandler.playing)
 		{
-			MusicHandler.checkSync(TIME);
+			MusicHandler.checkSync();
 		}
 	}
 

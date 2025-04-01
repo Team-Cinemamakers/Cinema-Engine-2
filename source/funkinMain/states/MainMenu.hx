@@ -64,7 +64,9 @@ class MainMenu extends FlxState
 		{
 			scroll(1);
 		}
-		Conductor.addConductorTime(elapsed, this);
+		if(FlxG.sound.music != null){
+			Conductor.setConductorTime(FlxG.sound.music.time, this);
+		}
 	}
 
 	override function destroy()

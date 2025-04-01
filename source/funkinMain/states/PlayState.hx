@@ -110,7 +110,16 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		Conductor.addConductorTime(elapsed, this);
+		if(MusicHandler.inst != null && MusicHandler.voices != null){
+			if(MusicHandler.inst.length >= MusicHandler.voices.length){
+				Conductor.setConductorTime(MusicHandler.inst.time, this);
+			} else {
+				Conductor.setConductorTime(MusicHandler.voices.time, this);
+			}
+		} else if (MusicHandler.inst != null){
+			Conductor.setConductorTime(MusicHandler.inst.time, this);
+		}
+		
 
 		if (CoolInput.pressed("noteLeft"))
 		{

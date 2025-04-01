@@ -39,13 +39,13 @@ class MusicHandler{
             playing = false;
         }
 	}
-	// checks if the inst or voices are offsync and then fixes it, called each update on conductor
-	public static function checkSync(time:Float)
+	// checks if the voices is off sync from the inst
+	public static function checkSync()
 	{
-		if (time < inst.time - 50 || time > inst.time + 50 || time < voices.time - 50 || time > voices.time + 50)
-		{
-			inst.time = time;
-			voices.time = time;
-		}
+        if(voices != null){
+            if(!MathFunctions.isInRange(voices.time, inst.time, 50)){
+                voices.time = inst.time;
+            }
+        }
     }
 }

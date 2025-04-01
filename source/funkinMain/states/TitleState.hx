@@ -79,7 +79,9 @@ class TitleState extends FlxState{
                     skipIntro();
                 }
             }
-            Conductor.addConductorTime(elapsed, this);
+            if(FlxG.sound.music != null){
+                Conductor.setConductorTime(FlxG.sound.music.time, this);
+            }
         }
 
     function beatHit(e:BeatEvent)
