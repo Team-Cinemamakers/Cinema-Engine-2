@@ -116,6 +116,7 @@ class Note extends FlxSprite {
 			if(newy <= 0 - height){
 				moving = false;
 				this.destroy();
+				trace('destroyed');
 			} else if (newy >= FlxG.height + this.height/2){
 				y = FlxG.height + this.height/2;
 			}
