@@ -14,7 +14,7 @@ class PlayState extends FlxState
 {
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
-	var notes:FlxTypedGroup<Note>;
+	static var notes:FlxTypedGroup<Note>;
 	// chart note array of array to allow support for more than 2 characters
 
 	var debTimer:FlxTimer;
@@ -237,5 +237,17 @@ class PlayState extends FlxState
 	{
 		notes.remove(note, true);
 		note.destroy();
+	}
+
+	public static function resyncNotes(){
+		if (notes.length == 0 || notes == null)
+			return;
+		for(i in 0...notes.length){
+			if(notes.members[i] != null){
+				if(notes.members[i].moving){
+					notes.members[i].recalculateNoteScreenPosition(Conductor.TIME);
+				}
+			}
+		}
 	}
 }

@@ -45,6 +45,7 @@ class MusicHandler{
         if(voices != null){
             if(!MathFunctions.isInRange(voices.time, inst.time, 50)){
                 voices.time = inst.time;
+                PlayState.resyncNotes();
             }
         }
     }
