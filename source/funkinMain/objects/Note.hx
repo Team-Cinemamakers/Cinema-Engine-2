@@ -86,13 +86,19 @@ class Note extends FlxSprite {
 	}
 
 	public function recalculateNoteScreenPosition(TIME:Float){
-		if(moving){
+		if(moving || TIME >= noteMoveTime){
+			if(!moving) moving = true;
+
 			var noteMoveTime:Float = noteData.time
 				- (((FlxG.height +
 					this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
 			var noteOffsetTime:Float = TIME - noteMoveTime;
 
 			y = this.startY + ((PlayState.song.metadata.scrollSpeed * noteOffsetTime) * 1000);
+
+			if(y <= -1 * height){
+				this.destroy();
+			}
 		}
 	}
 }

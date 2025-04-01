@@ -244,9 +244,7 @@ class PlayState extends FlxState
 			return;
 		for(i in 0...notes.length){
 			if(notes.members[i] != null){
-				if(notes.members[i].moving){
-					notes.members[i].recalculateNoteScreenPosition(Conductor.TIME);
-				}
+				notes.members[i].recalculateNoteScreenPosition(Conductor.TIME);
 			}
 		}
 	}
