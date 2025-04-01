@@ -23,6 +23,9 @@ class Note extends FlxSprite {
 	public var moving:Bool = false;
 	var offsetNote:Float;
 	var strumnote:StrumNote;
+	var tempNoScroll:Bool = false;
+
+	var justMovedY:Float = 0;
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float)
 	{
@@ -58,6 +61,11 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
+		if (y <= 0 - height)
+			{
+				this.destroy();
+			}
+
 		var scrollAmount:Float = (PlayState.song.metadata.scrollSpeed * elapsed) * 1000;
 
 		x = strumnote.x + offsetNote;
@@ -66,13 +74,17 @@ class Note extends FlxSprite {
 			- (((FlxG.height +
 				this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
 		{
-			if (!moving)
+			if (!moving){
 				moving = true;
-			y -= scrollAmount;
-			if (y <= -1 * height)
-			{
-				this.destroy();
 			}
+			
+			y -= scrollAmount;
+
+			if (y <= 0 - height)
+				{
+					moving = false;
+					this.destroy();
+				}
 		}
 	}
 	public function clickedOnRow():Bool
@@ -85,20 +97,27 @@ class Note extends FlxSprite {
 			return false;
 	}
 
-	public function recalculateNoteScreenPosition(TIME:Float){
-		if(moving || TIME >= noteMoveTime){
-			if(!moving) moving = true;
+	public function recalculateNoteScreenPosition(){
+		var noteMoveTime:Float = noteData.time
+		- (((FlxG.height +
+			this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
 
-			var noteMoveTime:Float = noteData.time
-				- (((FlxG.height +
-					this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
-			var noteOffsetTime:Float = TIME - noteMoveTime;
+			if(noteMoveTime > Conductor.TIME) return;
 
-			y = this.startY + ((PlayState.song.metadata.scrollSpeed * noteOffsetTime) * 1000);
-
-			if(y <= -1 * height){
+			if(Conductor.TIME >= noteData.time){
 				this.destroy();
 			}
+
+			if(!moving) moving = true;
+
+			var newy:Float = ((Conductor.TIME - noteData.time)/-1000) * (PlayState.song.metadata.scrollSpeed * 1000) + (strumline.members[noteData.value].y - strumline.members[noteData.value].height/2);
+			this.y = newy;
+
+			if(newy <= 0 - height){
+				moving = false;
+				this.destroy();
+			} else if (newy >= FlxG.height + this.height/2){
+				y = FlxG.height + this.height/2;
+			}
 		}
-	}
 }

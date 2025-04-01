@@ -137,6 +137,10 @@ class PlayState extends FlxState
 		{
 			activateNote(3, 'singRIGHT');
 		}
+		if (CoolInput.pressed("skipTime"))
+			{
+				MusicHandler.skipTime(5000);
+			}
 		// calls function to move the loaded notes (putting this in strumlines actually might be less optimized)
 		// why the FUCK did move notes in the playstate and not the fuckin note itself
 	}
@@ -240,11 +244,9 @@ class PlayState extends FlxState
 	}
 
 	public static function resyncNotes(){
-		if (notes.length == 0 || notes == null)
-			return;
 		for(i in 0...notes.length){
 			if(notes.members[i] != null){
-				notes.members[i].recalculateNoteScreenPosition(Conductor.TIME);
+				notes.members[i].recalculateNoteScreenPosition();
 			}
 		}
 	}

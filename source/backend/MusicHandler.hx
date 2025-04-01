@@ -49,4 +49,12 @@ class MusicHandler{
             }
         }
     }
+
+    public static function skipTime(time:Float){
+        if(inst.length < inst.time + time || voices.length < voices.time + time) return;
+
+        inst.time += time;
+        voices.time = inst.time;
+        PlayState.resyncNotes();
+    }
 }

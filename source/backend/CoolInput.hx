@@ -25,6 +25,8 @@ class CoolInput
 				return (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A);
 			case "uiRight":
 				return (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D);
+			case "skipTime":
+				return (FlxG.keys.justPressed.BACKSLASH);
 		}
 		return false;
 	}
