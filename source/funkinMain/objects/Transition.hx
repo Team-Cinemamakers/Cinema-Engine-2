@@ -12,15 +12,15 @@ class Transition extends FlxSprite {
 
     }
 
-    public function play(direction:Int = 1){
+    public function play(direction:Int = 1, speed:Float = 0.5){
         if(direction == 1){
             y = 0;
             visible = true;
-            FlxTween.tween(this, {y: 0 - this.height}, 1.5);
+            FlxTween.tween(this, {y: 0 - this.height}, speed);
         } else if(direction == -1){
             y = 0 - this.height;
             visible = true;
-            FlxTween.tween(this, {y: 0}, 1.5);
+            FlxTween.tween(this, {y: 0}, speed);
         } else {
             return;
         }
