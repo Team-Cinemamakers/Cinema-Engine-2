@@ -55,6 +55,7 @@ class MusicHandler{
 
         inst.time += time;
         voices.time = inst.time;
+        Conductor.TIME = inst.time;
         PlayState.resyncNotes();
     }
 }

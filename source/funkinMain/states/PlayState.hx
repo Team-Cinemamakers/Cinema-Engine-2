@@ -144,6 +144,7 @@ class PlayState extends FlxState
 		if (CoolInput.pressed("skipTime"))
 			{
 				MusicHandler.skipTime(5000);
+				resyncNotes();
 			}
 		// calls function to move the loaded notes (putting this in strumlines actually might be less optimized)
 		// why the FUCK did move notes in the playstate and not the fuckin note itself
@@ -207,32 +208,6 @@ class PlayState extends FlxState
 		}
 	}
 
-	// checks for notes that are rendered and if it is time to move them, if so, moves them up based on funky shit
-	function moveNotes(elapsed:Float)
-	{
-		if (notes.length == 0 || notes == null)
-			return;
-
-		var scrollAmount:Float = (song.metadata.scrollSpeed * elapsed) * 1000;
-		for (i in 0...notes.length)
-		{
-			if (notes.members[i] == null)
-				return;
-			var curNote:Note = notes.members[i];
-			if (curNote.noteData.time
-				- (((FlxG.height +
-					curNote.height / 2) - curNote.strumline.members[curNote.noteData.value].y) / ((song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
-				{
-					if (!curNote.moving)
-						curNote.moving = true;
-					curNote.y -= scrollAmount;
-					if (curNote.y <= -1 * curNote.height)
-				{
-					noteMiss(curNote, "");
-					}
-			}
-		}		
-	}
 	function noteHit(note:Note, animation:String)
 	{
 		playAnimation(bf, animation, true);
