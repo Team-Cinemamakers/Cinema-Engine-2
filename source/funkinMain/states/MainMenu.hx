@@ -2,7 +2,6 @@ package funkinMain.states;
 
 import backend.events.*;
 import cpp.vm.Gc;
-import funkinMain.objects.Alphabet;
 import funkinMain.objects.Transition;
 import funkinMain.states.FreeplayState;
 import openfl.events.Event;
@@ -12,11 +11,12 @@ class MainMenu extends FlxState
 {
 	var bg:FlxSprite;
 	var mainMenu:ScrollableMenu;
-	var menuOptions:FlxTypedGroup<Alphabet>;
+	var menuOptions:FlxTypedGroup<FlxSprite>;
 	var curItem:Int = 0;
 	var transition:Transition;
 	// DONT ADD SPACES IT WILL FUCKING NOT ADD THEM (I gotta make that work but later cuz im lazy)
 	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
+	static var mainMenuSparrow:Array<String> = ['story_mode', 'freeplay', 'options', 'credits'];
 
 	override public function create()
 	{
@@ -31,17 +31,28 @@ class MainMenu extends FlxState
 		bg.screenCenter();
 		add(bg);
 
-		menuOptions = new FlxTypedGroup<Alphabet>();
+		menuOptions = new FlxTypedGroup<FlxSprite>();
 		add(menuOptions);
 
 		for (i in 0...mainMenuOptions.length)
 		{
 			var yIterator:Float = (i * (100 + 75)) + 62.5;
-			var newAlphabet = new Alphabet(mainMenuOptions[i], i, 50, 0, yIterator, true, true);
-			menuOptions.add(newAlphabet);
-			add(newAlphabet);
+			var item:FlxSprite = new FlxSprite();
+			item.frames = Paths.sparrow("images/stateAssets/mainMenu/menu_" + mainMenuSparrow[i]);
+			item.animation.addByPrefix('white', mainMenuSparrow[i] + ' basic', 8, true);
+			item.animation.addByPrefix('basic', mainMenuSparrow[i] + ' white', 8, true);
+			item.animation.play('basic', true);
+			item.scale.set(0.6, 0.6);
+			item.updateHitbox();
+			item.screenCenter(X);
+			item.y = yIterator;
+			menuOptions.add(item);
+			add(item);
 		}
-		menuOptions.members[0].setScale(true);
+
+		menuOptions.members[0].animation.play('white', true);
+		menuOptions.members[0].scale.set(1.1, 1.1);
+		menuOptions.members[0].updateHitbox();
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 		transition = new Transition();
@@ -91,7 +102,10 @@ class MainMenu extends FlxState
 
 	public function scroll(value:Int)
 	{
-		menuOptions.members[curItem].setScale(false);
+		menuOptions.members[curItem].animation.play('basic', true);
+		menuOptions.members[curItem].scale.set(0.6, 0.6);
+		menuOptions.members[curItem].updateHitbox();
+		menuOptions.members[curItem].screenCenter(X);
 		value *= -1;
 		if (curItem + value >= menuOptions.length)
 		{
@@ -107,7 +121,10 @@ class MainMenu extends FlxState
 		}
 		FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
 
-		menuOptions.members[curItem].setScale(true);
+		menuOptions.members[curItem].animation.play('white', true);
+		menuOptions.members[curItem].scale.set(1.1, 1.1);
+		menuOptions.members[curItem].updateHitbox();
+		menuOptions.members[curItem].screenCenter(X);
 	}
 
 	function beatHit(e:Event) {
