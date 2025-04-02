@@ -11,7 +11,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var scaleMain:Float = 0;
 	var onSelectScale:Float = 0;
     //this isnt done
-	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2)
+	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2, bold:Bool = false)
 	{
 		super();
 
@@ -24,10 +24,17 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 
 			letter.frames = Paths.sparrow('images/shared/alphabet');
 
-			if (StaticVariables.alphabetLowercase.contains(char))
+			if(bold){
+				var shit:String = char.toUpperCase() + " bold";
+				letter.animation.addByPrefix('bruh', shit, 8, true);
+				letter.animation.play('bruh', true);
+				//
+				var scaleVal:Float = height / letter.height;
+				this.add(letter);
+			} else if (StaticVariables.alphabetLowercase.contains(char))
 			{
 				var shit:String = char + " lowercase";
-				letter.animation.addByPrefix('bruh', shit, 0, false);
+				letter.animation.addByPrefix('bruh', shit, 8, true);
 				letter.animation.play('bruh', true);
 				//
 				var scaleVal:Float = height / letter.height;
@@ -36,7 +43,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			else if (StaticVariables.alphabetUppercase.contains(char))
 			{
 				var shit:String = char + " capital";
-				letter.animation.addByPrefix('bruh', shit, 0, false);
+				letter.animation.addByPrefix('bruh', shit, 8, true);
 				letter.animation.play('bruh', true);
 				//
 				var scaleVal:Float = height / letter.height;

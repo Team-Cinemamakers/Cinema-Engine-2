@@ -34,7 +34,7 @@ class MainMenu extends FlxState
 		for (i in 0...mainMenuOptions.length)
 		{
 			var yIterator:Float = (i * (100 + 75)) + 62.5;
-			var newAlphabet = new Alphabet(mainMenuOptions[i], i, 50, 0, yIterator, true);
+			var newAlphabet = new Alphabet(mainMenuOptions[i], i, 50, 0, yIterator, true, true);
 			menuOptions.add(newAlphabet);
 			add(newAlphabet);
 		}
