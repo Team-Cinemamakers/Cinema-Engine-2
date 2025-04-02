@@ -2,6 +2,7 @@ package funkinMain.states;
 
 import backend.events.*;
 import cpp.vm.Gc;
+import funkinMain.objects.Transition;
 
 class TitleState extends FlxState{
 
@@ -21,6 +22,8 @@ class TitleState extends FlxState{
 	var bopDeb:Bool = false;
 
     static var path:String = 'images/stateAssets/titleState/';
+
+    var transition:Transition;
 
     override public function create(){
         super.create();
@@ -52,6 +55,8 @@ class TitleState extends FlxState{
         titleEnter.x = 150;
         titleEnter.y = FlxG.height - titleEnter.height - 20;
 
+        transition = new Transition(false);
+
         Conductor.start(102);
 
         Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
@@ -65,15 +70,16 @@ class TitleState extends FlxState{
             {
                 if(titleFinished && !selected){
                     selected = true;
-				screenFlashMain.play(0.15, true);
+				    screenFlashMain.play(0.15, true);
                     titleEnter.animation.play('pressed');
                     Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
-				FlxG.sound.play(Paths.audio('audio/sounds/confirmMenu'));
-				// for some reason visual studio wants this indented back and it wont let me stop it
-				// preloading the main menu before the timer to stop stuttering
-                    new FlxTimer().start(1, function(tmr:FlxTimer){
-					Gc.run(true);
-					FlxG.switchState(() -> new MainMenu());
+				    FlxG.sound.play(Paths.audio('audio/sounds/confirmMenu'));
+				    // for some reason visual studio wants this indented back and it wont let me stop it
+				    // preloading the main menu before the timer to stop stuttering
+                    transition.play(-1);
+                    new FlxTimer().start(1.5, function(tmr:FlxTimer){
+					    Gc.run(true);
+					    FlxG.switchState(() -> new MainMenu());
                     });
                 } else if (!selected){
                     skipIntro();
@@ -104,14 +110,14 @@ class TitleState extends FlxState{
 					makeIntroText("I", true);
 				case 12:
 					makeIntroText("FART");
-				case 13:
+				case 14:
 					removeIntroText();
 					makeIntroText("FRIDAY", true);
-				case 14:
-					makeIntroText("NIGHT");
 				case 15:
-					makeIntroText("FUCKING");
+					makeIntroText("NIGHT");
 				case 16:
+					makeIntroText("FUCKING");
+				case 17:
                     skipIntro();
             }
         } else {
@@ -129,6 +135,7 @@ class TitleState extends FlxState{
         add(titleBump);
         add(gf);
         add(titleEnter);
+        add(transition);
 		screenFlashMain = new ScreenFlash(0.15, true, false);
     }
 

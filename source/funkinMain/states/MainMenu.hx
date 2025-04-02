@@ -3,6 +3,7 @@ package funkinMain.states;
 import backend.events.*;
 import cpp.vm.Gc;
 import funkinMain.objects.Alphabet;
+import funkinMain.objects.Transition;
 import openfl.events.Event;
 import openfl.events.EventType;
 
@@ -12,6 +13,7 @@ class MainMenu extends FlxState
 	var mainMenu:ScrollableMenu;
 	var menuOptions:FlxTypedGroup<Alphabet>;
 	var curItem:Int = 0;
+	var transition:Transition;
 	// DONT ADD SPACES IT WILL FUCKING NOT ADD THEM (I gotta make that work but later cuz im lazy)
 	static var mainMenuOptions:Array<String> = ['StoryMode', 'Freeplay', 'Options', 'Credits'];
 
@@ -41,6 +43,9 @@ class MainMenu extends FlxState
 		menuOptions.members[0].setScale(true);
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
+		transition = new Transition();
+		add(transition);
+		transition.play(1);
 	}
 
 	override public function update(elapsed:Float)
