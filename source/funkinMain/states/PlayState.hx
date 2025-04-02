@@ -36,6 +36,10 @@ class PlayState extends FlxState
 
 	var mainStage:Stage = new Stage("stage");
 
+	var baseZoom:Float = 0.85;
+	var cameraTween:FlxTween;
+	var lastCameraTween:Float = 0;
+
 	override public function create()
 	{
 		super.create();
@@ -47,7 +51,7 @@ class PlayState extends FlxState
 		camGame = FlxG.camera;
 		FlxG.cameras.add(camUI, false);
 
-		camGame.zoom = 0.7;
+		camGame.zoom = baseZoom;
 
 		ZOrder.flushSprites();
 		ZOrder.addScreenSpace(this);
@@ -104,10 +108,6 @@ class PlayState extends FlxState
 
 		song.metadata.scrollSpeed *= 0.25;
 		renderNotes();
-
-		new FlxTimer().start(15, function(tmr:FlxTimer){
-			resyncNotes();
-		});
 	}
 
 	override public function update(elapsed:Float)
@@ -124,6 +124,15 @@ class PlayState extends FlxState
 			Conductor.setConductorTime(MusicHandler.inst.time, this);
 		}
 		
+		if(camGame.zoom != baseZoom && !MathFunctions.isInRange(camGame.zoom, baseZoom, 0.01)){
+			if(camGame.zoom > baseZoom){
+				camGame.zoom -= 0.2 * elapsed;
+			} else {
+				camGame.zoom += 0.2 * elapsed;
+			} 
+		} else if(MathFunctions.isInRange(camGame.zoom, baseZoom, 0.005)){
+			camGame.zoom = baseZoom;
+		}
 
 		if (CoolInput.pressed("noteLeft"))
 		{
@@ -152,8 +161,13 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
-		if (Conductor.curBeat % 2 == 0 && !bopDeb)
-			bf.animation.play("Idle", true);
+		if (Conductor.curBeat % 2 == 0){
+			if(!bopDeb){
+				bf.animation.play("Idle", true);
+			}
+			lastCameraTween = camGame.zoom * 1.03;
+			camGame.zoom = lastCameraTween;
+		}
 	}
 
 	// someone fix input system pls
