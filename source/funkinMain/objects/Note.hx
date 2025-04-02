@@ -1,6 +1,7 @@
 package funkinMain.objects;
 
 import backend.Paths;
+import flixel.graphics.frames.FlxAtlasFrames;
 import funkinMain.objects.Strumline;
 
 typedef NoteData =
@@ -28,7 +29,7 @@ class Note extends FlxSprite {
 	var justMovedY:Float = 0;
 	var justRecalc:Bool = false;
 
-	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float)
+	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames)
 	{
 		y = FlxG.height + this.height / 2;
 		this.startY = y;
@@ -48,7 +49,7 @@ class Note extends FlxSprite {
         this.strumline = strumline;
 
 		this.scale.set(scaleX, scaleY);
-		frames = Paths.sparrow('images/shared/notes');
+		this.frames = frames;
 
 		animation.addByPrefix('note', 'noteUp', 24);
 		animation.play('note', true);

@@ -1,6 +1,7 @@
 package funkinMain.states;
 
 import backend.events.BeatEvent;
+import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
 import funkinMain.data.SongEvent;
@@ -40,11 +41,14 @@ class PlayState extends FlxState
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
 	var paused:Bool = false;
+	var noteSparrow:FlxAtlasFrames;
 
 	override public function create()
 	{
 		super.create();
 		Gc.run(true);
+
+		noteSparrow = Paths.sparrow('images/shared/notes');
 
 		camUI = new FlxCamera(0, 0, 1280, 720, 1);
 		camUI.bgColor = FlxColor.TRANSPARENT;
@@ -216,7 +220,7 @@ class PlayState extends FlxState
 	{
 		// optimized this by removing the need for stupid ass functions n shit
 		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
-			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y);
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow);
 
 		noteNew.cameras = [camUI];
 		notes.add(noteNew);
