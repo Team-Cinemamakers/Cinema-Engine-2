@@ -78,7 +78,7 @@ class Note extends FlxSprite {
 				moving = true;
 			}
 			
-			y -= scrollAmount;
+			//y -= scrollAmount;
 
 			if (y <= 0 - height)
 				{
@@ -102,16 +102,21 @@ class Note extends FlxSprite {
 		- (((FlxG.height +
 			this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
 
-			if(noteMoveTime > Conductor.TIME) return;
-
 			if(Conductor.TIME >= noteData.time){
 				this.destroy();
 			}
 
 			if(!moving) moving = true;
 
-			var newy:Float = ((Conductor.TIME - noteData.time)/-1000) * (PlayState.song.metadata.scrollSpeed * 1000) + (strumline.members[noteData.value].y - strumline.members[noteData.value].height/2);
+			var coolOffset:Float = Conductor.TIME - noteMoveTime;
+			var distance:Float = ((FlxG.height + this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2);
+			var cool:Float = coolOffset/(((FlxG.height + this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
+			var newDistance:Float = cool * distance;
+		
+			var newy:Float = (FlxG.height + this.height / 2) - newDistance;
+			//var newy:Float = (strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) - (((PlayState.song.metadata.scrollSpeed) * 1000) * (noteData.time - Conductor.TIME)/-1000);
 			this.y = newy;
+			trace(newy);
 
 			if(newy <= 0 - height){
 				moving = false;

@@ -120,7 +120,6 @@ class TitleState extends FlxState{
 				gf.animation.play("dance", true);
 			bopDeb = !bopDeb;
         }
-        trace("I DID IT");
     }
 
     function skipIntro(){
