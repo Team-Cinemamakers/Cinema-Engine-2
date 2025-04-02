@@ -1,0 +1,21 @@
+{
+    "sections": [
+        {
+            "name": "bg",
+            "songs": [
+                {
+                    "name": "dad-battle",
+                    "displayName": "Dad Battle",
+                    "difficulties": ["normal"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "poopy-fart",
+                    "displayName": "Poopy Fart",
+                    "difficulties": ["normal"],
+                    "icon": "Daddy-Dearest"
+                }
+            ]
+        }
+    ]
+}

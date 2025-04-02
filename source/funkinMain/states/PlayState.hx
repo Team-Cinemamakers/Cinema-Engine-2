@@ -1,7 +1,6 @@
 package funkinMain.states;
 
 import backend.events.BeatEvent;
-import cpp.vm.Gc;
 import flixel.system.debug.stats.Stats;
 import funkinMain.data.Song;
 import funkinMain.data.SongEvent;
@@ -15,6 +14,7 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 	static var notes:FlxTypedGroup<Note>;
+	public static var loadedSong:String;
 	// chart note array of array to allow support for more than 2 characters
 
 	var debTimer:FlxTimer;
@@ -39,6 +39,7 @@ class PlayState extends FlxState
 	var baseZoom:Float = 0.85;
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
+	var paused:Bool = false;
 
 	override public function create()
 	{
@@ -67,7 +68,12 @@ class PlayState extends FlxState
 
 		debTimer = new FlxTimer();
 
-		song = Song.fromFile('dad-battle');
+		if(loadedSong != null){
+			song = Song.fromFile(loadedSong);
+		} else {
+			trace('Could not find song Defaulting to Dad Battle');
+			song = Song.fromFile('dad-battle');
+		}
 		
 		// Create strumlines
 		for (i in 0...song.metadata.strumlines.length)
@@ -151,9 +157,15 @@ class PlayState extends FlxState
 			activateNote(3, 'singRIGHT');
 		}
 		if (CoolInput.pressed("skipTime"))
+		{
+			MusicHandler.skipTime(5000);
+			resyncNotes();
+		}
+		if (CoolInput.pressed("accept"))
 			{
-				MusicHandler.skipTime(5000);
-				resyncNotes();
+				if(!paused){
+					//will pause
+				}
 			}
 		// calls function to move the loaded notes (putting this in strumlines actually might be less optimized)
 		// why the FUCK did move notes in the playstate and not the fuckin note itself

@@ -1,4 +1,5 @@
 import backend.*;
+import cpp.vm.Gc;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;

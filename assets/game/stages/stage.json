@@ -23,11 +23,11 @@
     "characters": [
         {
             "name": "bf",
-            "position": [770, 100]
+            "position": [770, 500]
         },
         {
             "name": "dad",
-            "position": [100, 100]
+            "position": [100, 500]
         }
     ]
 }

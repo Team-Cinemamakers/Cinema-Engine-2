@@ -4,6 +4,7 @@ import backend.events.*;
 import cpp.vm.Gc;
 import funkinMain.objects.Alphabet;
 import funkinMain.objects.Transition;
+import funkinMain.states.FreeplayState;
 import openfl.events.Event;
 import openfl.events.EventType;
 
@@ -59,6 +60,11 @@ class MainMenu extends FlxState
 			{
 				case 0:
 					FlxG.switchState(() -> new PlayState());
+				case 1:
+					transition.play(-1);
+					new FlxTimer().start(1.5, function(tmr:FlxTimer){
+						FlxG.switchState(() -> new FreeplayState());
+					});
 			}
 		}
 		if (CoolInput.pressed("uiDown"))
