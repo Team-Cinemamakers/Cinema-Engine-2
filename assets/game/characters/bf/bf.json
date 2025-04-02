@@ -14,6 +14,10 @@
                 -5,
                 0
             ],
+            "camOffset": [
+                0,
+                0
+            ],
             "fps": 24,
             "loop": false
         },
@@ -23,6 +27,10 @@
             "offset": [
                 5,
                 -6
+            ],
+            "camOffset": [
+                -50,
+                0
             ],
             "fps": 24,
             "loop": false
@@ -34,6 +42,10 @@
                 -20,
                 -51
             ],
+            "camOffset": [
+                0,
+                50
+            ],
             "fps": 24,
             "loop": false
         },
@@ -43,6 +55,10 @@
             "offset": [
                 -46,
                 27
+            ],
+            "camOffset": [
+                0,
+                -50
             ],
             "fps": 24,
             "loop": false
@@ -54,6 +70,10 @@
                 -48,
                 -7
             ],
+            "camOffset": [
+                50,
+                0
+            ],
             "fps": 24,
             "loop": false
         },
@@ -61,6 +81,10 @@
             "name": "singLEFTmiss",
             "prefix": "BF NOTE LEFT MISS",
             "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
                 0,
                 0
             ],
@@ -74,6 +98,10 @@
                 0,
                 0
             ],
+            "camOffset": [
+                0,
+                0
+            ],
             "fps": 24,
             "loop": false
         },
@@ -81,6 +109,11 @@
             "name": "singUPmiss",
             "prefix": "BF NOTE UP MISS",
             "offset": [
+                0,
+                0
+
+            ],
+            "camOffset": [
                 0,
                 0
             ],
@@ -91,6 +124,10 @@
             "name": "singRIGHTmiss",
             "prefix": "BF NOTE RIGHT MISS",
             "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
                 0,
                 0
             ],

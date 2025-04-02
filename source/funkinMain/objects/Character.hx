@@ -15,18 +15,21 @@ typedef CharacterAnimation =
 	var prefix:Null<String>;
 	var indices:Null<Array<Int>>;
 	var offset:Array<Int>;
+	var camOffset:Array<Int>;
 	var fps:Int;
 	var loop:Bool;
 }
 
 class Character extends FlxSprite
 {
-	var name:String; // display name of the character in places like chart editor
-	var icon:String;
-	var positionOffset:FlxPoint; // same as offset in the char file // slippery slope -x8c8r
-	var fileName:String;
+	public var name:String; // display name of the character in places like chart editor
+	public var icon:String;
+	public var positionOffset:FlxPoint; // same as offset in the char file // slippery slope -x8c8r
+	public var cameraOffset:FlxPoint;
+	public var fileName:String;
 	// var animations:Map<String, CharacterAnimation>;
-	var animOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
+	public var animOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
+	public var animCamOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
 
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
@@ -46,15 +49,11 @@ class Character extends FlxSprite
 		for (anim in file.animations)
 		{
 			if (anim.indices != null)
-			{
 				animation.addByIndices(anim.name, anim.prefix, anim.indices, "", anim.fps, anim.loop);
-				animOffsets[anim.name] = new FlxPoint(anim.offset[0], anim.offset[1]);
-			}
 			else
-			{
 				animation.addByPrefix(anim.name, anim.prefix, anim.fps, anim.loop);
-				animOffsets[anim.name] = new FlxPoint(anim.offset[0], anim.offset[1]);
-			}
+			animOffsets[anim.name] = new FlxPoint(anim.offset[0], anim.offset[1]);
+			animCamOffsets[anim.name] = new FlxPoint(anim.camOffset[0], anim.camOffset[1]);
 		}
 
 		trace(animation.getNameList());

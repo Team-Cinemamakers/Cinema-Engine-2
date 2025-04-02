@@ -210,6 +210,7 @@ class PlayState extends FlxState
 		// letting you know for some reason bfs animations are all only his misses
 		bopDeb = true;
 		char.playAnimation(anim, force);
+		camGame.setPosition(char.animCamOffsets[anim].x, char.animCamOffsets[anim].y);
 		debTimer.start(1, function(tmr:FlxTimer)
 		{
 			bopDeb = false;
