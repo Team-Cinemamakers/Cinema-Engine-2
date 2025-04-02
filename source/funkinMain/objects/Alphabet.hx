@@ -1,5 +1,7 @@
 package funkinMain.objects;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+
 class Alphabet extends FlxTypedGroup<FlxSprite>
 {
 	var ogHeight:Float = 0;
@@ -10,6 +12,8 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var letterYScaled:Array<Float> = [];
 	var scaleMain:Float = 0;
 	var onSelectScale:Float = 0;
+
+	private var alphabetSparrow:FlxAtlasFrames = Paths.sparrow('images/shared/alphabet');
     //this isnt done
 	public function new(text:String, index:Int, height:Float, x:Float = 0, y:Float = 0, xCentered:Bool = true, onSelectScale:Float = 1.2, bold:Bool = false)
 	{
@@ -22,7 +26,7 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 			var letter:FlxSprite = new FlxSprite();
 			var char = text.charAt(i);
 
-			letter.frames = Paths.sparrow('images/shared/alphabet');
+			letter.frames = alphabetSparrow;
 
 			if(bold){
 				var shit:String = char.toUpperCase() + " bold";

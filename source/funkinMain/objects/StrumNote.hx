@@ -2,6 +2,7 @@ package funkinMain.objects;
 
 import backend.CoolInput;
 import backend.Paths;
+import flixel.graphics.frames.FlxAtlasFrames;
 
 typedef StrumNoteData =
 {
@@ -20,6 +21,8 @@ class StrumNote extends FlxSprite {
 
 	public var pressedOnNote:Bool = false;
 
+	private var noteSparrow:FlxAtlasFrames = Paths.sparrow('images/shared/noteStrumline');
+
 	public function new(input:String = "noteLeft", angle:Float = 0, character:String = "bf", playable:Bool = false, x:Float = 0, y:Float = 0)
 	{
         super(x, y);
@@ -28,7 +31,7 @@ class StrumNote extends FlxSprite {
 		this.character = character;
 		this.playable = playable;
 
-        frames = Paths.sparrow('images/shared/noteStrumline');
+        frames = noteSparrow;
 
         animation.addByPrefix("static", "staticUp", 24, false);
         animation.addByPrefix("press", "pressUp", 24, false);
