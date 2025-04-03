@@ -1,8 +1,9 @@
 package funkinMain.objects;
 
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.group.FlxSpriteGroup;
 
-class Alphabet extends FlxTypedGroup<FlxSprite>
+class Alphabet extends FlxSpriteGroup
 {
 	var ogHeight:Float = 0;
 	//
@@ -12,6 +13,8 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 	var letterYScaled:Array<Float> = [];
 	var scaleMain:Float = 0;
 	var onSelectScale:Float = 0;
+
+	public var yOffset:Float = 0;
 
 	private var alphabetSparrow:FlxAtlasFrames = Paths.sparrow('images/shared/alphabet');
     //this isnt done
@@ -74,7 +77,9 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 				this.members[i].updateHitbox();
 
 				this.members[i].x = letterXScaled[i];
-				this.members[i].y = letterYScaled[i];
+				FlxTween.tween(this.members[i], {y: letterYScaled[i] - yOffset}, 0.3, {
+					ease: FlxEase.quadInOut
+				});
 			}
 		}
 		else
@@ -85,7 +90,9 @@ class Alphabet extends FlxTypedGroup<FlxSprite>
 				this.members[i].updateHitbox();
 
 				this.members[i].x = letterX[i];
-				this.members[i].y = letterY[i];
+				FlxTween.tween(this.members[i], {y: letterY[i] - yOffset}, 0.3, {
+					ease: FlxEase.quadInOut
+				});
 			}
 		}
 	}

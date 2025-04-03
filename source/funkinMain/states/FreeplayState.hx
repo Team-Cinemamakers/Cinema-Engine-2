@@ -9,6 +9,7 @@ import funkinMain.states.PlayState;
 class FreeplayState extends FlxState{
     var bg:FlxSprite;
     var freeplayOptions:FlxTypedGroup<Alphabet>;
+    var freeplayYValues:Array<Float> = [];
     var transition:Transition;
 
     var freeplay:FreeplayData;
@@ -41,6 +42,7 @@ class FreeplayState extends FlxState{
                 var newAlphabet = new Alphabet(freeplay.sections[i].songs[k].name, k * (i + 1), 50, 0, yIterator, true, true);
                 freeplayOptions.add(newAlphabet);
                 add(newAlphabet);
+                freeplayYValues.push(yIterator - newAlphabet.height);
                 freeplayLength++;
             }
 		}
@@ -79,7 +81,8 @@ class FreeplayState extends FlxState{
 
     	public function scroll(value:Int)
             {
-                freeplayOptions.members[curItem].setScale(false);
+                var ogCurItem:Int = curItem;
+                
                 value *= -1;
                 if (curItem + value >= freeplayLength)
                 {
@@ -93,8 +96,16 @@ class FreeplayState extends FlxState{
                 {
                     curItem += value;
                 }
-                FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
+
+                for(i in 0...freeplayOptions.length){
+                    freeplayOptions.members[i].yOffset = 175 * curItem;
+                    if(i != curItem){
+                        freeplayOptions.members[i].setScale(false);
+                    }
+                }
         
                 freeplayOptions.members[curItem].setScale(true);
+
+                FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
             }
 }

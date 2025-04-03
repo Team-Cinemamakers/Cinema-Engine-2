@@ -42,6 +42,9 @@ class PlayState extends FlxState
 	var lastCameraTween:Float = 0;
 	var paused:Bool = false;
 	var noteSparrow:FlxAtlasFrames;
+
+	var camCenterX:Float = -2750;
+	var camCenterY:Float = -1750;
 	
 	var hitNoteDebounce:Array<Bool> = [];
 
@@ -59,6 +62,12 @@ class PlayState extends FlxState
 		FlxG.cameras.add(camUI, false);
 
 		camGame.zoom = baseZoom;
+
+		camGame.width = 4500;
+		camGame.height = 3500;
+
+		camGame.x = camCenterX;
+		camGame.y = camCenterY;
 
 		ZOrder.flushSprites();
 		ZOrder.addScreenSpace(this);
@@ -114,8 +123,6 @@ class PlayState extends FlxState
 			trace('Could not find song Defaulting to Dad Battle');
 			MusicHandler.loadInstAndVoices('dad-battle', 'Inst', 'Vocals');
 		}
-
-		
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
@@ -199,6 +206,9 @@ class PlayState extends FlxState
 		if (Conductor.curBeat % 2 == 0){
 			if(!bopDeb){
 				bf.animation.play("Idle", true);
+				FlxTween.tween(camGame, {x: camCenterX + bf.animCamOffsets["Idle"].x, y: camCenterY + bf.animCamOffsets["Idle"].y}, 0.25, {
+					ease: FlxEase.quadInOut
+				});
 			}
 			lastCameraTween = camGame.zoom * 1.03;
 			camGame.zoom = lastCameraTween;
@@ -231,7 +241,9 @@ class PlayState extends FlxState
 		// letting you know for some reason bfs animations are all only his misses
 		bopDeb = true;
 		char.playAnimation(anim, force);
-		camGame.setPosition(char.animCamOffsets[anim].x, char.animCamOffsets[anim].y);
+		FlxTween.tween(camGame, {x: camCenterX + char.animCamOffsets[anim].x, y: camCenterY + char.animCamOffsets[anim].y}, 0.25, {
+			ease: FlxEase.quadInOut
+		});
 		debTimer.start(1, function(tmr:FlxTimer)
 		{
 			bopDeb = false;
