@@ -42,6 +42,8 @@ class PlayState extends FlxState
 	var lastCameraTween:Float = 0;
 	var paused:Bool = false;
 	var noteSparrow:FlxAtlasFrames;
+	
+	var hitNoteDebounce:Array<Bool> = [];
 
 	override public function create()
 	{
@@ -93,6 +95,12 @@ class PlayState extends FlxState
 
 			strumlines.add(strumLine);
 			amntLoaded.push(0);
+
+			for(k in 0...strumLine.strumNotes.length){
+				if(strumLine.playable){
+					hitNoteDebounce.push(false);
+				}
+			}
 		}
 
 		ZOrder.addToBackground(mainStage, 0);
@@ -100,7 +108,14 @@ class PlayState extends FlxState
 		mainStage.build();
 		ZOrder.addToBackground(mainStage);
 
-		MusicHandler.loadInstAndVoices('dad-battle', song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
+		if(loadedSong != null){
+			MusicHandler.loadInstAndVoices(loadedSong, song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
+		} else {
+			trace('Could not find song Defaulting to Dad Battle');
+			MusicHandler.loadInstAndVoices('dad-battle', 'Inst', 'Vocals');
+		}
+
+		
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
@@ -146,18 +161,22 @@ class PlayState extends FlxState
 
 		if (CoolInput.pressed("noteLeft"))
 		{
+			hitNoteDebounce[0] = false;
 			activateNote(0, 'singLEFT');
 		}
 		if (CoolInput.pressed("noteDown"))
 		{
+			hitNoteDebounce[1] = false;
 			activateNote(1, 'singDOWN');
 		}
 		if (CoolInput.pressed("noteUp"))
 		{
+			hitNoteDebounce[2] = false;
 			activateNote(2, 'singUP');
 		}
 		if (CoolInput.pressed("noteRight"))
 		{
+			hitNoteDebounce[3] = false;
 			activateNote(3, 'singRIGHT');
 		}
 		if (CoolInput.pressed("skipTime"))
@@ -192,8 +211,10 @@ class PlayState extends FlxState
 		for (i in 0...notes.length)
 		{
 			if (notes.members[i] != null && notes.members[i].strumline.playable != false && notes.members[i].noteData.value == note){
-				if (notes.members[i].clickedOnRow())
+				if (notes.members[i].clickedOnRow() && !hitNoteDebounce[notes.members[i].noteData.value])
 					{
+						hitNoteDebounce[notes.members[i].noteData.value] = true;
+
 						notes.members[i].strumline.members[notes.members[i].noteData.value].pressedOnNote = true;
 						var ah:Note = notes.members[i];
 						notes.remove(ah);

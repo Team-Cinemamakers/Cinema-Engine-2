@@ -1,0 +1,121 @@
+{
+    "sections": [
+        {
+            "name": "Gameplay",
+            "isNoteSection": true,
+            "schemas": [
+                {
+                    "name": "Four Note",
+                    "noteCount": 4,
+                    "controls": [
+                        {
+                            "index": 0,
+                            "keys": [
+                                "D",
+                                "LEFT"
+                            ]
+                        },
+                        {
+                            "index": 1,
+                            "keys": [
+                                "F",
+                                "DOWN"
+                            ]
+                        },
+                        {
+                            "index": 2,
+                            "keys": [
+                                "J",
+                                "UP"
+                            ]
+                        },
+                        {
+                            "index": 3,
+                            "keys": [
+                                "K",
+                                "RIGHT"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Six Note",
+                    "noteCount": 6,
+                    "controls": [
+                        {
+                            "index": 0,
+                            "keys": [
+                                "A"
+                            ]
+                        },
+                        {
+                            "index": 1,
+                            "keys": [
+                                "D"
+                            ]
+                        },
+                        {
+                            "index": 2,
+                            "keys": [
+                                "F"
+                            ]
+                        },
+                        {
+                            "index": 3,
+                            "keys": [
+                                "J"
+                            ]
+                        },
+                        {
+                            "index": 4,
+                            "keys": [
+                                "K"
+                            ]
+                        },
+                        {
+                            "index": 5,
+                            "keys": [
+                                "L"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "UI Controls",
+            "isNoteSection": false,
+            "schemas": [
+                {
+                    "name": "Main",
+                    "controls": [
+                        {
+                            "action": "uiLEFT",
+                            "keys": [
+                                "LEFT"
+                            ]
+                        },
+                        {
+                            "action": "uiDOWN",
+                            "keys": [
+                                "DOWN"
+                            ]
+                        },
+                        {
+                            "action": "uiUP",
+                            "keys": [
+                                "UP"
+                            ]
+                        },
+                        {
+                            "action": "uiRIGHT",
+                            "keys": [
+                                "RIGHT"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

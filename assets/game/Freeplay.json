@@ -4,9 +4,21 @@
             "name": "bg",
             "songs": [
                 {
+                    "name": "bopeebo",
+                    "displayName": "Bopeebo",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "fresh",
+                    "displayName": "Fresh",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
                     "name": "dad-battle",
                     "displayName": "Dad Battle",
-                    "difficulties": ["normal"],
+                    "difficulties": ["hard"],
                     "icon": "Daddy-Dearest"
                 },
                 {
