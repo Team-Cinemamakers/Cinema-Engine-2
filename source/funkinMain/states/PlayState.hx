@@ -43,8 +43,8 @@ class PlayState extends FlxState
 	var paused:Bool = false;
 	var noteSparrow:FlxAtlasFrames;
 
-	var camCenterX:Float = -2750;
-	var camCenterY:Float = -1750;
+	var camCenterX:Float = -170;
+	var camCenterY:Float = -150;
 	
 	var hitNoteDebounce:Array<Bool> = [];
 
