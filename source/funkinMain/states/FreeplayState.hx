@@ -4,7 +4,7 @@ import funkinMain.data.Freeplay.FreeplayData;
 import funkinMain.data.Freeplay;
 import funkinMain.objects.Alphabet;
 import funkinMain.objects.Transition;
-import funkinMain.states.PlayState;
+import funkinMain.states.MainMenu;
 
 class FreeplayState extends FlxState{
     var bg:FlxSprite;
@@ -19,7 +19,8 @@ class FreeplayState extends FlxState{
 
     override public function create(){
         super.create();
-        Gc.run(true);
+
+        AssetTracking.destroyUnusedAssets(true);
 
         if (!FlxG.sound.music.playing || FlxG.sound.music == null)
             {
@@ -73,6 +74,11 @@ class FreeplayState extends FlxState{
             else if (CoolInput.pressed("uiUp"))
             {
                 scroll(1);
+            } else if (CoolInput.pressed("return")){
+                transition.play(-1);
+                new FlxTimer().start(1.5, function(tmr:FlxTimer){
+                    FlxG.switchState(() -> new MainMenu());
+                });
             }
             if(FlxG.sound.music != null){
                 Conductor.setConductorTime(FlxG.sound.music.time, this);

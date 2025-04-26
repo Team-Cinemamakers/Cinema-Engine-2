@@ -3,7 +3,8 @@ package funkinMain.states;
 import backend.events.*;
 import cpp.vm.Gc;
 import funkinMain.objects.Transition;
-import funkinMain.states.FreeplayState;
+import funkinMain.states.*;
+import funkinMain.states.TitleState;
 import openfl.events.Event;
 import openfl.events.EventType;
 
@@ -21,6 +22,8 @@ class MainMenu extends FlxState
 	override public function create()
 	{
 		super.create();
+
+		AssetTracking.destroyUnusedAssets(true);
 
 		if (!FlxG.sound.music.playing || FlxG.sound.music == null)
 		{
@@ -85,6 +88,11 @@ class MainMenu extends FlxState
 		else if (CoolInput.pressed("uiUp"))
 		{
 			scroll(1);
+		} else if (CoolInput.pressed("return")){
+			transition.play(-1);
+			new FlxTimer().start(1.5, function(tmr:FlxTimer){
+				FlxG.switchState(() -> new TitleState());
+			});
 		}
 		if(FlxG.sound.music != null){
 			Conductor.setConductorTime(FlxG.sound.music.time, this);

@@ -27,6 +27,8 @@ class CoolInput
 				return (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D);
 			case "skipTime":
 				return (FlxG.keys.justPressed.BACKSLASH);
+			case "return":
+				return (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.BACKSPACE);
 		}
 		return false;
 	}

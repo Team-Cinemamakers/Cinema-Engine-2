@@ -15,7 +15,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import funkinMain.states.*;
+import funkinMain.states.PlayState;
 import funkinMain.systems.*;
 import haxe.Json;
 import openfl.events.EventDispatcher;

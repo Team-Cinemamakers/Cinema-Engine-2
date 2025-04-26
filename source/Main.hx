@@ -3,6 +3,7 @@ package;
 import flixel.FlxGame;
 import flixel.addons.display.FlxZoomCamera;
 import flixel.system.debug.console.ConsoleHistory;
+import funkinMain.states.TitleState;
 import openfl.display.Sprite;
 
 class Main extends Sprite

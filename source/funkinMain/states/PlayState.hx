@@ -51,7 +51,8 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		super.create();
-		Gc.run(true);
+
+		AssetTracking.destroyUnusedAssets(true);
 
 		noteSparrow = Paths.sparrow('images/shared/notes');
 

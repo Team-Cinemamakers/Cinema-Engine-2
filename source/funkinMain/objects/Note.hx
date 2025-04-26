@@ -29,6 +29,8 @@ class Note extends FlxSprite {
 	var justMovedY:Float = 0;
 	var justRecalc:Bool = false;
 
+	var framesAdded:Bool = false;
+
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames)
 	{
 		y = FlxG.height + this.height / 2;
@@ -50,9 +52,6 @@ class Note extends FlxSprite {
 
 		this.scale.set(scaleX, scaleY);
 		this.frames = frames;
-
-		animation.addByPrefix('note', 'noteUp', 24);
-		animation.play('note', true);
 
 		offsetNote = this.width / 4;
 		strumnote = strumline.members[noteData.value];
@@ -81,6 +80,7 @@ class Note extends FlxSprite {
 				this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
 		{
 			if (!moving){
+				addFrames();
 				moving = true;
 			}
 			
@@ -90,9 +90,21 @@ class Note extends FlxSprite {
 				{
 					moving = false;
 					this.destroy();
+					Gc.run(true);
 				}
 		}
 	}
+
+	public function addFrames():Void{
+		if(framesAdded) return;
+		framesAdded = true;
+		
+		this.frames = frames;
+
+		animation.addByPrefix('note', 'noteUp', 24);
+		animation.play('note', true);
+	}
+
 	public function clickedOnRow():Bool
 	{
 		if (MathFunctions.isInRange(y, strumline.members[noteData.value].y, 100))
@@ -137,7 +149,6 @@ class Note extends FlxSprite {
 			} else if (newy >= FlxG.height + (this.height/2)){
 				y = FlxG.height + (this.height/2);
 			} else {
-				trace(newy);
 			}
 		}
 }

@@ -3,6 +3,7 @@ package funkinMain.states;
 import backend.events.*;
 import cpp.vm.Gc;
 import funkinMain.objects.Transition;
+import funkinMain.states.MainMenu;
 
 class TitleState extends FlxState{
 
@@ -78,7 +79,6 @@ class TitleState extends FlxState{
 				    // preloading the main menu before the timer to stop stuttering
                     transition.play(-1);
                     new FlxTimer().start(1.5, function(tmr:FlxTimer){
-					    Gc.run(true);
 					    FlxG.switchState(() -> new MainMenu());
                     });
                 } else if (!selected){
