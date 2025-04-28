@@ -14,7 +14,13 @@ class PlayState extends FlxState
 {
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
-	static var notes:FlxTypedGroup<Note>;
+
+	//implemented notes map and unloaded notes map for better optimization
+	public static var notes:Map<Int, Note>;
+	public static var unloadedNotes:Map<Int, Note>;
+
+	public static var notesTypedGroup:FlxTypedGroup<Note>;
+
 	public static var loadedSong:String;
 	// chart note array of array to allow support for more than 2 characters
 
@@ -80,7 +86,7 @@ class PlayState extends FlxState
 
 		strumlines = new FlxTypedGroup<Strumline>();
 
-		notes = new FlxTypedGroup<Note>();
+		notesTypedGroup = new FlxTypedGroup<Note>();
 
 		debTimer = new FlxTimer();
 
@@ -137,7 +143,7 @@ class PlayState extends FlxState
 		// Load in strums
 
 		ZOrder.addToUIBackground(strumlines, 1);
-		ZOrder.addToUIBackground(notes, 2);
+		ZOrder.addToUIBackground(notesTypedGroup, 2);
 
 		song.metadata.scrollSpeed *= 0.25;
 		renderNotes();
@@ -216,19 +222,19 @@ class PlayState extends FlxState
 		}
 	}
 
-	// someone fix input system pls
-	function activateNote(note:Int, animation:String)
+	// i fixed ts
+	function activateNote(noteVal:Int, animation:String)
 	{
-		for (i in 0...notes.length)
+		for (note in notes)
 		{
-			if (notes.members[i] != null && notes.members[i].strumline.playable != false && notes.members[i].noteData.value == note){
-				if (notes.members[i].clickedOnRow() && !hitNoteDebounce[notes.members[i].noteData.value])
+			if (note != null && note.strumline.playable != false && note.noteData.value == noteVal){
+				if (note.clickedOnRow() && !hitNoteDebounce[note.noteData.value])
 					{
-						hitNoteDebounce[notes.members[i].noteData.value] = true;
+						hitNoteDebounce[note.noteData.value] = true;
 
-						notes.members[i].strumline.members[notes.members[i].noteData.value].pressedOnNote = true;
-						var ah:Note = notes.members[i];
-						notes.remove(ah);
+						note.strumline.members[note.noteData.value].pressedOnNote = true;
+						var ah:Note = note;
+						notes.remove(note.iterator);
 						ah.destroy();
 
 						playAnimation(bf, animation, true);
@@ -255,10 +261,10 @@ class PlayState extends FlxState
 	{
 		// optimized this by removing the need for stupid ass functions n shit
 		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
-			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow);
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, i);
 
 		noteNew.cameras = [camUI];
-		notes.add(noteNew);
+		unloadedNotes.set(i, noteNew);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before
@@ -277,20 +283,20 @@ class PlayState extends FlxState
 	{
 		playAnimation(bf, animation, true);
 
-		notes.remove(note, true);
+		notes.remove(note.iterator);
 		note.destroy();
 	}
 
 	function noteMiss(note:Note, animation:String)
 	{
-		notes.remove(note, true);
+		notes.remove(note.iterator);
 		note.destroy();
 	}
 
 	public static function resyncNotes(){
-		for(i in 0...notes.length){
-			if(notes.members[i] != null){
-				notes.members[i].recalculateNoteScreenPosition();
+		for(note in notes){
+			if(note != null){
+				note.recalculateNoteScreenPosition();
 			}
 		}
 	}

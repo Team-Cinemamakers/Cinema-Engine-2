@@ -31,7 +31,9 @@ class Note extends FlxSprite {
 
 	var framesAdded:Bool = false;
 
-	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames)
+	public var iterator:Int = 0;
+
+	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
 		y = FlxG.height + this.height / 2;
 		this.startY = y;
@@ -47,6 +49,8 @@ class Note extends FlxSprite {
 
         this.angle = angle;
 		this.noteData = noteData;
+
+		this.iterator = iterator;
 
         this.strumline = strumline;
 
@@ -80,8 +84,10 @@ class Note extends FlxSprite {
 				this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
 		{
 			if (!moving){
-				addFrames();
 				moving = true;
+				PlayState.notesTypedGroup.add(this);
+				PlayState.unloadedNotes.remove(iterator);
+				PlayState.notes.set(iterator, this);
 			}
 			
 			y -= scrollAmount;
@@ -90,6 +96,8 @@ class Note extends FlxSprite {
 				{
 					moving = false;
 					this.destroy();
+					PlayState.unloadedNotes.remove(iterator);
+					PlayState.notesTypedGroup.remove(this);
 					Gc.run(true);
 				}
 		}
@@ -125,12 +133,17 @@ class Note extends FlxSprite {
 
 			if(Conductor.TIME >= noteData.time){
 				moving = false;
+				PlayState.notes.remove(iterator);
+				PlayState.notesTypedGroup.remove(this);
 				this.destroy();
 			}
 
 			justRecalc = true;
 
 			if(!moving) moving = true;
+			PlayState.notesTypedGroup.add(this);
+			PlayState.unloadedNotes.remove(iterator);
+			PlayState.notes.set(iterator, this);
 
 			var coolOffset:Float = Conductor.TIME - noteMoveTime;
 			var coolOffset2:Float = noteData.time - noteMoveTime;
@@ -145,6 +158,8 @@ class Note extends FlxSprite {
 			
 			if(newy <= 0 - height){
 				moving = false;
+				PlayState.notes.remove(iterator);
+				PlayState.notesTypedGroup.remove(this);
 				this.destroy();
 			} else if (newy >= FlxG.height + (this.height/2)){
 				y = FlxG.height + (this.height/2);
