@@ -15,9 +15,7 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 
-	//implemented notes map and unloaded notes map for better optimization
-	public static var notes:Map<Int, Note>;
-	public static var unloadedNotes:Map<Int, Note>;
+	public static var notes:Map<Int, Note> = [];
 
 	public static var notesTypedGroup:FlxTypedGroup<Note>;
 
@@ -225,6 +223,8 @@ class PlayState extends FlxState
 	// i fixed ts
 	function activateNote(noteVal:Int, animation:String)
 	{
+		if(notes != null) return;
+
 		for (note in notes)
 		{
 			if (note != null && note.strumline.playable != false && note.noteData.value == noteVal){
@@ -257,24 +257,29 @@ class PlayState extends FlxState
 		});
 	}
 	// calls note graphics and adds them
-	function loadNote(i:Int, note:NoteData)
+	function loadNote(i:Int, note:NoteData, j:Int)
 	{
+		trace('starting loading note' + j);
 		// optimized this by removing the need for stupid ass functions n shit
 		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
-			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, i);
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, j);
 
 		noteNew.cameras = [camUI];
-		unloadedNotes.set(i, noteNew);
+		notes.set(j, noteNew);
+		trace('loaded note' + j);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before
 	function renderNotes()
 	{
+		var total:Int = 0;
 		for (i in 0...song.strumlines.length)
 		{
 			for (j in 0...song.strumlines[i].notes.length)
 			{
-				loadNote(i, song.strumlines[i].notes[j]);
+				trace('renderingNotes');
+				loadNote(i, song.strumlines[i].notes[j], total);
+				total++;
 			}
 		}
 	}

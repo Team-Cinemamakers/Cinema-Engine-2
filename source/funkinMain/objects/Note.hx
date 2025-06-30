@@ -86,8 +86,7 @@ class Note extends FlxSprite {
 			if (!moving){
 				moving = true;
 				PlayState.notesTypedGroup.add(this);
-				PlayState.unloadedNotes.remove(iterator);
-				PlayState.notes.set(iterator, this);
+				trace('started moving');
 			}
 			
 			y -= scrollAmount;
@@ -95,9 +94,10 @@ class Note extends FlxSprite {
 			if (y <= 0 - height)
 				{
 					moving = false;
+					trace('killed');
+					PlayState.notesTypedGroup.remove(this, true);
+					PlayState.notes.remove(this.iterator);
 					this.destroy();
-					PlayState.unloadedNotes.remove(iterator);
-					PlayState.notesTypedGroup.remove(this);
 					Gc.run(true);
 				}
 		}
@@ -132,9 +132,10 @@ class Note extends FlxSprite {
 			if(noteMoveTime > Conductor.TIME) return;
 
 			if(Conductor.TIME >= noteData.time){
+				trace('killed');
 				moving = false;
 				PlayState.notes.remove(iterator);
-				PlayState.notesTypedGroup.remove(this);
+				PlayState.notesTypedGroup.remove(this, true);
 				this.destroy();
 			}
 
@@ -142,8 +143,6 @@ class Note extends FlxSprite {
 
 			if(!moving) moving = true;
 			PlayState.notesTypedGroup.add(this);
-			PlayState.unloadedNotes.remove(iterator);
-			PlayState.notes.set(iterator, this);
 
 			var coolOffset:Float = Conductor.TIME - noteMoveTime;
 			var coolOffset2:Float = noteData.time - noteMoveTime;
@@ -159,7 +158,8 @@ class Note extends FlxSprite {
 			if(newy <= 0 - height){
 				moving = false;
 				PlayState.notes.remove(iterator);
-				PlayState.notesTypedGroup.remove(this);
+				PlayState.notesTypedGroup.remove(this, true);
+				trace('killed');
 				this.destroy();
 			} else if (newy >= FlxG.height + (this.height/2)){
 				y = FlxG.height + (this.height/2);
