@@ -1,15 +1,23 @@
 @echo off
-color 6
+
+SET preferredHaxeVersion=4.3.7
 FOR /F "tokens=*" %%g IN ('haxe --version') do (SET haxeVer=%%g)
-echo Haxe version - %haxeVer% (Supported version: 4.3.7)
 
-echo Installing Libraries!
+color 6
 
-haxelib install flixel
-haxelib install flixel-addons
-haxelib install hxcpp
-haxelib install openfl
-haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
+echo Engine Haxe version - %preferredHaxeVersion%
+echo Installed Haxe version - %haxeVer%
+if %haxeVer% == %preferredHaxeVersion% (
+    echo Installing Libraries!
 
-echo Done!
-color 7
+    haxelib install flixel
+    haxelib install flixel-addons
+    haxelib install hxcpp
+    haxelib install openfl
+    haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
+
+    echo Done!
+) else (
+    color c
+    echo You have an incorrect Haxe version. Please install Haxe %preferredHaxeVersion%
+)
