@@ -1,7 +1,7 @@
 @echo off
 color 6
 FOR /F "tokens=*" %%g IN ('haxe --version') do (SET haxeVer=%%g)
-echo Haxe version - %haxeVer% (Supported version: 4.3.6)
+echo Haxe version - %haxeVer% (Supported version: 4.3.7)
 
 echo Installing Libraries!
 

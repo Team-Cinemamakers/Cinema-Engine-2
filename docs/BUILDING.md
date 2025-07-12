@@ -1,6 +1,6 @@
 # Building the engine
 ## Prerequisites
-- [Haxe 4.3.6](https://haxe.org/download/)
+- [Haxe 4.3.7](https://haxe.org/download/)
 - [Windows SDK (If you are on Windows. I think)](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
 ## Building
