@@ -1,4 +1,5 @@
 import backend.*;
+import backend.Paths.PathSource;
 import cpp.vm.Gc;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
@@ -15,8 +16,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import funkinMain.states.PlayState;
-import funkinMain.systems.*;
+import funkin.states.PlayState;
+import funkin.systems.*;
 import haxe.Json;
 import openfl.events.EventDispatcher;
 import sys.*;

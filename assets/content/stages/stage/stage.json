@@ -1,0 +1,33 @@
+{
+    "name": "stage",
+    "objects": [
+        {
+            "name": "bg",
+            "file": "stageback",
+            "scale": [1, 1],
+            "position": [-600, -200]
+        },
+        {
+            "name": "stageFront",
+            "file": "stagefront",
+            "scale": [1, 1],
+            "position": [-600, 600]
+        },
+        {
+            "name": "stageCurtains",
+            "file": "stagecurtains",
+            "scale": [1, 1],
+            "position": [-600, -300]
+        }
+    ],
+    "characters": [
+        {
+            "name": "bf",
+            "position": [770, 500]
+        },
+        {
+            "name": "dad",
+            "position": [100, 500]
+        }
+    ]
+}

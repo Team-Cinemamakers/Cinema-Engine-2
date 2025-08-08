@@ -5,14 +5,14 @@
     "objects": [ // Objects in the stage (regular/animated sprites)
         { // Example of a static sprite
             "name": "bg", // Name of the object, by which it can be accessed later
-            "path": "images/stageAssets/stage/stageback", // Path to the sprite
+            "file": "stageback", // Path to the sprite file from the stage assets folder
             "scale": [1, 1], // (Optional) Object's scale. Default: (1, 1)
             "position": [-600, 0], // Object's position,
             "flipX": false // (Optional) Whether the object should be flipped horizontally. Default: false (no)
         },
         { // Example of an animated sprite using sparrow sheets
             "name": "santa",
-            "path": "images/stageAssets/stage/santa",
+            "path": "santa",
             "scale": [1, 1],
             "position": [-300, 0],
             "flipX": false,
@@ -30,7 +30,7 @@
         },
         { // Example of an animated sprite using frame size
             "name": "door",
-            "path": "images/stageAssets/stage/door",
+            "path": "door",
             "scale": [1, 1],
             "position": [500, 300],
             "flipX": false,
