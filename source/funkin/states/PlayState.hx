@@ -63,7 +63,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		hitsound = FlxG.sound.load(Paths.audio("audio/sounds/scrollMenu", "", ENGINE));
+		hitsound = FlxG.sound.load(Paths.audio("scrollMenu", "audio/sounds", ENGINE));
 
 		instance = this;
 
@@ -297,7 +297,7 @@ class PlayState extends FlxState
 			if(camTween != null){
 				camTween.cancel();
 			}
-			camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.25, {
+			camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.1, {
 				ease: FlxEase.quadInOut
 			});
 	}

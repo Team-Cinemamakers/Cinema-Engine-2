@@ -96,7 +96,7 @@ class TitleState extends FlxState{
             //     case 2:
 			// 		makeIntroText("Made By", true);
             //     case 4:
-			// 		makeIntroText("Team CinemaMakers");
+			// 		makeIntroText("Team Cinemamakers");
 			// 	case 5:
 			// 		removeIntroText();
 			// 	case 6:
