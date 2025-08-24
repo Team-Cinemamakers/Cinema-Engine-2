@@ -47,15 +47,21 @@ class PlayState extends FlxState
 
 	var camCenterX:Float = -170;
 	var camCenterY:Float = -150;
+
+	public static var scrollSpeed:Float = 0;
 	
 
 	public static var instance:PlayState;
 
 	var hitNoteDebounce:Array<Bool> = [];
 
+	public static var hitsound:FlxSound;
+
 	override public function create()
 	{
 		super.create();
+
+		hitsound = FlxG.sound.load(Paths.audio("audio/sounds/scrollMenu", "", ENGINE));
 
 		instance = this;
 
@@ -145,7 +151,7 @@ class PlayState extends FlxState
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notesTypedGroup, 2);
 
-		song.metadata.scrollSpeed *= 0.25;
+		scrollSpeed = song.metadata.scrollSpeed * 7;
 		renderNotes();
 	}
 
@@ -196,7 +202,6 @@ class PlayState extends FlxState
 		if (CoolInput.pressed("skipTime"))
 		{
 			MusicHandler.skipTime(5000);
-			resyncNotes();
 		}
 		if (CoolInput.pressed("accept"))
 			{

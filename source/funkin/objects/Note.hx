@@ -47,7 +47,7 @@ class Note extends FlxSprite {
 		this.scaleY = scaleY;
 		this.updateHitbox();
 
-        this.angle = angle;
+        this.angle = angle + 180;
 		this.noteData = noteData;
 
 		this.iterator = iterator;
@@ -64,9 +64,27 @@ class Note extends FlxSprite {
 		}
 	}
 
+	var playedHitsound:Bool = false;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		x = strumnote.x + (this.width/4);
+		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/PlayState.scrollSpeed) * ((1/(1/elapsed)) * 1000) <= Conductor.TIME){
+			if(!moving) moving = true;
+			y = strumnote.y + ((noteData.time - Conductor.TIME)/(((1/(1/elapsed)) * 1000)) * PlayState.scrollSpeed);
+		};
+
+		if(y <= strumnote.y){
+			if(!playedHitsound && moving){
+				playedHitsound = true;
+				PlayState.hitsound.play(true);
+			}
+		}
+
+		if(y <= 0 - this.height){
+			this.destroy();
+		}
 	}
 
 	public function addFrames():Void{
