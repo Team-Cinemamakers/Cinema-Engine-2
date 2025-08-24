@@ -98,7 +98,7 @@ class PlayState extends FlxState
 			song = Song.fromFile(loadedSong);
 		} else {
 			trace('Could not find song Defaulting to Dad Battle');
-			song = Song.fromFile('dad-battle');
+			song = Song.fromFile('feddy-whop');
 		}
 		
 		// Create strumlines
@@ -132,7 +132,7 @@ class PlayState extends FlxState
 			MusicHandler.loadInstAndVoices(loadedSong, song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
 		} else {
 			trace('Could not find song. Defaulting to Dad Battle');
-			MusicHandler.loadInstAndVoices('dad-battle', 'Inst', 'Vocals');
+			MusicHandler.loadInstAndVoices('feddy-whop', 'Inst', 'Vocals');
 		}
 
 		// resets conductor and also plays loaded inst and voices on music handler
@@ -270,10 +270,14 @@ class PlayState extends FlxState
 		}
 	}
 
+	var camTween:FlxTween;
 	function playAnimation(char:Character, anim:String, force:Bool = false)
 	{
 		char.playAnimation(anim, force);
-			FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.25, {
+			if(camTween != null){
+				camTween.cancel();
+			}
+			camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.25, {
 				ease: FlxEase.quadInOut
 			});
 	}

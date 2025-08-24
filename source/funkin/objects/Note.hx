@@ -33,6 +33,8 @@ class Note extends FlxSprite {
 
 	public var iterator:Int = 0;
 
+	var longNoteStretch:FlxSprite;
+
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
 		y = FlxG.height + this.height / 2;
