@@ -91,7 +91,7 @@ class Conductor
 		if (doConductorTime)
 		{
 			TIME = timeNew;
-			// trace(TIME);
+			trace(TIME);
 		}
 
 		if (TIME >= lastBeatTime + beatTime) // beat hits

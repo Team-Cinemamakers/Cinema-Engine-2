@@ -59,6 +59,10 @@ class Note extends FlxSprite {
 
 		offsetNote = this.width / 4;
 		strumnote = strumline.members[noteData.value];
+		if(PlayState.instance != null){
+			PlayState.instance.add(this);
+		}
+		
 		// y += strumline.members[noteData].y;
 	}
 
@@ -80,8 +84,7 @@ class Note extends FlxSprite {
 		x = strumnote.x + offsetNote;
 
 		if (noteData.time
-			- (((FlxG.height +
-				this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000) <= Conductor.TIME)
+			- (((FlxG.height + (this.height/2)) - (strumline.members[noteData.value].y - (strumline.members[noteData.value].height/2))) / (scrollAmount)) <= Conductor.TIME)
 		{
 			if (!moving){
 				moving = true;

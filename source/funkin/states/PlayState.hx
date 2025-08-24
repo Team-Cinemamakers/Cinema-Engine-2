@@ -33,6 +33,8 @@ class PlayState extends FlxState
 	var camGame:FlxCamera;
 	var camUI:FlxCamera;
 
+	var characters:Array<Character> = [];
+
 	var amntLoaded:Array<Int> = [];
 
 	var mainStage:Stage = new Stage("stage");
@@ -46,11 +48,16 @@ class PlayState extends FlxState
 	var camCenterX:Float = -170;
 	var camCenterY:Float = -150;
 	
+
+	public static var instance:PlayState;
+
 	var hitNoteDebounce:Array<Bool> = [];
 
 	override public function create()
 	{
 		super.create();
+
+		instance = this;
 
 		AssetTracking.destroyUnusedAssets(true);
 
@@ -130,6 +137,7 @@ class PlayState extends FlxState
 		bf.animation.play("Idle", true);
 		bf.x = mainStage.data.characters[0].position[0];
 		bf.y = mainStage.data.characters[0].position[1];
+		characters.push(bf);
 		
 		ZOrder.addToCharacters(bf);
 		// Load in strums
@@ -202,7 +210,11 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
-
+		if(Conductor.curBeat % 4 == 0){
+			for(i in 0...characters.length){
+				playAnimation(characters[i], 'Idle', true);
+			}
+		}
 	}
 
 	// i fixed ts
@@ -246,7 +258,7 @@ class PlayState extends FlxState
 
 		noteNew.cameras = [camUI];
 		notes.set(j, noteNew);
-		// trace('loaded note' + j);
+		//trace('loaded note' + j);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before
