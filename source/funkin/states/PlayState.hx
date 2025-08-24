@@ -9,6 +9,7 @@ import funkin.data.Stage;
 import funkin.objects.Character;
 import funkin.objects.Note;
 import funkin.objects.Strumline;
+import funkin.objects.StrumNote;
 
 class PlayState extends FlxState
 {
@@ -193,6 +194,8 @@ class PlayState extends FlxState
 		{
 			hitNoteDebounce[0] = false;
 			activateNote(0, 'singLEFT');
+		} else {
+			deactivateNote(0);
 		}
 		if (CoolInput.pressed("noteDown"))
 		{
@@ -261,6 +264,7 @@ class PlayState extends FlxState
 					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 90)){
 						hitType = 'Good';
 					}
+					thisNote.strumnote.pressedOnNote = true;
 					notesTypedGroup.remove(thisNote, true);
 					noteHit(thisNote.strumnote.input);
 					thisNote.destroy();
@@ -268,6 +272,22 @@ class PlayState extends FlxState
 				}
 			}
 		}
+	}
+
+	function deactivateNote(noteVal:Int){
+		for(i in 0...strumlines.length){
+			if(strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote) strumlines.members[i].members[noteVal].pressedOnNote = false;
+		}
+	}
+
+	var newTmr:Array<FlxTimer> = [];
+	public function activateEnemyNote(strumnote:StrumNote, value:Int){
+		if(newTmr[value] != null){
+			newTmr[value].cancel();
+		}
+		newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer){
+			strumnote.pressedOnNote = false;
+		});
 	}
 
 	var camTween:FlxTween;
@@ -317,5 +337,9 @@ class PlayState extends FlxState
 	function noteMiss(note:Note, animation:String)
 	{
 		note.destroy();
+	}
+
+	function onSongComplete(){
+		FlxG.switchState(() -> new MainMenuState());
 	}
 }

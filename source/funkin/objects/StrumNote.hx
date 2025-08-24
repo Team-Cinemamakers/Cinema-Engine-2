@@ -50,7 +50,13 @@ class StrumNote extends FlxSprite {
 					playAnim('confirm');
 			}
 			
-        } else {
+        } else if (!playable) {
+			if(!pressedOnNote){
+				playAnim('static');
+			} else {
+				playAnim('confirm');
+			}
+		} else {
 			playAnim('static');
 			pressedOnNote = false;
 		}

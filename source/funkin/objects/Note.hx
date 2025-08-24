@@ -71,18 +71,6 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-		if(y <= strumnote.y){
-			if(!playedHitsound && moving){
-				playedHitsound = true;
-				if(!this.strumnote.playable){
-					PlayState.instance.notesTypedGroup.remove(this, true);
-					this.destroy();
-					Gc.run(true);
-				}
-				//PlayState.hitsound.play(true);
-			}
-		}
-
 		x = strumnote.x + (this.width/4);
 		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (60/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
 			if(!moving) moving = true;
@@ -93,6 +81,20 @@ class Note extends FlxSprite {
 			PlayState.instance.notesTypedGroup.remove(this, true);
 			this.destroy();
 			Gc.run(true);
+		}
+
+		if(y <= strumnote.y + (this.height/2)){
+			if(!playedHitsound && moving){
+				playedHitsound = true;
+				if(!this.strumnote.playable){
+					this.strumnote.pressedOnNote = true;
+					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					this.destroy();
+					Gc.run(true);
+				}
+				//PlayState.hitsound.play(true);
+			}
 		}
 	}
 
