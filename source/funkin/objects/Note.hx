@@ -62,48 +62,11 @@ class Note extends FlxSprite {
 		if(PlayState.instance != null){
 			PlayState.instance.add(this);
 		}
-		
-		// y += strumline.members[noteData].y;
 	}
 
 	override function update(elapsed:Float)
 	{
-		if(justRecalc){
-			justRecalc = false;
-			return;
-		}
 		super.update(elapsed);
-
-		if (y <= 0 - height)
-			{
-				this.destroy();
-			}
-
-		var scrollAmount:Float = (PlayState.song.metadata.scrollSpeed * elapsed) * 1000;
-
-		x = strumnote.x + offsetNote;
-
-		if (noteData.time
-			- (((FlxG.height + (this.height/2)) - (strumline.members[noteData.value].y - (strumline.members[noteData.value].height/2))) / (scrollAmount)) <= Conductor.TIME)
-		{
-			if (!moving){
-				moving = true;
-				PlayState.notesTypedGroup.add(this);
-				trace('started moving');
-			}
-			
-			y -= scrollAmount;
-
-			if (y <= 0 - height)
-				{
-					moving = false;
-					trace('killed');
-					PlayState.notesTypedGroup.remove(this, true);
-					PlayState.notes.remove(this.iterator);
-					this.destroy();
-					Gc.run(true);
-				}
-		}
 	}
 
 	public function addFrames():Void{
@@ -125,48 +88,4 @@ class Note extends FlxSprite {
 		else
 			return false;
 	}
-
-	//this works but the skipping breaks it somehow
-	public function recalculateNoteScreenPosition(){
-		var noteMoveTime:Float = noteData.time
-		- (((FlxG.height +
-			this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
-
-			if(noteMoveTime > Conductor.TIME) return;
-
-			if(Conductor.TIME >= noteData.time){
-				trace('killed');
-				moving = false;
-				PlayState.notes.remove(iterator);
-				PlayState.notesTypedGroup.remove(this, true);
-				this.destroy();
-			}
-
-			justRecalc = true;
-
-			if(!moving) moving = true;
-			PlayState.notesTypedGroup.add(this);
-
-			var coolOffset:Float = Conductor.TIME - noteMoveTime;
-			var coolOffset2:Float = noteData.time - noteMoveTime;
-			var timeDifference:Float = coolOffset2 - coolOffset;
-			var distance:Float = ((FlxG.height + this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2);
-			var cool:Float = timeDifference/(((FlxG.height + this.height / 2) - strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) / ((PlayState.song.metadata.scrollSpeed) * 1000) * 1000);
-			var newDistance:Float = cool * distance;
-		
-			var newy:Float = (strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) + newDistance + this.height/2;
-			//var newy:Float = (strumline.members[noteData.value].y - strumline.members[noteData.value].height/2) - (((PlayState.song.metadata.scrollSpeed) * 1000) * (noteData.time - Conductor.TIME)/-1000);
-			this.y = newy;
-			
-			if(newy <= 0 - height){
-				moving = false;
-				PlayState.notes.remove(iterator);
-				PlayState.notesTypedGroup.remove(this, true);
-				trace('killed');
-				this.destroy();
-			} else if (newy >= FlxG.height + (this.height/2)){
-				y = FlxG.height + (this.height/2);
-			} else {
-			}
-		}
 }

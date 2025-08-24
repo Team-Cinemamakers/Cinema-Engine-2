@@ -289,12 +289,4 @@ class PlayState extends FlxState
 		notes.remove(note.iterator);
 		note.destroy();
 	}
-
-	public static function resyncNotes(){
-		for(note in notes){
-			if(note != null){
-				note.recalculateNoteScreenPosition();
-			}
-		}
-	}
 }
