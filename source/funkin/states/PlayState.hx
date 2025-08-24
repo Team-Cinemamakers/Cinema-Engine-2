@@ -235,7 +235,7 @@ class PlayState extends FlxState
 	{
 		if(Conductor.curBeat % 4 == 0){
 			for(i in 0...characters.length){
-				if(animDeb[i] >= 0.25){
+				if(animDeb[i] >= 0.15){
 					animDeb[i] = 0;
 					playAnimation(characters[i], 'Idle', true);
 				}
@@ -252,13 +252,13 @@ class PlayState extends FlxState
 		{
 			if(notesTypedGroup.members[i] != null){
 				var thisNote:Note = notesTypedGroup.members[i];
-				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 100)){
+				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 140)){
 					var hitType:String = 'Meh';
-					if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 10)){
+					if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
 						hitType = 'Perfect';
-					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
-						hitType = 'Great';
 					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 60)){
+						hitType = 'Great';
+					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 90)){
 						hitType = 'Good';
 					}
 					notesTypedGroup.remove(thisNote, true);

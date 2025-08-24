@@ -71,12 +71,6 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-		x = strumnote.x + (this.width/4);
-		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (60/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
-			if(!moving) moving = true;
-			y = strumnote.y + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-		}
-
 		if(y <= strumnote.y){
 			if(!playedHitsound && moving){
 				playedHitsound = true;
@@ -87,6 +81,12 @@ class Note extends FlxSprite {
 				}
 				//PlayState.hitsound.play(true);
 			}
+		}
+
+		x = strumnote.x + (this.width/4);
+		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (60/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
+			if(!moving) moving = true;
+			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
 		}
 
 		if(y <= 0 - this.height){
