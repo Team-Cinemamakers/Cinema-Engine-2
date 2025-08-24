@@ -29,6 +29,10 @@ class CoolInput
 				return (FlxG.keys.justPressed.BACKSLASH);
 			case "return":
 				return (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.BACKSPACE);
+			case "plus":
+				return (FlxG.keys.justPressed.RBRACKET);
+			case "minus":
+				return (FlxG.keys.justPressed.LBRACKET);
 		}
 		return false;
 	}

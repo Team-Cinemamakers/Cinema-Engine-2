@@ -23,7 +23,7 @@ class Note extends FlxSprite {
 
 	public var moving:Bool = false;
 	var offsetNote:Float;
-	var strumnote:StrumNote;
+	public var strumnote:StrumNote;
 	var tempNoScroll:Bool = false;
 
 	var justMovedY:Float = 0;
@@ -53,14 +53,14 @@ class Note extends FlxSprite {
 		this.iterator = iterator;
 
         this.strumline = strumline;
+		this.frames = frames;
 
 		this.scale.set(scaleX, scaleY);
-		this.frames = frames;
 
 		offsetNote = this.width / 4;
 		strumnote = strumline.members[noteData.value];
 		if(PlayState.instance != null){
-			PlayState.instance.add(this);
+			PlayState.instance.notesTypedGroup.add(this);
 		}
 	}
 
@@ -70,36 +70,33 @@ class Note extends FlxSprite {
 		super.update(elapsed);
 
 		x = strumnote.x + (this.width/4);
-		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/PlayState.scrollSpeed) * ((1/(1/elapsed)) * 1000) <= Conductor.TIME){
+		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (60/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
 			if(!moving) moving = true;
-			y = strumnote.y + ((noteData.time - Conductor.TIME)/(((1/(1/elapsed)) * 1000)) * PlayState.scrollSpeed);
-		};
+			y = strumnote.y + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
+		}
 
 		if(y <= strumnote.y){
 			if(!playedHitsound && moving){
 				playedHitsound = true;
-				PlayState.hitsound.play(true);
+				if(!this.strumnote.playable){
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					this.destroy();
+					Gc.run(true);
+				}
+				//PlayState.hitsound.play(true);
 			}
 		}
 
 		if(y <= 0 - this.height){
+			PlayState.instance.notesTypedGroup.remove(this, true);
 			this.destroy();
+			Gc.run(true);
 		}
-	}
-
-	public function addFrames():Void{
-		if(framesAdded) return;
-		framesAdded = true;
-		
-		this.frames = frames;
-
-		animation.addByPrefix('note', 'noteUp', 24);
-		animation.play('note', true);
 	}
 
 	public function clickedOnRow():Bool
 	{
-		if (MathFunctions.isInRange(y, strumline.members[noteData.value].y, 100))
+		if (MathFunctions.isInRange(y, strumnote.y, 100))
 		{
 			return true;
 		}

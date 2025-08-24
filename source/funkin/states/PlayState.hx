@@ -15,14 +15,13 @@ class PlayState extends FlxState
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
 
-	public static var notes:Map<Int, Note> = [];
-
-	public static var notesTypedGroup:FlxTypedGroup<Note>;
+	public var notesTypedGroup:FlxTypedGroup<Note>;
 
 	public static var loadedSong:String;
 	// chart note array of array to allow support for more than 2 characters
 
 	var notesLoaded:Bool = false;
+	public var noteInts:Array<Int> = [];
 
 	public static var song:SongData;
 	public var stage:StageFile;
@@ -43,10 +42,12 @@ class PlayState extends FlxState
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
 	var paused:Bool = false;
-	var noteSparrow:FlxAtlasFrames;
+	public var noteSparrow:FlxAtlasFrames;
 
-	var camCenterX:Float = -170;
-	var camCenterY:Float = -150;
+	var camCenterX:Float = -350;
+	var camCenterY:Float = -350;
+
+	var animDeb:Array<Float> = [];
 
 	public static var scrollSpeed:Float = 0;
 	
@@ -66,6 +67,7 @@ class PlayState extends FlxState
 		instance = this;
 
 		AssetTracking.destroyUnusedAssets(true);
+		Gc.run(true);
 
 		noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
@@ -79,9 +81,6 @@ class PlayState extends FlxState
 
 		camGame.width = 4500;
 		camGame.height = 3500;
-
-		camGame.x = camCenterX;
-		camGame.y = camCenterY;
 
 		ZOrder.flushSprites();
 		ZOrder.addScreenSpace(this);
@@ -144,6 +143,11 @@ class PlayState extends FlxState
 		bf.x = mainStage.data.characters[0].position[0];
 		bf.y = mainStage.data.characters[0].position[1];
 		characters.push(bf);
+
+		camGame.x = camCenterX;
+		camGame.y = camCenterY;
+
+		animDeb[0] = 0;
 		
 		ZOrder.addToCharacters(bf);
 		// Load in strums
@@ -153,11 +157,17 @@ class PlayState extends FlxState
 
 		scrollSpeed = song.metadata.scrollSpeed * 7;
 		renderNotes();
+
+		Gc.run(true);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		for(i in 0...animDeb.length){
+			animDeb[i] += elapsed;
+		}
 
 		if(MusicHandler.inst != null && MusicHandler.voices != null){
 			if(MusicHandler.inst.length >= MusicHandler.voices.length){
@@ -203,6 +213,14 @@ class PlayState extends FlxState
 		{
 			MusicHandler.skipTime(5000);
 		}
+		if (CoolInput.pressed("plus"))
+		{
+			scrollSpeed *= 1.1;
+		}
+		if (CoolInput.pressed("minus"))
+		{
+			scrollSpeed *= 0.9;
+		}
 		if (CoolInput.pressed("accept"))
 			{
 				if(!paused){
@@ -217,7 +235,10 @@ class PlayState extends FlxState
 	{
 		if(Conductor.curBeat % 4 == 0){
 			for(i in 0...characters.length){
-				playAnimation(characters[i], 'Idle', true);
+				if(animDeb[i] >= 0.25){
+					animDeb[i] = 0;
+					playAnimation(characters[i], 'Idle', true);
+				}
 			}
 		}
 	}
@@ -225,33 +246,36 @@ class PlayState extends FlxState
 	// i fixed ts
 	function activateNote(noteVal:Int, animation:String)
 	{
-		if(notes != null) return;
+		if(notesTypedGroup.length <= 0) return;
 
-		for (note in notes)
+		for (i in 0...notesTypedGroup.length)
 		{
-			if (note != null && note.strumline.playable != false && note.noteData.value == noteVal){
-				if (note.clickedOnRow() && !hitNoteDebounce[note.noteData.value])
-					{
-						hitNoteDebounce[note.noteData.value] = true;
-
-						note.strumline.members[note.noteData.value].pressedOnNote = true;
-						var ah:Note = note;
-						notes.remove(note.iterator);
-						ah.destroy();
-
-						playAnimation(bf, animation, true);
+			if(notesTypedGroup.members[i] != null){
+				var thisNote:Note = notesTypedGroup.members[i];
+				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 100)){
+					var hitType:String = 'Meh';
+					if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 10)){
+						hitType = 'Perfect';
+					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
+						hitType = 'Great';
+					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 60)){
+						hitType = 'Good';
 					}
+					notesTypedGroup.remove(thisNote, true);
+					noteHit(thisNote.strumnote.input);
+					thisNote.destroy();
+					trace('Hit note rating: ' + hitType);
+				}
 			}
 		}
 	}
 
 	function playAnimation(char:Character, anim:String, force:Bool = false)
 	{
-		// letting you know for some reason bfs animations are all only his misses
 		char.playAnimation(anim, force);
-		FlxTween.tween(camGame, {x: camCenterX + char.animCamOffsets[anim].x, y: camCenterY + char.animCamOffsets[anim].y}, 0.25, {
-			ease: FlxEase.quadInOut
-		});
+			FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.25, {
+				ease: FlxEase.quadInOut
+			});
 	}
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData, j:Int)
@@ -262,7 +286,6 @@ class PlayState extends FlxState
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, j);
 
 		noteNew.cameras = [camUI];
-		notes.set(j, noteNew);
 		//trace('loaded note' + j);
 	}
 
@@ -281,17 +304,14 @@ class PlayState extends FlxState
 		}
 	}
 
-	function noteHit(note:Note, animation:String)
+	function noteHit(animation:String)
 	{
+		animDeb[0] = 0;
 		playAnimation(bf, animation, true);
-
-		notes.remove(note.iterator);
-		note.destroy();
 	}
 
 	function noteMiss(note:Note, animation:String)
 	{
-		notes.remove(note.iterator);
 		note.destroy();
 	}
 }
