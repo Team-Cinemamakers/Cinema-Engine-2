@@ -1,23 +1,23 @@
 {
-    "name": "Boyfriend",
-    "icon": "bf",
+    "name": "Feddy",
+    "icon": "feddy",
     "offset": [
         0,
         0
     ],
     "camOffset": [
-        -150,
-        -340
+        0,
+        0
     ],
-    "fileName": "bf",
+    "fileName": "feddy",
     "animations": [
         {
             "name": "Idle",
-            "prefix": "BF idle dance",
+            "prefix": "idle",
             "offset": [
-                -5,
-                0
-            ],
+				140,
+				100
+			],
             "camOffset": [
                 0,
                 0
@@ -27,11 +27,11 @@
         },
         {
             "name": "noteLeft",
-            "prefix": "BF NOTE LEFT0",
+            "prefix": "left",
             "offset": [
-                5,
-                -6
-            ],
+				129,
+				102
+			],
             "camOffset": [
                 -20,
                 0
@@ -41,11 +41,11 @@
         },
         {
             "name": "noteDown",
-            "prefix": "BF NOTE DOWN0",
+            "prefix": "down",
             "offset": [
-                -20,
-                -51
-            ],
+				180,
+				329
+			],
             "camOffset": [
                 0,
                 20
@@ -55,11 +55,11 @@
         },
         {
             "name": "noteUp",
-            "prefix": "BF NOTE UP0",
+            "prefix": "up",
             "offset": [
-                -46,
-                27
-            ],
+				74,
+				257
+			],
             "camOffset": [
                 0,
                 -20
@@ -69,11 +69,11 @@
         },
         {
             "name": "noteRight",
-            "prefix": "BF NOTE RIGHT0",
+            "prefix": "right",
             "offset": [
-                -48,
-                -7
-            ],
+				122,
+				103
+			],
             "camOffset": [
                 20,
                 0

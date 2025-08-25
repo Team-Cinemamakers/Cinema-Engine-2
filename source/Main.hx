@@ -24,7 +24,7 @@ class Main extends Sprite
 
 		FlxG.autoPause = false;
 
-		addChild(new FlxGame(0, 0, TitleState, 60, 60, true));
+		addChild(new FlxGame(0, 0, TitleState, 180, 180, true));
 		performanceDisplay = new PerformanceDisplay();
 		addChild(performanceDisplay);
 	}

@@ -8,8 +8,8 @@ import funkin.data.SongEvent;
 import funkin.data.Stage;
 import funkin.objects.Character;
 import funkin.objects.Note;
-import funkin.objects.Strumline;
 import funkin.objects.StrumNote;
+import funkin.objects.Strumline;
 
 class PlayState extends FlxState
 {
@@ -33,11 +33,11 @@ class PlayState extends FlxState
 	var camGame:FlxCamera;
 	var camUI:FlxCamera;
 
-	var characters:Array<Character> = [];
+	public var characters:Array<Character> = [];
 
 	var amntLoaded:Array<Int> = [];
 
-	var mainStage:Stage = new Stage("stage");
+	public var mainStage:Stage = new Stage("stage");
 
 	var baseZoom:Float = 0.85;
 	var cameraTween:FlxTween;
@@ -107,7 +107,7 @@ class PlayState extends FlxState
 		{
 			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].character,
 				song.metadata.strumlines[i].playable, song.metadata.strumlines[i].kerning, song.metadata.strumlines[i].position[0],
-				song.metadata.strumlines[i].position[1]);
+				song.metadata.strumlines[i].position[1], i);
 
 			strumLine.scale = song.metadata.strumlines[i].scale;
 			strumLine.updateStrums();
@@ -139,20 +139,22 @@ class PlayState extends FlxState
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
 
-		bf = new Character('bf');
-		bf.animation.play("Idle", true);
-		bf.x = mainStage.data.characters[0].position[0];
-		bf.y = mainStage.data.characters[0].position[1];
-		characters.push(bf);
+		if(characters[0].cameraOffset != null){
+			camCenterX = characters[0].cameraOffset.x;
+			camCenterY = characters[0].cameraOffset.y;
+		}
 
 		camGame.x = camCenterX;
 		camGame.y = camCenterY;
 
+
 		animDeb[0] = 0;
 		
-		ZOrder.addToCharacters(bf);
 		// Load in strums
 
+		for(i in 0...characters.length){
+			ZOrder.addToCharacters(characters[i]);
+		}
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notesTypedGroup, 2);
 
@@ -236,11 +238,11 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
-		if(Conductor.curBeat % 4 == 0){
-			for(i in 0...characters.length){
-				if(animDeb[i] >= 0.15){
+		if(Conductor.curBeat % 2 == 0){
+			for(i in 0...strumlines.length){
+				if(animDeb[i] >= 0.2){
 					animDeb[i] = 0;
-					playAnimation(characters[i], 'Idle', true);
+					playAnimation(strumlines.members[i].character, 'Idle', true, strumlines.members[i].playable);
 				}
 			}
 		}
@@ -266,7 +268,7 @@ class PlayState extends FlxState
 					}
 					thisNote.strumnote.pressedOnNote = true;
 					notesTypedGroup.remove(thisNote, true);
-					noteHit(thisNote.strumnote.input);
+					noteHit(thisNote.strumnote.input, thisNote.strumnote.character, thisNote.strumnote.playable);
 					thisNote.destroy();
 					trace('Hit note rating: ' + hitType);
 				}
@@ -282,6 +284,7 @@ class PlayState extends FlxState
 
 	var newTmr:Array<FlxTimer> = [];
 	public function activateEnemyNote(strumnote:StrumNote, value:Int){
+		playAnimation(strumnote.character, strumnote.input);
 		if(newTmr[value] != null){
 			newTmr[value].cancel();
 		}
@@ -291,9 +294,11 @@ class PlayState extends FlxState
 	}
 
 	var camTween:FlxTween;
-	function playAnimation(char:Character, anim:String, force:Bool = false)
+	function playAnimation(char:Character, anim:String, force:Bool = false, playable:Bool = false)
 	{
 		char.playAnimation(anim, force);
+		if(!playable) return;
+
 			if(camTween != null){
 				camTween.cancel();
 			}
@@ -328,10 +333,10 @@ class PlayState extends FlxState
 		}
 	}
 
-	function noteHit(animation:String)
+	function noteHit(animation:String, char:Character, playable:Bool)
 	{
 		animDeb[0] = 0;
-		playAnimation(bf, animation, true);
+		playAnimation(char, animation, true, playable);
 	}
 
 	function noteMiss(note:Note, animation:String)

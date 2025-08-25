@@ -29,13 +29,14 @@ class Strumline extends FlxTypedGroup<StrumNote>
 	public var scale:Array<Float> = [1, 1];
 
 	public var kerning:Float; // distance between notes
-	public var character:String;
+	public var characterName:String;
+	public var character:Character;
 	public var playable:Bool;
 	public var viewable:Bool;
 
 	public var allowUpdateStrums:Bool = true;
 
-	public function new(strumNotes:Array<StrumNoteData>, character:String = "bf", playable:Bool = false, kerning:Float = 200, x:Float = 0, y:Float = 0)
+	public function new(strumNotes:Array<StrumNoteData>, character:String = "bf", playable:Bool = false, kerning:Float = 200, x:Float = 0, y:Float = 0, i:Int = 0)
 	{
 		super();
 
@@ -43,13 +44,19 @@ class Strumline extends FlxTypedGroup<StrumNote>
 
 		this.x = x;
 		this.y = y;
-		this.character = character;
+		this.characterName = character;
 		this.playable = playable;
 		this.kerning = kerning;
 
+		var char:Character = new Character(this.characterName);
+		char.x = PlayState.instance.mainStage.data.characters[i].position[0];
+		char.y = PlayState.instance.mainStage.data.characters[i].position[1];
+		PlayState.instance.characters.push(char);
+		this.character = char;
+
 		for (i in 0...strumNotes.length)
 		{
-			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, character, playable, x + (i * kerning), y);
+			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, character, playable, x + (i * kerning), y, char);
 			add(strumNote);
 		}
 	}
@@ -74,6 +81,7 @@ class Strumline extends FlxTypedGroup<StrumNote>
 			members[i].x = x + (i * kerning);
 			members[i].y = y;
 
+			members[i].characterName = characterName;
 			members[i].character = character;
 			members[i].playable = playable;
 		}

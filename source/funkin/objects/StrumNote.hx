@@ -12,7 +12,8 @@ typedef StrumNoteData =
 class StrumNote extends FlxSprite {
 
     public var input:String;
-	public var character:String;
+	public var characterName:String;
+	public var character:Character;
 	public var playable:Bool;
 	public var animOffsets:Map<String, Array<Float>> = new Map();
 
@@ -22,13 +23,14 @@ class StrumNote extends FlxSprite {
 
 	private var noteSparrow:FlxAtlasFrames = Paths.sparrow('noteStrumline', 'images/shared', ENGINE);
 
-	public function new(input:String = "noteLeft", angle:Float = 0, character:String = "bf", playable:Bool = false, x:Float = 0, y:Float = 0)
+	public function new(input:String = "noteLeft", angle:Float = 0, characterName:String = "bf", playable:Bool = false, x:Float = 0, y:Float = 0, character:Character)
 	{
         super(x, y);
         this.input = input;
         this.angle = angle;
-		this.character = character;
+		this.characterName = characterName;
 		this.playable = playable;
+		this.character = character;
 
         frames = noteSparrow;
 
