@@ -16,7 +16,7 @@
     "stage": "stage",
     "strumlines": [
       {
-        "character": "bf",
+        "characters": ["bf"],
         "kerning": 125,
         "playable": true,
         "position": [
@@ -47,7 +47,7 @@
         ]
       },
       {
-        "character": "feddy",
+        "characters": ["feddy"],
         "kerning": 125,
         "playable": false,
         "position": [

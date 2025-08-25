@@ -5,13 +5,13 @@ import funkin.objects.StrumNote;
 
 typedef StrumlineData =
 {
-	var character:String; // strumline owner (initial at least)
+	var characters:Array<String>; // strumline owner (initial at least)
 	var notes:Array<NoteData>; // notes belonging to this strumline
 }
 
 typedef StrumlineInfo =
 {
-	var character:String; // strumline owner
+	var characters:Array<String>; // strumline owner
 	var strumNotes:Array<StrumNoteData>; // strumnote data (defines all the strum notes)
 	var position:Array<Float>; // position of the strumline
 	var scale:Array<Float>; // scale of the strumline
@@ -29,14 +29,14 @@ class Strumline extends FlxTypedGroup<StrumNote>
 	public var scale:Array<Float> = [1, 1];
 
 	public var kerning:Float; // distance between notes
-	public var characterName:String;
-	public var character:Character;
+	public var characterNames:Array<String>;
+	public var characters:Array<Character>;
 	public var playable:Bool;
 	public var viewable:Bool;
 
 	public var allowUpdateStrums:Bool = true;
 
-	public function new(strumNotes:Array<StrumNoteData>, character:String = "bf", playable:Bool = false, kerning:Float = 200, x:Float = 0, y:Float = 0, i:Int = 0)
+	public function new(strumNotes:Array<StrumNoteData>, characters:Array<String>, playable:Bool = false, kerning:Float = 200, x:Float = 0, y:Float = 0, v:Int = 0)
 	{
 		super();
 
@@ -44,19 +44,25 @@ class Strumline extends FlxTypedGroup<StrumNote>
 
 		this.x = x;
 		this.y = y;
-		this.characterName = character;
+		this.characterNames = characters;
 		this.playable = playable;
 		this.kerning = kerning;
 
-		var char:Character = new Character(this.characterName);
-		char.x = PlayState.instance.mainStage.data.characters[i].position[0];
-		char.y = PlayState.instance.mainStage.data.characters[i].position[1];
-		PlayState.instance.characters.push(char);
-		this.character = char;
+		if(characters == null){
+			characters = ["bf"];
+		}
+
+		for(i in 0...this.characterNames.length){
+			var char:Character = new Character(this.characterNames[i]);
+			char.x = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).x;
+			char.y = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).y;
+			PlayState.instance.characters.set(characterNames[i], char);
+			this.characters.push(char);
+		}
 
 		for (i in 0...strumNotes.length)
 		{
-			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, character, playable, x + (i * kerning), y, char);
+			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, characterNames, playable, x + (i * kerning), y, this.characters);
 			add(strumNote);
 		}
 	}
@@ -81,8 +87,8 @@ class Strumline extends FlxTypedGroup<StrumNote>
 			members[i].x = x + (i * kerning);
 			members[i].y = y;
 
-			members[i].characterName = characterName;
-			members[i].character = character;
+			members[i].characterNames = characterNames;
+			members[i].characters = characters;
 			members[i].playable = playable;
 		}
 	}

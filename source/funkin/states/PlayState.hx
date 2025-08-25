@@ -33,7 +33,7 @@ class PlayState extends FlxState
 	var camGame:FlxCamera;
 	var camUI:FlxCamera;
 
-	public var characters:Array<Character> = [];
+	public var characters:Map<String, Character> = [];
 
 	var amntLoaded:Array<Int> = [];
 
@@ -51,7 +51,6 @@ class PlayState extends FlxState
 	var animDeb:Array<Float> = [];
 
 	public static var scrollSpeed:Float = 0;
-	
 
 	public static var instance:PlayState;
 
@@ -105,7 +104,7 @@ class PlayState extends FlxState
 		// Create strumlines
 		for (i in 0...song.metadata.strumlines.length)
 		{
-			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].character,
+			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].characters,
 				song.metadata.strumlines[i].playable, song.metadata.strumlines[i].kerning, song.metadata.strumlines[i].position[0],
 				song.metadata.strumlines[i].position[1], i);
 
@@ -139,9 +138,9 @@ class PlayState extends FlxState
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.metadata.bpm, true);
 
-		if(characters[0].cameraOffset != null){
-			camCenterX = characters[0].cameraOffset.x;
-			camCenterY = characters[0].cameraOffset.y;
+		if(characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null){
+			camCenterX = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.x;
+			camCenterY = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.y;
 		}
 
 		camGame.x = camCenterX;
@@ -152,8 +151,8 @@ class PlayState extends FlxState
 		
 		// Load in strums
 
-		for(i in 0...characters.length){
-			ZOrder.addToCharacters(characters[i]);
+		for(char in characters){
+			ZOrder.addToCharacters(char);
 		}
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notesTypedGroup, 2);
@@ -242,7 +241,9 @@ class PlayState extends FlxState
 			for(i in 0...strumlines.length){
 				if(animDeb[i] >= 0.2){
 					animDeb[i] = 0;
-					playAnimation(strumlines.members[i].character, 'Idle', true, strumlines.members[i].playable);
+					for(v in 0...strumlines.members[i].characters.length){
+						playAnimation(strumlines.members[i].characters[v], 'Idle', true, strumlines.members[i].playable);
+					}
 				}
 			}
 		}
@@ -268,7 +269,9 @@ class PlayState extends FlxState
 					}
 					thisNote.strumnote.pressedOnNote = true;
 					notesTypedGroup.remove(thisNote, true);
-					noteHit(thisNote.strumnote.input, thisNote.strumnote.character, thisNote.strumnote.playable);
+					for(v in 0...thisNote.strumnote.characters.length){
+						noteHit(thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
+					}
 					thisNote.destroy();
 					trace('Hit note rating: ' + hitType);
 				}
@@ -284,13 +287,15 @@ class PlayState extends FlxState
 
 	var newTmr:Array<FlxTimer> = [];
 	public function activateEnemyNote(strumnote:StrumNote, value:Int){
-		playAnimation(strumnote.character, strumnote.input);
-		if(newTmr[value] != null){
-			newTmr[value].cancel();
+		for(i in 0...strumnote.characters.length){
+			playAnimation(strumnote.characters[i], strumnote.input);
+			if(newTmr[value] != null){
+				newTmr[value].cancel();
+			}
+			newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer){
+				strumnote.pressedOnNote = false;
+			});
 		}
-		newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer){
-			strumnote.pressedOnNote = false;
-		});
 	}
 
 	var camTween:FlxTween;
@@ -346,5 +351,14 @@ class PlayState extends FlxState
 
 	function onSongComplete(){
 		FlxG.switchState(() -> new MainMenuState());
+	}
+
+	public function getCharacterPositionFromStage(charName:String):FlxPoint{
+		for(i in 0...PlayState.instance.mainStage.data.characters.length){
+			if(PlayState.instance.mainStage.data.characters[i].name == charName){
+				return FlxPoint.get(PlayState.instance.mainStage.data.characters[i].position[0], PlayState.instance.mainStage.data.characters[i].position[1]);
+			}
+		}
+		return FlxPoint.get(0, 0);
 	}
 }
