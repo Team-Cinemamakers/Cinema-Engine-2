@@ -29,8 +29,8 @@ class Strumline extends FlxTypedGroup<StrumNote>
 	public var scale:Array<Float> = [1, 1];
 
 	public var kerning:Float; // distance between notes
-	public var characterNames:Array<String>;
-	public var characters:Array<Character>;
+	public var characterNames:Array<String> = [];
+	public var characters:Array<Character> = [];
 	public var playable:Bool;
 	public var viewable:Bool;
 
@@ -54,6 +54,7 @@ class Strumline extends FlxTypedGroup<StrumNote>
 
 		for(i in 0...this.characterNames.length){
 			var char:Character = new Character(this.characterNames[i]);
+			trace(char);
 			char.x = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).x;
 			char.y = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).y;
 			PlayState.instance.characters.set(characterNames[i], char);
