@@ -1,4 +1,4 @@
-// Cinema Engine 2 Stage Format (Version 1)
+// Cinema Engine 2 Stage Format (Version 2)
 // Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
 {
     "name": "Stage", // Name of the stage
@@ -52,13 +52,13 @@
             ]
         }
     ],
-    "characters": [ // Characters and their positions
+    "markers": [ // Points in space that can be referenced by objects for positions
         {
-            "name": "bf", // Character filename
-            "position": [770, 100] // Position in the stage
+            "name": "bfPos",
+            "position": [770, 100]
         },
         {
-            "name": "dad",
+            "name": "oppPos",
             "position": [100, 100]
         }
     ]

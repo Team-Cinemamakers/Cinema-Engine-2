@@ -3,7 +3,7 @@
 {
     "name": "Boyfriend", // Name of the character
     "icon": "bf", // Character's icon name
-    "offset": [ // Offset of the character, can also be seen as it's position, stage files should be used for the main positioning however
+    "offset": [ // Offset of the character, can also be seen as it's position, stage markers should be used for the main positioning tool, however
         0,
         0
     ],

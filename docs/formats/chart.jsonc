@@ -1,4 +1,4 @@
-// Cinema Engine 2 Chart Format (Version 1)
+// Cinema Engine 2 Chart Format (Version 2)
 // Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
 {
     "metadata": {
@@ -10,14 +10,22 @@
             "vocals": "Vocals" // Should be left unspecified if using per-character voices (Not added to the format yet)
         },
         "stage": "stage", // Stage to use (specify filename),
-        "defaults": { // Default characters to start the song with
-            "player": "bf",
-            "opponent": "dad",
-            "speaker": "gf" // (Optional)
-        },
+        "characters": [
+            {
+                "name": "boyfriend",
+                "character": "bf",
+                "positionMarker": "bfPos"
+            },
+            {
+                "name": "opponent",
+                "character": "dad",
+                "positionMarker": "oppPos"
+            }
+
+        ],
         "strumlines": [ // Specifies individual strumlines for every (singing) character in the song
             {
-                "character": "bf", // Owner of the strumline
+                "characters": ["boyfriend"], // Owner of the strumline
                 "strumnotes": [ // List of strumnotes, mostly generated through presets in the chart editor
                     {
                         "angle": 270, // Rotation of the note
@@ -58,7 +66,7 @@
     ],
     "strumlines": [ // The actual notes, per-strumline
         {
-            "character": "bf", // Name of the character who owns this strumline, might be replaced in the future by just going through the metadata strumlines and seeing which character this would correspond to by index
+            "characters": "boyfriend", // Name of the character who owns this strumline, might be replaced in the future by just going through the metadata strumlines and seeing which character this would correspond to by index
             "notes": [
                 {
                     "time": 0, // Time (in milliseconds) at which the note is supposed to be hit
