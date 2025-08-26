@@ -96,12 +96,12 @@ class PlayState extends FlxState
 
 		notesTypedGroup = new FlxTypedGroup<Note>();
 
-		if(loadedSong != null){
-			song = new Song(loadedSong);
-		} else {
-			trace('Could not find song Defaulting to Dad Battle');
-			song = new Song('feddy-whop');
+		if (loadedSong == null) {
+			trace("Could not find song, defaulting to Dad Battle");
+			loadedSong = 'dad-battle';
 		}
+
+		song = new Song(loadedSong);
 
 		// Create character declarations
 		for (charData in song.info.characters) {
@@ -138,12 +138,7 @@ class PlayState extends FlxState
 		mainStage.build();
 		ZOrder.addToBackground(mainStage);
 
-		if(loadedSong != null){
-			MusicHandler.loadInstAndVoices(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
-		} else {
-			trace('Could not find song. Defaulting to Dad Battle');
-			MusicHandler.loadInstAndVoices('feddy-whop', 'Inst', 'Vocals');
-		}
+		MusicHandler.loadInstAndVoices(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.info.bpm, true);
