@@ -42,8 +42,8 @@ class MainMenuState extends FlxState
 			var yIterator:Float = (i * (100 + 75)) + 62.5;
 			var item:FlxSprite = new FlxSprite();
 			item.frames = Paths.sparrow("menu_" + mainMenuSparrow[i], 'images/states/mainMenu', ENGINE);
-			item.animation.addByPrefix('idle', mainMenuSparrow[i] + ' basic', 24, true);
-			item.animation.addByPrefix('selected', mainMenuSparrow[i] + ' white', 24, true);
+			item.animation.addByPrefix('idle', mainMenuSparrow[i] + ' idle', 24, true);
+			item.animation.addByPrefix('selected', mainMenuSparrow[i] + ' selected', 24, true);
 			item.animation.play('idle', true);
 			// item.scale.set(0.6, 0.6);
 			item.y = yIterator;
