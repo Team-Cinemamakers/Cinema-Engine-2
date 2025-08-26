@@ -44,7 +44,9 @@ class Character extends FlxSprite
 		this.icon = file.icon;
 		this.positionOffset = new FlxPoint(file.offset[0], file.offset[1]);
 		this.cameraOffset = new FlxPoint(file.camOffset[0], file.camOffset[1]);
-		offset = positionOffset;
+		// offset = positionOffset;
+
+		offset.set(width/2, -height);
 
 		frames = Paths.sparrow(character, "characters/" + character);
 

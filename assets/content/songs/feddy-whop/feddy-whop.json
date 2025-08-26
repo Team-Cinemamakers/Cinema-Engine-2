@@ -1,12 +1,19 @@
 {
   "events": [],
-  "metadata": {
+  "info": {
     "bpm": 140,
-    "defaults": {
-      "gf": "gf",
-      "opponent": "dad",
-      "player": "bf"
-    },
+    "characters": [
+        {
+          "name": "boyfriend",
+          "character": "bf",
+          "positionMarker": "bfPos"
+      },
+      {
+          "name": "opponent",
+          "character": "feddy",
+          "positionMarker": "oppPos"
+      }
+    ],
     "name": "feddy-whop",
     "scrollSpeed": 3.1,
     "songFiles": {
@@ -16,7 +23,7 @@
     "stage": "stage",
     "strumlines": [
       {
-        "characters": ["bf"],
+        "characters": ["boyfriend"],
         "kerning": 125,
         "playable": true,
         "position": [
@@ -47,7 +54,7 @@
         ]
       },
       {
-        "characters": ["feddy"],
+        "characters": ["opponent"],
         "kerning": 125,
         "playable": false,
         "position": [
@@ -81,7 +88,7 @@
   },
   "strumlines": [
     {
-      "character": "bf",
+      "characters": ["boyfriend"],
       "notes": [
         {
           "time": 13928.5714285714,
@@ -1111,7 +1118,7 @@
       ]
     },
     {
-      "character": "feddy",
+      "characters": ["opponent"],
       "notes": [
         {
           "time": 6857.14285714286,

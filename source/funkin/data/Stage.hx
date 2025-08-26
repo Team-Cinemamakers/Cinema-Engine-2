@@ -5,10 +5,10 @@ import flixel.group.FlxSpriteGroup;
 typedef StageFile = {
     var name:String;
     var objects:Array<StageObject>;
-    var characters:Array<StageCharacterData>;
+    var markers:Array<StageMarkerData>;
 }
 
-typedef StageCharacterData = {
+typedef StageMarkerData = {
     var name:String;
     var position:Array<Float>;
 }
@@ -106,4 +106,11 @@ class Stage extends FlxSpriteGroup
 			}
 		}
 	}
+
+    public function getPositionFromMarker(markerName:String):FlxPoint {
+        for (marker in data.markers) {
+            if (marker.name == markerName) return new FlxPoint(marker.position[0], marker.position[1]);
+        }
+        return new FlxPoint();
+    }
 }

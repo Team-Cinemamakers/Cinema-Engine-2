@@ -52,12 +52,9 @@ class Strumline extends FlxTypedGroup<StrumNote>
 			characters = ["bf"];
 		}
 
-		for(i in 0...this.characterNames.length){
-			var char:Character = new Character(this.characterNames[i]);
-			trace(char);
-			char.x = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).x;
-			char.y = PlayState.instance.getCharacterPositionFromStage(characterNames[i]).y;
-			PlayState.instance.characters.set(characterNames[i], char);
+		for(character in this.characterNames)
+		{
+			var char = PlayState.instance.characters.get(character);
 			this.characters.push(char);
 		}
 

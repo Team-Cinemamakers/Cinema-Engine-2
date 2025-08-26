@@ -1,12 +1,19 @@
 {
     "events": [],
-    "metadata": {
+    "info": {
         "bpm": 180,
-        "defaults": {
-            "speaker": "gf",
-            "opponent": "dad",
-            "player": "bf"
-        },
+        "characters": [
+            {
+              "name": "boyfriend",
+              "character": "bf",
+              "positionMarker": "bfPos"
+          },
+          {
+              "name": "opponent",
+              "character": "dad",
+              "positionMarker": "oppPos"
+          }
+        ],
         "name": "Dad Battle",
         "scrollSpeed": 2.3,
         "songFiles": {
@@ -16,7 +23,7 @@
         "stage": "stage",
         "strumlines": [
             {
-                "character": "bf",
+                "characters": ["boyfriend"],
                 "kerning": 125,
                 "playable": true,
                 "position": [
@@ -47,7 +54,7 @@
                 ]
             },
             {
-                "character": "dad",
+                "characters": ["opponent"],
                 "kerning": 125,
                 "playable": false,
                 "position": [
@@ -81,7 +88,7 @@
     },
     "strumlines": [
         {
-            "character": "bf",
+            "characters": ["boyfriend"],
             "notes": [
                 {
                     "time": 13333.334,
@@ -896,7 +903,7 @@
             ]
         },
         {
-            "character": "dad",
+            "characters": ["opponent"],
             "notes": [
                 {
                     "time": 10666.667,

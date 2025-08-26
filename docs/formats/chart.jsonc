@@ -1,7 +1,7 @@
 // Cinema Engine 2 Chart Format (Version 2)
 // Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
 {
-    "metadata": {
+    "info": {
         "name": "Dadbattle", // Song name as shown in-game
         "bpm": 180, // Initial song BPM
         "scrollSpeed": 3.2, // Initial song scroll speed
@@ -66,7 +66,7 @@
     ],
     "strumlines": [ // The actual notes, per-strumline
         {
-            "characters": "boyfriend", // Name of the character who owns this strumline, might be replaced in the future by just going through the metadata strumlines and seeing which character this would correspond to by index
+            "characters": "boyfriend", // Name of the character who owns this strumline, might be replaced in the future by just going through the info strumlines and seeing which character this would correspond to by index
             "notes": [
                 {
                     "time": 0, // Time (in milliseconds) at which the note is supposed to be hit

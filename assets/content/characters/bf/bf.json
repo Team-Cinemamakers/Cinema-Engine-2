@@ -83,7 +83,7 @@
         },
         {
             "name": "singLEFTmiss",
-            "prefix": "BF NOTE LEFT MISS",
+            "prefix": "BF NOTE LEFT MISS0",
             "offset": [
                 0,
                 0
@@ -97,7 +97,7 @@
         },
         {
             "name": "singDOWNmiss",
-            "prefix": "BF NOTE DOWN MISS",
+            "prefix": "BF NOTE DOWN MISS0",
             "offset": [
                 0,
                 0
@@ -111,7 +111,7 @@
         },
         {
             "name": "singUPmiss",
-            "prefix": "BF NOTE UP MISS",
+            "prefix": "BF NOTE UP MISS0",
             "offset": [
                 0,
                 0
@@ -126,7 +126,7 @@
         },
         {
             "name": "singRIGHTmiss",
-            "prefix": "BF NOTE RIGHT MISS",
+            "prefix": "BF NOTE RIGHT MISS0",
             "offset": [
                 0,
                 0

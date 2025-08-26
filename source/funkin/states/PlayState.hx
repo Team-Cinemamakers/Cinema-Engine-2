@@ -24,7 +24,7 @@ class PlayState extends FlxState
 	var notesLoaded:Bool = false;
 	public var noteInts:Array<Int> = [];
 
-	public static var song:SongData;
+	public static var song:Song;
 	public var stage:StageFile;
 
 	var loadAhead:Int = 50;
@@ -97,20 +97,28 @@ class PlayState extends FlxState
 		notesTypedGroup = new FlxTypedGroup<Note>();
 
 		if(loadedSong != null){
-			song = Song.fromFile(loadedSong);
+			song = new Song(loadedSong);
 		} else {
 			trace('Could not find song Defaulting to Dad Battle');
-			song = Song.fromFile('feddy-whop');
+			song = new Song('feddy-whop');
+		}
+
+		// Create character declarations
+		for (charData in song.info.characters) {
+			var charPos = mainStage.getPositionFromMarker(charData.positionMarker);
+			var char:Character = new Character(charData.character, charPos.x, charPos.y);
+
+			characters.set(charData.name, char);
 		}
 		
 		// Create strumlines
-		for (i in 0...song.metadata.strumlines.length)
+		for (i in 0...song.info.strumlines.length)
 		{
-			var strumLine:Strumline = new Strumline(song.metadata.strumlines[i].strumNotes, song.metadata.strumlines[i].characters,
-				song.metadata.strumlines[i].playable, song.metadata.strumlines[i].kerning, song.metadata.strumlines[i].position[0],
-				song.metadata.strumlines[i].position[1], i);
+			var strumLine:Strumline = new Strumline(song.info.strumlines[i].strumNotes, song.info.strumlines[i].characters,
+				song.info.strumlines[i].playable, song.info.strumlines[i].kerning, song.info.strumlines[i].position[0],
+				song.info.strumlines[i].position[1], i);
 
-			strumLine.scale = song.metadata.strumlines[i].scale;
+			strumLine.scale = song.info.strumlines[i].scale;
 			strumLine.updateStrums();
 
 			strumLine.cameras = [camUI];
@@ -131,14 +139,14 @@ class PlayState extends FlxState
 		ZOrder.addToBackground(mainStage);
 
 		if(loadedSong != null){
-			MusicHandler.loadInstAndVoices(loadedSong, song.metadata.songFiles.inst, song.metadata.songFiles.vocals);
+			MusicHandler.loadInstAndVoices(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
 		} else {
 			trace('Could not find song. Defaulting to Dad Battle');
 			MusicHandler.loadInstAndVoices('feddy-whop', 'Inst', 'Vocals');
 		}
 
 		// resets conductor and also plays loaded inst and voices on music handler
-		Conductor.reset(song.metadata.bpm, true);
+		Conductor.reset(song.info.bpm, true);
 
 		if(characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null){
 			camCenterX = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.x;
@@ -159,7 +167,7 @@ class PlayState extends FlxState
 		ZOrder.addToUIBackground(strumlines, 1);
 		ZOrder.addToUIBackground(notesTypedGroup, 2);
 
-		scrollSpeed = song.metadata.scrollSpeed * 7;
+		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
 		#if desktop
@@ -308,12 +316,12 @@ class PlayState extends FlxState
 		char.playAnimation(anim, force);
 		if(!playable) return;
 
-			if(camTween != null){
-				camTween.cancel();
-			}
-			camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.1, {
-				ease: FlxEase.quadInOut
-			});
+			// if(camTween != null){
+			// 	camTween.cancel();
+			// }
+			// camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.1, {
+			// 	ease: FlxEase.quadInOut
+			// });
 	}
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData, j:Int)
@@ -355,14 +363,5 @@ class PlayState extends FlxState
 
 	function onSongComplete(){
 		FlxG.switchState(() -> new MainMenuState());
-	}
-
-	public function getCharacterPositionFromStage(charName:String):FlxPoint{
-		for(i in 0...PlayState.instance.mainStage.data.characters.length){
-			if(PlayState.instance.mainStage.data.characters[i].name == charName){
-				return FlxPoint.get(PlayState.instance.mainStage.data.characters[i].position[0], PlayState.instance.mainStage.data.characters[i].position[1]);
-			}
-		}
-		return FlxPoint.get(0, 0);
 	}
 }
