@@ -80,7 +80,9 @@ class Note extends FlxSprite {
 		if(y <= 0 - this.height){
 			PlayState.instance.notesTypedGroup.remove(this, true);
 			this.destroy();
+			#if desktop
 			Gc.run(true);
+			#end
 		}
 
 		if(y <= strumnote.y + (this.height/2)){
@@ -91,7 +93,9 @@ class Note extends FlxSprite {
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
 					PlayState.instance.notesTypedGroup.remove(this, true);
 					this.destroy();
+					#if desktop
 					Gc.run(true);
+					#end
 				}
 				//PlayState.hitsound.play(true);
 			}

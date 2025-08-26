@@ -1,7 +1,6 @@
 package funkin.states;
 
 import backend.events.*;
-import cpp.vm.Gc;
 import funkin.objects.Transition;
 import funkin.states.MainMenuState;
 

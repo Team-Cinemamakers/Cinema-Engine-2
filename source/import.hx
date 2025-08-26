@@ -1,6 +1,5 @@
 import backend.*;
 import backend.Paths.PathSource;
-import cpp.vm.Gc;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -24,3 +23,6 @@ import sys.*;
 import sys.io.*;
 
 using StringTools;
+#if desktop
+import cpp.vm.Gc;
+#end

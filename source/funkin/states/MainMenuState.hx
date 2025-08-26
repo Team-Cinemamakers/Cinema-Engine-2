@@ -1,12 +1,14 @@
 package funkin.states;
 
 import backend.events.*;
-import cpp.vm.Gc;
 import funkin.objects.Transition;
 import funkin.states.*;
 import funkin.states.TitleState;
 import openfl.events.Event;
 import openfl.events.EventType;
+#if desktop
+import cpp.vm.Gc;
+#end
 
 class MainMenuState extends FlxState
 {
@@ -99,7 +101,9 @@ class MainMenuState extends FlxState
 	override function destroy()
 	{
 		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
+		#if desktop
 		Gc.run(true);
+		#end
 		menuOptions = null;
 
 		super.destroy();

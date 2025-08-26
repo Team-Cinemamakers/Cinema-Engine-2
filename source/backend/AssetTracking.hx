@@ -24,7 +24,9 @@ class AssetTracking{
                     asset.bitmap.__texture.dispose();
                 FlxG.bitmap.remove(asset);
             }
+            #if desktop
             Gc.run(true);
+            #end
     }
 
     public static function addAsset(yup:FlxGraphic){
