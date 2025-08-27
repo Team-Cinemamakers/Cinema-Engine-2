@@ -37,6 +37,8 @@ class MainMenuState extends FlxState
 		add(bg);
 
 		menuOptions = new FlxTypedGroup<FlxSprite>();
+		trace(menuOptions.zIndex);
+		menuOptions.zIndex = 10;
 		add(menuOptions);
 
 		for (i in 0...mainMenuOptions.length)
@@ -60,6 +62,8 @@ class MainMenuState extends FlxState
 		transition = new Transition();
 		add(transition);
 		transition.play(1);
+
+		ZOrder.reorder(this);
 	}
 
 	override public function update(elapsed:Float)

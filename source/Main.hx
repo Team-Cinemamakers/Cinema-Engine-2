@@ -10,12 +10,9 @@ class Main extends Sprite
 {
 	public static var conductor:Conductor;
 	public static var performanceDisplay:backend.PerformanceDisplay;
-	public static var zOrder:ZOrder;
 	public function new()
 	{
 		super();
-
-		zOrder = new ZOrder(5);
 
 		FlxSprite.defaultAntialiasing = true;
 

@@ -17,8 +17,6 @@ class FlixelMacros {
             pos: Context.currentPos()
         });
 
-        Context.info(fields, Context.currentPos());
-
         return fields;
     }
 }

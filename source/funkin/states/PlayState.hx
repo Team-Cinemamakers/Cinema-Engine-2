@@ -84,17 +84,16 @@ class PlayState extends FlxState
 		camGame.width = 4500;
 		camGame.height = 3500;
 
-		ZOrder.flushSprites();
-		ZOrder.addScreenSpace(this);
-
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
 		strumlines = new FlxTypedGroup<Strumline>();
+		strumlines.zIndex = ZLayers.UI;
 
 		notesTypedGroup = new FlxTypedGroup<Note>();
+		notesTypedGroup.zIndex = ZLayers.UI;
 
 		if (loadedSong == null) {
 			trace("Could not find song, defaulting to Dad Battle");
@@ -133,10 +132,11 @@ class PlayState extends FlxState
 			}
 		}
 
-		ZOrder.addToBackground(mainStage, 0);
+		add(strumlines);
+		add(notesTypedGroup);
 
 		mainStage.build();
-		ZOrder.addToBackground(mainStage);
+		add(mainStage);
 
 		MusicHandler.loadInstAndVoices(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
 
@@ -157,13 +157,14 @@ class PlayState extends FlxState
 		// Load in strums
 
 		for(char in characters){
-			ZOrder.addToCharacters(char);
+			char.zIndex = ZLayers.CHARACTER;
+			add(char);
 		}
-		ZOrder.addToUIBackground(strumlines, 1);
-		ZOrder.addToUIBackground(notesTypedGroup, 2);
 
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
+
+		ZOrder.reorder(this);
 
 		// #if desktop
 		// Gc.run(true);

@@ -9,6 +9,8 @@ class Transition extends FlxSprite {
         this.screenCenter(X);
         this.y = 0;
         this.visible = visible;
+        
+        this.zIndex = 10000;
 
     }
 

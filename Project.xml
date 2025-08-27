@@ -46,10 +46,9 @@
 	<!--<haxelib name="nape-haxe4" />-->
 
 	<!-- ______________________________ Macros __________________________________ -->
-	<!-- This shit on the high backburner because of Haxe bullshit -->
-	<!-- <haxeflag name="--macro" value="addMetadata('@:build(backend.macros.FlixelMacros.buildFlxBasic())', 'flixel.FlxBasic')" /> -->
 
-	<!--<haxeflag name="--macro" value="include('backend.macros')" />-->
+	<!-- Add Z-Index field to all FlxBasics -->
+	<haxeflag name="--macro" value="addMetadata('@:build(backend.macros.FlixelMacros.buildFlxBasic())', 'flixel.FlxBasic')" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

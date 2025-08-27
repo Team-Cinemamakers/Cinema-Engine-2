@@ -1,5 +1,9 @@
+#if !macro
 import backend.*;
 import backend.Paths.PathSource;
+import backend.ZOrder.ZLayers;
+import backend.ZOrder.ZOrder;
+import backend.utils.*;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -23,3 +27,4 @@ import sys.*;
 import sys.io.*;
 
 using StringTools;
+#end
