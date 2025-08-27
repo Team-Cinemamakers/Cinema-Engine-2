@@ -96,9 +96,9 @@ class Note extends FlxSprite {
 				this.longNoteStretch.destroy();
 			}
 			this.destroy();
-			#if desktop
-			Gc.run(true);
-			#end
+			// #if desktop
+			// Gc.run(true);
+			// #end
 		}
 
 		if(y <= strumnote.y + (this.height/2)){
@@ -112,9 +112,9 @@ class Note extends FlxSprite {
 						this.longNoteStretch.destroy();
 					}
 					this.destroy();
-					#if desktop
-					Gc.run(true);
-					#end
+					// #if desktop
+					// Gc.run(true);
+					// #end
 				}
 				//PlayState.hitsound.play(true);
 			}

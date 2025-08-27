@@ -23,6 +23,3 @@ import sys.*;
 import sys.io.*;
 
 using StringTools;
-#if desktop
-import cpp.vm.Gc;
-#end

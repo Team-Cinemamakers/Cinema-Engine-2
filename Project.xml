@@ -45,6 +45,12 @@
 	<!--In case you want to use nape with flixel-->
 	<!--<haxelib name="nape-haxe4" />-->
 
+	<!-- ______________________________ Macros __________________________________ -->
+	<!-- This shit on the high backburner because of Haxe bullshit -->
+	<!-- <haxeflag name="--macro" value="addMetadata('@:build(backend.macros.FlixelMacros.buildFlxBasic())', 'flixel.FlxBasic')" /> -->
+
+	<!--<haxeflag name="--macro" value="include('backend.macros')" />-->
+
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
 	<!--Remove the legacy health system-->

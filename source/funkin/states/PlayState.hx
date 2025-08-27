@@ -67,9 +67,9 @@ class PlayState extends FlxState
 		instance = this;
 
 		AssetTracking.destroyUnusedAssets(true);
-		#if desktop
-		Gc.run(true);
-		#end
+		// #if desktop
+		// Gc.run(true);
+		// #end
 
 		noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
@@ -165,9 +165,9 @@ class PlayState extends FlxState
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
-		#if desktop
-		Gc.run(true);
-		#end
+		// #if desktop
+		// Gc.run(true);
+		// #end
 	}
 
 	override public function update(elapsed:Float)
