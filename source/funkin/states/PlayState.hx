@@ -98,7 +98,7 @@ class PlayState extends FlxState
 
 		if (loadedSong == null) {
 			trace("Could not find song, defaulting to Dad Battle");
-			loadedSong = 'dad-battle';
+			loadedSong = 'feddy-whop';
 		}
 
 		song = new Song(loadedSong);
