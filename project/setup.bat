@@ -15,6 +15,7 @@ if %haxeVer% == %preferredHaxeVersion% (
     haxelib install hxcpp
     haxelib install openfl
     haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
+    haxelib git hscript-iris https://github.com/pisayesiwsi/hscript-iris
 
     echo Done!
 ) else (
