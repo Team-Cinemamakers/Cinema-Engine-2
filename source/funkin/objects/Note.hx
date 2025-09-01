@@ -80,7 +80,7 @@ class Note extends FlxSprite {
 				this.longNoteStretch.x = this.x + (this.width/2) - 15;
 				this.longNoteStretch.y = this.y + this.height;
 				PlayState.instance.add(this.longNoteStretch);
-				trace("Long note added with length of " + this.noteData.length);
+				// trace("Long note added with length of " + this.noteData.length);
 			}
 			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
 			if(this.longNoteStretch != null){
@@ -123,7 +123,7 @@ class Note extends FlxSprite {
 
 	public function clickedOnRow():Bool
 	{
-		if (MathFunctions.isInRange(y, strumnote.y, 100))
+		if (MathUtil.isInRange(y, strumnote.y, 100))
 		{
 			return true;
 		}

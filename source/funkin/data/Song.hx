@@ -64,7 +64,7 @@ class Song
 
 	public static function fromFile(song:String, directory:String = ""):SongData
 	{
-        var rawJson = JsonFunctions.loadJson(Paths.json("songs/" + song + "/" + song, directory));
+        var rawJson = JsonUtil.loadJson(Paths.json("songs/" + song + "/" + song, directory));
 		var casted:SongData = cast(Json.parse(rawJson));
 		return casted;
     }

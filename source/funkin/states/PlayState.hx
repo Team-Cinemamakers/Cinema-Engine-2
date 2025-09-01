@@ -189,13 +189,13 @@ class PlayState extends FlxState
 			Conductor.setConductorTime(MusicHandler.inst.time, this);
 		}
 		
-		if(camGame.zoom != baseZoom && !MathFunctions.isInRange(camGame.zoom, baseZoom, 0.01)){
+		if(camGame.zoom != baseZoom && !MathUtil.isInRange(camGame.zoom, baseZoom, 0.01)){
 			if(camGame.zoom > baseZoom){
 				camGame.zoom -= 0.2 * elapsed;
 			} else {
 				camGame.zoom += 0.2 * elapsed;
 			} 
-		} else if(MathFunctions.isInRange(camGame.zoom, baseZoom, 0.005)){
+		} else if(MathUtil.isInRange(camGame.zoom, baseZoom, 0.005)){
 			camGame.zoom = baseZoom;
 		}
 
@@ -266,13 +266,13 @@ class PlayState extends FlxState
 		{
 			if(notesTypedGroup.members[i] != null){
 				var thisNote:Note = notesTypedGroup.members[i];
-				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 140)){
+				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 140)){
 					var hitType:String = 'Meh';
-					if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
+					if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
 						hitType = 'Perfect';
-					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 60)){
+					} else if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60)){
 						hitType = 'Great';
-					} else if(MathFunctions.isInRange(thisNote.y, thisNote.strumnote.y, 90)){
+					} else if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 90)){
 						hitType = 'Good';
 					}
 					thisNote.strumnote.pressedOnNote = true;

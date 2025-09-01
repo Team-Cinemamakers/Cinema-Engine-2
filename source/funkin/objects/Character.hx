@@ -31,6 +31,7 @@ class Character extends FlxSprite
 	// var animations:Map<String, CharacterAnimation>;
 	public var animOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
 	public var animCamOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
+	public var characterScript:HScript = null;
 
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
@@ -60,12 +61,20 @@ class Character extends FlxSprite
 			animCamOffsets[anim.name] = new FlxPoint(anim.camOffset[0], anim.camOffset[1]);
 		}
 
-		trace(animation.getNameList());
+		// Initiate character script
+		if (Paths.exists(Paths.hscript(character, "characters/" + character))) {
+			characterScript = Scripts.create(character + "-character", character, "characters/" + character);
+
+			characterScript.set("character", this);
+
+			// CALLBACK: onCreate
+			characterScript.run("onCreate");
+		}
 	}
 
 	function load(character)
 	{
-		var rawJson = JsonFunctions.loadJson(Paths.json(character, "characters/" + character));
+		var rawJson = JsonUtil.loadJson(Paths.json(character, "characters/" + character));
 		var casted:CharacterFile = cast(Json.parse(rawJson));
 		return casted;
 	}
@@ -76,5 +85,17 @@ class Character extends FlxSprite
 			return;
 		offset = positionOffset + animOffsets[animation];
 		this.animation.play(animation, force);
+
+		// CALLBACK: onAnimationPlayed
+		if (characterScript != null) 
+			characterScript.run("onAnimationPlayed", [animation]);
+	}
+
+	public override function update(elapsed:Float) {
+		super.update(elapsed);
+
+		// CALLBACK: onUpdate
+		if (characterScript != null) 
+			characterScript.run("onUpdate", [elapsed]);
 	}
 }

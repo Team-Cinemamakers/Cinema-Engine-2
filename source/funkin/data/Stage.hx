@@ -43,7 +43,7 @@ class Stage extends FlxSpriteGroup
     {
         super();
 
-        var json = JsonFunctions.loadJson(Paths.json(stage, "stages/" + stage));
+        var json = JsonUtil.loadJson(Paths.json(stage, "stages/" + stage));
 		var stage:StageFile = cast(Json.parse(json));
 
         // SET DEFAULTS FOR UNSPECIFIED

@@ -1,5 +1,6 @@
 package;
 
+import backend.scripting.Scripts;
 import flixel.FlxGame;
 import flixel.addons.display.FlxZoomCamera;
 import flixel.system.debug.console.ConsoleHistory;

@@ -2,7 +2,10 @@ package backend.utils;
 
 import flixel.util.FlxSort;
 
-class SortFunctions {
+/**
+    Collection of sorting-related functions
+**/
+class SortUtil {
     /**
         Sorts by the FlxBasic's Z-Index value
     **/

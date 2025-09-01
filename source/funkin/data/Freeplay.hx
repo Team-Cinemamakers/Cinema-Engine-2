@@ -19,7 +19,7 @@ class Freeplay
 {
 	public static function loadFreeplay():FreeplayData
 	{
-        var rawJson = JsonFunctions.loadJson(Paths.json("freeplay", "game/data", CONTENT));
+        var rawJson = JsonUtil.loadJson(Paths.json("freeplay", "game/data", CONTENT));
 		var casted:FreeplayData = cast(Json.parse(rawJson));
 		return casted;
     }

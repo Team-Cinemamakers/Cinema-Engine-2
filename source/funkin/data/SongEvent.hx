@@ -28,7 +28,7 @@ typedef SongEventFile = {
 class SongEvent {
     public static function fromFile(eventName:String, directory:String):SongEventFile
 	{
-        var rawJson = JsonFunctions.loadJson(Paths.json("events/" + eventName, directory));
+        var rawJson = JsonUtil.loadJson(Paths.json("events/" + eventName, directory));
 		var casted:SongEventFile = cast(Json.parse(rawJson));
         return casted;
     }

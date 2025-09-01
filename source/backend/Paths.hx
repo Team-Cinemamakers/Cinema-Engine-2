@@ -74,6 +74,12 @@ class Paths
 		return file(pth, directory, source) + ".xml";
 	}
 
+	// gets an hscript file
+	public static function hscript(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT):String
+	{
+		return file(pth, directory, source) + ".hxs";
+	}
+
 	/*
 		SPECIFIC ASSETS FUNCTIONS
 	 */

@@ -40,6 +40,8 @@
 	<haxelib name="hxcpp" />
 	<haxelib name="flxanimate" />
 
+	<haxelib name="hscript-iris" />
+
 	<!--<haxelib name="flixel-ui" />-->
 
 	<!--In case you want to use nape with flixel-->
@@ -91,6 +93,9 @@
 
 	<!-- Enable warnings about future deprecations in Haxe 5.0 -->
 	<haxedef name="haxe-next"/>
+
+	<!-- HScript stuffs -->
+	<haxedef name="hscriptPos" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 

@@ -3,6 +3,7 @@ import backend.*;
 import backend.Paths.PathSource;
 import backend.ZOrder.ZLayers;
 import backend.ZOrder.ZOrder;
+import backend.scripting.*;
 import backend.utils.*;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
