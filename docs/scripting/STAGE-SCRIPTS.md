@@ -13,14 +13,14 @@ Removes an object from the stage.
 Returns an FlxPoint from a stage marker.
 
 # Callbacks
-## `onCreate()`
+## `create()`
 Called when the stage is created, before the stage builder runs.
 
-## `onStageBuild()`
+## `stageBuild()`
 Called once the stage builder starts.
 
-## `onStageBuildObject(object:StageObject)`
+## `stageBuildObject(object:StageObject)`
 Called once the stage builder starts building an object.
 
-## `onStageBuildEnd()`
+## `stageBuildEnd()`
 Called when the stage builder is finished. If you want to add any extra elements to the stage this is probably the best point to do so.

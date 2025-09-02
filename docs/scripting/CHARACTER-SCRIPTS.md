@@ -3,11 +3,11 @@
 Reference to the character itself
 
 # Callbacks
-## `onCreate()`
+## `create()`
 Called when the character is created.
 
-## `onUpdate(elapsed:Float)`
+## `update(elapsed:Float)`
 Called when the character is updated.
 
-## `onAnimationPlayed(animation:String)`
+## `playAnimation(animation:String)`
 Called when the character plays an animation.

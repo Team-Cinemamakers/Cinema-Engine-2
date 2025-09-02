@@ -33,8 +33,6 @@ class CoolInput
 				return (FlxG.keys.justPressed.RBRACKET);
 			case "minus":
 				return (FlxG.keys.justPressed.LBRACKET);
-			case "fart":
-				return (FlxG.keys.justPressed.Q);
 		}
 		return false;
 	}

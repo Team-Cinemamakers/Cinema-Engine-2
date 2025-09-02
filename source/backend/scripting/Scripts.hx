@@ -4,6 +4,7 @@ import crowplexus.iris.Iris.IrisCall;
 import funkin.data.Song;
 import funkin.data.Stage;
 import funkin.objects.Alphabet;
+import funkin.objects.Transition;
 
 enum ScriptContext {
     ANY; // Not a context, but is used for signifying that any context is fine
@@ -21,13 +22,25 @@ enum ScriptContext {
 class Scripts {
     public static var scripts:Map<String, HScript> = [];
 
-    public static function create(name:String, pth:String, directory:String = "", source:PathSource = PathSource.CONTENT, context:ScriptContext):HScript {
-        if (Paths.exists(Paths.hscript(pth, directory, source))) {
-            var script = new HScript(name, Paths.hscript(pth, directory, source), context);
-            scripts[name] = script;
+    public static function create(name:String, pth:String, context:ScriptContext):HScript {
+        if (Paths.exists(pth)) {
+            // Check in case its a duplicate to prevent loading a shit ton of the same scripts. Might replace with a better solution later
+            remove(name);
+
+            var script = new HScript(name, pth, context);
+            scripts.set(name,script);
             return script;
         }
         return null;
+    }
+
+    public static function remove(name:String):Void {
+        if (scripts.exists(name)) 
+        {
+            scripts.get(name).destroy();
+            scripts.remove(name);
+            
+        }
     }
 
     /**
@@ -48,14 +61,20 @@ class Scripts {
 
         "Conductor" => Conductor,
         "Paths" => Paths,
+        "PathSource" => PathSource,
         "JsonUtil" => JsonUtil,
         "MathUtil" => MathUtil,
         "SortUtil" => SortUtil,
         "ZLayers" => ZLayers,
+        "CoolInput" => CoolInput,
+        "ScrollableMenu" => ScrollableMenu,
+        "MusicHandler" => MusicHandler,
+        "Globals" => Globals,
 
         "Song" => Song,
         "Stage" => Stage,
         "Alphabet" => Alphabet,
+        "Transition" => Transition,
 
         "PlayState" => PlayState.instance
 

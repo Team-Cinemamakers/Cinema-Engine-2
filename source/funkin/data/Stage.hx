@@ -71,22 +71,22 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
         setupScripting();
 
-        // CALLBACK: onCreate
+        // CALLBACK: create
         if (script != null)
-            script.run('onCreate');
+            script.run('create');
     }
 
     public function build(){
-        // CALLBACK: onStageBuild
+        // CALLBACK: stageBuild
         if (script != null)
-            script.run('onStageBuild');
+            script.run('stageBuild');
 
 		for(i in 0...data.objects.length){
 			var obj:StageObject = data.objects[i];
 
-            // CALLBACK: onStageBuildObject
+            // CALLBACK: stageBuildObject
             if (script != null)
-                script.run('onStageBuildObject', [obj]);
+                script.run('stageBuildObject', [obj]);
 
             var spritePath:String = Paths.image(obj.file, "stages/" + data.name + "/assets");
 			if(Paths.exists(spritePath)){
@@ -132,9 +132,9 @@ class Stage extends FlxTypedGroup<FlxBasic>
 			}
 		}
 
-        // CALLBACK: onStageBuildEnd
+        // CALLBACK: stageBuildEnd
         if (script != null)
-            script.run('onStageBuildEnd');
+            script.run('stageBuildEnd');
 
         SortUtil.reorder(this);
 	}
@@ -149,7 +149,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
     function setupScripting() {
 		// Initiate character script
 		if (Paths.exists(Paths.hscript(currentStage, "stages/" + currentStage))) {
-			script = Scripts.create(currentStage + "-stage", currentStage, "stages/" + currentStage, ScriptContext.STAGE);
+			script = Scripts.create(currentStage + "-stage", Paths.hscript(currentStage, "stages/" + currentStage), ScriptContext.STAGE);
 
             script.set("add", add);
             script.set("remove", remove);

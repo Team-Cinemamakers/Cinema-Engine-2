@@ -31,7 +31,7 @@ class Character extends FlxSprite
 	// var animations:Map<String, CharacterAnimation>;
 	public var animOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
 	public var animCamOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
-	public var characterScript:HScript = null;
+	public var script:HScript = null;
 
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
@@ -63,9 +63,9 @@ class Character extends FlxSprite
 
 		setupScripting();
 
-		// CALLBACK: onCreate
-		if (characterScript != null)
-			characterScript.run("onCreate");
+		// CALLBACK: create
+		if (script != null)
+			script.run("create");
 	}
 
 	function load(character)
@@ -82,25 +82,25 @@ class Character extends FlxSprite
 		offset = positionOffset + animOffsets[animation];
 		this.animation.play(animation, force);
 
-		// CALLBACK: onAnimationPlayed
-		if (characterScript != null) 
-			characterScript.run("onAnimationPlayed", [animation]);
+		// CALLBACK: playAnimation
+		if (script != null) 
+			script.run("playAnimation", [animation]);
 	}
 
 	public override function update(elapsed:Float) {
 		super.update(elapsed);
 
-		// CALLBACK: onUpdate
-		if (characterScript != null) 
-			characterScript.run("onUpdate", [elapsed]);
+		// CALLBACK: update
+		if (script != null) 
+			script.run("update", [elapsed]);
 	}
 
 	function setupScripting() {
 		// Initiate character script
 		if (Paths.exists(Paths.hscript(fileName, "characters/" + fileName))) {
-			characterScript = Scripts.create(fileName + "-character", fileName, "characters/" + fileName, ScriptContext.CHARACTER);
+			script = Scripts.create(fileName + "-character", Paths.hscript(fileName, "characters/" + fileName), ScriptContext.CHARACTER);
 
-			characterScript.set("character", this);
+			script.set("character", this);
 		}
 	}
 }
