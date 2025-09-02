@@ -14,3 +14,9 @@ Called before the state is updated.
 
 ## `update(elapsed:Float)`
 Called when the state is updated.
+
+## `preDestroy()`
+Called before the state is destroyed.
+
+## `destroy()`
+Called when the state is destroyed.

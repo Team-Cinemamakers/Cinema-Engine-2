@@ -32,6 +32,20 @@ class HScriptState extends FlxSubState {
             script.run("update", [elapsed]);
     }
 
+    override function destroy() {
+        // CALLBACK: preDestroy
+        if (script != null)
+            script.run("preDestroy");
+        
+        super.destroy();
+
+        // CALLBACK: destroy
+        if (script != null)
+            script.run("destroy");
+
+        Scripts.remove(script.name);
+    }
+
     function setupScripting(name:String, path:String) {
         // Initiate state script
         if (Paths.exists(path)) {
@@ -39,6 +53,7 @@ class HScriptState extends FlxSubState {
 
             script.set("add", add);
             script.set("remove", remove);
+            script.set("this", this);
         }
     }
 }

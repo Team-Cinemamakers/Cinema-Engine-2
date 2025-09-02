@@ -32,7 +32,7 @@ class Conductor
 	}
 
 	// plays conductor with bpm and also runs music play for playstate based on a bool value (this does not reset so it can be used after pause)
-	public static function start(bpmNew:Float = 120, runMusicPlay:Bool = false)
+	public static function start(bpmNew:Float = 120, runMusicPlay:Bool = false):Void
 	{
 		BPM = bpmNew;
 		doConductorTime = true;
@@ -43,13 +43,13 @@ class Conductor
 	}
 
 	// pauses the conductor
-	public static function pause()
+	public static function pause():Void
 	{
 		doConductorTime = false;
 	}
 
 	// resets conductor but does not stop or start it
-	public static function reset(bpmNew:Float = 120, runMusicPlay:Bool = false)
+	public static function reset(bpmNew:Float = 120, runMusicPlay:Bool = false):Void
 	{
 		if (runMusicPlay)
 			MusicHandler.play();
@@ -66,7 +66,7 @@ class Conductor
 	}
 
 	// stops conductor completely and resets all values
-	public static function stop()
+	public static function stop():Void
 	{
 		doConductorTime = false;
 		TIME = 0;
@@ -78,7 +78,7 @@ class Conductor
 	}
 
 	// sets a new bpm value for the conductor and calculates new time in between beats (in case of in song bpm changes)
-	public static function setBPM(bpmNew:Float)
+	public static function setBPM(bpmNew:Float):Void
 	{
 		BPM = bpmNew;
 		beatTime = (60 / BPM) * 1000;
@@ -86,7 +86,7 @@ class Conductor
 	}
 
 	// ran on update in the flxstate, adds the elapsed time to the conductor and then checks if music needs sync, also calculates curBeat
-	public static function setConductorTime(timeNew:Float, state:FlxState)
+	public static function setConductorTime(timeNew:Float, state:FlxState):Void
 	{
 		if (doConductorTime)
 		{

@@ -17,7 +17,6 @@ class Main extends Sprite
 
 		FlxSprite.defaultAntialiasing = true;
 
-		// create that conductor!
 		conductor = new Conductor();
 
 		FlxG.autoPause = false;

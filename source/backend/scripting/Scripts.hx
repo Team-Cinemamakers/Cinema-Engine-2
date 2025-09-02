@@ -1,6 +1,7 @@
 package backend.scripting;
 
 import crowplexus.iris.Iris.IrisCall;
+import flixel.util.FlxAxes;
 import funkin.data.Song;
 import funkin.data.Stage;
 import funkin.objects.Alphabet;
@@ -58,6 +59,8 @@ class Scripts {
         "FlxTween" => FlxTween,
         "FlxEase" => FlxEase,
         "FlxColor" => FlxColor.colorLookup,
+        "FlxTypedGroup" => FlxTypedGroup,
+        "FlxAxes" => MacroUtil.buildAbstract(FlxAxes),
 
         "Conductor" => Conductor,
         "Paths" => Paths,
@@ -75,15 +78,12 @@ class Scripts {
         "Stage" => Stage,
         "Alphabet" => Alphabet,
         "Transition" => Transition,
-
-        "PlayState" => PlayState.instance
-
     ];
 
     /**
         Sets a variable for all scripts. Optionally you can specify a context that the scripts need in order to qualify.
     **/
-    public static function setForScripts(variable:String, argument:Dynamic, requireContext:ScriptContext = ScriptContext.ANY) {
+    public static function setForScripts(variable:String, argument:Dynamic, requireContext:ScriptContext = ScriptContext.ANY):Void {
         for (script in scripts) {
             if (script.context == requireContext && requireContext != ScriptContext.ANY) script.set(variable, argument);
         }
@@ -96,7 +96,7 @@ class Scripts {
         var calls:Map<String, IrisCall> = [];
 
         for (name => script in scripts) {
-            if (script.context == requireContext && requireContext != ScriptContext.ANY) calls[name] = script.run(func, args);
+            if (script.context == requireContext && requireContext != ScriptContext.ANY) calls.set(name, script.run(func, args));
         }
 
         return calls;

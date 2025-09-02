@@ -27,7 +27,7 @@ class MainMenuState extends FlxState
 
 		AssetTracking.destroyUnusedAssets(true);
 
-		if (!FlxG.sound.music.playing || FlxG.sound.music == null)
+		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.audio('freakyMenu', 'audio/music', ENGINE));
 		}
@@ -58,7 +58,6 @@ class MainMenuState extends FlxState
 
 		scroll(0);
 
-		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 		transition = new Transition();
 		add(transition);
 		transition.play(1);
@@ -138,9 +137,5 @@ class MainMenuState extends FlxState
 		// menuOptions.members[curItem].scale.set(1.1, 1.1);
 		menuOptions.members[curItem].centerOffsets();
 		menuOptions.members[curItem].screenCenter(X);
-	}
-
-	function beatHit(e:Event) {
-		
 	}
 }

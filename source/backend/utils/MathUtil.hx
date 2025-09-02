@@ -19,7 +19,7 @@ class MathUtil
 	}
 
 	
-	public static function absolute(val:Float){
+	public static function absolute(val:Float):Float {
 		if(val >= 0){
 			return val;
 		} else{
