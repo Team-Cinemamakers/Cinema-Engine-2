@@ -24,7 +24,7 @@ class HScriptState extends FlxSubState {
 
         // Auto-update conductor to reduce boilerplate on custom states
         if(FlxG.sound.music != null){
-            Conductor.setConductorTime(FlxG.sound.music.time, this);
+            Conductor.setConductorTime(FlxG.sound.music.time);
         }
 
         // CALLBACK: update

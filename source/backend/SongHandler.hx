@@ -1,20 +1,28 @@
 package backend;
 
-class MusicHandler
+class SongHandler
 {
 	public static var inst:FlxSound;
 	public static var voices:FlxSound;
 
 	public static var playing:Bool = false;
 
-	// loads the inst and voices for a song based on a song name
-	public static function loadInstAndVoices(songName:String, instPath:String, vocalsPath:String):Void
+	/**
+		Loads the instrumental and vocals for a song by name.
+
+		@param songName Name of the song
+		@param instPath Name of the instrumental track
+		@param vocalsPath Name of the vocals track
+	**/
+	public static function load(songName:String, instPath:String, vocalsPath:String):Void
 	{
 		inst = FlxG.sound.load(Paths.audio(instPath, 'songs/' + songName));
 		voices = FlxG.sound.load(Paths.audio(vocalsPath, "songs/" + songName));
 	}
 
-	// plays the inst and voices while also instantly fixing the time in case of conductor pausing
+	/**
+		Plays instrumental and vocals.
+	**/
 	public static function play():Void
 	{
 		if (inst != null && voices != null)
@@ -25,7 +33,9 @@ class MusicHandler
 		}
 	}
 
-	// shuts the music up them bitches needa be quiet
+	/**
+		Stops the song completely.
+	**/
 	public static function stop():Void
 	{
 		if (inst != null && voices != null)
@@ -36,7 +46,9 @@ class MusicHandler
 		}
 	}
 
-	// pauses music but doesnt reset time idk
+	/**
+		Pauses the song.
+	**/
 	public static function pause():Void
 	{
 		if (inst != null && voices != null)
@@ -47,7 +59,9 @@ class MusicHandler
 		}
 	}
 
-	// checks if the voices is off sync from the inst
+	/**
+		Checks if the vocals are offsync from the instrumental, and fixes them if they are.
+	**/
 	public static function checkSync():Void
 	{
 		if (voices != null)
@@ -59,6 +73,11 @@ class MusicHandler
 		}
 	}
 
+	/**
+		Skips time by specified amount in milliseconds.
+
+		@param time Amount to skip by
+	**/
 	public static function skipTime(time:Float):Void
 	{
 		if (inst.length < inst.time + time || voices.length < voices.time + time)

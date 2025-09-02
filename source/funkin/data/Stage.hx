@@ -22,9 +22,9 @@ typedef StageObject = {
     var flipX:Null<Bool>;
     var zIndex:Null<Int>;
     
-    var animations:Null<Array<StageObjectAnimationData>>; // if its null then obviously animated is false
+    var animations:Null<Array<StageObjectAnimationData>>; // If its null then obviously animated is false
     var defaultAnimation:Null<String>;
-    var frameSize:Null<Array<Int>>; // would be used for stuff like spritesheets that arent atlases
+    var frameSize:Null<Array<Int>>; // Would be used for stuff like spritesheets that arent atlases
 
 }
 
@@ -34,8 +34,8 @@ typedef StageObjectAnimationData = {
     var framerate:Float;
     var flipX:Null<Bool>;
 
-    var prefix:Null<String>; // for prefix 
-    var indices:Null<Array<Int>>; // for indices
+    var prefix:Null<String>; // For prefix 
+    var indices:Null<Array<Int>>; // For indices
 }
 
 class Stage extends FlxTypedGroup<FlxBasic>
@@ -76,6 +76,9 @@ class Stage extends FlxTypedGroup<FlxBasic>
             script.run('create');
     }
 
+    /**
+        Builds the current stage from the stage file
+    **/
     public function build(){
         // CALLBACK: stageBuild
         if (script != null)
@@ -139,6 +142,13 @@ class Stage extends FlxTypedGroup<FlxBasic>
         SortUtil.reorder(this);
 	}
 
+    /**
+        Gets a position from a specified position marker if defined in the stage file.
+
+        @param markerName Name of the marker
+        
+        @returns An FlxPoint containing the marker's position
+    **/
     public function getPositionFromMarker(markerName:String):FlxPoint {
         for (marker in data.markers) {
             if (marker.name == markerName) return new FlxPoint(marker.position[0], marker.position[1]);

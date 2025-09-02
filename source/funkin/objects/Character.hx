@@ -23,9 +23,9 @@ typedef CharacterAnimation =
 
 class Character extends FlxSprite
 {
-	public var name:String; // display name of the character in places like chart editor
+	public var name:String; // Display name of the character in places like chart editor
 	public var icon:String;
-	public var positionOffset:FlxPoint; // same as offset in the char file // slippery slope -x8c8r
+	public var positionOffset:FlxPoint; // Same as offset in the char file // slippery slope -x8c8r
 	public var cameraOffset:FlxPoint;
 	public var fileName:String;
 	// var animations:Map<String, CharacterAnimation>;
@@ -75,6 +75,12 @@ class Character extends FlxSprite
 		return casted;
 	}
 
+	/**
+		Plays a specified animation for the character, if it exists.
+
+		@param animation Animation name
+		@param force Whether the animation should override the current animation
+	**/
 	public function playAnimation(animation:String, force:Bool = false)
 	{
 		if (animOffsets[animation] == null)

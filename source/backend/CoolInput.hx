@@ -2,10 +2,13 @@ package backend;
 
 class CoolInput
 {
-	// custom names for inputs (will be important later)
-	public static function pressed(str:String):Bool
+	/**
+		Whether a specified input was pressed last frame
+		@param input Input to check
+	**/
+	public static function pressed(input:String):Bool
 	{
-		switch (str)
+		switch (input)
 		{
 			case "accept":
 				return (FlxG.keys.justPressed.ENTER);
@@ -37,9 +40,13 @@ class CoolInput
 		return false;
 	}
 
-	public static function held(str:String):Bool
+	/**
+		Whether a specified input is being held
+		@param input Input to check
+	**/
+	public static function held(input:String):Bool
 	{
-		switch (str)
+		switch (input)
 		{
 			case "noteLeft":
 				return (FlxG.keys.pressed.D);
@@ -61,9 +68,13 @@ class CoolInput
 		return false;
 	}
 
-	public static function released(str:String):Bool
+	/**
+		Whether a specified input was released last frame
+		@param input Input to check
+	**/
+	public static function released(input:String):Bool
 	{
-		switch (str)
+		switch (input)
 		{
 			case "noteLeft":
 				return (FlxG.keys.justReleased.D);

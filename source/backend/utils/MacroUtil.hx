@@ -6,9 +6,12 @@ package backend.utils;
 class MacroUtil
 {
     /**
-        Converts abstract classes to ones usable in HScript
+        Converts abstract classes to ones usable in HScript.
 
         Stolen from NightmareVision btw - https://github.com/DuskieWhy/NightmareVision/blob/main/source/funkin/utils/MacroUtil.hx
+
+        @param typePath Type to convert
+        @param exclude (Optional) String array of fields that should be excluded
     **/
 	public static macro function buildAbstract(typePath:Expr, ?exclude:Array<String>)
 	{

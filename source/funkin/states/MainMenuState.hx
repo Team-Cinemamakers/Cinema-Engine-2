@@ -97,7 +97,7 @@ class MainMenuState extends FlxState
 			});
 		}
 		if(FlxG.sound.music != null){
-			Conductor.setConductorTime(FlxG.sound.music.time, this);
+			Conductor.setConductorTime(FlxG.sound.music.time);
 		}
 	}
 

@@ -138,7 +138,7 @@ class PlayState extends FlxState
 		mainStage.build();
 		add(mainStage);
 
-		MusicHandler.loadInstAndVoices(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
+		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.info.bpm, true);
@@ -179,14 +179,14 @@ class PlayState extends FlxState
 			animDeb[i] += elapsed;
 		}
 
-		if(MusicHandler.inst != null && MusicHandler.voices != null){
-			if(MusicHandler.inst.length >= MusicHandler.voices.length){
-				Conductor.setConductorTime(MusicHandler.inst.time, this);
+		if(SongHandler.inst != null && SongHandler.voices != null){
+			if(SongHandler.inst.length >= SongHandler.voices.length){
+				Conductor.setConductorTime(SongHandler.inst.time);
 			} else {
-				Conductor.setConductorTime(MusicHandler.voices.time, this);
+				Conductor.setConductorTime(SongHandler.voices.time);
 			}
-		} else if (MusicHandler.inst != null){
-			Conductor.setConductorTime(MusicHandler.inst.time, this);
+		} else if (SongHandler.inst != null){
+			Conductor.setConductorTime(SongHandler.inst.time);
 		}
 		
 		if(camGame.zoom != baseZoom && !MathUtil.isInRange(camGame.zoom, baseZoom, 0.01)){
@@ -223,7 +223,7 @@ class PlayState extends FlxState
 		}
 		if (CoolInput.pressed("skipTime"))
 		{
-			MusicHandler.skipTime(5000);
+			SongHandler.skipTime(5000);
 		}
 		if (CoolInput.pressed("plus"))
 		{

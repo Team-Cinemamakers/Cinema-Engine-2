@@ -33,7 +33,7 @@ typedef SongInfo =
 typedef SongData =
 {
 	var info:SongInfo;
-	var strumlines:Array<StrumlineData>; // each strumline contains its own chart for that strumline only
+	var strumlines:Array<StrumlineData>; // Each strumline contains its own chart for that strumline only
 	var events:Array<SongEventData>;
 }
 
@@ -53,6 +53,11 @@ class Song
 		this.events = song.events;
 	}
 
+	/**
+		Get metadata for a character from the chart file.
+
+		@param charName Name of the character as specified in the chart
+	**/
 	public function getCharacterMetadata(charName:String):SongCharacter {
 		trace(charName);
 		trace(info.characters);
@@ -62,6 +67,12 @@ class Song
 		return null;
 	}
 
+	/**
+		Get song data from a file.
+
+		@param song Name of the song
+		@param directory Directory that the song is located in
+	**/
 	public static function fromFile(song:String, directory:String = ""):SongData
 	{
         var rawJson = JsonUtil.loadJson(Paths.json("songs/" + song + "/" + song, directory));

@@ -18,6 +18,8 @@ class SortUtil {
 
     /**
         Reorders the group/state. Lower Z objects go in the back, while higher Z objects go in the front.
+
+        @param group (Optional) Group to sort. If left unspecified the current state gets reordered.
     **/
     public static function reorder(?group:FlxGroup):Void {
         group ??= FlxG.state;

@@ -6,55 +6,73 @@ import openfl.events.EventDispatcher;
 
 class Conductor
 {
-	public static var BPM:Float = 120; // beats per minute
-	public static var TIME:Float = 0; // time in milliseconds
+	public static var BPM:Float = 120; // Beats per minute
+	public static var TIME:Float = 0; // Time in milliseconds
 
-	static var doConductorTime:Bool = false; // is conductor currently allowed to count up
+	static var doConductorTime:Bool = false; // Is conductor currently allowed to count up
 
-	public static var evDisp:EventDispatcher; // event dispatcher
-	public static var beatEvent:Event = new BeatEvent(BeatEvent.BEAT_HIT); // beat event to call on each beat and the event dispatcher for the event
-	public static var stepEvent:Event = new StepEvent(StepEvent.STEP_HIT); // step event to call on each step and the event dispatcher for the event
+	public static var evDisp:EventDispatcher; // Event dispatcher
+	public static var beatEvent:Event = new BeatEvent(BeatEvent.BEAT_HIT); // Beat event to call on each beat
+	public static var stepEvent:Event = new StepEvent(StepEvent.STEP_HIT); // Step event to call on each step
 
-	public static var curBeat:Int = 0; // the current beat in the current song
-	static var lastBeatTime:Float = 0; // the total song milliseconds when the last beat was hit
+	public static var curBeat:Int = 0; // The current beat
+	static var lastBeatTime:Float = 0; // Time in milliseconds when the last beat was hit
 
-	public static var curStep:Int = 0; // the current step in the current song
-	static var lastStepTime:Float = 0; // the total song milliseconds when the last step was hit
+	public static var curStep:Int = 0; // The current step
+	static var lastStepTime:Float = 0; // Time in milliseconds when the last step occurred
 
-	static var beatTime:Float = (60 / BPM) * 1000; // the calculated milliseconds between each beat
-	static var stepTime:Float = beatTime / 4; // the calculated milliseconds between each step // TODO: support time signatures LMAOO
+	static var beatTime:Float = (60 / BPM) * 1000; // The calculated milliseconds between each beat
+	static var stepTime:Float = beatTime / 4; // The calculated milliseconds between each step // TODO: support time signatures LMAOO
 
-	// creates conductor (does this on main)
+	/**
+		Creates a conductor.
+
+		This is done by default in Main, and usually there is no need to make another one.
+
+		@param startImmediately Whether the conductor should start counting up immediately
+	**/
 	public function new(startImmediately:Bool = false)
 	{
 		doConductorTime = startImmediately;
 		evDisp = new EventDispatcher();
 	}
 
-	// plays conductor with bpm and also runs music play for playstate based on a bool value (this does not reset so it can be used after pause)
-	public static function start(bpmNew:Float = 120, runMusicPlay:Bool = false):Void
+	/**
+		Starts/resumes the conductor. Optionally makes the song play.
+
+		@param newBpm New BPM for the Conductor
+		@param playSong Make the song play
+	**/
+	public static function start(bpmNew:Float = 120, playSong:Bool = false):Void
 	{
 		BPM = bpmNew;
 		doConductorTime = true;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
-		if (runMusicPlay)
-			MusicHandler.play();
+		if (playSong)
+			SongHandler.play();
 	}
 
-	// pauses the conductor
+	/**
+		Pauses the conductor time.
+	**/
 	public static function pause():Void
 	{
 		doConductorTime = false;
 	}
 
-	// resets conductor but does not stop or start it
-	public static function reset(bpmNew:Float = 120, runMusicPlay:Bool = false):Void
-	{
-		if (runMusicPlay)
-			MusicHandler.play();
+	/**
+		Reset all conductor values, but notably does not start or stop it.
 
-		BPM = bpmNew;
+		@param newBpm New BPM for the Conductor
+		@param playSong Make the song play
+	**/
+	public static function reset(newBpm:Float = 120, playSong:Bool = false):Void
+	{
+		if (playSong)
+			SongHandler.play();
+
+		BPM = newBpm;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
 		TIME = 0;
@@ -65,7 +83,9 @@ class Conductor
 		lastStepTime = 0;
 	}
 
-	// stops conductor completely and resets all values
+	/**
+		Stops the conductor entirely, resetting all values to 0.
+	**/
 	public static function stop():Void
 	{
 		doConductorTime = false;
@@ -77,49 +97,57 @@ class Conductor
 		lastStepTime = 0;
 	}
 
-	// sets a new bpm value for the conductor and calculates new time in between beats (in case of in song bpm changes)
-	public static function setBPM(bpmNew:Float):Void
+	/**
+		Sets a new BPM for the conductor, and calculates new beat and step times.
+
+		@param newBpm New BPM
+	**/
+	public static function setBPM(newBpm:Float):Void
 	{
-		BPM = bpmNew;
+		BPM = newBpm;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
 	}
 
-	// ran on update in the flxstate, adds the elapsed time to the conductor and then checks if music needs sync, also calculates curBeat
-	public static function setConductorTime(timeNew:Float, state:FlxState):Void
+	/**
+		Updates the conductor time, calling any beat or step events in the process.
+
+		@param newTime New time the conductor should be on
+	**/
+	public static function setConductorTime(newTime:Float):Void
 	{
 		if (doConductorTime)
 		{
-			TIME = timeNew;
+			TIME = newTime;
 		}
 
-		if (TIME >= lastBeatTime + beatTime) // beat hits
+		if (TIME >= lastBeatTime + beatTime) // Beat hits
 		{
 			curBeat++;
 			lastBeatTime += beatTime;
 			beatHit(curBeat);
 		}
 
-		if (TIME >= lastStepTime + stepTime)
+		if (TIME >= lastStepTime + stepTime) // Step hits
 		{
 			curStep++;
 			lastStepTime += stepTime;
 			stepHit(curStep);
 		}
 
-		else if (MusicHandler.inst != null && MusicHandler.voices != null && MusicHandler.playing)
+		else if (SongHandler.inst != null && SongHandler.voices != null && SongHandler.playing)
 		{
-			MusicHandler.checkSync();
+			SongHandler.checkSync();
 		}
 	}
 
-	static function stepHit(stepNum:Int):Void
+	// Event dispatchers	
+	private function stepHit(stepNum:Int):Void
 	{
 		evDisp.dispatchEvent(stepEvent);
 	}
 
-	// runs every beat and dispatches the event to allow beatHit to run on FlxG States
-	static function beatHit(beatNum:Int):Void
+	private function beatHit(beatNum:Int):Void
 	{
 		evDisp.dispatchEvent(beatEvent);
 	}

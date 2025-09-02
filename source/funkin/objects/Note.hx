@@ -6,9 +6,9 @@ import funkin.objects.Strumline;
 
 typedef NoteData =
 {
-	var time:Float; // time at which the note is supposed to be pressed
-	var type:Int; // note type (0 for normal)
-	var value:Int; // value (corresponds to the place in the strumline, so on 4k its from 0-3 and on 7k its from 0-6 and so on)
+	var time:Float; // Time at which the note is supposed to be pressed
+	var type:Int; // Note type (0 for normal)
+	var value:Int; // Value (corresponds to the place in the strumline, so on 4k its from 0-3 and on 7k its from 0-6 and so on)
 	var length:Float;
 }
 
