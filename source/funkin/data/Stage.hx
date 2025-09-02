@@ -1,5 +1,6 @@
 package funkin.data;
 
+import flixel.animation.FlxBaseAnimation;
 import flixel.group.FlxSpriteGroup;
 
 typedef StageFile = {
@@ -37,10 +38,12 @@ typedef StageObjectAnimationData = {
     var indices:Null<Array<Int>>; // for indices
 }
 
-class Stage extends FlxSpriteGroup
+class Stage extends FlxTypedGroup<FlxBasic>
 {
     public var data:StageFile;
     public var currentStage:String = 'stage';
+
+    public var script:HScript = null;
 
 	public function new(stage:String) 
     {
@@ -65,11 +68,26 @@ class Stage extends FlxSpriteGroup
         }
 
         this.data = stage;
+
+        setupScripting();
+
+        // CALLBACK: onCreate
+        if (script != null)
+            script.run('onCreate');
     }
 
     public function build(){
+        // CALLBACK: onStageBuild
+        if (script != null)
+            script.run('onStageBuild');
+
 		for(i in 0...data.objects.length){
 			var obj:StageObject = data.objects[i];
+
+            // CALLBACK: onStageBuildObject
+            if (script != null)
+                script.run('onStageBuildObject', [obj]);
+
             var spritePath:String = Paths.image(obj.file, "stages/" + data.name + "/assets");
 			if(Paths.exists(spritePath)){
 				var stageSprite:FlxSprite = new FlxSprite();
@@ -113,6 +131,12 @@ class Stage extends FlxSpriteGroup
 				trace("Couldn't find asset at: " + spritePath);
 			}
 		}
+
+        // CALLBACK: onStageBuildEnd
+        if (script != null)
+            script.run('onStageBuildEnd');
+
+        SortUtil.reorder(this);
 	}
 
     public function getPositionFromMarker(markerName:String):FlxPoint {
@@ -121,4 +145,17 @@ class Stage extends FlxSpriteGroup
         }
         return new FlxPoint();
     }
+
+    function setupScripting() {
+		// Initiate character script
+		if (Paths.exists(Paths.hscript(currentStage, "stages/" + currentStage))) {
+			script = Scripts.create(currentStage + "-stage", currentStage, "stages/" + currentStage, ScriptContext.STAGE);
+
+            script.set("add", add);
+            script.set("remove", remove);
+            script.set("getPositionFromMarker", getPositionFromMarker);
+
+			script.set("stage", this);
+		}
+	}
 }

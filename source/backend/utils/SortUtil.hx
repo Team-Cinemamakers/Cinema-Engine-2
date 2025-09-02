@@ -1,5 +1,6 @@
 package backend.utils;
 
+import flixel.group.FlxGroup;
 import flixel.util.FlxSort;
 
 /**
@@ -18,7 +19,8 @@ class SortUtil {
     /**
         Reorders the group/state. Lower Z objects go in the back, while higher Z objects go in the front.
     **/
-    public static function reorder(group:FlxTypedGroup<FlxBasic>) {
+    public static function reorder(?group:FlxGroup) {
+        group ??= FlxG.state;
         group.sort(SortUtil.sortByZOrder, FlxSort.ASCENDING);
     }
 }

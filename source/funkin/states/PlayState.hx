@@ -164,7 +164,7 @@ class PlayState extends FlxState
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
-		SortUtil.reorder(this);
+		SortUtil.reorder();
 
 		// #if desktop
 		// Gc.run(true);

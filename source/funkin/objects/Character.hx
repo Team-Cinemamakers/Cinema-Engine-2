@@ -61,15 +61,11 @@ class Character extends FlxSprite
 			animCamOffsets[anim.name] = new FlxPoint(anim.camOffset[0], anim.camOffset[1]);
 		}
 
-		// Initiate character script
-		if (Paths.exists(Paths.hscript(character, "characters/" + character))) {
-			characterScript = Scripts.create(character + "-character", character, "characters/" + character);
+		setupScripting();
 
-			characterScript.set("character", this);
-
-			// CALLBACK: onCreate
+		// CALLBACK: onCreate
+		if (characterScript != null)
 			characterScript.run("onCreate");
-		}
 	}
 
 	function load(character)
@@ -97,5 +93,14 @@ class Character extends FlxSprite
 		// CALLBACK: onUpdate
 		if (characterScript != null) 
 			characterScript.run("onUpdate", [elapsed]);
+	}
+
+	function setupScripting() {
+		// Initiate character script
+		if (Paths.exists(Paths.hscript(fileName, "characters/" + fileName))) {
+			characterScript = Scripts.create(fileName + "-character", fileName, "characters/" + fileName, ScriptContext.CHARACTER);
+
+			characterScript.set("character", this);
+		}
 	}
 }

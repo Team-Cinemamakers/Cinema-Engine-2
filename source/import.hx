@@ -2,6 +2,7 @@
 import backend.*;
 import backend.Paths.PathSource;
 import backend.scripting.*;
+import backend.scripting.Scripts.ScriptContext;
 import backend.utils.*;
 import backend.utils.SortUtil.ZLayers;
 import flixel.FlxBasic;
