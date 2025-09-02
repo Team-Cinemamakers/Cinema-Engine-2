@@ -19,6 +19,7 @@ typedef StageObject = {
     var position:Array<Float>;
     var scale:Null<Array<Float>>;
     var flipX:Null<Bool>;
+    var zIndex:Null<Int>;
     
     var animations:Null<Array<StageObjectAnimationData>>; // if its null then obviously animated is false
     var defaultAnimation:Null<String>;
@@ -39,9 +40,13 @@ typedef StageObjectAnimationData = {
 class Stage extends FlxSpriteGroup
 {
     public var data:StageFile;
+    public var currentStage:String = 'stage';
+
 	public function new(stage:String) 
     {
         super();
+
+        this.currentStage = stage;
 
         var json = JsonUtil.loadJson(Paths.json(stage, "stages/" + stage));
 		var stage:StageFile = cast(Json.parse(json));
@@ -50,6 +55,7 @@ class Stage extends FlxSpriteGroup
         for (object in stage.objects) {
             if (object.scale == null) object.scale = [1, 1];
             if (object.flipX == null) object.flipX = false;
+            if (object.zIndex == null) object.zIndex = 0;
 
             if (object.animations != null) {
                 for (animation in object.animations) {
@@ -83,6 +89,8 @@ class Stage extends FlxSpriteGroup
 
 				stageSprite.x = obj.position[0];
 				stageSprite.y = obj.position[1];
+
+                stageSprite.zIndex = obj.zIndex;
 
                 // if it has animations
                 if (obj.animations != null) {

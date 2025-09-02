@@ -63,7 +63,7 @@ class MainMenuState extends FlxState
 		add(transition);
 		transition.play(1);
 
-		ZOrder.reorder(this);
+		SortUtil.reorder(this);
 	}
 
 	override public function update(elapsed:Float)

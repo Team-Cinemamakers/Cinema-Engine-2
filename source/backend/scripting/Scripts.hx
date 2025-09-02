@@ -48,7 +48,7 @@ class Scripts {
         "JsonUtil" => JsonUtil,
         "MathUtil" => MathUtil,
         "SortUtil" => SortUtil,
-        "ZOrder" => ZOrder,
+        "ZLayers" => ZLayers,
 
         "Song" => Song,
         "Stage" => Stage,

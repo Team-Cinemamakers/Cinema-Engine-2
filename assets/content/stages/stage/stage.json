@@ -17,7 +17,7 @@
             "name": "stageCurtains",
             "file": "stagecurtains",
             "scale": [1, 1],
-            "position": [-600, -300]
+            "position": [-600, -300]        
         }
     ],
     "markers": [

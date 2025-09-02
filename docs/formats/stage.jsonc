@@ -1,4 +1,4 @@
-// Cinema Engine 2 Stage Format (Version 2)
+// Cinema Engine 2 Stage Format (Version 3)
 // Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
 {
     "name": "Stage", // Name of the stage
@@ -8,7 +8,8 @@
             "file": "stageback", // Path to the sprite file from the stage assets folder
             "scale": [1, 1], // (Optional) Object's scale. Default: (1, 1)
             "position": [-600, 0], // Object's position,
-            "flipX": false // (Optional) Whether the object should be flipped horizontally. Default: false (no)
+            "flipX": false, // (Optional) Whether the object should be flipped horizontally. Default: false (no),
+            "zIndex": 0 // (Optional) zIndex of an object, used for determining the order in which the objects should be drawn. Default: 0
         },
         { // Example of an animated sprite using sparrow sheets
             "name": "santa",
