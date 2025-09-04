@@ -1,4 +1,4 @@
-// Cinema Engine 2 Chart Format (Version 2)
+// Cinema Engine 2 Chart Format (Version 3)
 // Some values are provided as example, others cut out for brevity. This is just an example to give a sense for the format, every possible field is represented here.
 {
     "info": {
@@ -9,7 +9,7 @@
             "inst": "Inst",
             "vocals": "Vocals" // Should be left unspecified if using per-character voices (Not added to the format yet)
         },
-        "stage": "stage", // Stage to use (specify filename),
+        "stages": ["stage"], // Stages to use (specify filename),
         "characters": [
             {
                 "name": "boyfriend",

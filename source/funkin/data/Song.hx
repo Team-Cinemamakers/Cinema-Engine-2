@@ -25,7 +25,7 @@ typedef SongInfo =
 	var scrollSpeed:Float;
 	var songFiles:SongTracks;
 	var strumlines:Array<StrumlineInfo>;
-	var stage:String;
+	var stages:Array<String>;
 	var characters:Array<SongCharacter>;
 	// var scripts; // TODO: not implemented yet
 }

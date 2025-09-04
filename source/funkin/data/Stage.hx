@@ -4,18 +4,19 @@ import flixel.animation.FlxBaseAnimation;
 import flixel.group.FlxSpriteGroup;
 
 typedef StageFile = {
-    var name:String;
+    var stage:String;
     var objects:Array<StageObject>;
     var markers:Array<StageMarkerData>;
 }
 
 typedef StageMarkerData = {
-    var name:String;
+    var stage:String;
     var position:Array<Float>;
 }
 
 typedef StageObject = {
     var name:String;
+    var stage:String;
     var file:String;
     var position:Array<Float>;
     var scale:Null<Array<Float>>;
@@ -29,7 +30,7 @@ typedef StageObject = {
 }
 
 typedef StageObjectAnimationData = {
-    var name:String;
+    var stage:String;
     var loop:Bool;
     var framerate:Float;
     var flipX:Null<Bool>;
@@ -38,18 +39,17 @@ typedef StageObjectAnimationData = {
     var indices:Null<Array<Int>>; // For indices
 }
 
-class Stage extends FlxTypedGroup<FlxBasic>
+class Stage
 {
     public var data:StageFile;
-    public var currentStage:String = 'stage';
+    public var objects:Map<String, FlxSprite> = [];
+    public var stage:String = 'stage';
 
     public var script:HScript = null;
 
 	public function new(stage:String) 
     {
-        super();
-
-        this.currentStage = stage;
+        this.stage = stage;
 
         var json = JsonUtil.loadJson(Paths.json(stage, "stages/" + stage));
 		var stage:StageFile = cast(Json.parse(json));
@@ -79,7 +79,9 @@ class Stage extends FlxTypedGroup<FlxBasic>
     /**
         Builds the current stage from the stage file
     **/
-    public function build(){
+    public function build(?state:FlxState){
+        state ??= FlxG.state;
+
         // CALLBACK: stageBuild
         if (script != null)
             script.run('stageBuild');
@@ -91,7 +93,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
             if (script != null)
                 script.run('stageBuildObject', [obj]);
 
-            var spritePath:String = Paths.image(obj.file, "stages/" + data.name + "/assets");
+            var spritePath:String = Paths.image(obj.file, "stages/" + data.stage + "/assets");
 			if(Paths.exists(spritePath)){
 				var stageSprite:FlxSprite = new FlxSprite();
                 
@@ -100,7 +102,7 @@ class Stage extends FlxTypedGroup<FlxBasic>
                     if (obj.frameSize != null) // non-atlas spritesheet
                         stageSprite.loadGraphic(spritePath, true, obj.frameSize[0], obj.frameSize[1]);
                     else // sparrow atlas
-                        stageSprite.frames = Paths.sparrow(obj.file, "stages/" + data.name + "/assets");
+                        stageSprite.frames = Paths.sparrow(obj.file, "stages/" + data.stage + "/assets");
                 }
                 else // no animations, just plain sprite
                     stageSprite.loadGraphic(spritePath);
@@ -117,11 +119,11 @@ class Stage extends FlxTypedGroup<FlxBasic>
                 if (obj.animations != null) {
                     for (anim in obj.animations) {
                         if (anim.prefix != null && anim.indices != null) // indices with prefix
-                            stageSprite.animation.addByIndices(anim.name, anim.prefix, anim.indices, "", anim.framerate, anim.loop, anim.flipX);
+                            stageSprite.animation.addByIndices(anim.stage, anim.prefix, anim.indices, "", anim.framerate, anim.loop, anim.flipX);
                         else if (anim.prefix != null) // only uses prefix
-                            stageSprite.animation.addByPrefix(anim.name, anim.prefix, anim.framerate, anim.loop, anim.flipX);
+                            stageSprite.animation.addByPrefix(anim.stage, anim.prefix, anim.framerate, anim.loop, anim.flipX);
                         else if (anim.indices != null) // only uses indices
-                            stageSprite.animation.add(anim.name, anim.indices, anim.framerate, anim.loop, anim.flipX);
+                            stageSprite.animation.add(anim.stage, anim.indices, anim.framerate, anim.loop, anim.flipX);
                     }
 
                     // if default animation then play it immediately
@@ -129,7 +131,8 @@ class Stage extends FlxTypedGroup<FlxBasic>
                         stageSprite.animation.play(obj.defaultAnimation, true);
                 }
 
-				add(stageSprite);
+                objects.set(obj.name, stageSprite);
+				state.add(stageSprite);
 			} else {
 				trace("Couldn't find asset at: " + spritePath);
 			}
@@ -138,34 +141,80 @@ class Stage extends FlxTypedGroup<FlxBasic>
         // CALLBACK: stageBuildEnd
         if (script != null)
             script.run('stageBuildEnd');
-
-        SortUtil.reorder(this);
 	}
 
     /**
         Gets a position from a specified position marker if defined in the stage file.
 
-        @param markerName Name of the marker
+        @param markerstage stage of the marker
         
         @returns An FlxPoint containing the marker's position
     **/
-    public function getPositionFromMarker(markerName:String):FlxPoint {
+    public function getPositionFromMarker(markerstage:String):FlxPoint {
         for (marker in data.markers) {
-            if (marker.name == markerName) return new FlxPoint(marker.position[0], marker.position[1]);
+            if (marker.stage == markerstage) return new FlxPoint(marker.position[0], marker.position[1]);
         }
         return new FlxPoint();
     }
 
     function setupScripting() {
 		// Initiate character script
-		if (Paths.exists(Paths.hscript(currentStage, "stages/" + currentStage))) {
-			script = Scripts.create(currentStage + "-stage", Paths.hscript(currentStage, "stages/" + currentStage), ScriptContext.STAGE);
+		if (Paths.exists(Paths.hscript(stage, "stages/" + stage))) {
+			script = Scripts.create(stage + "-stage", Paths.hscript(stage, "stages/" + stage), ScriptContext.STAGE);
 
             script.set("add", add);
+            script.set("delete", delete);
             script.set("remove", remove);
             script.set("getPositionFromMarker", getPositionFromMarker);
 
 			script.set("stage", this);
 		}
 	}
+
+    /**
+        Adds object to the stage.
+
+        @param name Name under which the object should be added
+        @param object The object itself
+    **/
+    function add(name:String, object:FlxSprite):Void {
+        objects.set(name, object);
+    }
+
+    /**
+        Gets an object from the stage.
+
+        @param name Name of the object
+    **/    
+    function get(name:String):FlxSprite {
+        if (objects.exists(name)) {
+            return objects.get(name);
+        }
+        return new FlxSprite().makeGraphic(16, 16, FlxColor.PINK);
+    }
+    
+    /**
+        Removes object from the stage without destroying it.
+
+        @param name Name under which the object should be added
+        @param object The object itself
+    **/
+    function remove(name:String):Void {
+        if (objects.exists(name)) {
+            objects.remove(name);
+        }
+    }
+
+    /**
+        Removes and destroy the object from the stage.
+
+        @param name Name under which the object should be added
+        @param object The object itself
+    **/    
+    function delete(name:String):Void {
+        if (objects.exists(name)) {
+            remove(name);
+            objects.get(name).destroy();
+        }
+    }
 }

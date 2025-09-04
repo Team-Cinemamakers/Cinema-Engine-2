@@ -35,9 +35,9 @@ class PlayState extends FlxState
 
 	public var characters:Map<String, Character> = [];
 
-	var amntLoaded:Array<Int> = [];
-
-	public var mainStage:Stage = new Stage("stage");
+	// public var mainStage:Stage = new Stage("stage");
+	public var stages:Map<String, Stage> = [];
+	public var currentStage:Stage;
 
 	var baseZoom:Float = 0.85;
 	var cameraTween:FlxTween;
@@ -62,14 +62,16 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		hitsound = FlxG.sound.load(Paths.audio("scrollMenu", "audio/sounds", ENGINE));
-
-		instance = this;
-
 		AssetTracking.destroyUnusedAssets(true);
 		// #if desktop
 		// Gc.run(true);
 		// #end
+
+		hitsound = FlxG.sound.load(Paths.audio("scrollMenu", "audio/sounds", ENGINE));
+
+		instance = this;
+
+		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 
 		noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
@@ -84,7 +86,28 @@ class PlayState extends FlxState
 		camGame.width = 4500;
 		camGame.height = 3500;
 
-		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
+		if (loadedSong == null) {
+			trace("Could not find song, defaulting to Dad Battle");
+			loadedSong = 'feddy-whop';
+		}
+
+		song = new Song(loadedSong);
+
+		for (stageDef in song.info.stages) {
+			var stage:Stage = new Stage(stageDef);
+
+			stage.build();
+			// Wrong way to do it, should be handled by a stage function but I wanna sleep rn
+			for (sprite in stage.objects) {
+				sprite.visible = false;
+			}
+
+			stages.set(stageDef, stage);
+		}
+		currentStage = stages[song.info.stages[0]];
+		for (sprite in currentStage.objects) {
+			sprite.visible = false;
+		}
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -95,16 +118,9 @@ class PlayState extends FlxState
 		notesTypedGroup = new FlxTypedGroup<Note>();
 		notesTypedGroup.zIndex = ZLayers.UI;
 
-		if (loadedSong == null) {
-			trace("Could not find song, defaulting to Dad Battle");
-			loadedSong = 'feddy-whop';
-		}
-
-		song = new Song(loadedSong);
-
 		// Create character declarations
 		for (charData in song.info.characters) {
-			var charPos = mainStage.getPositionFromMarker(charData.positionMarker);
+			var charPos = currentStage.getPositionFromMarker(charData.positionMarker);
 			var char:Character = new Character(charData.character, charPos.x, charPos.y);
 
 			characters.set(charData.name, char);
@@ -123,7 +139,6 @@ class PlayState extends FlxState
 			strumLine.cameras = [camUI];
 
 			strumlines.add(strumLine);
-			amntLoaded.push(0);
 
 			for(k in 0...strumLine.strumNotes.length){
 				if(strumLine.playable){
@@ -134,9 +149,6 @@ class PlayState extends FlxState
 
 		add(strumlines);
 		add(notesTypedGroup);
-
-		mainStage.build();
-		add(mainStage);
 
 		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
 
@@ -150,7 +162,6 @@ class PlayState extends FlxState
 
 		camGame.x = camCenterX;
 		camGame.y = camCenterY;
-
 
 		animDeb[0] = 0;
 		

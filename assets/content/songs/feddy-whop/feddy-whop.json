@@ -3,7 +3,7 @@
 		"name": "feddy-whop",
 		"bpm": 140.0,
 		"scrollSpeed": 3.1,
-		"stage": "fedstage",
+		"stages": ["stage"],
 		"characters": [
 			{
 				"name": "bf",

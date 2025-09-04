@@ -37,8 +37,6 @@ class MainMenuState extends FlxState
 		add(bg);
 
 		menuOptions = new FlxTypedGroup<FlxSprite>();
-		trace(menuOptions.zIndex);
-		menuOptions.zIndex = 10;
 		add(menuOptions);
 
 		for (i in 0...mainMenuOptions.length)
