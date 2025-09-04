@@ -1,5 +1,12 @@
 package backend.utils;
 
+#if macro
+import haxe.macro.Context;
+import haxe.macro.Expr;
+
+using haxe.macro.Tools;
+#end
+
 /**
 	Collection of various utility macros
 **/

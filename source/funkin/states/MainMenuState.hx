@@ -103,7 +103,6 @@ class MainMenuState extends FlxState
 
 	override function destroy()
 	{
-		Conductor.evDisp.removeEventListener(Conductor.beatEvent.type, beatHit);
 		#if desktop
 		Gc.run(true);
 		#end

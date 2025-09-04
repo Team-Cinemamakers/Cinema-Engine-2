@@ -125,30 +125,19 @@ class Conductor
 		{
 			curBeat++;
 			lastBeatTime += beatTime;
-			beatHit(curBeat);
+			evDisp.dispatchEvent(beatEvent);
 		}
 
 		if (TIME >= lastStepTime + stepTime) // Step hits
 		{
 			curStep++;
 			lastStepTime += stepTime;
-			stepHit(curStep);
+			evDisp.dispatchEvent(stepEvent);
 		}
 
 		else if (SongHandler.inst != null && SongHandler.voices != null && SongHandler.playing)
 		{
 			SongHandler.checkSync();
 		}
-	}
-
-	// Event dispatchers	
-	private function stepHit(stepNum:Int):Void
-	{
-		evDisp.dispatchEvent(stepEvent);
-	}
-
-	private function beatHit(beatNum:Int):Void
-	{
-		evDisp.dispatchEvent(beatEvent);
 	}
 }
