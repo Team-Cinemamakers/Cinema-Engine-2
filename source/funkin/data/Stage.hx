@@ -4,13 +4,13 @@ import flixel.animation.FlxBaseAnimation;
 import flixel.group.FlxSpriteGroup;
 
 typedef StageFile = {
-    var stage:String;
+    var name:String;
     var objects:Array<StageObject>;
     var markers:Array<StageMarkerData>;
 }
 
 typedef StageMarkerData = {
-    var stage:String;
+    var name:String;
     var position:Array<Float>;
 }
 
@@ -93,7 +93,7 @@ class Stage
             if (script != null)
                 script.run('stageBuildObject', [obj]);
 
-            var spritePath:String = Paths.image(obj.file, "stages/" + data.stage + "/assets");
+            var spritePath:String = Paths.image(obj.file, "stages/" + data.name + "/assets");
 			if(Paths.exists(spritePath)){
 				var stageSprite:FlxSprite = new FlxSprite();
                 
@@ -102,7 +102,7 @@ class Stage
                     if (obj.frameSize != null) // non-atlas spritesheet
                         stageSprite.loadGraphic(spritePath, true, obj.frameSize[0], obj.frameSize[1]);
                     else // sparrow atlas
-                        stageSprite.frames = Paths.sparrow(obj.file, "stages/" + data.stage + "/assets");
+                        stageSprite.frames = Paths.sparrow(obj.file, "stages/" + data.name + "/assets");
                 }
                 else // no animations, just plain sprite
                     stageSprite.loadGraphic(spritePath);
