@@ -17,6 +17,11 @@ enum ScriptContext {
     OTHER;
 }
 
+enum EventProcess {
+    CONTINUE; // Continue the event without any changes
+    CANCEL; // Cancel the event
+}
+
 /**
     Manager for all the HScript scripts
 **/
@@ -87,6 +92,7 @@ class Scripts {
         "ScrollableMenu" => ScrollableMenu,
         "MusicHandler" => SongHandler,
         "Globals" => Globals,
+        "EventProcess" => EventProcess,
 
         "Song" => Song,
         "Stage" => Stage,
@@ -103,7 +109,7 @@ class Scripts {
     **/
     public static function setForScripts(variable:String, argument:Dynamic, requireContext:ScriptContext = ScriptContext.ANY):Void {
         for (script in scripts) {
-            if (script.context == requireContext && requireContext != ScriptContext.ANY) script.set(variable, argument);
+            if (script.context == requireContext || requireContext == ScriptContext.ANY) script.set(variable, argument);
         }
     }
 
@@ -120,10 +126,17 @@ class Scripts {
         var calls:Map<String, IrisCall> = [];
 
         for (name => script in scripts) {
-            if (script.context == requireContext && requireContext != ScriptContext.ANY) calls.set(name, script.run(func, args));
+            if (script.context == requireContext || requireContext == ScriptContext.ANY) calls.set(name, script.run(func, args));
         }
 
         return calls;
+    }
+
+    public static function getCallEventResult(calls:Map<String, IrisCall>):EventProcess {
+        for (result in calls) {
+            if (result.returnValue == EventProcess.CANCEL) return EventProcess.CANCEL;
+        }
+        return EventProcess.CONTINUE;
     }
 }
 

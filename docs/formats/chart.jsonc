@@ -54,7 +54,7 @@
     },
     "events": [
         {
-            "name": "Change Focus", // Event name,
+            "name": "change-focus", // Event filename,
             "time": 1.33, // Time (in milliseconds) at which this event occurs
             "values": [
                 {

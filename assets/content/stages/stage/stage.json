@@ -22,12 +22,12 @@
     ],
     "markers": [
         {
-            "name": "bfPos",
-            "position": [770, 500]
+            "name": "playerPos",
+            "position": [770, 350]
         },
         {
-            "name": "oppPos",
-            "position": [100, 500]
+            "name": "opponentPos",
+            "position": [100, 350]
         }
     ]
 }

@@ -1,0 +1,12 @@
+{
+    "name": "Change Focus",
+    "description": "Changes camera focus to the selected character",
+    "values": [
+        {
+            "name": "Focus on",
+            "description": "Character to focus on",
+            "type": "character",
+            "optional": false
+        }
+    ]
+}

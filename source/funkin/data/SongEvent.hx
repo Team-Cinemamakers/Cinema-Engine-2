@@ -12,7 +12,7 @@ typedef SongEventValue = {
     var value:Dynamic;
 }
 
-typedef SongEventFileValue = {
+typedef SongEventValueDef = {
     var name:String;
     var description:String;
     var type:String; // manually specified type: "float", "string", "bool", "color" etc
@@ -22,14 +22,57 @@ typedef SongEventFileValue = {
 typedef SongEventFile = {
     var name:String; // event name/id
     var description:String; // event description in the chart editor
-    var values:Array<SongEventFileValue>;
+    var values:Array<SongEventValueDef>;
 }
 
 class SongEvent {
-    public static function fromFile(eventName:String, directory:String):SongEventFile
-	{
-        var rawJson = JsonUtil.loadJson(Paths.json("events/" + eventName, directory));
-		var casted:SongEventFile = cast(Json.parse(rawJson));
-        return casted;
+    public var name:String;
+    public var values:Map<String, Dynamic> = [];
+    public var time:Float;
+    public var triggered:Bool = false; // Whether the event was already triggered
+    public var script:HScript;
+
+    public function new(eventName:String, time:Float, values:Array<SongEventValue>) {
+        this.name = eventName;
+        this.time = time;
+
+        for (value in values) {
+            this.values.set(value.name, value.value);
+        }
+
+        setupScripting();
+    }
+
+    /**
+        Gets a value from the event.
+
+        @param valueName Name of the value
+        
+        @return Value, null if it doesn't exist
+    **/
+    public function getValue(valueName:String):Dynamic {
+        if (values.exists(valueName)) return values.get(valueName);
+        else {
+            trace('Value "$valueName" doesn\' exist in event "$name"!');
+            return null;
+        }
+    }
+
+    function setupScripting() {
+		// Initiate event script
+		if (Paths.exists(Paths.hscript(name, "events"))) {
+			script = Scripts.create(name + "-event", Paths.hscript(name, "events"), ScriptContext.EVENT);
+		}
+	}
+
+    /**
+        Triggers the event.
+    **/
+    public function trigger() {
+        triggered = true;
+        
+        // CALLBACK: eventTriggered
+        if (script != null)
+            script.run("eventTriggered", [values]);
     }
 }

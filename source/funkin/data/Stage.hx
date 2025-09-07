@@ -150,9 +150,9 @@ class Stage
         
         @returns An FlxPoint containing the marker's position
     **/
-    public function getPositionFromMarker(markerstage:String):FlxPoint {
+    public function getPositionFromMarker(markerName:String):FlxPoint {
         for (marker in data.markers) {
-            if (marker.stage == markerstage) return new FlxPoint(marker.position[0], marker.position[1]);
+            if (marker.name == markerName) return new FlxPoint(marker.position[0], marker.position[1]);
         }
         return new FlxPoint();
     }
@@ -172,12 +172,23 @@ class Stage
 	}
 
     /**
+        Sets visibility of the stage.
+
+        @param visible Whether the stage is visible or invisible
+    **/
+    public function setVisibility(visible:Bool):Void {
+        for (object in objects) {
+            object.visible = visible;
+        }
+    }
+
+    /**
         Adds object to the stage.
 
         @param name Name under which the object should be added
         @param object The object itself
     **/
-    function add(name:String, object:FlxSprite):Void {
+    public function add(name:String, object:FlxSprite):Void {
         objects.set(name, object);
     }
 
@@ -186,7 +197,7 @@ class Stage
 
         @param name Name of the object
     **/    
-    function get(name:String):FlxSprite {
+    public function get(name:String):FlxSprite {
         if (objects.exists(name)) {
             return objects.get(name);
         }
@@ -199,7 +210,7 @@ class Stage
         @param name Name under which the object should be added
         @param object The object itself
     **/
-    function remove(name:String):Void {
+    public function remove(name:String):Void {
         if (objects.exists(name)) {
             objects.remove(name);
         }
@@ -211,7 +222,7 @@ class Stage
         @param name Name under which the object should be added
         @param object The object itself
     **/    
-    function delete(name:String):Void {
+    public function delete(name:String):Void {
         if (objects.exists(name)) {
             remove(name);
             objects.get(name).destroy();

@@ -41,16 +41,20 @@ class Song
 {
 	public var info:SongInfo;
 	public var strumlines:Array<StrumlineData>;
-	public var events:Array<SongEventData>;
+	public var events:Array<SongEvent> = [];
 
 	// Maybe temporary?
 	public function new(song:String, directory:String = "") {
 		var song = Song.fromFile(song, directory);
 
 		this.info = song.info;
-		trace(info);
 		this.strumlines = song.strumlines;
-		this.events = song.events;
+		
+		var eventDefinitions = song.events;
+		for (eventDef in eventDefinitions) {
+			var event = new SongEvent(eventDef.name, eventDef.time, eventDef.values);
+			events.push(event);
+		}
 	}
 
 	/**

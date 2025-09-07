@@ -1,6 +1,8 @@
 package funkin.states;
 
+import backend.Globals.NoteRating;
 import backend.events.BeatEvent;
+import backend.scripting.Scripts.EventProcess;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
 import funkin.data.Song;
@@ -19,12 +21,14 @@ class PlayState extends FlxState
 	public var notesTypedGroup:FlxTypedGroup<Note>;
 
 	public static var loadedSong:String;
-	// chart note array of array to allow support for more than 2 characters
 
+	// chart note array of array to allow support for more than 2 characters
 	var notesLoaded:Bool = false;
+
 	public var noteInts:Array<Int> = [];
 
 	public static var song:Song;
+
 	public var stage:StageFile;
 
 	var loadAhead:Int = 50;
@@ -43,6 +47,7 @@ class PlayState extends FlxState
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
 	var paused:Bool = false;
+
 	public var noteSparrow:FlxAtlasFrames;
 
 	var camCenterX:Float = -350;
@@ -86,28 +91,25 @@ class PlayState extends FlxState
 		camGame.width = 4500;
 		camGame.height = 3500;
 
-		if (loadedSong == null) {
+		if (loadedSong == null)
+		{
 			trace("Could not find song, defaulting to Dad Battle");
 			loadedSong = 'feddy-whop';
 		}
 
 		song = new Song(loadedSong);
 
-		for (stageDef in song.info.stages) {
+		for (stageDef in song.info.stages)
+		{
 			var stage:Stage = new Stage(stageDef);
 
 			stage.build();
-			// Wrong way to do it, should be handled by a stage function but I wanna sleep rn
-			for (sprite in stage.objects) {
-				sprite.visible = false;
-			}
+			stage.setVisibility(false);
 
 			stages.set(stageDef, stage);
 		}
 		currentStage = stages[song.info.stages[0]];
-		for (sprite in currentStage.objects) {
-			sprite.visible = false;
-		}
+		currentStage.setVisibility(true);
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -119,19 +121,19 @@ class PlayState extends FlxState
 		notesTypedGroup.zIndex = ZLayers.UI;
 
 		// Create character declarations
-		for (charData in song.info.characters) {
+		for (charData in song.info.characters)
+		{
 			var charPos = currentStage.getPositionFromMarker(charData.positionMarker);
 			var char:Character = new Character(charData.character, charPos.x, charPos.y);
 
 			characters.set(charData.name, char);
 		}
-		
+
 		// Create strumlines
 		for (i in 0...song.info.strumlines.length)
 		{
-			var strumLine:Strumline = new Strumline(song.info.strumlines[i].strumNotes, song.info.strumlines[i].characters,
-				song.info.strumlines[i].playable, song.info.strumlines[i].kerning, song.info.strumlines[i].position[0],
-				song.info.strumlines[i].position[1], i);
+			var strumLine:Strumline = new Strumline(song.info.strumlines[i].strumNotes, song.info.strumlines[i].characters, song.info.strumlines[i].playable,
+				song.info.strumlines[i].kerning, song.info.strumlines[i].position[0], song.info.strumlines[i].position[1], i);
 
 			strumLine.scale = song.info.strumlines[i].scale;
 			strumLine.updateStrums();
@@ -140,8 +142,10 @@ class PlayState extends FlxState
 
 			strumlines.add(strumLine);
 
-			for(k in 0...strumLine.strumNotes.length){
-				if(strumLine.playable){
+			for (k in 0...strumLine.strumNotes.length)
+			{
+				if (strumLine.playable)
+				{
 					hitNoteDebounce.push(false);
 				}
 			}
@@ -155,7 +159,8 @@ class PlayState extends FlxState
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.info.bpm, true);
 
-		if(characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null){
+		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
+		{
 			camCenterX = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.x;
 			camCenterY = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.y;
 		}
@@ -164,10 +169,11 @@ class PlayState extends FlxState
 		camGame.y = camCenterY;
 
 		animDeb[0] = 0;
-		
+
 		// Load in strums
 
-		for(char in characters){
+		for (char in characters)
+		{
 			char.zIndex = ZLayers.CHARACTER;
 			add(char);
 		}
@@ -186,81 +192,59 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		for(i in 0...animDeb.length){
+		processInputs();
+
+		for (i in 0...animDeb.length)
+		{
 			animDeb[i] += elapsed;
 		}
 
-		if(SongHandler.inst != null && SongHandler.voices != null){
-			if(SongHandler.inst.length >= SongHandler.voices.length){
+		if (SongHandler.inst != null && SongHandler.voices != null)
+		{
+			if (SongHandler.inst.length >= SongHandler.voices.length)
+			{
 				Conductor.setConductorTime(SongHandler.inst.time);
-			} else {
+			}
+			else
+			{
 				Conductor.setConductorTime(SongHandler.voices.time);
 			}
-		} else if (SongHandler.inst != null){
+		}
+		else if (SongHandler.inst != null)
+		{
 			Conductor.setConductorTime(SongHandler.inst.time);
 		}
-		
-		if(camGame.zoom != baseZoom && !MathUtil.isInRange(camGame.zoom, baseZoom, 0.01)){
-			if(camGame.zoom > baseZoom){
+
+		processEvents();
+
+		if (camGame.zoom != baseZoom && !MathUtil.isInRange(camGame.zoom, baseZoom, 0.01))
+		{
+			if (camGame.zoom > baseZoom)
+			{
 				camGame.zoom -= 0.2 * elapsed;
-			} else {
+			}
+			else
+			{
 				camGame.zoom += 0.2 * elapsed;
-			} 
-		} else if(MathUtil.isInRange(camGame.zoom, baseZoom, 0.005)){
+			}
+		}
+		else if (MathUtil.isInRange(camGame.zoom, baseZoom, 0.005))
+		{
 			camGame.zoom = baseZoom;
 		}
-
-		if (CoolInput.pressed("noteLeft"))
-		{
-			hitNoteDebounce[0] = false;
-			activateNote(0, 'singLEFT');
-		} else {
-			deactivateNote(0);
-		}
-		if (CoolInput.pressed("noteDown"))
-		{
-			hitNoteDebounce[1] = false;
-			activateNote(1, 'singDOWN');
-		}
-		if (CoolInput.pressed("noteUp"))
-		{
-			hitNoteDebounce[2] = false;
-			activateNote(2, 'singUP');
-		}
-		if (CoolInput.pressed("noteRight"))
-		{
-			hitNoteDebounce[3] = false;
-			activateNote(3, 'singRIGHT');
-		}
-		if (CoolInput.pressed("skipTime"))
-		{
-			SongHandler.skipTime(5000);
-		}
-		if (CoolInput.pressed("plus"))
-		{
-			scrollSpeed *= 1.1;
-		}
-		if (CoolInput.pressed("minus"))
-		{
-			scrollSpeed *= 0.9;
-		}
-		if (CoolInput.pressed("accept"))
-			{
-				if(!paused){
-					//will pause
-				}
-			}
-		// calls function to move the loaded notes (putting this in strumlines actually might be less optimized)
-		// why the FUCK did move notes in the playstate and not the fuckin note itself
 	}
 
 	function beatHit(e:BeatEvent)
 	{
-		if(Conductor.curBeat % 2 == 0){
-			for(i in 0...strumlines.length){
-				if(animDeb[i] >= 0.2){
+		if (Conductor.curBeat % 2 == 0)
+		{
+			for (i in 0...strumlines.length)
+			{
+				if (animDeb[i] >= 0.2)
+				{
 					animDeb[i] = 0;
-					for(v in 0...strumlines.members[i].characters.length){
+					for (v in 0...strumlines.members[i].characters.length)
+					{
 						playAnimation(strumlines.members[i].characters[v], 'Idle', true, strumlines.members[i].playable);
 					}
 				}
@@ -271,65 +255,86 @@ class PlayState extends FlxState
 	// i fixed ts
 	function activateNote(noteVal:Int, animation:String)
 	{
-		if(notesTypedGroup.length <= 0) return;
+		if (notesTypedGroup.length <= 0)
+			return;
 
 		for (i in 0...notesTypedGroup.length)
 		{
-			if(notesTypedGroup.members[i] != null){
+			if (notesTypedGroup.members[i] != null)
+			{
 				var thisNote:Note = notesTypedGroup.members[i];
-				if(thisNote.noteData.value == noteVal && thisNote.strumnote.playable && MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 140)){
-					var hitType:String = 'Meh';
-					if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 30)){
-						hitType = 'Perfect';
-					} else if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60)){
-						hitType = 'Great';
-					} else if(MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 90)){
-						hitType = 'Good';
+				if (thisNote.noteData.value == noteVal
+					&& thisNote.strumnote.playable
+					&& MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 140))
+				{
+					var hitType:NoteRating = NoteRating.BAD;
+					if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 30))
+					{
+						hitType = NoteRating.PERFECT;
+					}
+					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60))
+					{
+						hitType = NoteRating.GREAT;
+					}
+					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 90))
+					{
+						hitType = NoteRating.GOOD;
 					}
 					thisNote.strumnote.pressedOnNote = true;
 					notesTypedGroup.remove(thisNote, true);
-					for(v in 0...thisNote.strumnote.characters.length){
-						noteHit(thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
+					for (v in 0...thisNote.strumnote.characters.length)
+					{
+						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
 					thisNote.destroy();
-					trace('Hit note rating: ' + hitType);
 				}
 			}
 		}
 	}
 
-	function deactivateNote(noteVal:Int){
-		for(i in 0...strumlines.length){
-			if(strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote) strumlines.members[i].members[noteVal].pressedOnNote = false;
+	function deactivateNote(noteVal:Int)
+	{
+		for (i in 0...strumlines.length)
+		{
+			if (strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote)
+				strumlines.members[i].members[noteVal].pressedOnNote = false;
 		}
 	}
 
 	var newTmr:Array<FlxTimer> = [];
-	public function activateEnemyNote(strumnote:StrumNote, value:Int){
-		for(i in 0...strumnote.characters.length){
+
+	public function activateEnemyNote(strumnote:StrumNote, value:Int)
+	{
+		for (i in 0...strumnote.characters.length)
+		{
 			playAnimation(strumnote.characters[i], strumnote.input);
-			if(newTmr[value] != null){
+			if (newTmr[value] != null)
+			{
 				newTmr[value].cancel();
 			}
-			newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer){
+			newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer)
+			{
 				strumnote.pressedOnNote = false;
 			});
 		}
 	}
 
 	var camTween:FlxTween;
+
 	function playAnimation(char:Character, anim:String, force:Bool = false, playable:Bool = false)
 	{
 		char.playAnimation(anim, force);
-		if(!playable) return;
+		if (!playable)
+			return;
 
-			// if(camTween != null){
-			// 	camTween.cancel();
-			// }
-			// camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.1, {
-			// 	ease: FlxEase.quadInOut
-			// });
+		// if(camTween != null){
+		// 	camTween.cancel();
+		// }
+		// camTween = FlxTween.tween(camGame, {x: camCenterX - char.animCamOffsets[anim].x, y: camCenterY - char.animCamOffsets[anim].y}, 0.1, {
+		// 	ease: FlxEase.quadInOut
+		// });
 	}
+
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData, j:Int)
 	{
@@ -339,7 +344,7 @@ class PlayState extends FlxState
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, j);
 
 		noteNew.cameras = [camUI];
-		//trace('loaded note' + j);
+		// trace('loaded note' + j);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before
@@ -357,18 +362,82 @@ class PlayState extends FlxState
 		}
 	}
 
-	function noteHit(animation:String, char:Character, playable:Bool)
+	function noteHit(note:Note, animation:String, char:Character, playable:Bool)
 	{
+		var ret = Scripts.callOnScripts("noteHit", [note, char, playable]);
+		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
+			return;
+
 		animDeb[0] = 0;
 		playAnimation(char, animation, true, playable);
 	}
 
 	function noteMiss(note:Note, animation:String)
 	{
+		var ret = Scripts.callOnScripts("noteMiss", [note]);
+		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
+			return;
+
 		note.destroy();
 	}
 
-	function onSongComplete(){
+	function processEvents()
+	{
+		for (event in song.events)
+		{
+			if (Conductor.TIME >= event.time && !event.triggered)
+			{
+				event.trigger();
+			}
+		}
+	}
+
+	function processInputs()
+	{
+		if (CoolInput.pressed("noteLeft"))
+		{
+			hitNoteDebounce[0] = false;
+			activateNote(0, 'singLEFT');
+		}
+		if (CoolInput.pressed("noteDown"))
+		{
+			hitNoteDebounce[1] = false;
+			activateNote(1, 'singDOWN');
+		}
+		if (CoolInput.pressed("noteUp"))
+		{
+			hitNoteDebounce[2] = false;
+			activateNote(2, 'singUP');
+		}
+		if (CoolInput.pressed("noteRight"))
+		{
+			hitNoteDebounce[3] = false;
+			activateNote(3, 'singRIGHT');
+		}
+		
+		if (CoolInput.pressed("skipTime"))
+		{
+			SongHandler.skipTime(5000);
+		}
+		if (CoolInput.pressed("plus"))
+		{
+			scrollSpeed *= 1.1;
+		}
+		if (CoolInput.pressed("minus"))
+		{
+			scrollSpeed *= 0.9;
+		}
+		if (CoolInput.pressed("accept"))
+		{
+			if (!paused)
+			{
+				// will pause
+			}
+		}
+	}
+
+	function onSongComplete()
+	{
 		FlxG.switchState(() -> new MainMenuState());
 	}
 }
