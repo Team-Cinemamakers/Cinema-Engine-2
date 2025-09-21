@@ -132,9 +132,16 @@ class Scripts {
         return calls;
     }
 
+    /**
+        Determines whether the event should proceed or be cancelled based on calls received from `callOnScripts`
+
+        @param calls Map<String, IrisCall> that you should have from `callOnScripts`
+
+        @returns Whether the event should continue (`EventProcess.CONTINUE`) or be cancelled (`EventProcess.CANCEL`)
+    **/
     public static function getCallEventResult(calls:Map<String, IrisCall>):EventProcess {
         for (result in calls) {
-            if (result.returnValue == EventProcess.CANCEL) return EventProcess.CANCEL;
+            if (result != null && result.returnValue == EventProcess.CANCEL) return EventProcess.CANCEL;
         }
         return EventProcess.CONTINUE;
     }
