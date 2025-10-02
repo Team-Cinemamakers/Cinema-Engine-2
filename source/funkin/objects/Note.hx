@@ -89,7 +89,7 @@ class Note extends FlxSprite {
 				var endPos:Float = strumnote.y + (this.height/2) + (((noteData.time + noteData.length) - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
 				longNoteStretch.scale.set(1, endPos - (this.y));
 				longNoteStretch.updateHitbox();
-				longNoteStretch.x = strumnote.x - (longNoteStretch.width/2);
+				longNoteStretch.x = this.x;
 				longNoteStretch.y = this.y;
 			}
 		}

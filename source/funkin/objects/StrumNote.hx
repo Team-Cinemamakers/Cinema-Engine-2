@@ -38,6 +38,9 @@ class StrumNote extends FlxSprite {
         animation.addByPrefix("static", "staticUp", 24, false);
         animation.addByPrefix("press", "pressUp", 24, false);
 		animation.addByPrefix("confirm", "confirmUp", 24, false);
+
+		centerOffsets();
+		centerOrigin();
     }
 
     override function update(elapsed:Float) {
