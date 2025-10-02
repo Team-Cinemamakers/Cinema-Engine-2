@@ -286,7 +286,12 @@ class PlayState extends FlxState
 					{
 						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
-					thisNote.destroy();
+					if(thisNote.longNoteStretch == null){
+						thisNote.destroy();
+					} else {
+						thisNote.visible = false;
+						thisNote.held = true;
+					}
 				}
 			}
 		}

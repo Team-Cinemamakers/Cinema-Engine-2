@@ -34,7 +34,9 @@ class Note extends FlxSprite {
 
 	public var iterator:Int = 0;
 
-	var longNoteStretch:FlxSprite;
+	public var longNoteStretch:FlxSprite;
+
+	public var held:Bool = false;
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
@@ -83,6 +85,7 @@ class Note extends FlxSprite {
 				longNoteStretch.x = this.x + (this.width/2) - (longNoteStretch.width/2);
 				PlayState.instance.add(longNoteStretch);
 			} else if (longNoteStretch != null){
+				longNoteStretch.updateHitbox();
 				var endPos:Float = strumnote.y + (this.height/2) + (((noteData.time + noteData.length) - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
 				longNoteStretch.scale.set(1, endPos - (this.y));
 				longNoteStretch.updateHitbox();
@@ -92,15 +95,24 @@ class Note extends FlxSprite {
 		}
 
 		if(y <= 0 - this.height){
-			if(longNoteStretch != null){
-				trace("try destroy longNote");
-				this.longNoteStretch.destroy();
+			if(held && longNoteStretch != null){
+				if(longNoteStretch.y <= 0 - longNoteStretch.height){
+					trace("try destroy longNote");
+					this.longNoteStretch.destroy();
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					this.destroy();
+				}
+			} else {
+				if(longNoteStretch != null){
+					trace("try destroy longNote");
+					this.longNoteStretch.destroy();
+				}
+				PlayState.instance.notesTypedGroup.remove(this, true);
+				this.destroy();
+				// #if desktop
+				// Gc.run(true);
+				// #end
 			}
-			PlayState.instance.notesTypedGroup.remove(this, true);
-			this.destroy();
-			// #if desktop
-			// Gc.run(true);
-			// #end
 		}
 
 		if(y <= strumnote.y + (this.height/2)){
