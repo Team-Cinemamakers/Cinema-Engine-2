@@ -9,6 +9,7 @@ import funkin.data.Song;
 import funkin.data.SongEvent;
 import funkin.data.Stage;
 import funkin.objects.Character;
+import funkin.objects.LongNote;
 import funkin.objects.Note;
 import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
@@ -286,12 +287,8 @@ class PlayState extends FlxState
 					{
 						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
-					if(thisNote.longNoteStretch == null){
-						thisNote.destroy();
-					} else {
-						thisNote.visible = false;
-						thisNote.held = true;
-					}
+					if(thisNote.longNote != null) thisNote.longNote.destroy();
+					thisNote.destroy();
 				}
 			}
 		}

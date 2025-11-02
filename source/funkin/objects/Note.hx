@@ -34,9 +34,9 @@ class Note extends FlxSprite {
 
 	public var iterator:Int = 0;
 
-	public var longNoteStretch:FlxSprite;
-
 	public var held:Bool = false;
+
+	public var longNote:LongNote;
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
@@ -62,6 +62,8 @@ class Note extends FlxSprite {
 
 		this.scale.set(scaleX, scaleY);
 
+		lastSS = PlayState.scrollSpeed;
+
 		offsetNote = this.width / 4;
 		strumnote = strumline.members[noteData.value];
 		if(PlayState.instance != null){
@@ -70,6 +72,7 @@ class Note extends FlxSprite {
 	}
 
 	var playedHitsound:Bool = false;
+	var lastSS:Float = -1;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -78,50 +81,25 @@ class Note extends FlxSprite {
 		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (1/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
 			if(!moving) moving = true;
 			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-		}
-		if(moving){
-			if(noteData.length > 0 && longNoteStretch == null){
-				longNoteStretch = new FlxSprite().loadGraphic(Paths.image('NOTE_hold_assets', "images/shared", PathSource.ENGINE));
-				longNoteStretch.x = this.x + (this.width/2) - (longNoteStretch.width/2);
-				PlayState.instance.add(longNoteStretch);
-			} else if (longNoteStretch != null){
-				longNoteStretch.updateHitbox();
-				var endPos:Float = strumnote.y + (this.height/2) + (((noteData.time + noteData.length) - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-				longNoteStretch.scale.set(1, endPos - (this.y));
-				longNoteStretch.updateHitbox();
-				longNoteStretch.x = this.x;
-				longNoteStretch.y = this.y;
+
+			if(longNote == null){
+				longNote = new LongNote(this);
+				PlayState.instance.add(longNote);
 			}
 		}
 
 		if(y <= 0 - this.height){
-			if(held && longNoteStretch != null){
-				if(longNoteStretch.y <= 0 - longNoteStretch.height){
-					trace("try destroy longNote");
-					this.longNoteStretch.destroy();
-					PlayState.instance.notesTypedGroup.remove(this, true);
-					this.destroy();
-				}
-			} else {
-				if(longNoteStretch != null){
-					trace("try destroy longNote");
-					this.longNoteStretch.destroy();
-				}
 				PlayState.instance.notesTypedGroup.remove(this, true);
 				this.destroy();
 				// #if desktop
 				// Gc.run(true);
 				// #end
 			}
-		}
 
 		if(y <= strumnote.y + (this.height/2)){
 			if(!playedHitsound && moving){
 				playedHitsound = true;
 				if(!this.strumnote.playable){
-					if(longNoteStretch != null){
-						this.longNoteStretch.destroy();
-					}
 					this.strumnote.pressedOnNote = true;
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
 					PlayState.instance.notesTypedGroup.remove(this, true);
