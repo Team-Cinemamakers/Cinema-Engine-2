@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TextureAtlas imagePath="notes.png" width="311" height="311">
-  <SubTexture name="noteDown0001" x="0" y="0" width="157" height="154" frameX="-0" frameY="-0" frameWidth="157" frameHeight="154" />
-  <SubTexture name="noteLeft0001" x="157" y="0" width="154" height="157" frameX="-0" frameY="-0" frameWidth="154" frameHeight="157" />
-  <SubTexture name="noteRight0001" x="0" y="154" width="154" height="157" frameX="-0" frameY="-0" frameWidth="154" frameHeight="157" />
-  <SubTexture name="noteUp0001" x="154" y="157" width="157" height="154" frameX="-0" frameY="-0" frameWidth="157" frameHeight="154" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="notes.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="noteUp0000" x="1" y="1" width="157" height="154"/>
 </TextureAtlas>

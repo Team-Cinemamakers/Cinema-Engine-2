@@ -52,7 +52,7 @@ class Note extends FlxSprite {
 		this.scaleY = scaleY;
 		this.updateHitbox();
 
-        this.angle = angle + 180;
+        this.angle = angle;
 		this.noteData = noteData;
 
 		this.iterator = iterator;
@@ -84,6 +84,7 @@ class Note extends FlxSprite {
 
 			if(longNote == null){
 				longNote = new LongNote(this);
+				longNote.cameras = this.cameras;
 				PlayState.instance.add(longNote);
 			}
 		}
