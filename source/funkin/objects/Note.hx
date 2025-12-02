@@ -85,6 +85,8 @@ class Note extends FlxSprite {
 			if(longNote == null){
 				longNote = new LongNote(this);
 				longNote.cameras = this.cameras;
+				longNote.zIndex = this.zIndex-1;
+				SortUtil.reorder();
 				PlayState.instance.add(longNote);
 			}
 		}
