@@ -7,6 +7,7 @@ typedef StageFile = {
     var name:String;
     var objects:Array<StageObject>;
     var markers:Array<StageMarkerData>;
+    var baseZoom:Null<Float>;
 }
 
 typedef StageMarkerData = {
@@ -20,6 +21,7 @@ typedef StageObject = {
     var file:String;
     var position:Array<Float>;
     var scale:Null<Array<Float>>;
+    var scrollFactor:Null<Array<Float>>;
     var flipX:Null<Bool>;
     var zIndex:Null<Int>;
     
@@ -55,8 +57,12 @@ class Stage
 		var stage:StageFile = cast(Json.parse(json));
 
         // SET DEFAULTS FOR UNSPECIFIED
+
+        if (stage.baseZoom == null) stage.baseZoom = 0.85;
+
         for (object in stage.objects) {
             if (object.scale == null) object.scale = [1, 1];
+            if (object.scrollFactor == null) object.scrollFactor = [1, 1];
             if (object.flipX == null) object.flipX = false;
             if (object.zIndex == null) object.zIndex = 0;
 
@@ -112,6 +118,8 @@ class Stage
 
 				stageSprite.x = obj.position[0];
 				stageSprite.y = obj.position[1];
+
+                stageSprite.scrollFactor.set(obj.scrollFactor[0], obj.scrollFactor[1]);
 
                 stageSprite.zIndex = obj.zIndex;
 

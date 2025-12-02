@@ -45,7 +45,7 @@ class Character extends FlxSprite
 		this.icon = file.icon;
 		this.positionOffset = new FlxPoint(file.offset[0], file.offset[1]);
 		this.cameraOffset = new FlxPoint(file.camOffset[0], file.camOffset[1]);
-		// offset = positionOffset;
+		offset = positionOffset;
 
 		offset.set(width/2, -height);
 
@@ -108,5 +108,19 @@ class Character extends FlxSprite
 
 			script.set("character", this);
 		}
+	}
+
+	public function getCameraPos(isPlayer:Bool = false) {
+		var camPos = getMidpoint();
+
+		if (isPlayer) {
+			camPos.x -= 100 + cameraOffset.x;
+			camPos.y += -100 + cameraOffset.y;
+		} else {
+			camPos.x += 150 + cameraOffset.x;
+			camPos.y += -100 + cameraOffset.y;
+		}
+
+		return camPos;
 	}
 }

@@ -22,7 +22,7 @@ class LongNote extends FlxSpriteGroup {
         for(i in 0...imageAmt){
             var part:FlxSprite = new FlxSprite(0, 0);
             part.frames = Paths.sparrow("NOTE_hold_default", 'images/shared', ENGINE);
-            part.x = note.x;
+            part.x = note.x + (note.width/4);
             part.y = note.y + (i * 75);
             add(part);
         }
@@ -33,7 +33,7 @@ class LongNote extends FlxSpriteGroup {
 		super.update(elapsed);
 
         for(i in 0...this.length){
-            this.members[i].x = note.x;
+            this.members[i].x = note.x + (note.width/4);
             this.members[i].y = note.y + (i * 75);
         }
 	}

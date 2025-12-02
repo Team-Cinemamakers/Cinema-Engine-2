@@ -82,11 +82,11 @@
             "loop": false
         },
         {
-            "name": "singLEFTmiss",
+            "name": "noteLeftMiss",
             "prefix": "BF NOTE LEFT MISS0",
             "offset": [
-                0,
-                0
+                5,
+                -6
             ],
             "camOffset": [
                 0,
@@ -96,11 +96,11 @@
             "loop": false
         },
         {
-            "name": "singDOWNmiss",
+            "name": "noteDownMiss",
             "prefix": "BF NOTE DOWN MISS0",
             "offset": [
-                0,
-                0
+                -20,
+                -51
             ],
             "camOffset": [
                 0,
@@ -110,12 +110,11 @@
             "loop": false
         },
         {
-            "name": "singUPmiss",
+            "name": "noteUpMiss",
             "prefix": "BF NOTE UP MISS0",
             "offset": [
-                0,
-                0
-
+                -46,
+                27
             ],
             "camOffset": [
                 0,
@@ -125,11 +124,11 @@
             "loop": false
         },
         {
-            "name": "singRIGHTmiss",
+            "name": "noteRightMiss",
             "prefix": "BF NOTE RIGHT MISS0",
             "offset": [
-                0,
-                0
+                -48,
+                -7
             ],
             "camOffset": [
                 0,

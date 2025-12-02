@@ -3,6 +3,8 @@ package funkin.states;
 import backend.Globals.NoteRating;
 import backend.events.BeatEvent;
 import backend.scripting.Scripts.EventProcess;
+import cpp.vm.ExecutionTrace;
+import flixel.FlxObject;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
 import funkin.data.Song;
@@ -64,6 +66,10 @@ class PlayState extends FlxState
 
 	public static var hitsound:FlxSound;
 
+	public static var health:Float = 1.0;
+
+	var camFollow:FlxObject; // I like this system ngl.
+
 	override public function create()
 	{
 		super.create();
@@ -87,15 +93,13 @@ class PlayState extends FlxState
 		camGame = FlxG.camera;
 		FlxG.cameras.add(camUI, false);
 
-		camGame.zoom = baseZoom;
-
 		camGame.width = 4500;
 		camGame.height = 3500;
 
 		if (loadedSong == null)
 		{
 			trace("Could not find song, defaulting to Dad Battle");
-			loadedSong = 'feddy-whop';
+			loadedSong = 'beat-the-meat';
 		}
 
 		song = new Song(loadedSong);
@@ -111,6 +115,10 @@ class PlayState extends FlxState
 		}
 		currentStage = stages[song.info.stages[0]];
 		currentStage.setVisibility(true);
+
+		baseZoom = currentStage.data.baseZoom;
+
+		camGame.zoom = baseZoom;
 
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
@@ -162,14 +170,26 @@ class PlayState extends FlxState
 
 		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
 		{
-			camCenterX = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.x;
-			camCenterY = characters.get(strumlines.members[0].characterNames[0]).cameraOffset.y;
+			camCenterX = characters.get(strumlines.members[0].characterNames[0]).getCameraPos(strumlines.members[0].playable).x;
+			camCenterY = characters.get(strumlines.members[0].characterNames[0]).getCameraPos(strumlines.members[0].playable).y;
 		}
 
-		camGame.x = camCenterX;
-		camGame.y = camCenterY;
+		/*camFollow = new FlxObject(0, 0, 1, 1);
+		camFollow.setPosition(camCenterX, camCenterY);
 
-		animDeb[0] = 0;
+		add(camFollow);
+
+		FlxG.camera.follow(camFollow, LOCKON, 0);
+		FlxG.camera.snapToTarget();
+
+		trace(camFollow.getPosition());
+		trace(FlxG.camera.x + " " + FlxG.camera.y);*/
+
+		FlxG.camera.scroll.x = camCenterX;
+		FlxG.camera.scroll.y = camCenterY;
+
+		for (i in 0...strumlines.length)
+			animDeb[i] = 0;
 
 		// Load in strums
 
@@ -309,7 +329,7 @@ class PlayState extends FlxState
 	{
 		for (i in 0...strumnote.characters.length)
 		{
-			playAnimation(strumnote.characters[i], strumnote.input);
+			playAnimation(strumnote.characters[i], strumnote.input, true);
 			if (newTmr[value] != null)
 			{
 				newTmr[value].cancel();
@@ -364,8 +384,9 @@ class PlayState extends FlxState
 		}
 	}
 
-	function noteHit(note:Note, animation:String, char:Character, playable:Bool)
+	public function noteHit(note:Note, animation:String, char:Character, playable:Bool)
 	{
+		health += 0.023;
 		var ret = Scripts.callOnScripts("noteHit", [note, char, playable]);
 		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
 			return;
@@ -374,11 +395,17 @@ class PlayState extends FlxState
 		playAnimation(char, animation, true, playable);
 	}
 
-	function noteMiss(note:Note, animation:String)
+	public function noteMiss(note:Note, animation:String)
 	{
+		health -= 0.0475;
 		var ret = Scripts.callOnScripts("noteMiss", [note]);
 		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
 			return;
+
+		for (v in 0...note.strumnote.characters.length)
+		{
+			playAnimation(note.strumnote.characters[v], animation+"Miss", true, note.strumnote.playable);
+		}
 
 		note.destroy();
 	}
@@ -434,6 +461,7 @@ class PlayState extends FlxState
 			if (!paused)
 			{
 				// will pause
+				FlxG.switchState(() -> new MainMenuState()); // For convenience or something
 			}
 		}
 	}

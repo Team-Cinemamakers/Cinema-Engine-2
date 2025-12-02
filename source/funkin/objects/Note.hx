@@ -93,6 +93,7 @@ class Note extends FlxSprite {
 
 		if(y <= 0 - this.height){
 				PlayState.instance.notesTypedGroup.remove(this, true);
+				PlayState.instance.noteMiss(this, this.strumnote.input);
 				this.destroy();
 				// #if desktop
 				// Gc.run(true);
@@ -105,6 +106,8 @@ class Note extends FlxSprite {
 				if(!this.strumnote.playable){
 					this.strumnote.pressedOnNote = true;
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
+					if (this.longNote != null)
+						this.longNote.destroy(); // prevent lag for now
 					PlayState.instance.notesTypedGroup.remove(this, true);
 					this.destroy();
 					// #if desktop
