@@ -66,7 +66,12 @@ class PlayState extends FlxState
 
 	public static var hitsound:FlxSound;
 
-	public static var health:Float = 1.0;
+	public static var health:Float = 1.0; // im health
+	public static var misses:Int = 0; // im misses
+	public static var score:Int = 0; // im score
+	// we're the song stat brothers
+
+	var testText:FlxText;
 
 	var camFollow:FlxObject; // I like this system ngl.
 
@@ -202,6 +207,12 @@ class PlayState extends FlxState
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
+		testText = new FlxText(0, 600, 1280, 'health: ' + health + ' | misses: ' + misses + ' | score: ' + score, 20, true);
+        testText.alignment = CENTER;
+		testText.screenCenter(X);
+		testText.cameras = [camUI];
+		add(testText);
+
 		SortUtil.reorder();
 
 		// #if desktop
@@ -253,6 +264,11 @@ class PlayState extends FlxState
 		{
 			camGame.zoom = baseZoom;
 		}
+
+		if (health > 2) health = 2;
+		if (health < 0) health = 0;
+
+		testText.text = 'health: ' + health + ' | misses: ' + misses + ' | score: ' + score;
 	}
 
 	function beatHit(e:BeatEvent)
@@ -292,14 +308,17 @@ class PlayState extends FlxState
 					if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 30))
 					{
 						hitType = NoteRating.PERFECT;
+						score += 100;
 					}
 					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60))
 					{
 						hitType = NoteRating.GREAT;
+						score += 75;
 					}
 					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 90))
 					{
 						hitType = NoteRating.GOOD;
+						score += 50;
 					}
 					thisNote.strumnote.pressedOnNote = true;
 					notesTypedGroup.remove(thisNote, true);
@@ -398,6 +417,7 @@ class PlayState extends FlxState
 	public function noteMiss(note:Note, animation:String)
 	{
 		health -= 0.0475;
+		misses++;
 		var ret = Scripts.callOnScripts("noteMiss", [note]);
 		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
 			return;
