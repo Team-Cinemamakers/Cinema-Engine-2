@@ -25,8 +25,6 @@ class MainMenuState extends FlxState
 	{
 		super.create();
 
-		AssetTracking.destroyUnusedAssets(true);
-
 		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.audio('freakyMenu', 'audio/music', ENGINE));
@@ -43,7 +41,7 @@ class MainMenuState extends FlxState
 		{
 			var yIterator:Float = (i * (100 + 75)) + 62.5;
 			var item:FlxSprite = new FlxSprite();
-			item.frames = Paths.sparrow("menu_" + mainMenuSparrow[i], 'images/states/mainMenu', ENGINE);
+			item.frames = Paths.sparrow("menu_" + mainMenuSparrow[i], 'images/states/mainMenu', ENGINE, item);
 			item.animation.addByPrefix('idle', mainMenuSparrow[i] + ' idle', 24, true);
 			item.animation.addByPrefix('selected', mainMenuSparrow[i] + ' selected', 24, true);
 			item.animation.play('idle', true);

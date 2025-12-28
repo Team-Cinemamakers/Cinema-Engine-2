@@ -23,8 +23,6 @@ class FreeplayState extends FlxState{
     override public function create(){
         super.create();
 
-        AssetTracking.destroyUnusedAssets(true);
-
         if (!FlxG.sound.music.playing || FlxG.sound.music == null)
             {
                 FlxG.sound.playMusic(Paths.audio('audio/music/freakyMenu'));

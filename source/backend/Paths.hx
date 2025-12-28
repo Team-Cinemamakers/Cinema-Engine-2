@@ -4,6 +4,7 @@ import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.Assets;
 import openfl.display.BitmapData;
+@:access(openfl.display.BitmapData)
 
 /**
 * Enum of sources for the path
@@ -126,9 +127,11 @@ class Paths
 		@param directory Directory that the atlas is located in
 		@param source Source of the atlas (Content/Engine/Other)
 	**/
-	public static function sparrow(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT):FlxAtlasFrames
+	public static function sparrow(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT, ?sprite:FlxSprite = null, ?keep:Bool = true):FlxAtlasFrames
 	{
-		return flxanimate.frames.FlxAnimateFrames.fromSparrow(xml(pth, directory, source), bitmap(pth, directory, source));
+		if(sprite != null) sprite.cacheKey = xml(pth, directory, source);
+		return AssetTracking.getAtlas(xml(pth, directory, source), bitmap(pth, directory, source), keep);
+		//return flxanimate.frames.FlxAnimateFrames.fromSparrow(xml(pth, directory, source), bitmap(pth, directory, source));
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package openfl.utils;
 
+import flixel.FlxSprite;
 import openfl.display.BitmapData;
 import openfl.display.MovieClip;
 import openfl.display.Sprite;

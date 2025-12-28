@@ -88,8 +88,6 @@ class PlayState extends FlxState
 		initialized = false;
 
 		desiredCamPos = FlxPoint.get(0, 0);
-
-		AssetTracking.destroyUnusedAssets(true);
 		// #if desktop
 		// Gc.run(true);
 		// #end
@@ -127,6 +125,7 @@ class PlayState extends FlxState
 			stage.setVisibility(false);
 
 			stages.set(stageDef, stage);
+			stage = null;
 		}
 		currentStage = stages[song.info.stages[0]];
 		currentStage.setVisibility(true);
@@ -234,7 +233,8 @@ class PlayState extends FlxState
 			desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get('Idle').x + char.cameraOffset.x, char.y + char.animCamOffsets.get('Idle').y + char.cameraOffset.y);
 			break; // just get first character
 		}
-		
+
+		song.strumlines = null;
 
 		if(!initialized){
 			initialized = true;
@@ -412,6 +412,8 @@ class PlayState extends FlxState
 		// 	ease: FlxEase.quadInOut
 		// });
 	}
+
+
 
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData, j:Int)

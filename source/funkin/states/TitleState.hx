@@ -32,7 +32,7 @@ class TitleState extends FlxState{
 		}
 
         titleBump = new FlxSprite();
-        titleBump.frames = Paths.sparrow(path + 'logoBumpin', '', ENGINE);
+        titleBump.frames = Paths.sparrow(path + 'logoBumpin', '', ENGINE, titleBump);
         titleBump.animation.addByPrefix("bump", 'logo bumpin', 24, false);
         titleBump.scale.set(0.75, 0.75);
         titleBump.updateHitbox();
@@ -40,7 +40,7 @@ class TitleState extends FlxState{
         titleBump.y = -25;
 
         gf = new FlxSprite();
-        gf.frames = Paths.sparrow(path + 'gfDanceTitle', '', ENGINE);
+        gf.frames = Paths.sparrow(path + 'gfDanceTitle', '', ENGINE, gf);
         gf.animation.addByPrefix("dance", 'gfDance', 24, false);
         gf.scale.set(0.85, 0.85);
         gf.updateHitbox();
@@ -48,7 +48,7 @@ class TitleState extends FlxState{
         gf.y = FlxG.height - gf.height - 40;
 
         titleEnter = new FlxSprite();
-        titleEnter.frames = Paths.sparrow(path + 'titleEnter', '', ENGINE);
+        titleEnter.frames = Paths.sparrow(path + 'titleEnter', '', ENGINE, titleEnter);
         titleEnter.animation.addByPrefix("idle", 'ENTER IDLE', 24, false);
         titleEnter.animation.addByPrefix("pressed", 'ENTER PRESSED', 24, true);
         titleEnter.x = 150;

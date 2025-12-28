@@ -6,6 +6,7 @@ import flixel.addons.display.FlxZoomCamera;
 import flixel.system.debug.console.ConsoleHistory;
 import funkin.states.TitleState;
 import openfl.display.Sprite;
+import openfl.utils.Assets;
 import source.backend.CinemaGame;
 
 class Main extends Sprite
@@ -15,6 +16,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		Assets.cache.enabled = false;
 
 		FlxSprite.defaultAntialiasing = true;
 

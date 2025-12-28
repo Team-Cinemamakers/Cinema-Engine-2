@@ -49,7 +49,7 @@ class Character extends FlxSprite
 
 		offset.set(width/2, -height);
 
-		frames = Paths.sparrow(character, "characters/" + character);
+		frames = Paths.sparrow(character, "characters/" + character, false);
 
 		for (anim in file.animations)
 		{
@@ -66,6 +66,8 @@ class Character extends FlxSprite
 		// CALLBACK: create
 		if (script != null)
 			script.run("create");
+
+		file = null;
 	}
 
 	function load(character)
