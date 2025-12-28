@@ -1,5 +1,6 @@
 package openfl.utils;
 
+import backend.optimization.BitmapVCache;
 import flixel.FlxSprite;
 import openfl.display.BitmapData;
 import openfl.display.MovieClip;
@@ -135,10 +136,17 @@ class Assets
 
 		if (image != null)
 		{
+			var bitmapData:BitmapData = null;
 			#if flash
 			var bitmapData = image.src;
 			#else
-			var bitmapData = BitmapData.fromImage(image);
+			if(AssetTracking.useVCache){
+				trace('loading VCache bitmap');
+				bitmapData = new BitmapVCache(0, 0, true, 0);
+				bitmapData.__fromImage(image);
+			} else {
+				bitmapData = BitmapData.fromImage(image);
+			}
 			bitmapData.__asset = true;
 			#end
 

@@ -14,6 +14,8 @@ class CinemaGame extends flixel.FlxGame
         Gc.run(true);
         FlxG.bitmap.clearCache();
         FlxG.bitmapLog.clear();
+        //gotta figure out how to fix this
+        //if(FlxG.stage.context3D != null) FlxG.stage.context3D.dispose(true);
         super.switchState();
         draw();
     }

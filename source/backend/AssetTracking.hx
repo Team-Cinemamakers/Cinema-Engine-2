@@ -4,14 +4,17 @@ import cpp.vm.Gc;
 import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.util.FlxDestroyUtil;
 import flxanimate.frames.FlxAnimateFrames;
 import haxe.ds.StringMap;
 import openfl.Assets;
 import openfl.display.BitmapData;
 //so this fucking sucked, now flxsprite automatically (when running loadGraphic) gets the graphic from here so there aren't duplicates :D cut down 3/4 MB usage in some places, goated
+@:access(openfl.display.BitmapData)
 class AssetTracking
 {
     public static var graphics:StringMap<TrackedGraphic> = new StringMap();
+    public static var useVCache:Bool = true;
 
     //we get the pre-existing flxgraphic (or set it)
     public static function get(path:String, keep:Bool = true):FlxGraphic
@@ -32,9 +35,6 @@ class AssetTracking
         //graphic should not persist nor destroy on no use (because for some reason it insta-destroys it)
         graphic.persist = true;
         graphic.destroyOnNoUse = false;
-        graphic.bitmap = null;
-
-        bitmap = null;
         //set it :3 or not
         if(keep) graphics.set(path, new TrackedGraphic(graphic));
         //return graphic so flxsprite can still do its thing
@@ -58,7 +58,6 @@ class AssetTracking
 
         graphic.persist = true;
         graphic.destroyOnNoUse = false;
-        graphic.bitmap = null;
 
         //get FlxAtlasFrames from a sparrow, same as you would normally
         var frames:FlxAtlasFrames = FlxAnimateFrames.fromSparrow(xmlPath, bitmapData);
@@ -67,8 +66,6 @@ class AssetTracking
         tracked.frames = frames;
 
         if(keep) graphics.set(key, tracked);
-
-        bitmapData = null;
 
         //returns the FlxAtlasFrames
         return frames;

@@ -1,7 +1,9 @@
 package backend;
 
+import backend.optimization.BitmapVCache;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
+import lime.graphics.Image;
 import openfl.Assets;
 import openfl.display.BitmapData;
 @:access(openfl.display.BitmapData)
@@ -143,6 +145,11 @@ class Paths
 	**/
 	public static function bitmap(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT):BitmapData
 	{
+		if(AssetTracking.useVCache){
+			var bm = new BitmapVCache(0, 0, true, 0);
+			bm.__fromImage(Image.fromFile(image(pth, directory, source)));
+			return(bm);
+		}
 		return BitmapData.fromFile(image(pth, directory, source));
 	}
 }
