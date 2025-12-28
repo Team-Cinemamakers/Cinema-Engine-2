@@ -1,9 +1,15 @@
 package funkin.data;
 
+import backend.utils.CE2FileUtil;
 import funkin.data.SongEvent.SongEventData;
 import funkin.objects.Strumline.StrumlineData;
 import funkin.objects.Strumline.StrumlineInfo;
 import funkin.states.PlayState;
+import haxe.io.Bytes;
+import haxe.zip.Entry;
+import haxe.zip.Reader;
+import sys.FileSystem;
+import sys.io.File;
 
 typedef SongCharacter =
 {
@@ -42,10 +48,23 @@ class Song
 	public var info:SongInfo;
 	public var strumlines:Array<StrumlineData>;
 	public var events:Array<SongEvent> = [];
+	public var tempDir:String = "";
 
 	// Maybe temporary?
-	public function new(song:String, directory:String = "") {
-		var song = Song.fromFile(song, directory);
+	public function new(songDir:String, directory:String = "") {
+		var song:SongData;
+		tempDir = "";
+		if(CE2FileUtil.doesCE2FileExist('assets/content/songs/${songDir}.ce2')) {
+			var unzippedFile:Array<String> = CE2FileUtil.unzipCE2SongFile(songDir);
+			if(unzippedFile.length == 0) {
+				throw 'Failed to unzip CE2 song file for song: ' + songDir;
+			} else {
+				song = cast(Json.parse(unzippedFile[0]));
+				tempDir = unzippedFile[1];
+			}
+		} else {
+			song = Song.fromFile(songDir, directory);
+		}
 
 		this.info = song.info;
 		this.strumlines = song.strumlines;
@@ -74,12 +93,12 @@ class Song
 	/**
 		Get song data from a file.
 
-		@param song Name of the song
+		@param songDir Name of the song
 		@param directory Directory that the song is located in
 	**/
-	public static function fromFile(song:String, directory:String = ""):SongData
+	public static function fromFile(songDir:String, directory:String = ""):SongData
 	{
-        var rawJson = JsonUtil.loadJson(Paths.json("songs/" + song + "/" + song, directory));
+        var rawJson = JsonUtil.loadJson(Paths.json("songs/" + songDir + "/" + songDir, directory));
 		var casted:SongData = cast(Json.parse(rawJson));
 		return casted;
     }

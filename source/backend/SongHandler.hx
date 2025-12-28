@@ -14,10 +14,16 @@ class SongHandler
 		@param instPath Name of the instrumental track
 		@param vocalsPath Name of the vocals track
 	**/
-	public static function load(songName:String, instPath:String, vocalsPath:String):Void
+	public static function load(songName:String, instPath:String, vocalsPath:String, tempDir:String = ""):Void
 	{
-		inst = FlxG.sound.load(Paths.audio(instPath, 'songs/' + songName));
-		voices = FlxG.sound.load(Paths.audio(vocalsPath, "songs/" + songName));
+		if(tempDir != ""){
+			trace('Loading song from temp directory: ' + tempDir);
+			inst = FlxG.sound.load(null, 1, false, null, false, false, tempDir + instPath + '.ogg');
+			voices = FlxG.sound.load(null, 1, false, null, false, false, tempDir + vocalsPath + '.ogg');
+		} else {
+			inst = FlxG.sound.load(Paths.audio(instPath, 'songs/' + songName));
+			voices = FlxG.sound.load(Paths.audio(vocalsPath, "songs/" + songName));
+		}
 	}
 
 	/**

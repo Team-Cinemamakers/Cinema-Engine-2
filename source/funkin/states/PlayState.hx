@@ -179,7 +179,7 @@ class PlayState extends FlxState
 		add(strumlines);
 		add(notesTypedGroup);
 
-		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals);
+		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.info.bpm, true);
@@ -229,6 +229,13 @@ class PlayState extends FlxState
 		// #if desktop
 		// Gc.run(true);
 		// #end
+
+		for(char in characters){
+			desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get('Idle').x + char.cameraOffset.x, char.y + char.animCamOffsets.get('Idle').y + char.cameraOffset.y);
+			break; // just get first character
+		}
+		
+
 		if(!initialized){
 			initialized = true;
 		}

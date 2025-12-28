@@ -2,11 +2,11 @@
     "name": "Feddy",
     "icon": "feddy",
     "offset": [
-        0,
+        100,
         0
     ],
     "camOffset": [
-        0,
+        350,
         0
     ],
     "fileName": "feddy",
