@@ -17,6 +17,8 @@ var mainMenuSparrow:Array<String> = ['story_mode', 'freeplay', 'options', 'credi
 
 function create()
 {
+	trace('in state');
+
 	if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 	{
 		FlxG.sound.playMusic(Paths.audio('freakyMenu', 'audio/music', PathSource.ENGINE));

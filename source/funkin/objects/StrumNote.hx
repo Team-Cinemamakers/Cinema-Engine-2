@@ -2,6 +2,8 @@ package funkin.objects;
 
 import backend.CoolInput;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxRect;
+import funkin.states.PlayState;
 
 typedef StrumNoteData =
 {
@@ -16,6 +18,7 @@ class StrumNote extends FlxSprite {
 	public var characters:Array<Character>;
 	public var playable:Bool;
 	public var animOffsets:Map<String, Array<Float>> = new Map();
+	public var clip:FlxRect;
 
 	public var scrollDirection:String = "auto";
 
@@ -41,6 +44,8 @@ class StrumNote extends FlxSprite {
 
 		centerOffsets();
 		centerOrigin();
+
+		clip = new FlxRect(0, this.y, 1280, 720);
     }
 
     override function update(elapsed:Float) {
@@ -66,6 +71,7 @@ class StrumNote extends FlxSprite {
 			playAnim('static');
 			pressedOnNote = false;
 		}
+		clip.y = this.y + (this.height / 2);
 	}
 
 	public function playAnim(anim:String, ?force:Bool = false)

@@ -46,12 +46,16 @@ class HScriptState extends FlxState {
 
     function setupScripting(name:String, path:String) {
         // Initiate state script
+        
         if (Paths.exists(path)) {
+            trace('it fucking worked');
             script = Scripts.create('$name-state', path, ScriptContext.STATE);
 
             script.set("add", add);
             script.set("remove", remove);
             script.set("this", this);
+        } else {
+            trace('Path does not exist at: ${path}');
         }
     }
 }

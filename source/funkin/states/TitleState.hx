@@ -1,6 +1,7 @@
 package funkin.states;
 
 import backend.events.*;
+import backend.scripting.HScriptState;
 import funkin.objects.Transition;
 import funkin.states.MainMenuState;
 
@@ -76,6 +77,8 @@ class TitleState extends FlxState{
 				    // preloading the main menu before the timer to stop stuttering
                     transition.play(-1);
                     new FlxTimer().start(1.5, function(tmr:FlxTimer){
+                        //var state:HScriptState = new HScriptState('MainMenuState', 'assets/engine/scripts/states/MainMenuState.hxs');
+                        //FlxG.switchState(() -> state);
 					    FlxG.switchState(() -> new MainMenuState());
                     });
                 } else if (!selected){

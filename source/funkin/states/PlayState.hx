@@ -66,6 +66,8 @@ class PlayState extends FlxState
 
 	public static var hitsound:FlxSound;
 
+	var desiredCamPos:FlxPoint;
+
 	public static var health:Float = 1.0; // im health
 	public static var misses:Int = 0; // im misses
 	public static var score:Int = 0; // im score
@@ -75,9 +77,17 @@ class PlayState extends FlxState
 
 	var camFollow:FlxObject; // I like this system ngl.
 
+	var timeSinceLastNote:Float = 0;
+
+	var initialized:Bool = false;
+
 	override public function create()
 	{
 		super.create();
+
+		initialized = false;
+
+		desiredCamPos = FlxPoint.get(0, 0);
 
 		AssetTracking.destroyUnusedAssets(true);
 		// #if desktop
@@ -98,8 +108,8 @@ class PlayState extends FlxState
 		camGame = FlxG.camera;
 		FlxG.cameras.add(camUI, false);
 
-		camGame.width = 4500;
-		camGame.height = 3500;
+		//camGame.width = 12;
+		//camGame.height = 3500;
 
 		if (loadedSong == null)
 		{
@@ -155,6 +165,7 @@ class PlayState extends FlxState
 			strumLine.cameras = [camUI];
 
 			strumlines.add(strumLine);
+			trace('added strumline ' + i);
 
 			for (k in 0...strumLine.strumNotes.length)
 			{
@@ -218,6 +229,9 @@ class PlayState extends FlxState
 		// #if desktop
 		// Gc.run(true);
 		// #end
+		if(!initialized){
+			initialized = true;
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -269,10 +283,18 @@ class PlayState extends FlxState
 		if (health < 0) health = 0;
 
 		testText.text = 'health: ' + health + ' | misses: ' + misses + ' | score: ' + score;
+
+		if(FlxPoint.get(camGame.scroll.x, camGame.scroll.y) != desiredCamPos){
+			FlxG.camera.scroll.x += (((desiredCamPos.x - (FlxG.camera.width/2))- FlxG.camera.scroll.x) * (5 * elapsed));
+			FlxG.camera.scroll.y += ((desiredCamPos.y - (FlxG.camera.height/2) - FlxG.camera.scroll.y) * (5 * elapsed));
+		}
+
+		timeSinceLastNote += elapsed;
 	}
 
 	function beatHit(e:BeatEvent)
 	{
+		if(!initialized || strumlines == null || strumlines.length <= 0)return;
 		if (Conductor.curBeat % 2 == 0)
 		{
 			for (i in 0...strumlines.length)
@@ -290,7 +312,7 @@ class PlayState extends FlxState
 	}
 
 	// i fixed ts
-	function activateNote(noteVal:Int, animation:String)
+	function activateNote(noteVal:Int, animation:String, input:String)
 	{
 		if (notesTypedGroup.length <= 0)
 			return;
@@ -321,13 +343,20 @@ class PlayState extends FlxState
 						score += 50;
 					}
 					thisNote.strumnote.pressedOnNote = true;
-					notesTypedGroup.remove(thisNote, true);
 					for (v in 0...thisNote.strumnote.characters.length)
 					{
 						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
-					if(thisNote.longNote != null) thisNote.longNote.destroy();
-					thisNote.destroy();
+					if(thisNote.longNote != null){
+						thisNote.alpha = 0;
+						thisNote.held = true;
+						trace('clicked long note');
+						thisNote.input = input;
+					} else {
+						thisNote.destroy();
+						notesTypedGroup.remove(thisNote, true);
+					}
+					
 				}
 			}
 		}
@@ -346,6 +375,7 @@ class PlayState extends FlxState
 
 	public function activateEnemyNote(strumnote:StrumNote, value:Int)
 	{
+		if(timeSinceLastNote >= (60/Conductor.BPM) * 2) desiredCamPos = FlxPoint.get(strumnote.characters[0].x + strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x, strumnote.characters[0].y + strumnote.characters[0].animCamOffsets.get(strumnote.input).y + strumnote.characters[0].cameraOffset.y);
 		for (i in 0...strumnote.characters.length)
 		{
 			playAnimation(strumnote.characters[i], strumnote.input, true);
@@ -412,10 +442,13 @@ class PlayState extends FlxState
 
 		animDeb[0] = 0;
 		playAnimation(char, animation, true, playable);
+		desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get(animation).x + char.cameraOffset.x, char.y + char.animCamOffsets.get(animation).y + char.cameraOffset.y);
+		timeSinceLastNote = 0;
 	}
 
 	public function noteMiss(note:Note, animation:String)
 	{
+		if(note.longNote != null) trace('long note missed');
 		health -= 0.0475;
 		misses++;
 		var ret = Scripts.callOnScripts("noteMiss", [note]);
@@ -432,6 +465,7 @@ class PlayState extends FlxState
 
 	function processEvents()
 	{
+		if(song == null)return;
 		for (event in song.events)
 		{
 			if (Conductor.TIME >= event.time && !event.triggered)
@@ -446,22 +480,22 @@ class PlayState extends FlxState
 		if (CoolInput.pressed("noteLeft"))
 		{
 			hitNoteDebounce[0] = false;
-			activateNote(0, 'singLEFT');
+			activateNote(0, 'singLEFT', "noteLeft");
 		}
 		if (CoolInput.pressed("noteDown"))
 		{
 			hitNoteDebounce[1] = false;
-			activateNote(1, 'singDOWN');
+			activateNote(1, 'singDOWN', "noteDown");
 		}
 		if (CoolInput.pressed("noteUp"))
 		{
 			hitNoteDebounce[2] = false;
-			activateNote(2, 'singUP');
+			activateNote(2, 'singUP', "noteUp");
 		}
 		if (CoolInput.pressed("noteRight"))
 		{
 			hitNoteDebounce[3] = false;
-			activateNote(3, 'singRIGHT');
+			activateNote(3, 'singRIGHT', "noteRight");
 		}
 		
 		if (CoolInput.pressed("skipTime"))
@@ -481,13 +515,17 @@ class PlayState extends FlxState
 			if (!paused)
 			{
 				// will pause
-				FlxG.switchState(() -> new MainMenuState()); // For convenience or something
+				song = null;
+				FlxG.switchState(() -> new MainMenuState());// For convenience or something
+				strumlines = null; 
 			}
 		}
 	}
 
 	function onSongComplete()
 	{
+		song = null;
 		FlxG.switchState(() -> new MainMenuState());
+		strumlines = null;
 	}
 }

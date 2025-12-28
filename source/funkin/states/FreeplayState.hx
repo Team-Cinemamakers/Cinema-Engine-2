@@ -5,17 +5,20 @@ import funkin.data.Freeplay;
 import funkin.objects.Alphabet;
 import funkin.objects.Transition;
 import funkin.states.MainMenuState;
+import funkin.states.PlayState;
 
 class FreeplayState extends FlxState{
     var bg:FlxSprite;
-    var freeplayOptions:FlxTypedGroup<Alphabet>;
     var freeplayYValues:Array<Float> = [];
     var transition:Transition;
+
+    var tempOptions:Map<FlxText, String> = new Map<FlxText, String>();
+    var options:Array<FlxText> = [];
 
     var freeplay:FreeplayData;
     var freeplayLength:Int = 0;
 
-    var curItem:Int = 0;
+    var curItem:FlxText;
 
     override public function create(){
         super.create();
@@ -33,85 +36,68 @@ class FreeplayState extends FlxState{
 
         freeplay = Freeplay.loadFreeplay();
 
-        freeplayOptions = new FlxTypedGroup<Alphabet>();
-		add(freeplayOptions);
-
 		for (i in 0...freeplay.sections.length)
 		{
             for(k in 0...freeplay.sections[i].songs.length){
-                var yIterator:Float = ((i + 1) * (k * (100 + 75)) + 62.5);
-                var newAlphabet = new Alphabet(freeplay.sections[i].songs[k].name, k * (i + 1), 50, 0, yIterator, true, true);
-                freeplayOptions.add(newAlphabet);
-                add(newAlphabet);
-                freeplayYValues.push(yIterator - newAlphabet.height);
+                var name:String = freeplay.sections[i].songs[k].name;
+                var option:FlxText = new FlxText(0, 0, 0, freeplay.sections[i].songs[k].displayName, 50, true);
+                option.screenCenter(X);
+                option.y = 100 + (freeplayLength * 75);
+                tempOptions.set(option, name);
+                options.push(option);
                 freeplayLength++;
+                if(i == 0 && k == 0){
+                    option.alpha = 1;
+                    curItem = option;
+                } else {
+                    option.alpha = 0.5;
+                }
+                add(option);
             }
 		}
-		freeplayOptions.members[0].setScale(true);
 
         transition = new Transition();
 		add(transition);
 		transition.play(1);
     }
 
-    override public function update(elapsed:Float)
-        {
-            super.update(elapsed);
-    
-            // gets input from custom input callouts (CoolInput) and checks if it is just pressed
-            if (CoolInput.pressed("accept"))
-            {
-                transition.play(-1);
-                new FlxTimer().start(1.5, function(tmr:FlxTimer){
-                    PlayState.loadedSong = freeplay.sections[0].songs[curItem].name;
-                    FlxG.switchState(() -> new PlayState());
-                });
-            }
-            if (CoolInput.pressed("uiDown"))
-            {
-                scroll(-1);
-            }
-            else if (CoolInput.pressed("uiUp"))
-            {
-                scroll(1);
-            } else if (CoolInput.pressed("return")){
-                transition.play(-1);
-                new FlxTimer().start(1.5, function(tmr:FlxTimer){
-                    FlxG.switchState(() -> new MainMenuState());
-                });
-            }
-            if(FlxG.sound.music != null){
-                Conductor.setConductorTime(FlxG.sound.music.time);
+    override public function update(elapsed:Float) {
+        super.update(elapsed);
+
+        if (CoolInput.pressed("uiDown"))
+		{
+			change(1);
+		}
+		else if (CoolInput.pressed("uiUp"))
+		{
+			change(-1);
+		} else if (CoolInput.pressed("return")){
+			transition.play(-1);
+			new FlxTimer().start(1.5, function(tmr:FlxTimer){
+				FlxG.switchState(() -> new MainMenuState());
+			});
+		}
+
+        if (CoolInput.pressed("accept"))
+		{
+            PlayState.loadedSong = tempOptions.get(curItem);
+			FlxG.switchState(() -> new PlayState());
+		}
+    }
+
+
+    public function change(dir:Int = 1){
+        if(curItem == null) return;
+        curItem.alpha = 0.5;
+        if(options[options.indexOf(curItem) + dir] != null){
+            curItem = options[options.indexOf(curItem) + dir];
+        } else {
+            if(dir == 1){
+                curItem = options[0];
+            } else if (dir == -1){
+                curItem = options[options.length - 1];
             }
         }
-
-    	public function scroll(value:Int)
-            {
-                var ogCurItem:Int = curItem;
-                
-                value *= -1;
-                if (curItem + value >= freeplayLength)
-                {
-                    curItem = 0;
-                }
-                else if (curItem + value < 0)
-                {
-                    curItem = freeplayLength - 1;
-                }
-                else
-                {
-                    curItem += value;
-                }
-
-                for(i in 0...freeplayOptions.length){
-                    freeplayOptions.members[i].yOffset = 175 * curItem;
-                    if(i != curItem){
-                        freeplayOptions.members[i].setScale(false);
-                    }
-                }
-        
-                freeplayOptions.members[curItem].setScale(true);
-
-                FlxG.sound.play(Paths.audio('audio/sounds/scrollMenu'));
-            }
+        curItem.alpha = 1;
+    }
 }

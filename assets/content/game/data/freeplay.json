@@ -26,6 +26,18 @@
                     "displayName": "Poopy Fart",
                     "difficulties": ["normal"],
                     "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "beat-the-meat",
+                    "displayName": "Beat The Meat",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "feddy-whop",
+                    "displayName": "Feddy Whop",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
                 }
             ]
         }

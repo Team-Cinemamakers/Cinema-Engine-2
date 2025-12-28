@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TextureAtlas imagePath="NOTE_hold_default_end.png" width="311" height="311">
+<TextureAtlas imagePath="notes.png" width="311" height="311">
   <SubTexture name="idle0001" x="0" y="0" width="75" height="75" frameX="-0" frameY="-0" frameWidth="75" frameHeight="75" />
 </TextureAtlas>

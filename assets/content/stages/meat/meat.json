@@ -1,6 +1,6 @@
 {
     "name": "meat",
-    "baseZoom": 1.2,
+    "baseZoom": 1.4,
     "objects": [
         {
             "name": "sky",

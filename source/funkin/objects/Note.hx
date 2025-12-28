@@ -2,7 +2,9 @@ package funkin.objects;
 
 import backend.Paths;
 import flixel.graphics.frames.FlxAtlasFrames;
+import funkin.objects.LongNote;
 import funkin.objects.Strumline;
+import haxe.io.Scheme;
 
 typedef NoteData =
 {
@@ -37,6 +39,8 @@ class Note extends FlxSprite {
 	public var held:Bool = false;
 
 	public var longNote:LongNote;
+
+	public var input:String = "";
 
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
@@ -82,7 +86,7 @@ class Note extends FlxSprite {
 			if(!moving) moving = true;
 			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
 
-			if(longNote == null){
+			if(longNote == null && noteData.length > 0){
 				longNote = new LongNote(this);
 				longNote.cameras = this.cameras;
 				longNote.zIndex = this.zIndex-1;
@@ -91,7 +95,7 @@ class Note extends FlxSprite {
 			}
 		}
 
-		if(y <= 0 - this.height){
+		if(y <= 0 - this.height && longNote == null){
 				PlayState.instance.notesTypedGroup.remove(this, true);
 				PlayState.instance.noteMiss(this, this.strumnote.input);
 				this.destroy();
@@ -106,16 +110,27 @@ class Note extends FlxSprite {
 				if(!this.strumnote.playable){
 					this.strumnote.pressedOnNote = true;
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
-					if (this.longNote != null)
-						this.longNote.destroy(); // prevent lag for now
-					PlayState.instance.notesTypedGroup.remove(this, true);
-					this.destroy();
+					if (this.longNote != null){
+						this.alpha = 0;
+					} else {
+						PlayState.instance.notesTypedGroup.remove(this, true);
+						this.destroy();
+					}
 					// #if desktop
 					// Gc.run(true);
 					// #end
 				}
 				//PlayState.hitsound.play(true);
 			}
+		}
+
+		if(this.longNote != null && !CoolInput.held(this.strumnote.input) && this.held){
+			this.held = false;
+			PlayState.instance.notesTypedGroup.remove(this, true);
+			PlayState.instance.noteMiss(this, this.strumnote.input);
+			trace('missed long note');
+            this.longNote.destroy();
+            this.destroy();
 		}
 	}
 
@@ -127,5 +142,12 @@ class Note extends FlxSprite {
 		}
 		else
 			return false;
+	}
+
+	public override function draw()
+	{
+		if(moving){
+			super.draw();
+		}
 	}
 }

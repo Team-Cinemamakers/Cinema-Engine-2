@@ -6,6 +6,7 @@ import flixel.addons.display.FlxZoomCamera;
 import flixel.system.debug.console.ConsoleHistory;
 import funkin.states.TitleState;
 import openfl.display.Sprite;
+import source.backend.CinemaGame;
 
 class Main extends Sprite
 {
@@ -21,7 +22,8 @@ class Main extends Sprite
 
 		FlxG.autoPause = false;
 
-		addChild(new FlxGame(0, 0, TitleState, 180, 180, true));
+		var game = new CinemaGame(0, 0, TitleState, 180, 180, true);
+		addChild(game);
 		performanceDisplay = new PerformanceDisplay();
 		addChild(performanceDisplay);
 	}
