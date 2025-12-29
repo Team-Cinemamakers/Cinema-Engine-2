@@ -1,0 +1,14 @@
+var healthBar:Bar;
+function onPlaystatePostInit(){
+    trace('set up hud');
+	healthBar = new Bar(600, 15, [0xFFFF0000, 0xFF52BAFF], 2, 1);
+	healthBar.cameras = [playstate.camUI];
+	healthBar.screenCenter();
+	healthBar.y = FlxG.height - 140;
+	healthBar.zIndex = 26;
+	playstate.add(healthBar);
+}
+
+function update(elapsed:Float){
+    if(healthBar != null) healthBar.value = PlayState.health;
+}

@@ -5,7 +5,9 @@ import flixel.util.FlxAxes;
 import funkin.data.Song;
 import funkin.data.Stage;
 import funkin.objects.Alphabet;
+import funkin.objects.Bar;
 import funkin.objects.Transition;
+import funkin.states.PlayState;
 
 enum ScriptContext {
     ANY; // Not a context, but is used for signifying that any context is fine
@@ -14,6 +16,7 @@ enum ScriptContext {
     STAGE;
     SONG;
     EVENT;
+    HUD;
     OTHER;
 }
 
@@ -93,11 +96,13 @@ class Scripts {
         "MusicHandler" => SongHandler,
         "Globals" => Globals,
         "EventProcess" => EventProcess,
+        "PlayState" => PlayState,
 
         "Song" => Song,
         "Stage" => Stage,
         "Alphabet" => Alphabet,
         "Transition" => Transition,
+        "Bar" => Bar,
     ];
 
     /**

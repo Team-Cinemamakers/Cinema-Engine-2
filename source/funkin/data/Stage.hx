@@ -174,8 +174,10 @@ class Stage
             script.set("delete", delete);
             script.set("remove", remove);
             script.set("getPositionFromMarker", getPositionFromMarker);
+            script.set("get", get);
 
 			script.set("stage", this);
+            trace('added hscript');
 		}
 	}
 

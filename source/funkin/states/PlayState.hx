@@ -10,6 +10,7 @@ import flixel.system.debug.stats.Stats;
 import funkin.data.Song;
 import funkin.data.SongEvent;
 import funkin.data.Stage;
+import funkin.objects.Bar;
 import funkin.objects.Character;
 import funkin.objects.LongNote;
 import funkin.objects.Note;
@@ -39,6 +40,8 @@ class PlayState extends FlxState
 
 	var camGame:FlxCamera;
 	var camUI:FlxCamera;
+
+	public var hud:HScript = null;
 
 	public var characters:Map<String, Character> = [];
 
@@ -73,7 +76,7 @@ class PlayState extends FlxState
 	public static var score:Int = 0; // im score
 	// we're the song stat brothers
 
-	var testText:FlxText;
+	public var testText:FlxText;
 
 	var camFollow:FlxObject; // I like this system ngl.
 
@@ -83,9 +86,13 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		Scripts.callOnScripts("onPlaystatePreInit", []);
+
 		super.create();
 
 		initialized = false;
+
+		health = 1.0;
 
 		desiredCamPos = FlxPoint.get(0, 0);
 		// #if desktop
@@ -223,8 +230,6 @@ class PlayState extends FlxState
 		testText.cameras = [camUI];
 		add(testText);
 
-		SortUtil.reorder();
-
 		// #if desktop
 		// Gc.run(true);
 		// #end
@@ -234,12 +239,20 @@ class PlayState extends FlxState
 			break; // just get first character
 		}
 
+		initHUD('baseHUD');
+
+		Scripts.callOnScripts("onPlaystatePostInit", []);
+
+		SortUtil.reorder();
+
 		song.strumlines = null;
 
 		if(!initialized){
 			initialized = true;
 		}
 	}
+
+	var healthBar:Bar;
 
 	override public function update(elapsed:Float)
 	{
@@ -297,6 +310,8 @@ class PlayState extends FlxState
 		}
 
 		timeSinceLastNote += elapsed;
+
+		Scripts.callOnScripts("update", [elapsed]);
 	}
 
 	function beatHit(e:BeatEvent)
@@ -537,4 +552,15 @@ class PlayState extends FlxState
 		FlxG.switchState(() -> new MainMenuState());
 		strumlines = null;
 	}
+
+	function initHUD(name:String) {
+		if (Paths.exists(Paths.hscript(name, "hud"))) {
+			hud = Scripts.create(name + "-hud", Paths.hscript(name, "hud"), ScriptContext.HUD);
+		} else {
+			hud = Scripts.create(name + "-hud", Paths.hscript("baseHUD", "hud"), ScriptContext.HUD); 
+		}
+		hud.set("playstate", this);
+        trace('added hscript');
+
+	} 
 }
