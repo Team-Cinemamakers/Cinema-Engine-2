@@ -84,6 +84,8 @@ class Scripts {
         "FlxTypedGroup" => FlxTypedGroup,
         "FlxAxes" => MacroUtil.buildAbstract(FlxAxes),
 
+        "FlxText" => FlxText,
+
         "Conductor" => Conductor,
         "Paths" => Paths,
         "PathSource" => PathSource,

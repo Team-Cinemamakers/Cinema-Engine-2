@@ -1,6 +1,14 @@
 var healthBar:Bar;
+var testText:FlxText;
 function onPlaystatePostInit(){
     trace('set up hud');
+
+	testText = new FlxText(0, 600, 1280, 'health: ' + PlayState.health + ' | misses: ' + PlayState.misses + ' | score: ' + PlayState.score, 20, true);
+    testText.alignment = "center";
+	testText.cameras = [playstate.camUI];
+	testText.screenCenter("x");
+	playstate.add(testText);
+
 	healthBar = new Bar(600, 15, [0xFFFF0000, 0xFF52BAFF], 2, 1);
 	healthBar.cameras = [playstate.camUI];
 	healthBar.screenCenter();
@@ -11,4 +19,5 @@ function onPlaystatePostInit(){
 
 function update(elapsed:Float){
     if(healthBar != null) healthBar.value = PlayState.health;
+	testText.text = 'health: ' + PlayState.health + ' | misses: ' + PlayState.misses + ' | score: ' + PlayState.score;
 }

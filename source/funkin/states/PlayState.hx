@@ -76,8 +76,6 @@ class PlayState extends FlxState
 	public static var score:Int = 0; // im score
 	// we're the song stat brothers
 
-	public var testText:FlxText;
-
 	var camFollow:FlxObject; // I like this system ngl.
 
 	var timeSinceLastNote:Float = 0;
@@ -93,6 +91,9 @@ class PlayState extends FlxState
 		initialized = false;
 
 		health = 1.0;
+
+		misses = 0;
+		score = 0;
 
 		desiredCamPos = FlxPoint.get(0, 0);
 		// #if desktop
@@ -224,11 +225,7 @@ class PlayState extends FlxState
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
-		testText = new FlxText(0, 600, 1280, 'health: ' + health + ' | misses: ' + misses + ' | score: ' + score, 20, true);
-        testText.alignment = CENTER;
-		testText.screenCenter(X);
-		testText.cameras = [camUI];
-		add(testText);
+		
 
 		// #if desktop
 		// Gc.run(true);
@@ -239,7 +236,10 @@ class PlayState extends FlxState
 			break; // just get first character
 		}
 
-		initHUD('baseHUD');
+		if (song.info.hud == null) {
+			trace("hud script not specified, returning to default");
+			initHUD('baseHUD');
+		} else initHUD(song.info.hud);
 
 		Scripts.callOnScripts("onPlaystatePostInit", []);
 
@@ -252,11 +252,11 @@ class PlayState extends FlxState
 		}
 	}
 
-	var healthBar:Bar;
-
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		Scripts.callOnScripts("preUpdate", [elapsed]);
 
 		processInputs();
 
@@ -301,8 +301,6 @@ class PlayState extends FlxState
 
 		if (health > 2) health = 2;
 		if (health < 0) health = 0;
-
-		testText.text = 'health: ' + health + ' | misses: ' + misses + ' | score: ' + score;
 
 		if(FlxPoint.get(camGame.scroll.x, camGame.scroll.y) != desiredCamPos){
 			FlxG.camera.scroll.x += (((desiredCamPos.x - (FlxG.camera.width/2))- FlxG.camera.scroll.x) * (5 * elapsed));

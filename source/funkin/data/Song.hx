@@ -32,6 +32,7 @@ typedef SongInfo =
 	var songFiles:SongTracks;
 	var strumlines:Array<StrumlineInfo>;
 	var stages:Array<String>;
+	var hud:String;
 	var characters:Array<SongCharacter>;
 	// var scripts; // TODO: not implemented yet
 }
