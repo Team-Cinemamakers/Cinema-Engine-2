@@ -314,6 +314,8 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
+		Scripts.callOnScripts("preBeatHit", []);
+
 		if(!initialized || strumlines == null || strumlines.length <= 0)return;
 		if (Conductor.curBeat % 2 == 0)
 		{
@@ -329,6 +331,8 @@ class PlayState extends FlxState
 				}
 			}
 		}
+
+		Scripts.callOnScripts("beatHit", []);
 	}
 
 	// i fixed ts
