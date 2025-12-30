@@ -83,14 +83,14 @@ class Note extends FlxSprite {
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		
+
 		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (1/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
 			if(!moving){
 				x = strumnote.x + (this.width/4);
 				moving = true;
 			}
 			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-			x += ((strumnote.x + (this.width/4))-x)/((noteData.time - Conductor.TIME));
+			x += ((strumnote.x + (this.width/4)) - x)/((noteData.time - Conductor.TIME)/((1/FlxG.updateFramerate) * 1000));
 
 			if(longNote == null && noteData.length > 0){
 				longNote = new LongNote(this);
