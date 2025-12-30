@@ -84,6 +84,9 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		super.create();
+		instance = this;
+
 		Scripts.callOnScripts("onPlaystatePreInit", []);
 
 		super.create();
@@ -562,10 +565,11 @@ class PlayState extends FlxState
 		if (Paths.exists(Paths.hscript(name, "hud"))) {
 			hud = Scripts.create(name + "-hud", Paths.hscript(name, "hud"), ScriptContext.HUD);
 		} else {
-			hud = Scripts.create(name + "-hud", Paths.hscript("baseHUD", "hud"), ScriptContext.HUD); 
+			hud = Scripts.create(name + "-hud", Paths.hscript("BaseHUD", "hud"), ScriptContext.HUD); 
 		}
-		hud.set("playstate", this);
-        trace('added hscript');
 
+		hud.set("add", add);
+		hud.set("remove", remove);
+		hud.set("this", this);
 	} 
 }
