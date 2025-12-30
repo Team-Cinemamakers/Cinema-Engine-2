@@ -1,5 +1,7 @@
 package backend;
 
+import openfl.events.Event;
+
 class SongHandler
 {
 	public static var inst:FlxSound;
@@ -22,8 +24,8 @@ class SongHandler
 			inst = FlxG.sound.load(null, 1, false, null, false, false, tempDir + instPath + '.ogg');
 			voices = FlxG.sound.load(null, 1, false, null, false, false, tempDir + vocalsPath + '.ogg');
 		} else {
-			inst = FlxG.sound.load(Paths.audio(instPath, 'songs/' + songName));
-			voices = FlxG.sound.load(Paths.audio(vocalsPath, "songs/" + songName));
+			inst = FlxG.sound.load(Paths.audio(instPath, 'songs/' + songName), 1, false);
+			voices = FlxG.sound.load(Paths.audio(vocalsPath, "songs/" + songName), 1, false);
 		}
 	}
 
@@ -32,11 +34,12 @@ class SongHandler
 	**/
 	public static function play():Void
 	{
-		if (inst != null && voices != null)
+		if (inst != null)
 		{
 			inst.play();
-			voices.play();
+			if(voices != null) voices.play();
 			playing = true;
+			Conductor.play();
 		}
 	}
 
@@ -45,24 +48,28 @@ class SongHandler
 	**/
 	public static function stop():Void
 	{
-		if (inst != null && voices != null)
+		if (inst != null)
 		{
-			inst.stop();
-			voices.stop();
+			Conductor.stop();
 			playing = false;
+			inst.stop();
+			if(voices != null) voices.stop();
+			
 		}
 	}
 
 	/**
 		Pauses the song.
 	**/
+	@:access(flixel.sound.FlxSound)
 	public static function pause():Void
 	{
-		if (inst != null && voices != null)
+		if (inst != null)
 		{
-			inst.pause();
-			voices.pause();
+			Conductor.pause();
 			playing = false;
+			inst.pause();
+			if(voices != null) voices.pause();
 		}
 	}
 
@@ -71,6 +78,7 @@ class SongHandler
 	**/
 	public static function checkSync():Void
 	{
+		if(!playing) return;
 		if (voices != null)
 		{
 			if (!MathUtil.isInRange(voices.time, inst.time, 50))

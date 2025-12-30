@@ -62,6 +62,14 @@ class Conductor
 	}
 
 	/**
+		Plays the conductor time.
+	**/
+	public static function play():Void
+	{
+		doConductorTime = true;
+	}
+
+	/**
 		Reset all conductor values, but notably does not start or stop it.
 
 		@param newBpm New BPM for the Conductor

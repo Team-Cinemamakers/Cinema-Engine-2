@@ -604,9 +604,9 @@ class PlayState extends FlxState
 					// trace('Could not find custom pause substate, falling back to default');
 					pauseSubstate = new HScriptSubstate("PauseSubstate", Paths.hscript("PauseSubstate", "scripts/substates", ENGINE));
 				}
-
-				paused = true;
 				SongHandler.pause();
+				paused = true;
+				
 				openSubState(pauseSubstate);
 			}
 		}
