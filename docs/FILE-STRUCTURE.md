@@ -35,3 +35,4 @@ assets/
             states/ - Assets for specific states
         scripts/
             states/ - Scripts for softcoded states
+            substates/ - Scripts for softcoded substates
