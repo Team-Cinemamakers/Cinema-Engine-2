@@ -16,6 +16,7 @@ class SongHandler
 	**/
 	public static function load(songName:String, instPath:String, vocalsPath:String, tempDir:String = ""):Void
 	{
+		//if it is a ce2 file it'll set the PCs temp directory, which if it exists, it will stream audio from there instead of loading an embedded sound :3
 		if(tempDir != ""){
 			trace('Loading song from temp directory: ' + tempDir);
 			inst = FlxG.sound.load(null, 1, false, null, false, false, tempDir + instPath + '.ogg');

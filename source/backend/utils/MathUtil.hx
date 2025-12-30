@@ -27,7 +27,19 @@ class MathUtil
 		}
 	}
 
-	public static function hexToRGB(hex:String):Array<Float> {
+	/**
+	 * Takes a hex value as a string or as a base hex value, returns rgb values between 0 and 1
+	 * @param hex 
+	 * @return Array<Float>
+	 */
+	public static function hexToRGB(hex:Dynamic):Array<Float> {
+		var fin:String;
+		if(Std.isOfType(hex, Int)){
+			fin = Std.string(hex);
+		} else if(!Std.isOfType(hex, String)){
+			return [1, 1, 1];
+		}
+
 		var ri:Int = Std.parseInt("0x" + hex.substr(2, 2));
 		var gi:Int = Std.parseInt("0x" + hex.substr(4, 2));
 		var bi:Int = Std.parseInt("0x" + hex.substr(6, 2));
