@@ -610,6 +610,9 @@ class PlayState extends FlxState
 				openSubState(pauseSubstate);
 			}
 		}
+		if (CoolInput.pressed("return")) {
+			endSong(); // Let me have my convenience.
+		}
 	}
 
 	function initHUD(name:String) {
