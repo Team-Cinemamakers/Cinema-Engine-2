@@ -29,12 +29,14 @@ class LongNote extends FlxSpriteGroup {
                 part.updateHitbox();
                 part.x = note.x + (note.width/4);
                 part.y = note.y + (i * 75);
+                part.shader = note.shader;
                 add(part);
             } else {
                 var part:FlxSprite = new FlxSprite(0, 0);
                 part.frames = Paths.sparrow("NOTE_hold_default", 'images/shared', ENGINE);
                 part.x = note.x + (note.width/4);
                 part.y = note.y + (i * 75);
+                part.shader = note.shader;
                 add(part);
             }
         }

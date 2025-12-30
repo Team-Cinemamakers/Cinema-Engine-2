@@ -1,6 +1,8 @@
 package funkin.objects;
 
 import backend.CoolInput;
+import backend.shaders.NoteShader;
+import backend.utils.MathUtil;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxRect;
 import funkin.states.PlayState;
@@ -9,6 +11,7 @@ typedef StrumNoteData =
 {
 	var input:String; // input, or animation
 	var angle:Float; // angle at which the note should be rotated, will be useful in the future when we switch to a single color note sprite and just recolor it
+	var color:Array<String>;
 }
 
 class StrumNote extends FlxSprite {
@@ -19,6 +22,7 @@ class StrumNote extends FlxSprite {
 	public var playable:Bool;
 	public var animOffsets:Map<String, Array<Float>> = new Map();
 	public var clip:FlxRect;
+	public var value:Int = 0;
 
 	public var scrollDirection:String = "auto";
 
@@ -26,7 +30,11 @@ class StrumNote extends FlxSprite {
 
 	private var noteSparrow:FlxAtlasFrames = Paths.sparrow('noteStrumline', 'images/shared', ENGINE);
 
-	public function new(input:String = "noteLeft", angle:Float = 0, characterNames:Array<String>, playable:Bool = false, x:Float = 0, y:Float = 0, characters:Array<Character>)
+	public var noteShader:NoteShader;
+
+	public final defaultColors:Array<Array<String>> = [["0xBF4C99", "0xFFFFFF", "0x3F205C"], ["0x01FFFF", "0xFFFFFF", "0x1840BA"], ["0x12FA04", "0xFFFFFF", "0x034A42"], ["0xF83845", "0xFFFFFF", "0x6F0E39"]];
+
+	public function new(input:String = "noteLeft", angle:Float = 0, characterNames:Array<String>, playable:Bool = false, x:Float = 0, y:Float = 0, characters:Array<Character>, color:Array<String>, value:Int = 0)
 	{
         super(x, y);
         this.input = input;
@@ -46,6 +54,24 @@ class StrumNote extends FlxSprite {
 		centerOrigin();
 
 		clip = new FlxRect(0, this.y, 1280, 720);
+
+		this.value = value;
+
+		if(color == null){
+			if(defaultColors[value] == null){
+				color = defaultColors[0];
+			} else {
+				color = defaultColors[value];
+			}
+		}
+		
+		trace(Std.parseInt(color[0]));
+
+		noteShader = new NoteShader();
+		noteShader.redColor.value = MathUtil.hexToRGB(color[0]);
+		noteShader.greenColor.value = MathUtil.hexToRGB(color[1]);
+		noteShader.blueColor.value = MathUtil.hexToRGB(color[2]);
+		
     }
 
     override function update(elapsed:Float) {
@@ -55,19 +81,24 @@ class StrumNote extends FlxSprite {
 		{
 			if (!pressedOnNote) {
 				if (animation.curAnim.name != 'press')
+					this.shader = noteShader;
 					playAnim('press');
 			} else {
 				if (animation.curAnim.name != 'confirm')
+					this.shader = noteShader;
 					playAnim('confirm');
 			}
 			
         } else if (!playable) {
 			if(!pressedOnNote){
+				this.shader = null;
 				playAnim('static');
 			} else {
+				this.shader = noteShader;
 				playAnim('confirm');
 			}
 		} else {
+			this.shader = null;
 			playAnim('static');
 			pressedOnNote = false;
 		}

@@ -371,6 +371,7 @@ class PlayState extends FlxState
 					{
 						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
+					SongHandler.voices.volume = 1;
 					if(thisNote.longNote != null){
 						thisNote.alpha = 0;
 						thisNote.held = true;
@@ -402,6 +403,7 @@ class PlayState extends FlxState
 		if(timeSinceLastNote >= (60/Conductor.BPM) * 2) desiredCamPos = FlxPoint.get(strumnote.characters[0].x + strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x, strumnote.characters[0].y + strumnote.characters[0].animCamOffsets.get(strumnote.input).y + strumnote.characters[0].cameraOffset.y);
 		for (i in 0...strumnote.characters.length)
 		{
+			SongHandler.voices.volume = 1;
 			playAnimation(strumnote.characters[i], strumnote.input, true);
 			if (newTmr[value] != null)
 			{
@@ -477,6 +479,7 @@ class PlayState extends FlxState
 		if(note.longNote != null) trace('long note missed');
 		health -= 0.0475;
 		misses++;
+		SongHandler.voices.volume = 0;
 		var ret = Scripts.callOnScripts("noteMiss", [note]);
 		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
 			return;

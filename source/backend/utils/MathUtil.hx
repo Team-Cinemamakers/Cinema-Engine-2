@@ -26,4 +26,20 @@ class MathUtil
 			return val * -1;
 		}
 	}
+
+	public static function hexToRGB(hex:String):Array<Float> {
+		var ri:Int = Std.parseInt("0x" + hex.substr(2, 2));
+		var gi:Int = Std.parseInt("0x" + hex.substr(4, 2));
+		var bi:Int = Std.parseInt("0x" + hex.substr(6, 2));
+
+		trace(ri);
+		trace(gi);
+		trace(bi);
+
+		var r:Float = ri/255;
+		var g:Float = gi/255;
+		var b:Float = bi/255;
+
+		return [r, g, b];
+	}
 }

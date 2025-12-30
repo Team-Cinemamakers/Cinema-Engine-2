@@ -60,7 +60,7 @@ class Strumline extends FlxTypedGroup<StrumNote>
 
 		for (i in 0...strumNotes.length)
 		{
-			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, characterNames, playable, x + (i * kerning), y, this.characters);
+			var strumNote:StrumNote = new StrumNote(strumNotes[i].input, strumNotes[i].angle, characterNames, playable, x + (i * kerning), y, this.characters, strumNotes[i].color, i);
 			add(strumNote);
 		}
 	}

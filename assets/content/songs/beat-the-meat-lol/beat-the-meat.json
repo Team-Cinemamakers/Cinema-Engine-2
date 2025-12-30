@@ -41,19 +41,23 @@
 				"strumNotes": [
 					{
 						"angle": 270,
-						"input": "noteLeft"
+						"input": "noteLeft",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 180,
-						"input": "noteDown"
+						"input": "noteDown",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 0,
-						"input": "noteUp"
+						"input": "noteUp",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 90,
-						"input": "noteRight"
+						"input": "noteRight",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					}
 				]
 			},
@@ -74,19 +78,23 @@
 				"strumNotes": [
 					{
 						"angle": 270,
-						"input": "noteLeft"
+						"input": "noteLeft",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 180,
-						"input": "noteDown"
+						"input": "noteDown",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 0,
-						"input": "noteUp"
+						"input": "noteUp",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					},
 					{
 						"angle": 90,
-						"input": "noteRight"
+						"input": "noteRight",
+						"color": ["0xFFFF00", "0xFFFF00", "0xFFFF00"]
 					}
 				]
 			}

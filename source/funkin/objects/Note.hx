@@ -1,7 +1,9 @@
 package funkin.objects;
 
 import backend.Paths;
+import backend.shaders.NoteShader;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.system.FlxAssets;
 import funkin.objects.LongNote;
 import funkin.objects.Strumline;
 import haxe.io.Scheme;
@@ -73,6 +75,7 @@ class Note extends FlxSprite {
 		if(PlayState.instance != null){
 			PlayState.instance.notesTypedGroup.add(this);
 		}
+		this.shader = strumnote.noteShader;
 	}
 
 	var playedHitsound:Bool = false;
