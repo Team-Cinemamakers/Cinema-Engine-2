@@ -470,13 +470,24 @@ class PlayState extends FlxState
 
 	public function noteHit(note:Note, animation:String, char:Character, playable:Bool)
 	{
-		health += 0.023;
 		var ret = Scripts.callOnScripts("noteHit", [note, char, playable]);
+		var values = Scripts.getCombinedCallResult(ret);
+		var eventValues = {
+			health: 0.023,
+			doAnimation: true
+		};
+
+		if (values.health != null) eventValues.health = values.health;
+		if (values.doAnimation != null) eventValues.doAnimation = values.doAnimation;
+
+		health += eventValues.health;
 		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
 			return;
 
-		animDeb[0] = 0;
-		playAnimation(char, animation, true, playable);
+		if (eventValues.doAnimation) {
+			animDeb[0] = 0;
+			playAnimation(char, animation, true, playable);
+		}	
 		desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get(animation).x + char.cameraOffset.x, char.y + char.animCamOffsets.get(animation).y + char.cameraOffset.y);
 		timeSinceLastNote = 0;
 	}
@@ -550,10 +561,11 @@ class PlayState extends FlxState
 		{
 			if (!paused)
 			{
-				// will pause
-				song = null;
-				FlxG.switchState(() -> new MainMenuState());// For convenience or something
-				strumlines = null; 
+
+				// // will pause
+				// song = null;
+				// FlxG.switchState(() -> new MainMenuState());// For convenience or something
+				// strumlines = null; 
 			}
 		}
 	}

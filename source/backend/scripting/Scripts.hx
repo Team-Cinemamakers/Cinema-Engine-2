@@ -8,6 +8,7 @@ import funkin.objects.Alphabet;
 import funkin.objects.Bar;
 import funkin.objects.Transition;
 import funkin.states.PlayState;
+import haxe.DynamicAccess;
 
 enum ScriptContext {
     ANY; // Not a context, but is used for signifying that any context is fine
@@ -99,7 +100,7 @@ class Scripts {
         "MusicHandler" => SongHandler,
         "Globals" => Globals,
         "EventProcess" => EventProcess,
-        
+
         "PlayState" => PlayState,
 
         "Song" => Song,
@@ -153,6 +154,29 @@ class Scripts {
             if (result != null && result.returnValue == EventProcess.CANCEL) return EventProcess.CANCEL;
         }
         return EventProcess.CONTINUE;
+    }
+
+    /**
+        Returns a struct with combined results of the scripts
+
+        @param calls Map<String, IrisCall> that you should have from `callOnScripts`
+
+        @returns Struct of combined returns from all the scripts, not including duplicates
+    **/
+    public static function getCombinedCallResult(calls:Map<String, IrisCall>):Dynamic {
+        var returns:DynamicAccess<Dynamic> = {};
+
+        for (result in calls) {
+            if (result == null || result.returnValue == EventProcess.CANCEL) continue;
+
+            var returnValues:DynamicAccess<Dynamic> = result.returnValue;
+            for (k => v in returnValues) {
+                if (!returns.exists(k))
+                    returns.set(k, v);
+            }
+        }
+
+        return returns;
     }
 }
 
