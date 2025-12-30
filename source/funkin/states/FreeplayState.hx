@@ -39,6 +39,7 @@ class FreeplayState extends FlxState{
             for(k in 0...freeplay.sections[i].songs.length){
                 var name:String = freeplay.sections[i].songs[k].name;
                 var option:FlxText = new FlxText(0, 0, 0, freeplay.sections[i].songs[k].displayName, 50, true);
+                option.setFormat(null, 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
                 option.screenCenter(X);
                 option.y = 100 + (freeplayLength * 75);
                 tempOptions.set(option, name);
