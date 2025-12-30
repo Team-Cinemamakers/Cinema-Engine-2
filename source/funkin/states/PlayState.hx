@@ -188,6 +188,7 @@ class PlayState extends FlxState
 		add(notesTypedGroup);
 
 		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
+		SongHandler.inst.onComplete = endSong;
 
 		// resets conductor and also plays loaded inst and voices on music handler
 		Conductor.reset(song.info.bpm, true);
@@ -340,6 +341,16 @@ class PlayState extends FlxState
 		}
 
 		Scripts.callOnScripts("beatHit", []);
+	}
+
+	public function endSong() {
+		var eventReturn = Scripts.callOnScripts("songEnd", []);
+		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL)
+			return;
+
+		song = null;
+		FlxG.switchState(() -> new MainMenuState());
+		strumlines = null;
 	}
 
 	// i fixed ts
@@ -581,13 +592,6 @@ class PlayState extends FlxState
 				// strumlines = null; 
 			}
 		}
-	}
-
-	function onSongComplete()
-	{
-		song = null;
-		FlxG.switchState(() -> new MainMenuState());
-		strumlines = null;
 	}
 
 	function initHUD(name:String) {
