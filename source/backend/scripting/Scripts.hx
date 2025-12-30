@@ -163,7 +163,7 @@ class Scripts {
 
         @returns Struct of combined returns from all the scripts, not including duplicates
     **/
-    public static function getCombinedCallResult(calls:Map<String, IrisCall>):Dynamic {
+    public static function getCombinedCallResult(calls:Map<String, IrisCall>, ?base:Dynamic):Dynamic {
         var returns:DynamicAccess<Dynamic> = {};
 
         for (result in calls) {
@@ -171,6 +171,14 @@ class Scripts {
 
             var returnValues:DynamicAccess<Dynamic> = result.returnValue;
             for (k => v in returnValues) {
+                if (!returns.exists(k))
+                    returns.set(k, v);
+            }
+        }
+
+        if (base != null) {
+            var baseAccess:DynamicAccess<Dynamic> = base;
+            for (k => v in baseAccess) {
                 if (!returns.exists(k))
                     returns.set(k, v);
             }

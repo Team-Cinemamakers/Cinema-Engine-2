@@ -177,7 +177,7 @@ class Stage
             script.set("get", get);
 
 			script.set("stage", this);
-            trace('added hscript');
+            trace('Added stage HScript!');
 		}
 	}
 

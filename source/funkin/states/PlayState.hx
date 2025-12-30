@@ -470,21 +470,19 @@ class PlayState extends FlxState
 
 	public function noteHit(note:Note, animation:String, char:Character, playable:Bool)
 	{
-		var ret = Scripts.callOnScripts("noteHit", [note, char, playable]);
-		var values = Scripts.getCombinedCallResult(ret);
-		var eventValues = {
+		var eventReturn = Scripts.callOnScripts("noteHit", [note, char, playable]);
+		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL)
+			return;
+
+		var eventData = {
 			health: 0.023,
 			doAnimation: true
 		};
+		eventData = Scripts.getCombinedCallResult(eventReturn, eventData);
 
-		if (values.health != null) eventValues.health = values.health;
-		if (values.doAnimation != null) eventValues.doAnimation = values.doAnimation;
+		health += eventData.health;
 
-		health += eventValues.health;
-		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
-			return;
-
-		if (eventValues.doAnimation) {
+		if (eventData.doAnimation) {
 			animDeb[0] = 0;
 			playAnimation(char, animation, true, playable);
 		}	
@@ -494,17 +492,32 @@ class PlayState extends FlxState
 
 	public function noteMiss(note:Note, animation:String)
 	{
-		if(note.longNote != null) trace('long note missed');
-		health -= 0.0475;
-		misses++;
-		SongHandler.voices.volume = 0;
-		var ret = Scripts.callOnScripts("noteMiss", [note]);
-		if (Scripts.getCallEventResult(ret) == EventProcess.CANCEL)
+		var eventReturn = Scripts.callOnScripts("noteMiss", [note]);
+		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL) {
+			note.destroy();
 			return;
+		}
 
-		for (v in 0...note.strumnote.characters.length)
-		{
-			playAnimation(note.strumnote.characters[v], animation+"Miss", true, note.strumnote.playable);
+		var eventData = {
+			health: 0.0475,
+			misses: 1,
+			muteVoices: true,
+			doAnimation: true
+		};
+		eventData = Scripts.getCombinedCallResult(eventReturn, eventData);
+
+		if(note.longNote != null) trace('long note missed');
+		health -= eventData.health;
+		misses += eventData.misses;
+
+		if (eventData.muteVoices)
+			SongHandler.voices.volume = 0;
+
+		if (eventData.doAnimation) {
+			for (v in 0...note.strumnote.characters.length)
+			{
+				playAnimation(note.strumnote.characters[v], animation+"Miss", true, note.strumnote.playable);
+			}
 		}
 
 		note.destroy();
