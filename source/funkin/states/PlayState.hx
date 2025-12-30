@@ -45,6 +45,7 @@ class PlayState extends FlxState
 	var camUI:FlxCamera;
 
 	public var hud:HScript = null;
+	public var pauseSubstate:HScriptSubstate = null;
 
 	public var characters:Map<String, Character> = [];
 
@@ -596,11 +597,17 @@ class PlayState extends FlxState
 		{
 			if (!paused)
 			{
+				if (Paths.exists(Paths.hscript("PauseSubstate", "substates"))) {
+					pauseSubstate = new HScriptSubstate("PauseSubstate", Paths.hscript("PauseSubstate", "scripts/substates", CONTENT));
+				}
+				else {
+					// trace('Could not find custom pause substate, falling back to default');
+					pauseSubstate = new HScriptSubstate("PauseSubstate", Paths.hscript("PauseSubstate", "scripts/substates", ENGINE));
+				}
 
-				// // will pause
-				// song = null;
-				// FlxG.switchState(() -> new MainMenuState());// For convenience or something
-				// strumlines = null; 
+				paused = true;
+				SongHandler.pause();
+				openSubState(pauseSubstate);
 			}
 		}
 	}
@@ -615,5 +622,5 @@ class PlayState extends FlxState
 		hud.set("add", add);
 		hud.set("remove", remove);
 		hud.set("this", this);
-	} 
+	}
 }

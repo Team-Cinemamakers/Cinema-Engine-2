@@ -2,7 +2,7 @@ package backend.scripting;
 
 import flixel.FlxSubState;
 
-class HScriptState extends FlxSubState {
+class HScriptSubstate extends FlxSubState {
     var script:HScript;
 
     public function new(name:String, path:String) {
@@ -49,11 +49,13 @@ class HScriptState extends FlxSubState {
     function setupScripting(name:String, path:String) {
         // Initiate state script
         if (Paths.exists(path)) {
-            script = Scripts.create('$name-state', path, ScriptContext.STATE);
+            script = Scripts.create('$name-substate', path, ScriptContext.STATE);
 
             script.set("add", add);
             script.set("remove", remove);
             script.set("this", this);
+
+            script.set("close", close);
         }
     }
 }

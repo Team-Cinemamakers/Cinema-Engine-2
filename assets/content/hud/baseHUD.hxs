@@ -2,7 +2,6 @@ var healthBar:Bar;
 var testText:FlxText;
 function onPlaystatePostInit(){
     trace('Setting up hud');
-	trace(PlayState.health);
 
 	testText = new FlxText(0, 600, 1380, 'health: 0 | misses: 0 | score: 0', 20, true);
     testText.alignment = "center";

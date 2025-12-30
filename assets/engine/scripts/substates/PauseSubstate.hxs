@@ -1,0 +1,16 @@
+function create() {
+    bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, 0x33000000);
+    bg.cameras = [PlayState.instance.camUI];
+    add(bg);
+
+    trace('hi');
+}
+
+function update(elapsed:Float) {
+    if (CoolInput.pressed("accept")) {
+        PlayState.instance.paused = false;
+        SongHandler.play();
+
+        close();
+    }
+}
