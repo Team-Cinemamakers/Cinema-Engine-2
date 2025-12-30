@@ -56,7 +56,7 @@ class MainMenuState extends FlxState
 
 		transition = new Transition();
 		add(transition);
-		transition.play(1);
+		transition.play(Transition.DOWN);
 
 		SortUtil.reorder();
 	}
@@ -71,12 +71,16 @@ class MainMenuState extends FlxState
 			switch (curItem)
 			{
 				case 0:
-					FlxG.switchState(() -> new PlayState());
+					transition.play(Transition.UP, 0.5, () -> {
+						FlxG.switchState(() -> new PlayState());
+					});
 				case 1:
-					transition.play(-1);
-					new FlxTimer().start(1.5, function(tmr:FlxTimer){
+					transition.play(Transition.UP, 0.5, () -> {
 						FlxG.switchState(() -> new FreeplayState());
 					});
+					// new FlxTimer().start(1.5, function(tmr:FlxTimer){
+					// 	FlxG.switchState(() -> new FreeplayState());
+					// });
 			}
 		}
 		if (CoolInput.pressed("uiDown"))
@@ -87,8 +91,7 @@ class MainMenuState extends FlxState
 		{
 			scroll(1);
 		} else if (CoolInput.pressed("return")){
-			transition.play(-1);
-			new FlxTimer().start(1.5, function(tmr:FlxTimer){
+			transition.play(Transition.UP, 0.5, () -> {
 				FlxG.switchState(() -> new TitleState());
 			});
 		}

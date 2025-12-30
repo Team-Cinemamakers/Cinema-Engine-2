@@ -56,7 +56,7 @@ class FreeplayState extends FlxState{
 
         transition = new Transition();
 		add(transition);
-		transition.play(1);
+		transition.play(Transition.DOWN);
     }
 
     override public function update(elapsed:Float) {
@@ -70,10 +70,9 @@ class FreeplayState extends FlxState{
 		{
 			change(-1);
 		} else if (CoolInput.pressed("return")){
-			transition.play(-1);
-			new FlxTimer().start(1.5, function(tmr:FlxTimer){
-				FlxG.switchState(() -> new MainMenuState());
-			});
+			transition.play(Transition.UP, 0.5, () -> {
+                FlxG.switchState(() -> new MainMenuState());
+            });
 		}
 
         if (CoolInput.pressed("accept"))

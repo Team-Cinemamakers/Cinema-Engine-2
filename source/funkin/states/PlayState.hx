@@ -15,6 +15,7 @@ import funkin.objects.LongNote;
 import funkin.objects.Note;
 import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
+import funkin.objects.Transition;
 #if !html5
 import cpp.vm.ExecutionTrace;
 #end
@@ -54,7 +55,9 @@ class PlayState extends FlxState
 	var baseZoom:Float = 0.85;
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
-	var paused:Bool = false;
+
+	public var paused:Bool = false;
+	public var songEnded:Bool = false;
 
 	public var noteSparrow:FlxAtlasFrames;
 
@@ -344,13 +347,21 @@ class PlayState extends FlxState
 	}
 
 	public function endSong() {
+		if (songEnded) return;
 		var eventReturn = Scripts.callOnScripts("songEnd", []);
 		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL)
 			return;
 
+		songEnded = true;
+
 		song = null;
-		FlxG.switchState(() -> new MainMenuState());
 		strumlines = null;
+
+		var transition:Transition = new Transition();
+		transition.cameras = [camUI];
+		transition.play(Transition.DOWN, 0.5, () -> FlxG.switchState(() -> new MainMenuState()));
+		add(transition);
+		
 	}
 
 	// i fixed ts

@@ -75,12 +75,14 @@ class TitleState extends FlxState{
 				    FlxG.sound.play(Paths.audio('audio/sounds/confirmMenu', '', ENGINE));
 				    // for some reason visual studio wants this indented back and it wont let me stop it
 				    // preloading the main menu before the timer to stop stuttering
-                    transition.play(-1);
-                    new FlxTimer().start(1.5, function(tmr:FlxTimer){
-                        //var state:HScriptState = new HScriptState('MainMenuState', 'assets/engine/scripts/states/MainMenuState.hxs');
-                        //FlxG.switchState(() -> state);
-					    FlxG.switchState(() -> new MainMenuState());
+                    transition.play(Transition.UP, 0.5, () -> {
+                        FlxG.switchState(() -> new MainMenuState());
                     });
+                    // new FlxTimer().start(1.5, function(tmr:FlxTimer){
+                    //     //var state:HScriptState = new HScriptState('MainMenuState', 'assets/engine/scripts/states/MainMenuState.hxs');
+                    //     //FlxG.switchState(() -> state);
+					    
+                    // });
                 } else if (!selected){
                     skipIntro();
                 }
