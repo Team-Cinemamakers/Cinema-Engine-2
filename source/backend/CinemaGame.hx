@@ -1,6 +1,8 @@
 package source.backend;
 
+#if !html5
 import cpp.vm.Gc;
+#end
 import flixel.FlxGame;
 import openfl.utils.Assets;
 
@@ -9,7 +11,9 @@ class CinemaGame extends flixel.FlxGame
     public override function switchState(){
         //clears all from assettracking
         AssetTracking.clearAll();
+        #if !html5
         Gc.run(true);
+        #end
         FlxG.bitmap.clearCache();
         FlxG.bitmapLog.clear();
         //gotta figure out how to fix this

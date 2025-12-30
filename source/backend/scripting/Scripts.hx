@@ -92,12 +92,14 @@ class Scripts {
         "JsonUtil" => JsonUtil,
         "MathUtil" => MathUtil,
         "SortUtil" => SortUtil,
+        "MiscUtil" => MiscUtil,
         "ZLayers" => ZLayers,
         "CoolInput" => CoolInput,
         "ScrollableMenu" => ScrollableMenu,
         "MusicHandler" => SongHandler,
         "Globals" => Globals,
         "EventProcess" => EventProcess,
+        
         "PlayState" => PlayState,
 
         "Song" => Song,

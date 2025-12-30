@@ -141,7 +141,7 @@ class Assets
 			var bitmapData = image.src;
 			#else
 			if(AssetTracking.useVCache){
-				trace('loading VCache bitmap');
+				// trace('loading VCache bitmap');
 				bitmapData = new BitmapVCache(0, 0, true, 0);
 				bitmapData.__fromImage(image);
 			} else {

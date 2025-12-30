@@ -8,8 +8,10 @@ import funkin.states.PlayState;
 import haxe.io.Bytes;
 import haxe.zip.Entry;
 import haxe.zip.Reader;
+#if !html5
 import sys.FileSystem;
 import sys.io.File;
+#end
 
 typedef SongCharacter =
 {
@@ -55,6 +57,7 @@ class Song
 	public function new(songDir:String, directory:String = "") {
 		var song:SongData;
 		tempDir = "";
+		#if desktop
 		if(CE2FileUtil.doesCE2FileExist('assets/content/songs/${songDir}.ce2')) {
 			var unzippedFile:Array<String> = CE2FileUtil.unzipCE2SongFile(songDir);
 			if(unzippedFile.length == 0) {
@@ -66,6 +69,9 @@ class Song
 		} else {
 			song = Song.fromFile(songDir, directory);
 		}
+		#else
+		song = Song.fromFile(songDir, directory);
+		#end
 
 		this.info = song.info;
 		this.strumlines = song.strumlines;

@@ -1,6 +1,8 @@
 package backend;
 
+#if !html5
 import cpp.vm.Gc;
+#end
 import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -14,7 +16,7 @@ import openfl.display.BitmapData;
 class AssetTracking
 {
     public static var graphics:StringMap<TrackedGraphic> = new StringMap();
-    public static var useVCache:Bool = true;
+    public static var useVCache:Bool = #if !html5 true #else false #end;
 
     //we get the pre-existing flxgraphic (or set it)
     public static function get(path:String, keep:Bool = true):FlxGraphic
@@ -52,7 +54,7 @@ class AssetTracking
             //returns the FlxAtlasFrames
             return graphics.get(key).frames;
         }
-        trace('Loading atlas: ' + xmlPath);
+        // trace('Loading atlas: ' + xmlPath);
 
         var graphic = FlxGraphic.fromBitmapData(bitmapData, false, "", false);
 
@@ -99,7 +101,9 @@ class AssetTracking
 
     //runs gc lol, done when a cached asset is cleared.
     public static function gcClean():Void{
+        #if !html5
         Gc.run(true);
+        #end
     }
 }
 

@@ -3,7 +3,6 @@ package funkin.states;
 import backend.Globals.NoteRating;
 import backend.events.BeatEvent;
 import backend.scripting.Scripts.EventProcess;
-import cpp.vm.ExecutionTrace;
 import flixel.FlxObject;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
@@ -16,6 +15,9 @@ import funkin.objects.LongNote;
 import funkin.objects.Note;
 import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
+#if !html5
+import cpp.vm.ExecutionTrace;
+#end
 
 class PlayState extends FlxState
 {
@@ -89,8 +91,6 @@ class PlayState extends FlxState
 
 		Scripts.callOnScripts("onPlaystatePreInit", []);
 
-		super.create();
-
 		initialized = false;
 
 		health = 1.0;
@@ -104,8 +104,6 @@ class PlayState extends FlxState
 		// #end
 
 		hitsound = FlxG.sound.load(Paths.audio("scrollMenu", "audio/sounds", ENGINE));
-
-		instance = this;
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 
@@ -122,8 +120,8 @@ class PlayState extends FlxState
 
 		if (loadedSong == null)
 		{
-			trace("Could not find song, defaulting to Dad Battle");
 			loadedSong = 'beat-the-meat';
+			trace("Could not find song, defaulting to " + MiscUtil.capitalize(loadedSong.replace("-", " ")));
 		}
 
 		song = new Song(loadedSong);
@@ -240,8 +238,8 @@ class PlayState extends FlxState
 		}
 
 		if (song.info.hud == null) {
-			trace("hud script not specified, returning to default");
-			initHUD('baseHUD');
+			trace("Hud script not specified, returning to default");
+			initHUD('BaseHUD');
 		} else initHUD(song.info.hud);
 
 		Scripts.callOnScripts("onPlaystatePostInit", []);
@@ -253,6 +251,12 @@ class PlayState extends FlxState
 		if(!initialized){
 			initialized = true;
 		}
+	}
+
+	override function destroy() {
+		super.destroy();
+
+		instance = null;
 	}
 
 	override public function update(elapsed:Float)

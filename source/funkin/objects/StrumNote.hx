@@ -65,7 +65,7 @@ class StrumNote extends FlxSprite {
 			}
 		}
 		
-		trace(Std.parseInt(color[0]));
+		// trace(Std.parseInt(color[0]));
 
 		noteShader = new NoteShader();
 		noteShader.redColor.value = MathUtil.hexToRGB(color[0]);

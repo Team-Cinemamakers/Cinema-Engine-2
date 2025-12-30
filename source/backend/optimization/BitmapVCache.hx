@@ -15,7 +15,7 @@ class BitmapVCache extends BitmapData {
     */
 	public override function __fromImage(image:Image):Void
 	{
-        trace('loading vcached image');
+        // trace('loading vcached image');
 		if (image != null && image.buffer != null)
 		{
             this.image = image;

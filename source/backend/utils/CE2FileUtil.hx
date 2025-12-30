@@ -1,5 +1,6 @@
 package backend.utils;
 
+#if !html5
 import funkin.data.SongEvent.SongEventData;
 import funkin.objects.Strumline.StrumlineData;
 import funkin.objects.Strumline.StrumlineInfo;
@@ -70,7 +71,4 @@ class CE2FileUtil
         return "";
     }
 }
-
-
-
-
+#end

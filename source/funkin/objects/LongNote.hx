@@ -59,8 +59,8 @@ class LongNote extends FlxSpriteGroup {
         }
 
         if(this.members[0].y + pixelLength <= 0){
-            trace('destroyed missed note');
-            trace('destroyed self');
+            // trace('destroyed missed note');
+            // trace('destroyed self');
             PlayState.instance.notesTypedGroup.remove(this.note, true);
             note.destroy();
             this.destroy();

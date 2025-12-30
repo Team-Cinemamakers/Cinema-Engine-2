@@ -11,7 +11,7 @@ class CoolInput
 		switch (input)
 		{
 			case "accept":
-				return (FlxG.keys.justPressed.ENTER);
+				return (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE);
 			case "noteLeft":
 				return (FlxG.keys.justPressed.D);
 			case "noteDown":

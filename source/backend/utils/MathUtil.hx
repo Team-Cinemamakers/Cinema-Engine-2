@@ -44,9 +44,9 @@ class MathUtil
 		var gi:Int = Std.parseInt("0x" + hex.substr(4, 2));
 		var bi:Int = Std.parseInt("0x" + hex.substr(6, 2));
 
-		trace(ri);
-		trace(gi);
-		trace(bi);
+		// trace(ri);
+		// trace(gi);
+		// trace(bi);
 
 		var r:Float = ri/255;
 		var g:Float = gi/255;
