@@ -417,7 +417,7 @@ class PlayState extends FlxState
 						hitType = NoteRating.PERFECT;
 						score += 100;
 
-						var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-25, thisNote.strumnote.y-25);
+						var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-20, thisNote.strumnote.y-25);
 						splash.cameras = [camUI];
 						// splash.scale = thisNote.strumnote.scale;
 						noteSplashes.add(splash);
