@@ -77,9 +77,6 @@ class Conductor
 	**/
 	public static function reset(newBpm:Float = 120, playSong:Bool = false):Void
 	{
-		if (playSong)
-			SongHandler.play();
-
 		BPM = newBpm;
 		beatTime = (60 / BPM) * 1000;
 		stepTime = beatTime / 4;
@@ -89,6 +86,9 @@ class Conductor
 		lastBeatTime = 0;
 		curStep = 0;
 		lastStepTime = 0;
+
+		if (playSong)
+			SongHandler.play();
 	}
 
 	/**

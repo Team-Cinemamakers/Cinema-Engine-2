@@ -446,7 +446,7 @@ class FlxSprite extends FlxObject
 
 		shader = null;
 
-        AssetTracking.gcClean();
+        //AssetTracking.gcClean();
 	}
 
 	public function clone():FlxSprite

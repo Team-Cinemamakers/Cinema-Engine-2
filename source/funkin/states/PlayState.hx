@@ -1,6 +1,7 @@
 package funkin.states;
 
 import backend.Globals.NoteRating;
+import backend.NoteHandler;
 import backend.events.BeatEvent;
 import backend.events.StepEvent;
 import backend.scripting.Scripts.EventProcess;
@@ -28,6 +29,7 @@ class PlayState extends FlxState
 	var strumlines:FlxTypedGroup<Strumline>;
 
 	public var notesTypedGroup:FlxTypedGroup<Note>;
+	public var noteMap:Map<Strumline, Array<Note>> = new Map<Strumline, Array<Note>>();
 
 	public static var loadedSong:String;
 
@@ -189,6 +191,8 @@ class PlayState extends FlxState
 					hitNoteDebounce.push(false);
 				}
 			}
+
+			noteMap.set(strumLine, []);
 		}
 
 		add(strumlines);
@@ -283,6 +287,8 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		NoteHandler.runNoteCheck(noteMap);
 
 		Scripts.callOnScripts("preUpdate", [elapsed]);
 
@@ -494,6 +500,7 @@ class PlayState extends FlxState
 			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, j);
 
 		noteNew.cameras = [camUI];
+		noteMap.get(strumlines.members[i]).push(noteNew);
 		// trace('loaded note' + j);
 	}
 

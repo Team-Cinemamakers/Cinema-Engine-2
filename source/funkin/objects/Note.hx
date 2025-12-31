@@ -76,6 +76,7 @@ class Note extends FlxSprite {
 			PlayState.instance.notesTypedGroup.add(this);
 		}
 		this.shader = strumnote.noteShader;
+		x = strumnote.x + (this.width/4);
 	}
 
 	var playedHitsound:Bool = false;
@@ -84,18 +85,7 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-		if(noteData.time - ((startY - (strumnote.y + (this.height/2)))/(PlayState.scrollSpeed * (1/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
-			if(!moving){
-				x = strumnote.x + (this.width/4);
-				moving = true;
-			}
-			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-			if(y < strumnote.y + (this.height/2)){
-				x = strumnote.x + (this.width/4);
-			} else {
-				x += ((strumnote.x + (this.width/4)) - x)/((noteData.time - Conductor.TIME)/((1/FlxG.updateFramerate) * 1000));
-			}
-
+		if(moving){
 			if(longNote == null && noteData.length > 0){
 				longNote = new LongNote(this);
 				longNote.cameras = this.cameras;
@@ -159,5 +149,10 @@ class Note extends FlxSprite {
 		if(moving){
 			super.draw();
 		}
+	}
+
+	public override function destroy(){
+		PlayState.instance.noteMap.get(strumline).remove(this);
+		super.destroy();
 	}
 }
