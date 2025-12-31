@@ -2,6 +2,7 @@ package funkin.states;
 
 import backend.Globals.NoteRating;
 import backend.events.BeatEvent;
+import backend.events.StepEvent;
 import backend.scripting.Scripts.EventProcess;
 import flixel.FlxObject;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -110,6 +111,7 @@ class PlayState extends FlxState
 		hitsound = FlxG.sound.load(Paths.audio("scrollMenu", "audio/sounds", ENGINE));
 
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
+		Conductor.evDisp.addEventListener(Conductor.stepEvent.type, stepHit);
 
 		noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
@@ -258,8 +260,18 @@ class PlayState extends FlxState
 		}
 	}
 
+	var safeContexts:Array<ScriptContext> = [ScriptContext.ANY, ScriptContext.STATE, ScriptContext.OTHER]; // These won't get removed.
+
 	override function destroy() {
 		super.destroy();
+
+		for (key in Scripts.scripts.keys()) { // Unload all scripts with contexts relating to songs.
+			var script = Scripts.scripts[key];
+
+			if (!safeContexts.contains(script.context)) {
+				Scripts.remove(key);
+			}
+		}
 
 		instance = null;
 	}
@@ -326,7 +338,7 @@ class PlayState extends FlxState
 
 	function beatHit(e:BeatEvent)
 	{
-		Scripts.callOnScripts("preBeatHit", []);
+		Scripts.callOnScripts("preBeatHit", [Conductor.curBeat]);
 
 		if(!initialized || strumlines == null || strumlines.length <= 0)return;
 		if (Conductor.curBeat % 2 == 0)
@@ -344,7 +356,12 @@ class PlayState extends FlxState
 			}
 		}
 
-		Scripts.callOnScripts("beatHit", []);
+		Scripts.callOnScripts("beatHit", [Conductor.curBeat]);
+	}
+
+	function stepHit(e:StepEvent) {
+		// Scripts.callOnScripts("preStepHit", [Conductor.curStep]);
+		Scripts.callOnScripts("stepHit", [Conductor.curStep]);
 	}
 
 	public function endSong() {
