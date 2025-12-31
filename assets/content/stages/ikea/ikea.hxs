@@ -1,17 +1,50 @@
 import funkin.objects.Character;
+// import backend.shaders.GlitchEffect;
 
 var shi:Array<Character> = [];
+
+var sigmioreveal:Bool = false;
+var unfairJevents:Array<Bool> = [false, false];
+var blackShitJ:FlxSprite;
+var whiteShitJ:FlxSprite;
+var bfTrailJ:FlxTrail;
+var dadTrailJ:FlxTrail;
+
+// var unfairjShader:GlitchEffect;
+
+var thorn:FlxSprite;
+var bg:FlxSprite;
 
 function onPlaystatePostInit(){
     trace('peener');
 
-    
+    /* unfairjShader = new GlitchEffect();
+    unfairjShader.waveAmplitude = 0.1;
+	unfairjShader.waveFrequency = 5;
+	unfairjShader.waveSpeed = 1; */
+
+    thorn = get('thorn');
+    bg = get('jo');
+
+    thorn.antialiasing = false;
+    bg.antialiasing = false;
+
+    // bg.shader = unfairjShader.shader;
+    bg.visible = false;
 }
 
 var time:Float = 0;
 function update(elapsed) {
     
     time += elapsed;
+}
+
+function beatHit(beat) {
+    switch (Conductor.curBeat) {
+        case 156:
+            trace("baller");
+            PlayState.instance.characters["spiritfakeout"].playAnimation("die", true);
+    }
 }
 
 function bigDih(char, charName, marker, strum) {

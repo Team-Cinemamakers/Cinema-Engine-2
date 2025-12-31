@@ -1,20 +1,20 @@
 {
-    "name": "Spirit Faker",
+    "name": "Sigmio Final",
     "icon": "bf",
     "offset": [
-        -550,
-		-300
+        0,
+		0
     ],
     "camOffset": [
         0,
         0
     ],
-    "fileName": "spiritfakeout",
+    "fileName": "sigmio-final",
     "scale": 6,
     "animations": [
         {
             "name": "Idle",
-            "prefix": "Idle",
+            "prefix": "idle",
             "offset": [
                 0,
 				0
@@ -28,9 +28,9 @@
         },
         {
             "name": "noteLeft",
-            "prefix": "Left",
+            "prefix": "left",
             "offset": [
-                0,
+                100,
 				0
             ],
             "camOffset": [
@@ -42,10 +42,10 @@
         },
         {
             "name": "noteDown",
-            "prefix": "Down",
+            "prefix": "down",
             "offset": [
                 0,
-				0
+				100
             ],
             "camOffset": [
                 0,
@@ -56,10 +56,10 @@
         },
         {
             "name": "noteUp",
-            "prefix": "Up",
+            "prefix": "up",
             "offset": [
                 0,
-				0
+				150
             ],
             "camOffset": [
                 0,
@@ -70,7 +70,7 @@
         },
         {
             "name": "noteRight",
-            "prefix": "Right",
+            "prefix": "right",
             "offset": [
                 0,
 				0

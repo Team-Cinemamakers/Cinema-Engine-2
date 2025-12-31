@@ -16,6 +16,7 @@ import funkin.objects.Bar;
 import funkin.objects.Character;
 import funkin.objects.LongNote;
 import funkin.objects.Note;
+import funkin.objects.NoteSplash;
 import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
 import funkin.objects.Transition;
@@ -27,6 +28,7 @@ class PlayState extends FlxState
 {
 	var bf:Character;
 	var strumlines:FlxTypedGroup<Strumline>;
+	var noteSplashes:FlxTypedGroup<NoteSplash>;
 
 	public var notesTypedGroup:FlxTypedGroup<Note>;
 	public var noteMap:Map<Strumline, Array<Note>> = new Map<Strumline, Array<Note>>();
@@ -166,6 +168,9 @@ class PlayState extends FlxState
 		notesTypedGroup = new FlxTypedGroup<Note>();
 		notesTypedGroup.zIndex = ZLayers.UI;
 
+		noteSplashes = new FlxTypedGroup<NoteSplash>();
+		noteSplashes.zIndex = ZLayers.UI;
+
 		// Create character declarations
 		for (charData in song.info.characters)
 		{
@@ -202,6 +207,7 @@ class PlayState extends FlxState
 
 		add(strumlines);
 		add(notesTypedGroup);
+		add(noteSplashes);
 
 		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
 		{
@@ -407,6 +413,12 @@ class PlayState extends FlxState
 					{
 						hitType = NoteRating.PERFECT;
 						score += 100;
+
+						var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-25, thisNote.strumnote.y-25);
+						splash.cameras = [camUI];
+						// splash.scale = thisNote.strumnote.scale;
+						noteSplashes.add(splash);
+						splash.splash();
 					}
 					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60))
 					{
@@ -483,8 +495,6 @@ class PlayState extends FlxState
 		// 	ease: FlxEase.quadInOut
 		// });
 	}
-
-
 
 	// calls note graphics and adds them
 	function loadNote(i:Int, note:NoteData, j:Int)

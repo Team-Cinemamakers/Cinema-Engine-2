@@ -71,7 +71,6 @@ class StrumNote extends FlxSprite {
 		noteShader.redColor.value = MathUtil.hexToRGB(color[0]);
 		noteShader.greenColor.value = MathUtil.hexToRGB(color[1]);
 		noteShader.blueColor.value = MathUtil.hexToRGB(color[2]);
-		
     }
 
     override function update(elapsed:Float) {

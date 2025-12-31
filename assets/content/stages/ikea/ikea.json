@@ -1,6 +1,6 @@
 {
     "name": "ikea",
-    "baseZoom": 1.4,
+    "baseZoom": 0.9,
     "objects": [
         {
             "name": "jo",
@@ -25,11 +25,11 @@
     "markers": [
         {
             "name": "playerPos",
-            "position": [920, 100]
+            "position": [920, 500]
         },
         {
             "name": "opponentPos",
-            "position": [-350, 0]
+            "position": [200, 400]
         }
     ]
 }
