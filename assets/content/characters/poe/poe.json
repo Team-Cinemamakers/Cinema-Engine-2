@@ -1,0 +1,85 @@
+{
+    "name": "poe",
+    "icon": "bf",
+    "offset": [
+		200,
+		75
+    ],
+    "camOffset": [
+        -75,
+        250
+    ],
+    "fileName": "poe",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "Idle",
+            "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "Right",
+            "offset": [
+                17,
+                0
+            ],
+            "camOffset": [
+                -30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "Down",
+            "offset": [
+                66,
+                -83
+            ],
+            "camOffset": [
+                0,
+                30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "Up",
+            "offset": [
+				-31,
+				24
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "Left",
+            "offset": [
+				-39,
+				-2
+            ],
+            "camOffset": [
+				30,
+				0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

@@ -37,7 +37,10 @@ class SongHandler
 		if (inst != null)
 		{
 			inst.play();
-			if(voices != null) voices.play();
+			if(voices != null){
+				voices.time = inst.time;
+				voices.play();
+			}
 			playing = true;
 			Conductor.play();
 		}
@@ -85,6 +88,15 @@ class SongHandler
 			{
 				voices.time = inst.time;
 			}
+		}
+	}
+
+	public static function forceSync():Void
+	{
+		if(!playing) return;
+		if (voices != null)
+		{
+			voices.time = inst.time;
 		}
 	}
 

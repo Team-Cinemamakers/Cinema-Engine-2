@@ -1,0 +1,22 @@
+{
+    "name": "tween",
+    "baseZoom": 0.7,
+    "objects": [
+        {
+            "name": "clone_room",
+            "file": "clone_room",
+            "scale": [2.3, 2.3],
+            "position": [0, 0]
+        }
+    ],
+    "markers": [
+        {
+            "name": "playerPos",
+            "position": [1700, 500]
+        },
+        {
+            "name": "opponentPos",
+            "position": [975, 625]
+        }
+    ]
+}

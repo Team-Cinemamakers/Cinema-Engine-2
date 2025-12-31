@@ -71,8 +71,9 @@ class SongEvent {
     public function trigger() {
         triggered = true;
         
+        Scripts.callOnScripts(name, [values]);
         // CALLBACK: eventTriggered
         if (script != null)
-            script.run("eventTriggered", [values]);
+            script.run(name, [values]);
     }
 }

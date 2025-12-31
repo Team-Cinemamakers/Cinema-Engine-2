@@ -44,6 +44,12 @@
                     "displayName": "UNFAIRJESS",
                     "difficulties": ["hard"],
                     "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "reasonable-crashout",
+                    "displayName": "REASONABLE CRASHOUT",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
                 }
             ]
         }

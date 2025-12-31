@@ -57,7 +57,7 @@ class PlayState extends FlxState
 	public var stages:Map<String, Stage> = [];
 	public var currentStage:Stage;
 
-	var baseZoom:Float = 0.85;
+	public var baseZoom:Float = 0.85;
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
 
@@ -258,9 +258,7 @@ class PlayState extends FlxState
 
 		song.strumlines = null;
 
-		if(!initialized){
-			initialized = true;
-		}
+		AssetTracking.gcClean();
 	}
 
 	var safeContexts:Array<ScriptContext> = [ScriptContext.ANY, ScriptContext.STATE, ScriptContext.OTHER]; // These won't get removed.
@@ -282,6 +280,11 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		if(!initialized){
+			initialized = true;
+			SongHandler.forceSync();
+		}
 
 		NoteHandler.runNoteCheck(noteMap);
 
@@ -577,6 +580,7 @@ class PlayState extends FlxState
 			if (Conductor.TIME >= event.time && !event.triggered)
 			{
 				event.trigger();
+				trace('event triggered');
 			}
 		}
 	}
