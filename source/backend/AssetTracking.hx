@@ -17,6 +17,7 @@ class AssetTracking
 {
     public static var graphics:StringMap<TrackedGraphic> = new StringMap();
     public static var useVCache:Bool = #if !html5 true #else false #end;
+    public static var protectedAssets:Array<String> = [];
 
     //we get the pre-existing flxgraphic (or set it)
     public static function get(path:String, keep:Bool = true):FlxGraphic
@@ -44,7 +45,7 @@ class AssetTracking
     }
 
     //same thing but for atlas, almost everything is the same, called when using Paths.sparrow() for simplicities sake
-    public static function getAtlas(xmlPath:String, bitmapData:BitmapData, ?keep:Bool = true):FlxAtlasFrames
+    public static function getAtlas(xmlPath:String, bitmapData:BitmapData, ?keep:Bool = true, ?protected:Bool = false):FlxAtlasFrames
     {
         var key = xmlPath;
 
@@ -68,6 +69,7 @@ class AssetTracking
         tracked.frames = frames;
 
         if(keep) graphics.set(key, tracked);
+        if(protected && !protectedAssets.contains(key)) protectedAssets.push(key);
 
         //returns the FlxAtlasFrames
         return frames;
@@ -83,6 +85,7 @@ class AssetTracking
 
         if (tracked.references <= 0)
         {
+            if(protectedAssets.contains(path)) return;
             tracked.graphic.destroy();
             graphics.remove(path);
         }

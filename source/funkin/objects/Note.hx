@@ -44,7 +44,7 @@ class Note extends FlxSprite {
 
 	public var input:String = "";
 
-	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
+	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, iterator:Int)
 	{
 		y = FlxG.height + this.height / 2;
 
@@ -63,7 +63,7 @@ class Note extends FlxSprite {
 		this.iterator = iterator;
 
         this.strumline = strumline;
-		this.frames = frames;
+		this.frames = Paths.sparrow('notes', 'images/shared', ENGINE, this, true, true);
 
 		this.scale.set(scaleX, scaleY);
 

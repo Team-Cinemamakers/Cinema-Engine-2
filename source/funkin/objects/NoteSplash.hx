@@ -11,7 +11,8 @@ class NoteSplash extends FlxSprite {
     public function new(strum:StrumNote, x:Float = 0, y:Float = 0) {
         super(x, y);
 
-        frames = Paths.sparrow('noteSplash', 'images/shared', ENGINE);
+        frames = Paths.sparrow('noteSplash', 'images/shared', ENGINE, this);
+        //frames = flxanimate.frames.FlxAnimateFrames.fromSparrow(Paths.xml('noteSplash', 'images/shared', ENGINE), Paths.bitmap('noteSplash', 'images/shared', ENGINE));
 
         animation.addByPrefix("splash", "note splash red 1", 24, false);
         

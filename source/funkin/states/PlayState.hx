@@ -118,7 +118,7 @@ class PlayState extends FlxState
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 		Conductor.evDisp.addEventListener(Conductor.stepEvent.type, stepHit);
 
-		noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
+		//noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
 		camUI = new FlxCamera(0, 0, 1280, 720, 1);
 		camUI.bgColor = FlxColor.TRANSPARENT;
@@ -409,10 +409,10 @@ class PlayState extends FlxState
 				var thisNote:Note = notesTypedGroup.members[i];
 				if (thisNote.noteData.value == noteVal
 					&& thisNote.strumnote.playable
-					&& MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 140))
+					&& MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 160))
 				{
 					var hitType:NoteRating = NoteRating.BAD;
-					if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 30))
+					if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 50))
 					{
 						hitType = NoteRating.PERFECT;
 						score += 100;
@@ -423,12 +423,12 @@ class PlayState extends FlxState
 						noteSplashes.add(splash);
 						splash.splash();
 					}
-					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 60))
+					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 85))
 					{
 						hitType = NoteRating.GREAT;
 						score += 75;
 					}
-					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 90))
+					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 120))
 					{
 						hitType = NoteRating.GOOD;
 						score += 50;
@@ -505,11 +505,11 @@ class PlayState extends FlxState
 		// trace('starting loading note' + j);
 		// optimized this by removing the need for stupid ass functions n shit
 		var noteNew:Note = new Note(strumlines.members[i].strumNotes[note.value].angle, strumlines.members[i], note, 0, 0,
-			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, noteSparrow, j);
+			strumlines.members[i].members[note.value].scale.x, strumlines.members[i].members[note.value].scale.y, j);
 
 		noteNew.cameras = [camUI];
 		noteMap.get(strumlines.members[i]).push(noteNew);
-		// trace('loaded note' + j);
+		//trace('loaded note' + j);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before

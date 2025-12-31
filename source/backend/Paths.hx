@@ -129,11 +129,11 @@ class Paths
 		@param directory Directory that the atlas is located in
 		@param source Source of the atlas (Content/Engine/Other)
 	**/
-	public static function sparrow(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT, ?sprite:FlxSprite = null, ?keep:Bool = true):FlxAtlasFrames
+	public static function sparrow(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT, ?sprite:FlxSprite = null, ?keep:Bool = true, ?protected:Bool = false):FlxAtlasFrames
 	{
+		if(sprite == null) return flxanimate.frames.FlxAnimateFrames.fromSparrow(xml(pth, directory, source), bitmap(pth, directory, source));
 		if(sprite != null) sprite.cacheKey = xml(pth, directory, source);
-		return AssetTracking.getAtlas(xml(pth, directory, source), bitmap(pth, directory, source), keep);
-		//return flxanimate.frames.FlxAnimateFrames.fromSparrow(xml(pth, directory, source), bitmap(pth, directory, source));
+		return AssetTracking.getAtlas(xml(pth, directory, source), bitmap(pth, directory, source), keep, protected);
 	}
 
 	/**

@@ -81,7 +81,7 @@ class SongHandler
 	**/
 	public static function checkSync():Void
 	{
-		if(!playing) return;
+		if(!playing || inst == null) return;
 		if (voices != null)
 		{
 			if (!MathUtil.isInRange(voices.time, inst.time, 50))
@@ -93,7 +93,7 @@ class SongHandler
 
 	public static function forceSync():Void
 	{
-		if(!playing) return;
+		if(!playing || inst == null) return;
 		if (voices != null)
 		{
 			voices.time = inst.time;
