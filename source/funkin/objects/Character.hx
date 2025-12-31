@@ -5,6 +5,7 @@ typedef CharacterFile =
 	var name:String;
 	var icon:String;
 	var scale:Null<Float>;
+	var antialiasing:Null<Bool>;
 	var offset:Array<Int>;
 	var camOffset:Array<Int>;
 	var fileName:String;
@@ -43,6 +44,8 @@ class Character extends FlxSprite
 		var file = load(character);
 
 		if (file.scale == null) file.scale = 1;
+		if (file.antialiasing == null) this.antialiasing = true;
+		else this.antialiasing = file.antialiasing;
 
 		this.name = file.name;
 		this.icon = file.icon;

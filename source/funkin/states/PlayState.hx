@@ -7,6 +7,7 @@ import backend.scripting.Scripts.EventProcess;
 import flixel.FlxObject;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
+import flixel.util.FlxTimer;
 import funkin.data.Song;
 import funkin.data.SongEvent;
 import funkin.data.Stage;
@@ -197,7 +198,10 @@ class PlayState extends FlxState
 		SongHandler.inst.onComplete = endSong;
 
 		// resets conductor and also plays loaded inst and voices on music handler
-		Conductor.reset(song.info.bpm, true);
+		var timer:FlxTimer = new FlxTimer();
+		timer.start(3, function(timer:FlxTimer) {
+			Conductor.reset(song.info.bpm, true);
+		});
 
 		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
 		{
