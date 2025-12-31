@@ -133,7 +133,15 @@ class PlayState extends FlxState
 			trace("Could not find song, defaulting to " + MiscUtil.capitalize(loadedSong.replace("-", " ")));
 		}
 
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.stop();
+
 		song = new Song(loadedSong);
+
+		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
+		SongHandler.inst.onComplete = endSong;
+
+		Conductor.reset(song.info.bpm, true);
 
 		for (stageDef in song.info.stages)
 		{
@@ -151,9 +159,6 @@ class PlayState extends FlxState
 		baseZoom = currentStage.data.baseZoom;
 
 		camGame.zoom = baseZoom;
-
-		if (FlxG.sound.music != null)
-			FlxG.sound.music.stop();
 
 		strumlines = new FlxTypedGroup<Strumline>();
 		strumlines.zIndex = ZLayers.UI;
@@ -198,15 +203,6 @@ class PlayState extends FlxState
 		add(strumlines);
 		add(notesTypedGroup);
 
-		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
-		SongHandler.inst.onComplete = endSong;
-
-		// resets conductor and also plays loaded inst and voices on music handler
-		var timer:FlxTimer = new FlxTimer();
-		timer.start(3, function(timer:FlxTimer) {
-			Conductor.reset(song.info.bpm, true);
-		});
-
 		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
 		{
 			camCenterX = characters.get(strumlines.members[0].characterNames[0]).getCameraPos(strumlines.members[0].playable).x;
@@ -241,8 +237,6 @@ class PlayState extends FlxState
 		scrollSpeed = song.info.scrollSpeed * 7;
 		renderNotes();
 
-		
-
 		// #if desktop
 		// Gc.run(true);
 		// #end
@@ -256,6 +250,7 @@ class PlayState extends FlxState
 			trace("Hud script not specified, returning to default");
 			initHUD('BaseHUD');
 		} else initHUD(song.info.hud);
+
 
 		Scripts.callOnScripts("onPlaystatePostInit", []);
 

@@ -85,15 +85,6 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-		if(moving){
-			if(longNote == null && noteData.length > 0){
-				longNote = new LongNote(this);
-				longNote.cameras = this.cameras;
-				longNote.zIndex = this.zIndex-1;
-				SortUtil.reorder();
-				PlayState.instance.add(longNote);
-			}
-		}
 
 		if(y <= 0 - this.height && longNote == null){
 				PlayState.instance.notesTypedGroup.remove(this, true);

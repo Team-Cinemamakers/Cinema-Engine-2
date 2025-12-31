@@ -1,5 +1,6 @@
 package backend;
 
+import funkin.objects.LongNote;
 import funkin.objects.Note;
 import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
@@ -12,9 +13,19 @@ class NoteHandler{
                     var note = noteArr[i];
                     var curY:Float = note.y;
                         if(note.noteData.time - ((note.startY - (note.strumnote.y + (note.height/2)))/(PlayState.scrollSpeed * (1/FlxG.updateFramerate))) * ((1/FlxG.updateFramerate) * 1000) <= Conductor.TIME){
-                            note.moving = true;
+                            if(note.moving == false){
+                                note.x = note.strumnote.x + (note.width/4);
+                                note.moving = true;
+                            }
                             note.y = note.strumnote.y + (note.height/2) + ((note.noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-                            if(note.y < note.strumnote.y + (note.height)){
+                            if(note.longNote == null && note.noteData.length > 0){
+                                note.longNote = new LongNote(note);
+                                note.longNote.cameras = note.cameras;
+                                note.longNote.zIndex = note.zIndex-1;
+                                SortUtil.reorder();
+                                PlayState.instance.add(note.longNote);
+			                }
+                            if((note.y < note.strumnote.y + (note.height)) || MathUtil.isInRange(note.x, note.strumnote.x + (note.width/4), 10)){
                                 note.x = note.strumnote.x + (note.width/4);
                             } else {
                                 note.x += ((note.strumnote.x + (note.width/4)) - note.x)/((note.noteData.time - Conductor.TIME)/((1/FlxG.updateFramerate) * 1000));
