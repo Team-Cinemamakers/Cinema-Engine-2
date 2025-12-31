@@ -90,7 +90,11 @@ class Note extends FlxSprite {
 				moving = true;
 			}
 			y = strumnote.y + (this.height/2) + ((noteData.time - Conductor.TIME)/(((1/FlxG.updateFramerate) * 1000)) * (PlayState.scrollSpeed * (60/FlxG.updateFramerate)));
-			x += ((strumnote.x + (this.width/4)) - x)/((noteData.time - Conductor.TIME)/((1/FlxG.updateFramerate) * 1000));
+			if(y < strumnote.y + (this.height/2)){
+				x = strumnote.x + (this.width/4);
+			} else {
+				x += ((strumnote.x + (this.width/4)) - x)/((noteData.time - Conductor.TIME)/((1/FlxG.updateFramerate) * 1000));
+			}
 
 			if(longNote == null && noteData.length > 0){
 				longNote = new LongNote(this);
