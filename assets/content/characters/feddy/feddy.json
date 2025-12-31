@@ -1,0 +1,142 @@
+{
+    "name": "Feddy",
+    "icon": "feddy",
+    "offset": [
+        100,
+        0
+    ],
+    "camOffset": [
+        350,
+        0
+    ],
+    "fileName": "feddy",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "idle",
+            "offset": [
+				140,
+				100
+			],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "left",
+            "offset": [
+				129,
+				102
+			],
+            "camOffset": [
+                -20,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "down",
+            "offset": [
+				180,
+				329
+			],
+            "camOffset": [
+                0,
+                20
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "up",
+            "offset": [
+				74,
+				257
+			],
+            "camOffset": [
+                0,
+                -20
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "right",
+            "offset": [
+				122,
+				103
+			],
+            "camOffset": [
+                20,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singLEFTmiss",
+            "prefix": "BF NOTE LEFT MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singDOWNmiss",
+            "prefix": "BF NOTE DOWN MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singUPmiss",
+            "prefix": "BF NOTE UP MISS",
+            "offset": [
+                0,
+                0
+
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "singRIGHTmiss",
+            "prefix": "BF NOTE RIGHT MISS",
+            "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

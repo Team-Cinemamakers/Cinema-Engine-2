@@ -1,0 +1,141 @@
+{
+    "name": "Boyfriend",
+    "icon": "bf",
+    "offset": [
+        0,
+        0
+    ],
+    "camOffset": [
+        -150,
+        0
+    ],
+    "fileName": "bf",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "BF idle dance",
+            "offset": [
+                -5,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "BF NOTE LEFT0",
+            "offset": [
+                5,
+                -6
+            ],
+            "camOffset": [
+                -20,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "BF NOTE DOWN0",
+            "offset": [
+                -20,
+                -51
+            ],
+            "camOffset": [
+                0,
+                20
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "BF NOTE UP0",
+            "offset": [
+                -46,
+                27
+            ],
+            "camOffset": [
+                0,
+                -20
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "BF NOTE RIGHT0",
+            "offset": [
+                -48,
+                -7
+            ],
+            "camOffset": [
+                20,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeftMiss",
+            "prefix": "BF NOTE LEFT MISS0",
+            "offset": [
+                5,
+                -6
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDownMiss",
+            "prefix": "BF NOTE DOWN MISS0",
+            "offset": [
+                -20,
+                -51
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUpMiss",
+            "prefix": "BF NOTE UP MISS0",
+            "offset": [
+                -46,
+                27
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRightMiss",
+            "prefix": "BF NOTE RIGHT MISS0",
+            "offset": [
+                -48,
+                -7
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

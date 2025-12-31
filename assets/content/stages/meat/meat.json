@@ -1,0 +1,50 @@
+{
+    "name": "meat",
+    "baseZoom": 1.4,
+    "objects": [
+        {
+            "name": "sky",
+            "file": "sky",
+            "scale": [1, 1],
+            "position": [50, 0]
+        },
+        {
+            "name": "back",
+            "file": "back",
+            "scale": [1, 1],
+            "position": [0, 250]
+        },
+        {
+            "name": "middle",
+            "file": "middle",
+            "scale": [1, 1],
+            "position": [0, 450],
+            "scrollFactor": [1.1, 1.1]
+        },
+        {
+            "name": "front",
+            "file": "front",
+            "scale": [1, 1],
+            "position": [0, 350],
+            "scrollFactor": [1.2, 1.2]
+        },
+        {
+            "name": "overlay",
+            "file": "overlay",
+            "scale": [1, 1],
+            "position": [0, 600],
+            "scrollFactor": [0.5, 0.5],
+            "zIndex": 100
+        }
+    ],
+    "markers": [
+        {
+            "name": "playerPos",
+            "position": [950, 450]
+        },
+        {
+            "name": "opponentPos",
+            "position": [450, 530]
+        }
+    ]
+}

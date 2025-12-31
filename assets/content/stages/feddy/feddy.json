@@ -1,0 +1,33 @@
+{
+    "name": "feddy",
+    "objects": [
+        {
+            "name": "wall",
+            "file": "wall",
+            "scale": [1.4, 1.4],
+            "position": [-6, 43]
+        },
+        {
+            "name": "floor",
+            "file": "floor",
+            "scale": [1.4, 1.4],
+            "position": [0, 0]
+        },
+        {
+            "name": "shader",
+            "file": "shader",
+            "scale": [1, 1],
+            "position": [-1078, -575]  
+        }
+    ],
+    "markers": [
+        {
+            "name": "playerPos",
+            "position": [1475, 750]
+        },
+        {
+            "name": "opponentPos",
+            "position": [750, 750]
+        }
+    ]
+}

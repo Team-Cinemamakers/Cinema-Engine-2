@@ -1,0 +1,85 @@
+{
+    "name": "Meatboy",
+    "icon": "bf",
+    "offset": [
+        -30,
+        650
+    ],
+    "camOffset": [
+        120,
+        70
+    ],
+    "fileName": "meatboy",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "Idle",
+            "offset": [
+                1,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "Left",
+            "offset": [
+                10,
+                1
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "Down",
+            "offset": [
+                14,
+                -5
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "Up",
+            "offset": [
+                11,
+                7
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "Right",
+            "offset": [
+                3,
+                0
+            ],
+            "camOffset": [
+                30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

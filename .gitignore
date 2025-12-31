@@ -6,9 +6,6 @@ dump/*
 .DS_Store
 .icloud
 
-### FUCK YOU
-assets/content/*
-
 ### VS Code
 vscode-project.hxml
 export/*

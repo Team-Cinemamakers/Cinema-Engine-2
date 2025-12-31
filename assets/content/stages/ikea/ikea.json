@@ -1,0 +1,35 @@
+{
+    "name": "ikea",
+    "baseZoom": 1.4,
+    "objects": [
+        {
+            "name": "jo",
+            "file": "jo",
+            "scale": [1, 1],
+            "position": [-600, -200],
+            "scrollFactor": [0.9, 0.9]
+        },
+        {
+            "name": "thorn",
+            "file": "thorn",
+            "scale": [1, 1],
+            "position": [-600, -200]
+        },
+        {
+            "name": "cobble",
+            "file": "cobble",
+            "scale": [1, 1],
+            "position": [720, 50]
+        }
+    ],
+    "markers": [
+        {
+            "name": "playerPos",
+            "position": [920, 100]
+        },
+        {
+            "name": "opponentPos",
+            "position": [-350, 0]
+        }
+    ]
+}

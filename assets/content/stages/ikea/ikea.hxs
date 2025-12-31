@@ -1,0 +1,28 @@
+import funkin.objects.Character;
+
+var shi:Array<Character> = [];
+
+function onPlaystatePostInit(){
+    trace('peener');
+
+    
+}
+
+var time:Float = 0;
+function update(elapsed) {
+    
+    time += elapsed;
+}
+
+function bigDih(char, charName, marker, strum) {
+    var charPos = PlayState.instance.currentStage.getPositionFromMarker(marker);
+    var balls:Character = new Character(char, charPos.x, charPos.y);
+    PlayState.instance.strumlines.members[strum].characterNames.push(charName);
+    PlayState.instance.strumlines.members[strum].characters.push(balls);
+
+    balls.zIndex = 10;
+    PlayState.instance.add(balls);
+
+    PlayState.instance.characters.set(charName, balls);
+    return balls;
+}

@@ -1,0 +1,100 @@
+{
+    "name": "Spirit Faker",
+    "icon": "bf",
+    "offset": [
+        0,
+        0
+    ],
+    "camOffset": [
+        0,
+        0
+    ],
+    "fileName": "spiritfakeout",
+    "antialiasing": false,
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "Idle",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "Left",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "Down",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                -550,
+				-300
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "Up",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "Right",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "die",
+            "prefix": "die",
+            "offset": [
+                -550,
+				-300
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

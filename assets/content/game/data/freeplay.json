@@ -1,0 +1,51 @@
+{
+    "sections": [
+        {
+            "name": "bg",
+            "songs": [
+                {
+                    "name": "bopeebo",
+                    "displayName": "Bopeebo",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "fresh",
+                    "displayName": "Fresh",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "dad-battle",
+                    "displayName": "Dad Battle",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "poopy-fart",
+                    "displayName": "Poopy Fart",
+                    "difficulties": ["normal"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "beat-the-meat",
+                    "displayName": "Beat The Meat",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "feddy-whop",
+                    "displayName": "Feddy Whop",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                },
+                {
+                    "name": "unfairness-jside",
+                    "displayName": "UNFAIRJESS",
+                    "difficulties": ["hard"],
+                    "icon": "Daddy-Dearest"
+                }
+            ]
+        }
+    ]
+}

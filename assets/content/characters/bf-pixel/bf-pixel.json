@@ -1,0 +1,143 @@
+{
+    "name": "Jo560hs Retro",
+    "icon": "bf",
+    "offset": [
+        0,
+        350
+    ],
+    "camOffset": [
+        50,
+        -60
+    ],
+    "scale": 6,
+    "antialiasing": false,
+    "fileName": "spiritfakeout",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "BF IDLE",
+            "offset": [
+                7,
+				0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "BF LEFT NOTE",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                -30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "BF DOWN NOTE",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                0,
+				30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "BF UP NOTE",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "BF RIGHT NOTE",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeftMiss",
+            "prefix": "BF LEFT MISS",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                -30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDownMiss",
+            "prefix": "BF DOWN MISS",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                0,
+				30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUpMiss",
+            "prefix": "BF UP MISS",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRightMiss",
+            "prefix": "BF RIGHT MISS",
+            "offset": [
+                0,
+				0
+            ],
+            "camOffset": [
+                30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}
