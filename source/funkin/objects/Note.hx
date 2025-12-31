@@ -24,7 +24,7 @@ class Note extends FlxSprite {
 	var scaleX:Float;
 	var scaleY:Float;
 
-	public var startY:Float = 0;
+	public var yOFF:Float = 0;
 
 	public var moving:Bool = false;
 	var offsetNote:Float;
@@ -47,7 +47,6 @@ class Note extends FlxSprite {
 	public function new(angle:Float = 0, strumline:Strumline, noteData:NoteData, x:Float = 0, y:Float = 0, scaleX:Float, scaleY:Float, frames:FlxAtlasFrames, iterator:Int)
 	{
 		y = FlxG.height + this.height / 2;
-		this.startY = y;
 
         super(x, y);
 
@@ -77,6 +76,7 @@ class Note extends FlxSprite {
 		}
 		this.shader = strumnote.noteShader;
 		x = strumnote.x + (this.width/4);
+		this.yOFF = y - strumnote.y + (this.height/2);
 	}
 
 	var playedHitsound:Bool = false;
@@ -87,9 +87,16 @@ class Note extends FlxSprite {
 
 
 		if(y <= 0 - this.height && longNote == null){
-				PlayState.instance.notesTypedGroup.remove(this, true);
-				PlayState.instance.noteMiss(this, this.strumnote.input);
-				this.destroy();
+				if(this.strumnote.playable){
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					PlayState.instance.noteMiss(this, this.strumnote.input);
+					this.destroy();
+				} else {
+					this.strumnote.pressedOnNote = true;
+					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					this.destroy();
+				}
 				// #if desktop
 				// Gc.run(true);
 				// #end
@@ -116,12 +123,18 @@ class Note extends FlxSprite {
 		}
 
 		if(this.longNote != null && !CoolInput.held(this.strumnote.input) && this.held){
-			this.held = false;
-			PlayState.instance.notesTypedGroup.remove(this, true);
-			PlayState.instance.noteMiss(this, this.strumnote.input);
-			trace('missed long note');
-            this.longNote.destroy();
-            this.destroy();
+			if(this.strumnote.playable){
+				this.held = false;
+				PlayState.instance.notesTypedGroup.remove(this, true);
+				PlayState.instance.noteMiss(this, this.strumnote.input);
+				trace('missed long note');
+            	this.longNote.destroy();
+            	this.destroy();
+			} else {
+				PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
+				this.longNote.destroy();
+            	this.destroy();
+			}
 		}
 	}
 
