@@ -4,6 +4,7 @@ typedef CharacterFile =
 {
 	var name:String;
 	var icon:String;
+	var scale:Null<Float>;
 	var offset:Array<Int>;
 	var camOffset:Array<Int>;
 	var fileName:String;
@@ -41,8 +42,14 @@ class Character extends FlxSprite
 
 		var file = load(character);
 
+		if (file.scale == null) file.scale = 1;
+
 		this.name = file.name;
 		this.icon = file.icon;
+		
+		this.scale.set(file.scale, file.scale);
+		this.updateHitbox();
+		
 		this.positionOffset = new FlxPoint(file.offset[0], file.offset[1]);
 		this.cameraOffset = new FlxPoint(file.camOffset[0], file.camOffset[1]);
 		offset = positionOffset;
