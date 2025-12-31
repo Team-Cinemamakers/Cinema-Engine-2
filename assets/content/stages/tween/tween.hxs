@@ -1,0 +1,63 @@
+import backend.utils.SortUtil;
+import funkin.objects.Character;
+
+var blackoverlay:FlxSprite;
+var blackout:FlxSprite;
+var security:FlxSprite;
+
+var tm:Character;
+
+function onPlaystatePostInit(){
+    blackoverlay = new FlxSprite(0, 0).makeGraphic(FlxG.width*3, FlxG.height*3, 0xFF000000);
+    blackoverlay.screenCenter();
+    blackoverlay.x += 400;
+    blackoverlay.y += 300;
+    blackoverlay.alpha = 0.5;
+    blackoverlay.zIndex = 21;
+    PlayState.instance.add(blackoverlay);
+
+    blackout = new FlxSprite(0, 0).makeGraphic(FlxG.width*3, FlxG.height*3, 0xFF000000);
+    blackout.screenCenter();
+    blackout.x += 100;
+    blackout.zIndex = 21;
+    blackout.alpha = 0;
+    PlayState.instance.add(blackout);
+
+    security = new FlxSprite(0, 0).loadGraphic(Paths.image("stages/outsidetween/assets/security"));
+    security.cameras = [PlayState.instance.camUI];
+    security.zIndex = 30;
+    PlayState.instance.add(security);
+
+    SortUtil.reorder();
+
+    for(char in PlayState.instance.characters){
+        char.flipX = true;
+    }
+    stage.setVisibility(false);
+    stage.objects.get("clone_room").visible = true;
+}
+
+function act2(){
+    trace("what");
+    FlxTween.tween(blackout, {alpha: 1}, 1);
+    PlayState.instance.baseZoom = 0.7;
+}
+
+function switchStage(){
+    stage.objects.get("clone_room").visible = false;
+    blackoverlay.alpha = 0;
+    blackout.alpha = 0;
+    PlayState.instance.camUI.flash(0xFFFFFFFF, 1);
+    PlayState.instance.strumlines.members[1].characterNames.remove("fbfmaster");
+
+    var fbf:Character = PlayState.instance.characters.get("fbfmaster");
+    PlayState.instance.strumlines.members[1].characters.remove(fbf);
+    PlayState.instance.characters.remove("fbfmaster");
+    fbf.destroy();
+
+    var pos = PlayState.instance.currentStage.getPositionFromMarker("opponentPos");
+    tm = new Character("tweenmaster", pos.x, pos.y);
+    PlayState.instance.strumlines.members[1].characterNames.push("tweenmaster");
+    PlayState.instance.strumlines.members[1].characters.push(tm);
+    PlayState.instance.add(tm);
+}

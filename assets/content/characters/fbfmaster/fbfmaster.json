@@ -1,0 +1,85 @@
+{
+    "name": "fbfmaster",
+    "icon": "bf",
+    "offset": [
+		200,
+		225
+    ],
+    "camOffset": [
+		200,
+		175
+    ],
+    "fileName": "fbfmaster",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "Idle",
+            "offset": [
+				0,
+				0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "Right",
+            "offset": [
+				54,
+				0
+            ],
+            "camOffset": [
+				-30,
+				0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "Down",
+            "offset": [
+				12,
+				-38
+            ],
+            "camOffset": [
+				0,
+				30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "Up",
+            "offset": [
+				69,
+				32
+            ],
+            "camOffset": [
+				0,
+				-30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "Left",
+            "offset": [
+				-22,
+				1
+            ],
+            "camOffset": [
+				30,
+				0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

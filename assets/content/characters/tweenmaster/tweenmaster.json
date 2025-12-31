@@ -1,0 +1,85 @@
+{
+    "name": "tweenmaster",
+    "icon": "bf",
+    "offset": [
+		200,
+		230
+    ],
+    "camOffset": [
+        75,
+        250
+    ],
+    "fileName": "tweenmaster",
+    "animations": [
+        {
+            "name": "Idle",
+            "prefix": "Idle",
+            "offset": [
+                0,
+                0
+            ],
+            "camOffset": [
+                0,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteLeft",
+            "prefix": "Left",
+            "offset": [
+				123,
+				0
+            ],
+            "camOffset": [
+                -30,
+                0
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteDown",
+            "prefix": "Down",
+            "offset": [
+				79,
+				-1
+            ],
+            "camOffset": [
+				0,
+				30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteUp",
+            "prefix": "Up",
+            "offset": [
+				4,
+				4
+            ],
+            "camOffset": [
+                0,
+                -30
+            ],
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "name": "noteRight",
+            "prefix": "Right",
+            "offset": [
+				-7,
+				1
+            ],
+            "camOffset": [
+				30,
+				0
+            ],
+            "fps": 24,
+            "loop": false
+        }
+    ]
+}

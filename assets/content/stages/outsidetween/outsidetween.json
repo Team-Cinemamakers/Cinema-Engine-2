@@ -1,0 +1,36 @@
+{
+    "name": "outsidetween",
+    "baseZoom": 0.6,
+    "objects": [
+        {
+            "name": "sky",
+            "file": "sky",
+            "scale": [2.1, 2.1],
+            "position": [-500, 0],
+            "scrollFactor": [0, 1]
+        },
+        {
+            "name": "deekly",
+            "file": "deekly",
+            "scale": [2.1, 2.1],
+            "position": [100, 150],
+            "scrollFactor": [0.25, 1]
+        },
+        {
+            "name": "outside",
+            "file": "outside",
+            "scale": [2.1, 2.1],
+            "position": [175, 0]
+        }
+    ],
+    "markers": [
+        {
+            "name": "playerPos",
+            "position": [1700, 500]
+        },
+        {
+            "name": "opponentPos",
+            "position": [975, 625]
+        }
+    ]
+}
