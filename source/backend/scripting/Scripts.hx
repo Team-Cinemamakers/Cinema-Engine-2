@@ -100,6 +100,10 @@ class Scripts {
         "Globals" => Globals,
         "EventProcess" => EventProcess,
 
+        "ENGINE" => ENGINE,
+        "CONTENT" => CONTENT,
+        "OTHER" => OTHER,
+
         "PlayState" => PlayState,
         "game" => PlayState.instance,
 

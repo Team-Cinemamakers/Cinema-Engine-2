@@ -30,6 +30,10 @@
         {
             "name": "opponentPos",
             "position": [200, 400]
+        },
+        {
+            "name": "opponentPos2",
+            "position": [-200, -200]
         }
     ]
 }

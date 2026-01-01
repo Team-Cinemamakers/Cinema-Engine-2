@@ -1,5 +1,5 @@
 import funkin.objects.Character;
-// import backend.shaders.GlitchEffect;
+import backend.shaders.GlitchEffect;
 
 var shi:Array<Character> = [];
 
@@ -10,27 +10,42 @@ var whiteShitJ:FlxSprite;
 var bfTrailJ:FlxTrail;
 var dadTrailJ:FlxTrail;
 
-// var unfairjShader:GlitchEffect;
+var unfairjShader:GlitchEffect;
 
 var thorn:FlxSprite;
 var bg:FlxSprite;
+var cobble:FlxSprite;
 
 function onPlaystatePostInit(){
     trace('peener');
 
-    /* unfairjShader = new GlitchEffect();
+    unfairjShader = new GlitchEffect();
     unfairjShader.waveAmplitude = 0.1;
 	unfairjShader.waveFrequency = 5;
-	unfairjShader.waveSpeed = 1; */
+	unfairjShader.waveSpeed = 1;
 
     thorn = get('thorn');
     bg = get('jo');
+    cobble = get('cobble');
+
+    game.characters["sigmio-final"].visible = false;
 
     thorn.antialiasing = false;
     bg.antialiasing = false;
+    cobble.antialiasing = false;
 
-    // bg.shader = unfairjShader.shader;
+    bg.shader = unfairjShader.shader;
     bg.visible = false;
+    cobble.visible = false;
+
+    blackShitJ = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+    blackShitJ.zIndex = 30;
+
+	whiteShitJ = new FlxSprite(-1280, -720).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.WHITE);
+	whiteShitJ.alpha = 0;
+    whiteShitJ.zIndex = 15;
+
+    game.add(whiteShitJ);
 }
 
 var time:Float = 0;
@@ -40,22 +55,55 @@ function update(elapsed) {
 }
 
 function beatHit(beat) {
-    switch (Conductor.curBeat) {
+    switch (beat) {
         case 156:
-            trace("baller");
-            PlayState.instance.characters["spiritfakeout"].playAnimation("die", true);
+            game.characters["spiritfakeout"].playAnimation("die", true, true);
+            FlxTween.tween(whiteShitJ, {alpha: 1}, 1.5, {ease: FlxEase.linear});
+        case 160:
+            game.characters["spiritfakeout"].visible = false;
+            game.characters["sigmio-final"].visible = true;
+            bg.visible = true;
+            thorn.visible = false;
+            FlxTween.tween(whiteShitJ, {alpha: 0}, 1, {ease: FlxEase.linear});
     }
 }
 
-function bigDih(char, charName, marker, strum) {
-    var charPos = PlayState.instance.currentStage.getPositionFromMarker(marker);
+function update(elapsed) {
+    unfairjShader.update(elapsed);
+}
+
+function stepHit(step) {
+    switch (step) {
+        case 1918:
+            unfairJevents[0] = true;
+           
+            blackShitJ.scrollFactor.set();
+            blackShitJ.cameras = [game.camGame];
+            game.add(blackShitJ);
+            game.camUI.visible = false;
+
+            game.characters["sigmio-final"].setGraphicSize(0.75);
+            game.characters["sigmio-final"].x += 200;
+            game.characters["sigmio-final"].y -= 150;
+
+            unfairjShader.waveAmplitude = 0.2;
+            unfairjShader.waveSpeed = 1.5;
+
+        case 1936: // 1936
+            blackShitJ.destroy();
+            game.camUI.visible = true;
+    }
+}
+
+function createCharacter(char, charName, marker, strum) {
+    var charPos = game.currentStage.getPositionFromMarker(marker);
     var balls:Character = new Character(char, charPos.x, charPos.y);
-    PlayState.instance.strumlines.members[strum].characterNames.push(charName);
-    PlayState.instance.strumlines.members[strum].characters.push(balls);
+    game.strumlines.members[strum].characterNames.push(charName);
+    game.strumlines.members[strum].characters.push(balls);
 
     balls.zIndex = 10;
-    PlayState.instance.add(balls);
+    game.add(balls);
 
-    PlayState.instance.characters.set(charName, balls);
+    game.characters.set(charName, balls);
     return balls;
 }

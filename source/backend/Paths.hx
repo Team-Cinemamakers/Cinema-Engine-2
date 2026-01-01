@@ -72,6 +72,18 @@ class Paths
 	}
 
 	/**
+		Returns a path to a specified TTF file.
+
+		@param pth Name of the file (Without the extension)
+		@param directory Directory that the file is located in
+		@param source Source of the file (Content/Engine/Other)
+	**/
+	public static function font(pth:String, directory:String = "", source:PathSource = PathSource.CONTENT):String
+	{
+		return file(pth, directory, source) + ".ttf";
+	}
+
+	/**
 		Returns a path to a specified OGG file.
 
 		@param pth Name of the file (Without the extension)

@@ -1,20 +1,34 @@
+import flixel.text.FlxTextBorderStyle;
+
 var healthBar:Bar;
+var barGraphic:FlxSprite;
 var testText:FlxText;
 function onPlaystatePostInit(){
     trace('Setting up hud');
 
-	testText = new FlxText(0, 600, 1380, 'health: 0 | misses: 0 | score: 0', 20, true);
-    testText.alignment = "center";
-	testText.cameras = [PlayState.instance.camUI];
-	testText.screenCenter("x");
-	add(testText);
-
 	healthBar = new Bar(600, 15, [0xFFFF0000, 0xFF52BAFF], 2, 1);
 	healthBar.cameras = [PlayState.instance.camUI];
 	healthBar.screenCenter();
-	healthBar.y = FlxG.height - 40;
+	healthBar.y = FlxG.height * 0.89;
 	healthBar.zIndex = 26;
 	add(healthBar);
+
+	barGraphic = new FlxSprite(healthBar.x, healthBar.y).loadGraphic(Paths.image("healthBar", "images/shared", ENGINE));
+	barGraphic.cameras = [PlayState.instance.camUI];
+	barGraphic.zIndex = 27;
+	add(barGraphic);
+
+	testText = new FlxText(0, healthBar.y + 40, FlxG.width, 'health: 0 | misses: 0 | score: 0', 20, true);
+    testText.alignment = "center";
+	testText.cameras = [PlayState.instance.camUI];
+	testText.setFormat(Paths.font("vcr", "fonts"), 20, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, 0xFF000000);
+	testText.screenCenter("x");
+	testText.borderSize = 1.25;
+	testText.scrollFactor.set();
+	testText.zIndex = 30;
+	add(testText);
+
+	
 }
 
 function update(elapsed:Float){
