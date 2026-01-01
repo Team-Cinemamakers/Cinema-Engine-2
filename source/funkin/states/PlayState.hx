@@ -364,7 +364,8 @@ class PlayState extends FlxState
 					animDeb[i] = 0;
 					for (v in 0...strumlines.members[i].characters.length)
 					{
-						playAnimation(strumlines.members[i].characters[v], 'Idle', true, strumlines.members[i].playable);
+						if (!strumlines.members[i].characters[v].playingSpecial)
+							playAnimation(strumlines.members[i].characters[v], 'Idle', true, strumlines.members[i].playable);
 					}
 				}
 			}

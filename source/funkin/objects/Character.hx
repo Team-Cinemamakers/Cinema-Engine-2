@@ -35,6 +35,8 @@ class Character extends FlxSprite
 	public var animCamOffsets:Map<String, FlxPoint> = new Map<String, FlxPoint>();
 	public var script:HScript = null;
 
+	public var playingSpecial:Bool = false;
+
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
@@ -60,6 +62,10 @@ class Character extends FlxSprite
 		offset.set(width/2, -height);
 
 		frames = Paths.sparrow(character, "characters/" + character, false);
+
+		this.animation.onFinish.add((anim) -> {
+			if (playingSpecial) playingSpecial = false;
+		});
 
 		for (anim in file.animations)
 		{
@@ -93,10 +99,11 @@ class Character extends FlxSprite
 		@param animation Animation name
 		@param force Whether the animation should override the current animation
 	**/
-	public function playAnimation(animation:String, force:Bool = false)
+	public function playAnimation(animation:String, force:Bool = false, special:Bool = false)
 	{
 		if (animOffsets[animation] == null)
 			return;
+		playingSpecial = special;
 		offset = positionOffset + animOffsets[animation];
 		this.animation.play(animation, force);
 
