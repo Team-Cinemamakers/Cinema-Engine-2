@@ -1,6 +1,6 @@
 package backend.shaders;
 
-import flixel.system.FlxAssets.FlxShader;
+import flixel.system.FlxAssets;
 
 /*  VS DAVE AND BAMBI SHADERS IMPLEMENTATION
     ALL OF THIS CODE WAS WROTE BY MTM101, ERIZUR AND T5MPLER (BUGFIXES)
@@ -10,7 +10,6 @@ class GlitchEffect
 {
     public var shader(default,null):GlitchShader = new GlitchShader();
 
-    #if SHADERS_ENABLED
     public var waveSpeed(default, set):Float = 0;
 	public var waveFrequency(default, set):Float = 0;
 	public var waveAmplitude(default, set):Float = 0;
@@ -52,13 +51,11 @@ class GlitchEffect
         shader.uWaveAmplitude.value = [waveAmplitude];
         return v;
     }
-    #end
 }
 
 
 class GlitchShader extends FlxShader
 {
-    #if SHADERS_ENABLED
     @:glFragmentSource('
     #pragma header
     //uniform float tx, ty; // x,y waves phase
@@ -101,7 +98,6 @@ class GlitchShader extends FlxShader
         vec2 uv = sineWave(openfl_TextureCoordv);
         gl_FragColor = texture2D(bitmap, uv);
     }')
-    #end
 
     public function new()
     {

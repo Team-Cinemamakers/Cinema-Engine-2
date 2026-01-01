@@ -5,6 +5,7 @@ import backend.NoteHandler;
 import backend.events.BeatEvent;
 import backend.events.StepEvent;
 import backend.scripting.Scripts.EventProcess;
+import backend.shaders.GlitchEffect;
 import flixel.FlxObject;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
