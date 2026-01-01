@@ -3,6 +3,8 @@ import flixel.text.FlxTextBorderStyle;
 var healthBar:Bar;
 var barGraphic:FlxSprite;
 var testText:FlxText;
+var notesHit:Int = 0;
+
 function onPlaystatePostInit(){
     trace('Setting up hud');
 
@@ -27,11 +29,45 @@ function onPlaystatePostInit(){
 	testText.scrollFactor.set();
 	testText.zIndex = 30;
 	add(testText);
-
-	
 }
+
+var rating:String = "N/A";
+var percentage:Float = 0;
+var playedAnything:Bool = false;
+
+var fullRating:String = "";
 
 function update(elapsed:Float){
     if(healthBar != null) healthBar.value = PlayState.health;
-	testText.text = 'health: ' + PlayState.health + ' | misses: ' + PlayState.misses + ' | score: ' + PlayState.score;
+
+	// Rating BS
+
+	if (PlayState.misses == 0) rating = "FC";
+	else if (PlayState.misses > 0 && PlayState.misses < 10) rating = "SDCB";
+	else if (PlayState.misses >= 10) rating = "Clear";
+
+	// Percents
+
+	if (PlayState.misses != 0) {
+		if (notesHit == 0) percentage = 0;
+		else percentage = (notesHit / (notesHit + PlayState.misses))*100;
+	} 
+	else percentage = 100;
+
+	// Actual updating
+
+	if (playedAnything) fullRating = MathUtil.floorDecimal(percentage, 2) + "% - " + rating;
+	else fullRating = "N/A";
+		
+	testText.text = 'Misses: ' + PlayState.misses + ' | Score: ' + PlayState.score + " | Accuracy: " + fullRating;
+}
+
+function noteHit(note, char, playable) {
+	if (playable) {
+		playedAnything = true;
+		notesHit += 1;
+		FlxTween.cancelTweensOf(testText);
+		testText.scale.set(1.075, 1.075);
+		FlxTween.tween(testText.scale, {x: 1, y: 1}, 0.2);
+	}
 }
