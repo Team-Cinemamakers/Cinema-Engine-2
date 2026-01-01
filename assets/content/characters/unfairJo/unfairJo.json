@@ -1,20 +1,21 @@
 {
-    "name": "Sigmio Final",
+    "name": "Jo560hs Retro SIGMA",
     "icon": "bf",
     "offset": [
         0,
-		0
+        350
     ],
     "camOffset": [
-        500,
-        300
+        -300,
+        -60
     ],
-    "fileName": "sigmio-final",
-    "scale": 1.5,
+    "scale": 2.50000000000001,
+    "antialiasing": false,
+    "fileName": "unfairJo",
     "animations": [
         {
             "name": "Idle",
-            "prefix": "idle",
+            "prefix": "Idle",
             "offset": [
                 0,
 				0
@@ -28,9 +29,9 @@
         },
         {
             "name": "noteLeft",
-            "prefix": "left",
+            "prefix": "Left",
             "offset": [
-                100,
+                0,
 				0
             ],
             "camOffset": [
@@ -42,10 +43,10 @@
         },
         {
             "name": "noteDown",
-            "prefix": "down",
+            "prefix": "Down",
             "offset": [
                 0,
-				100
+				0
             ],
             "camOffset": [
                 0,
@@ -56,10 +57,10 @@
         },
         {
             "name": "noteUp",
-            "prefix": "up",
+            "prefix": "Up",
             "offset": [
                 0,
-				150
+				0
             ],
             "camOffset": [
                 0,
@@ -70,27 +71,13 @@
         },
         {
             "name": "noteRight",
-            "prefix": "right",
+            "prefix": "Right",
             "offset": [
                 0,
 				0
             ],
             "camOffset": [
                 30,
-                0
-            ],
-            "fps": 24,
-            "loop": false
-        },
-        {
-            "name": "die",
-            "prefix": "die",
-            "offset": [
-                0,
-				0
-            ],
-            "camOffset": [
-                0,
                 0
             ],
             "fps": 24,

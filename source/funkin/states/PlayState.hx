@@ -7,6 +7,7 @@ import backend.events.StepEvent;
 import backend.scripting.Scripts.EventProcess;
 import backend.shaders.GlitchEffect;
 import flixel.FlxObject;
+import flixel.addons.effects.FlxTrail;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.system.debug.stats.Stats;
 import flixel.util.FlxTimer;
@@ -28,8 +29,8 @@ import cpp.vm.ExecutionTrace;
 class PlayState extends FlxState
 {
 	var bf:Character;
-	var strumlines:FlxTypedGroup<Strumline>;
-	var noteSplashes:FlxTypedGroup<NoteSplash>;
+	public var strumlines:FlxTypedGroup<Strumline>;
+	public var noteSplashes:FlxTypedGroup<NoteSplash>;
 
 	public var notesTypedGroup:FlxTypedGroup<Note>;
 	public var noteMap:Map<Strumline, Array<Note>> = new Map<Strumline, Array<Note>>();

@@ -33,7 +33,7 @@
         },
         {
             "name": "opponentPos2",
-            "position": [-200, -200]
+            "position": [-200, 0]
         }
     ]
 }

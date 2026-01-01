@@ -1,5 +1,6 @@
 import funkin.objects.Character;
 import backend.shaders.GlitchEffect;
+import flixel.addons.effects.FlxTrail;
 
 var shi:Array<Character> = [];
 
@@ -29,6 +30,11 @@ function onPlaystatePostInit(){
     cobble = get('cobble');
 
     game.characters["sigmio-final"].visible = false;
+    game.characters["unfairJo"].visible = false;
+
+    game.characters["sigmiofinalalt"].screenCenter();
+    game.characters["sigmiofinalalt"].scrollFactor.set();
+    game.characters["sigmiofinalalt"].visible = false;
 
     thorn.antialiasing = false;
     bg.antialiasing = false;
@@ -36,16 +42,23 @@ function onPlaystatePostInit(){
 
     bg.shader = unfairjShader.shader;
     bg.visible = false;
-    cobble.visible = false;
+    cobble.alpha = 0;
 
-    blackShitJ = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+    cobble.x = game.characters["unfairJo"].x - 200;
+    cobble.y = game.characters["unfairJo"].y - 50;
+    cobble.zIndex = 15;
+
+    blackShitJ = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, 0xFF000000);
     blackShitJ.zIndex = 30;
+    blackShitJ.scrollFactor.set();
+    blackShitJ.alpha = 0;
 
-	whiteShitJ = new FlxSprite(-1280, -720).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.WHITE);
+	whiteShitJ = new FlxSprite(-1280, -720).makeGraphic(FlxG.width * 3, FlxG.height * 3, 0xFFFFFFFF);
 	whiteShitJ.alpha = 0;
     whiteShitJ.zIndex = 15;
 
     game.add(whiteShitJ);
+    game.add(blackShitJ);
 }
 
 var time:Float = 0;
@@ -62,9 +75,37 @@ function beatHit(beat) {
         case 160:
             game.characters["spiritfakeout"].visible = false;
             game.characters["sigmio-final"].visible = true;
+            removeFromStrum(game.characters["spiritfakeout"], game.strumlines.members[1]);
             bg.visible = true;
             thorn.visible = false;
             FlxTween.tween(whiteShitJ, {alpha: 0}, 1, {ease: FlxEase.linear});
+        case 492: // 492
+            FlxTween.tween(cobble, {alpha: 1}, 1);
+        case 496: // 496
+            FlxTween.tween(cobble, {alpha: 0}, 1, { onComplete: (twn:FlxTween) -> {
+                cobble.destroy();
+            }});
+        case 676: // 676
+            game.characters["unfairJo"].visible = false;
+            game.characters["sigmio-final"].visible = false;
+            game.characters["sigmiofinalalt"].visible = true;
+            unfairJevents[0] = false;
+            unfairJevents[1] = true;
+            bg.alpha = 0;
+
+            unfairjShader.waveAmplitude = 0.3;
+            unfairjShader.waveFrequency = 4.5;
+            unfairjShader.waveSpeed = 1.5;
+
+            whiteShitJ.alpha = 1;
+            
+            FlxTween.tween(whiteShitJ, {alpha: 0}, 1, {ease: FlxEase.linear});
+        case 708: // 708
+            FlxTween.tween(bg, {"alpha": 0.5}, 2, {ease: FlxEase.linear});
+        case 804: // 804
+            dadTrailJ = new FlxTrail(game.characters["sigmiofinalalt"], null, 3, 24, 0.3, 0.05);
+            
+            game.add(dadTrailJ);
     }
 }
 
@@ -77,14 +118,14 @@ function stepHit(step) {
         case 1918:
             unfairJevents[0] = true;
            
-            blackShitJ.scrollFactor.set();
-            blackShitJ.cameras = [game.camGame];
-            game.add(blackShitJ);
+            blackShitJ.alpha = 1;
             game.camUI.visible = false;
 
-            game.characters["sigmio-final"].setGraphicSize(0.75);
-            game.characters["sigmio-final"].x += 200;
-            game.characters["sigmio-final"].y -= 150;
+            game.characters["sigmio-final"].scale.set(0.75, 0.75);
+
+            game.characters["bf-pixel"].visible = false;
+            game.characters["unfairJo"].visible = true;
+            removeFromStrum(game.characters["bf-pixel"], game.strumlines.members[0]);
 
             unfairjShader.waveAmplitude = 0.2;
             unfairjShader.waveSpeed = 1.5;
@@ -92,18 +133,34 @@ function stepHit(step) {
         case 1936: // 1936
             blackShitJ.destroy();
             game.camUI.visible = true;
+
+        case 3470: // 3470
+
+            game.characters["unfairJo"].visible = true;
+            game.characters["sigmio-final"].visible = true;
+            game.characters["sigmiofinalalt"].visible = false;
+
+            unfairJevents[0] = true;
+            unfairJevents[1] = false;
+            bg.alpha = 1;
+            whiteShitJ.alpha = 1;
+            FlxTween.tween(whiteShitJ, {alpha: 0}, 1, {ease: FlxEase.linear});
+
+            unfairjShader.waveFrequency = 4;
+            unfairjShader.waveSpeed = 2;
+
+            dadTrailJ.destroy();
+            bfTrailJ = new FlxTrail(game.characters["unfairJo"], null, 3, 24, 0.3, 0.05);
+            dadTrailJ = new FlxTrail(game.characters["sigmio-final"], null, 3, 24, 0.3, 0.05);
+            game.add(bfTrailJ);
+            game.add(dadTrailJ);
     }
 }
 
-function createCharacter(char, charName, marker, strum) {
-    var charPos = game.currentStage.getPositionFromMarker(marker);
-    var balls:Character = new Character(char, charPos.x, charPos.y);
-    game.strumlines.members[strum].characterNames.push(charName);
-    game.strumlines.members[strum].characters.push(balls);
+function removeFromStrum(char, strumline) {
+    for (strum in strumline) {
+        strum.characters.remove(char);
+    }
 
-    balls.zIndex = 10;
-    game.add(balls);
-
-    game.characters.set(charName, balls);
-    return balls;
+    strumline.characters.remove(char);
 }
