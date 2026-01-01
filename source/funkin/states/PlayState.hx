@@ -47,8 +47,8 @@ class PlayState extends FlxState
 	var loadAhead:Int = 50;
 	var totalNotes:Float = 0;
 
-	var camGame:FlxCamera;
-	var camUI:FlxCamera;
+	public var camGame:FlxCamera;
+	public var camUI:FlxCamera;
 
 	public var hud:HScript = null;
 	public var pauseSubstate:HScriptSubstate = null;

@@ -101,6 +101,7 @@ class Scripts {
         "EventProcess" => EventProcess,
 
         "PlayState" => PlayState,
+        "game" => PlayState.instance,
 
         "Song" => Song,
         "Stage" => Stage,
