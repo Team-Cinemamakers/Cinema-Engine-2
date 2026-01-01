@@ -13,7 +13,6 @@ import cpp.vm.Gc;
 class MainMenuState extends FlxState
 {
 	var bg:FlxSprite;
-	var mainMenu:ScrollableMenu;
 	var menuOptions:FlxTypedGroup<FlxSprite>;
 	var curItem:Int = 0;
 	var transition:Transition;

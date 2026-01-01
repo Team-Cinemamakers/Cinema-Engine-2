@@ -96,7 +96,6 @@ class Scripts {
         "MiscUtil" => MiscUtil,
         "ZLayers" => ZLayers,
         "CoolInput" => CoolInput,
-        "ScrollableMenu" => ScrollableMenu,
         "SongHandler" => SongHandler,
         "Globals" => Globals,
         "EventProcess" => EventProcess,

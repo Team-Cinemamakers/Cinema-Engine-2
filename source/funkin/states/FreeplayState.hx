@@ -6,6 +6,7 @@ import funkin.objects.Alphabet;
 import funkin.objects.Transition;
 import funkin.states.MainMenuState;
 import funkin.states.PlayState;
+import haxe.io.ArrayBufferView.ArrayBufferViewImpl;
 
 class FreeplayState extends FlxState{
     var bg:FlxSprite;
@@ -31,6 +32,9 @@ class FreeplayState extends FlxState{
 		bg = new FlxSprite().loadGraphic(Paths.image("menuBG", "images/states/mainMenu", ENGINE));
 		bg.screenCenter();
 		add(bg);
+
+        var alphaber:Alphabet = new Alphabet(0, 0, "holy shit");
+        add(alphaber);
 
         freeplay = Freeplay.loadFreeplay();
 
