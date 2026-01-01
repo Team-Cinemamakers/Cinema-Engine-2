@@ -71,3 +71,7 @@ function noteHit(note, char, playable) {
 		FlxTween.tween(testText.scale, {x: 1, y: 1}, 0.2);
 	}
 }
+
+function noteMiss(note) {
+	playedAnything = true;
+}
