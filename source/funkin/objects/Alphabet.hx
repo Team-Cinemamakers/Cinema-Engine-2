@@ -3,7 +3,8 @@ package funkin.objects;
 import flixel.group.FlxSpriteGroup;
 
 class Alphabet extends FlxSpriteGroup{
-    public function new(x:Float, y:Float, text:String = "test"){
+    var letterScaleValue:Float = 1;
+    public function new(x:Float, y:Float, text:String = "test", desiredHeight:Float = 30){
         super(x, y);
         for(i in 0...text.length){
             var letter:FlxSprite = new FlxSprite();
@@ -15,8 +16,12 @@ class Alphabet extends FlxSpriteGroup{
             letter.frames = Paths.sparrow("alphabet", 'images/shared', ENGINE, letter, true, true);
             letter.animation.addByPrefix(text.charAt(i), text.charAt(i).toUpperCase() + " bold", 24, true);
             letter.animation.play(text.charAt(i));
+            if(i == 0) letterScaleValue = desiredHeight/letter.height;
+            letter.scale.set(letterScaleValue, letterScaleValue);
+            letter.updateHitbox();
             letter.x = this.x;
-            if(this.members[i - 1] != null) letter.x = this.members[i - 1].x + this.members[i - 1].width + 5;
+            if(i != 0) letter.x = this.members[i-1].x + this.members[i-1].width;
+            letter.updateHitbox();
             letter.y = this.y;
             this.add(letter);
         }

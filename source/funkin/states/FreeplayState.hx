@@ -33,7 +33,7 @@ class FreeplayState extends FlxState{
 		bg.screenCenter();
 		add(bg);
 
-        var alphaber:Alphabet = new Alphabet(0, 0, "holy shit");
+        var alphaber:Alphabet = new Alphabet(0, 0, "holy shit", 70);
         add(alphaber);
 
         freeplay = Freeplay.loadFreeplay();
