@@ -145,8 +145,6 @@ class PlayState extends FlxState
 		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
 		SongHandler.inst.onComplete = endSong;
 
-		Conductor.reset(song.info.bpm, true);
-
 		for (stageDef in song.info.stages)
 		{
 			var stage:Stage = new Stage(stageDef);
@@ -291,6 +289,7 @@ class PlayState extends FlxState
 
 		if(!initialized){
 			initialized = true;
+			Conductor.reset(song.info.bpm, true);
 			SongHandler.forceSync();
 		}
 

@@ -10,7 +10,7 @@ class Alphabet extends FlxSpriteGroup{
             var letter:FlxSprite = new FlxSprite();
             var char:String = text.charAt(i);
             if(char == ' '){
-                char = "0";
+                char = 'O';
                 letter.alpha = 0;
             }
             letter.frames = Paths.sparrow("alphabet", 'images/shared', ENGINE, letter, true, true);

@@ -39,11 +39,12 @@ class FreeplayState extends FlxState{
 		{
             for(k in 0...freeplay.sections[i].songs.length){
                 var name:String = freeplay.sections[i].songs[k].name;
-                var option:Alphabet = new Alphabet(0, 0, freeplay.sections[i].songs[k].displayName, 70);
-                option.screenCenter();
+                var option:Alphabet = new Alphabet(0, 0, freeplay.sections[i].songs[k].displayName, 45);
+                option.screenCenter(Y);
+                option.x = 50;
                 if(i != 0 || k != 0){
-                    option.x = options[0].x + 15;
-                    option.y = options[0].y + (freeplayLength * 75);
+                    option.x = options[0].x + (30 * ((i + 1) * k));
+                    option.y = options[0].y + (freeplayLength * 80);
                 } 
                 tempOptions.set(option, name);
                 options.push(option);
@@ -89,6 +90,7 @@ class FreeplayState extends FlxState{
 
     public function change(dir:Int = 1){
         if(curItem == null) return;
+        var lastCur:Alphabet = curItem;
         curItem.alpha = 0.5;
         if(options[options.indexOf(curItem) + dir] != null){
             curItem = options[options.indexOf(curItem) + dir];
@@ -99,11 +101,11 @@ class FreeplayState extends FlxState{
                 curItem = options[options.length - 1];
             }
         }
-        var tweenedx:Float = options[options.indexOf(curItem)].x - ((FlxG.width/2) - (options[options.indexOf(curItem)].width/2));
+        var tweenedx:Float = options[options.indexOf(curItem)].x - lastCur.x;
         var tweenedy:Float = options[options.indexOf(curItem)].y - ((FlxG.height/2) - (options[options.indexOf(curItem)].height/2));
         for(i in 0...options.length){
-            var tx:Float = options[i].x + tweenedx;
-            var ty:Float = options[i].y + tweenedy;
+            var tx:Float = options[i].x - tweenedx;
+            var ty:Float = options[i].y - tweenedy;
             FlxTween.tween(options[i], {x: tx, y: ty}, 0.3, {
                 ease: FlxEase.quadInOut
             });
