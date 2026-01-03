@@ -13,13 +13,13 @@ class FreeplayState extends FlxState{
     var freeplayYValues:Array<Float> = [];
     var transition:Transition;
 
-    var tempOptions:Map<FlxText, String> = new Map<FlxText, String>();
-    var options:Array<FlxText> = [];
+    var tempOptions:Map<Alphabet, String> = new Map<Alphabet, String>();
+    var options:Array<Alphabet> = [];
 
     var freeplay:FreeplayData;
     var freeplayLength:Int = 0;
 
-    var curItem:FlxText;
+    var curItem:Alphabet;
 
     override public function create(){
         super.create();
@@ -33,19 +33,18 @@ class FreeplayState extends FlxState{
 		bg.screenCenter();
 		add(bg);
 
-        var alphaber:Alphabet = new Alphabet(0, 0, "holy shit", 70);
-        add(alphaber);
-
         freeplay = Freeplay.loadFreeplay();
 
 		for (i in 0...freeplay.sections.length)
 		{
             for(k in 0...freeplay.sections[i].songs.length){
                 var name:String = freeplay.sections[i].songs[k].name;
-                var option:FlxText = new FlxText(0, 0, 0, freeplay.sections[i].songs[k].displayName, 50, true);
-                option.setFormat(null, 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE_FAST, FlxColor.BLACK);
-                option.screenCenter(X);
-                option.y = 100 + (freeplayLength * 75);
+                var option:Alphabet = new Alphabet(0, 0, freeplay.sections[i].songs[k].displayName, 70);
+                option.screenCenter();
+                if(i != 0 || k != 0){
+                    option.x = options[0].x + 15;
+                    option.y = options[0].y + (freeplayLength * 75);
+                } 
                 tempOptions.set(option, name);
                 options.push(option);
                 freeplayLength++;
@@ -99,6 +98,15 @@ class FreeplayState extends FlxState{
             } else if (dir == -1){
                 curItem = options[options.length - 1];
             }
+        }
+        var tweenedx:Float = options[options.indexOf(curItem)].x - ((FlxG.width/2) - (options[options.indexOf(curItem)].width/2));
+        var tweenedy:Float = options[options.indexOf(curItem)].y - ((FlxG.height/2) - (options[options.indexOf(curItem)].height/2));
+        for(i in 0...options.length){
+            var tx:Float = options[i].x + tweenedx;
+            var ty:Float = options[i].y + tweenedy;
+            FlxTween.tween(options[i], {x: tx, y: ty}, 0.3, {
+                ease: FlxEase.quadInOut
+            });
         }
         curItem.alpha = 1;
     }
