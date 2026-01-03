@@ -171,6 +171,7 @@ class Stage
 			script = Scripts.create(stage + "-stage", Paths.hscript(stage, "stages/" + stage), ScriptContext.STAGE);
 
             script.set("add", add);
+            script.set("addToState", add);
             script.set("delete", delete);
             script.set("remove", remove);
             script.set("getPositionFromMarker", getPositionFromMarker);
@@ -193,7 +194,18 @@ class Stage
     }
 
     /**
-        Adds object to the stage.
+        Adds object to the state, without adding it to the stage
+
+        @param object The object itself
+    **/
+    public function addToState(object:FlxSprite):Void {
+        FlxG.state.add(object);
+    }
+
+    /**
+        Adds object to the object list.
+
+        The object list is only relevant when the stage is being built, so any objects added after `stageBuildEnd` will not actually show up.
 
         @param name Name under which the object should be added
         @param object The object itself
