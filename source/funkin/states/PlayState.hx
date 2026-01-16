@@ -366,7 +366,7 @@ class PlayState extends FlxState
 					animDeb[i] = 0;
 					for (v in 0...strumlines.members[i].characters.length)
 					{
-						if (!strumlines.members[i].characters[v].playingSpecial)
+						if (!strumlines.members[i].characters[v].playingSpecial && !strumlines.members[i].characters[v].playingLongNote)
 							playAnimation(strumlines.members[i].characters[v], 'Idle', true, strumlines.members[i].playable);
 					}
 				}
@@ -545,6 +545,7 @@ class PlayState extends FlxState
 		health += eventData.health;
 
 		if (eventData.doAnimation) {
+			if(note != null && note.longNote != null) note.setCharactersLongNoteState(true);
 			animDeb[0] = 0;
 			playAnimation(char, animation, true, playable);
 		}	

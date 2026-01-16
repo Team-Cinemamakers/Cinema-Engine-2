@@ -88,10 +88,12 @@ class Note extends FlxSprite {
 
 		if(y <= 0 - this.height && longNote == null){
 				if(this.strumnote.playable){
+					setCharactersLongNoteState(false);
 					PlayState.instance.notesTypedGroup.remove(this, true);
 					PlayState.instance.noteMiss(this, this.strumnote.input);
 					this.destroy();
 				} else {
+					setCharactersLongNoteState(false);
 					this.strumnote.pressedOnNote = true;
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
 					PlayState.instance.notesTypedGroup.remove(this, true);
@@ -110,7 +112,9 @@ class Note extends FlxSprite {
 					PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
 					if (this.longNote != null){
 						this.alpha = 0;
+						setCharactersLongNoteState(true);
 					} else {
+						setCharactersLongNoteState(false);
 						PlayState.instance.notesTypedGroup.remove(this, true);
 						this.destroy();
 					}
@@ -125,16 +129,31 @@ class Note extends FlxSprite {
 		if(this.longNote != null && !CoolInput.held(this.strumnote.input) && this.held){
 			if(this.strumnote.playable){
 				this.held = false;
-				PlayState.instance.notesTypedGroup.remove(this, true);
-				PlayState.instance.noteMiss(this, this.strumnote.input);
-				trace('missed long note');
-            	this.longNote.destroy();
-            	this.destroy();
+				if(this.longNote.members[this.longNote.length - 1].y >= strumnote.y + 60){
+					PlayState.instance.notesTypedGroup.remove(this, true);
+					PlayState.instance.noteMiss(this, this.strumnote.input);
+					trace('missed long note');
+					setCharactersLongNoteState(false);
+            		this.longNote.destroy();
+            		this.destroy();			
+				} else {
+					setCharactersLongNoteState(false);
+					this.longNote.destroy();
+					this.destroy();
+				}
 			} else {
 				PlayState.instance.activateEnemyNote(this.strumnote, this.noteData.value);
+				setCharactersLongNoteState(false);
 				this.longNote.destroy();
             	this.destroy();
 			}
+		}
+	}
+
+	public function setCharactersLongNoteState(state:Bool){
+		for (char in strumline.characters)
+		{
+			char.playingLongNote = state;
 		}
 	}
 

@@ -36,6 +36,7 @@ class Character extends FlxSprite
 	public var script:HScript = null;
 
 	public var playingSpecial:Bool = false;
+	public var playingLongNote:Bool = false;
 
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
