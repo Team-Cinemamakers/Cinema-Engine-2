@@ -67,6 +67,7 @@ class Conductor
 	public static function play():Void
 	{
 		doConductorTime = true;
+		trace("conductor play");
 	}
 
 	/**

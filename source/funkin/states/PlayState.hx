@@ -142,6 +142,8 @@ class PlayState extends FlxState
 
 		song = new Song(loadedSong);
 
+		Conductor.reset(song.info.bpm);
+
 		SongHandler.load(loadedSong, song.info.songFiles.inst, song.info.songFiles.vocals, song.tempDir);
 		SongHandler.inst.onComplete = endSong;
 
@@ -247,9 +249,6 @@ class PlayState extends FlxState
 		// Gc.run(true);
 		// #end
 
-		Conductor.reset(song.info.bpm, true);
-		SongHandler.forceSync();
-
 		for(char in characters){
 			desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get('Idle').x + char.cameraOffset.x, char.y + char.animCamOffsets.get('Idle').y + char.cameraOffset.y);
 			break; // just get first character
@@ -288,9 +287,15 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		SongHandler.update();
+		
 		super.update(elapsed);
 
-		if(!initialized){
+		if(!SongHandler.loaded) return;
+
+		if(!initialized && SongHandler.loaded){
+			SongHandler.play();
+			SongHandler.forceSync();
 			initialized = true;
 		}
 
