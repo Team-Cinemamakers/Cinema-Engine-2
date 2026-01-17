@@ -288,7 +288,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		SongHandler.update();
-		
+
 		super.update(elapsed);
 
 		if(!SongHandler.loaded) return;
@@ -299,7 +299,7 @@ class PlayState extends FlxState
 			initialized = true;
 		}
 
-		NoteHandler.runNoteCheck(noteMap);
+		if(SongHandler.playing) NoteHandler.runNoteCheck(noteMap, elapsed);
 
 		Scripts.callOnScripts("preUpdate", [elapsed]);
 

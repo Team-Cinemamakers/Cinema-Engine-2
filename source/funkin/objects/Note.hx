@@ -85,7 +85,6 @@ class Note extends FlxSprite {
 	{
 		super.update(elapsed);
 
-
 		if(y <= 0 - this.height && longNote == null){
 				if(this.strumnote.playable){
 					setCharactersLongNoteState(false);
@@ -137,6 +136,7 @@ class Note extends FlxSprite {
             		this.longNote.destroy();
             		this.destroy();			
 				} else {
+					PlayState.instance.notesTypedGroup.remove(this, true);
 					setCharactersLongNoteState(false);
 					this.longNote.destroy();
 					this.destroy();

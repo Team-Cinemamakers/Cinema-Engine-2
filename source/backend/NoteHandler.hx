@@ -6,7 +6,7 @@ import funkin.objects.StrumNote;
 import funkin.objects.Strumline;
 
 class NoteHandler{
-    public static function runNoteCheck(notes:Map<Strumline, Array<Note>>):Void{
+    public static function runNoteCheck(notes:Map<Strumline, Array<Note>>, elapsed:Float):Void{
         for(noteArr in notes){
             for(i in 0...noteArr.length){
                 if(noteArr[i] != null){
