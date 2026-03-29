@@ -79,13 +79,15 @@ class StrumNote extends FlxSprite {
 		if (CoolInput.held(input) && playable)
 		{
 			if (!pressedOnNote) {
-				if (animation.curAnim.name != 'press')
+				if (animation.curAnim.name != 'press') {
 					this.shader = noteShader;
 					playAnim('press');
+				}
 			} else {
-				if (animation.curAnim.name != 'confirm')
+				if (animation.curAnim.name != 'confirm') {
 					this.shader = noteShader;
 					playAnim('confirm');
+				}
 			}
 			
         } else if (!playable) {
