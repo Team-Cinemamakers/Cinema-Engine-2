@@ -382,7 +382,7 @@ class PlayState extends FlxState
 	}
 
 	function stepHit(e:StepEvent) {
-		// Scripts.callOnScripts("preStepHit", [Conductor.curStep]);
+		Scripts.callOnScripts("preStepHit", [Conductor.curStep]);
 		Scripts.callOnScripts("stepHit", [Conductor.curStep]);
 	}
 
@@ -456,7 +456,7 @@ class PlayState extends FlxState
 						thisNote.destroy();
 						notesTypedGroup.remove(thisNote, true);
 					}
-					
+					Scripts.callOnScripts("noteScored", [noteVal, hitType]);
 				}
 			}
 		}

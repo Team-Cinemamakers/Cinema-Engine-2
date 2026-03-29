@@ -1,5 +1,6 @@
 package backend.scripting;
 
+import backend.Globals.NoteRating;
 import crowplexus.iris.Iris.IrisCall;
 import flixel.util.FlxAxes;
 import funkin.data.Song;
@@ -99,6 +100,7 @@ class Scripts {
         "SongHandler" => SongHandler,
         "Globals" => Globals,
         "EventProcess" => EventProcess,
+        "NoteRating" => NoteRating,
 
         "ENGINE" => ENGINE,
         "CONTENT" => CONTENT,
