@@ -2,6 +2,7 @@ package backend.scripting;
 
 import backend.Globals.NoteRating;
 import crowplexus.iris.Iris.IrisCall;
+import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxAxes;
 import funkin.data.Song;
 import funkin.data.Stage;
@@ -84,6 +85,7 @@ class Scripts {
         "FlxEase" => FlxEase,
         "FlxColor" => FlxColor.colorLookup,
         "FlxTypedGroup" => FlxTypedGroup,
+        "FlxSpriteGroup" => FlxSpriteGroup,
         "FlxAxes" => MacroUtil.buildAbstract(FlxAxes),
 
         "FlxText" => FlxText,

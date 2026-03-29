@@ -9,6 +9,9 @@ var sicks:Int = 0;
 var goods:Int = 0;
 var bads:Int = 0;
 var shits:Int = 0;
+var combo:Int = 0;
+
+var comboGroup:FlxSpriteGroup;
 
 function onPlaystatePostInit(){
     trace('Setting up hud');
@@ -34,6 +37,11 @@ function onPlaystatePostInit(){
 	testText.scrollFactor.set();
 	testText.zIndex = 30;
 	add(testText);
+
+	comboGroup = new FlxSpriteGroup();
+	comboGroup.zIndex = 9;
+	comboGroup.cameras = [game.camUI];
+	add(comboGroup);
 }
 
 var rating:String = "N/A";
@@ -76,6 +84,7 @@ function noteHit(note, char, playable) {
 	if (playable) {
 		playedAnything = true;
 		notesPlayed += 1;
+		combo += 1;
 		FlxTween.cancelTweensOf(testText);
 		testText.scale.set(1.075, 1.075);
 		FlxTween.tween(testText.scale, {x: 1, y: 1}, 0.2);
@@ -85,22 +94,57 @@ function noteHit(note, char, playable) {
 function noteMiss(note) {
 	playedAnything = true;
 	notesPlayed += 1;
+	combo = 0;
 }
 
-function noteScored(noteVal, rating) {
-	if (rating == NoteRating.PERFECT) {
+function noteScored(noteVal, ratingg) {
+	if (ratingg == NoteRating.PERFECT) {
 		sicks += 1;
 		notesHit += 1;
 	}
-	else if (rating == NoteRating.GREAT) {
+	else if (ratingg == NoteRating.GREAT) {
 		goods += 1;
 		notesHit += 0.67;
 	}
-	else if (rating == NoteRating.GOOD) {
+	else if (ratingg == NoteRating.GOOD) {
 		bads += 1;
 		notesHit += 0.34;
 	}
-	else if (rating == NoteRating.BAD) {
+	else if (ratingg == NoteRating.BAD) {
 		shits += 1;
 	}
+
+	popupRating(ratingg);
+}
+
+function popupRating(ratingg) {
+	var ratingName = "";
+	if (ratingg == NoteRating.PERFECT) ratingName = "sick";
+	else if (ratingg == NoteRating.GREAT) ratingName = "good";
+	else if (ratingg == NoteRating.GOOD) ratingName = "bad";
+	else if (ratingg == NoteRating.BAD) ratingName = "shit";
+	else ratingName == "shit";
+
+	var ratings = new FlxSprite();
+
+	ratings.loadGraphic(Paths.image(ratingName, "images/shared/ratings", ENGINE));
+	ratings.screenCenter();
+	ratings.y -= 150;
+	ratings.x += 50;
+	ratings.acceleration.y = 550;
+	ratings.velocity.y -= FlxG.random.int(140, 175);
+	ratings.velocity.x -= FlxG.random.int(0, 10);
+	ratings.scale.set(0.75, 0.75);
+	ratings.updateHitbox();
+
+	comboGroup.add(ratings);
+
+
+	FlxTween.tween(ratings, {alpha: 0}, 0.2, {
+		onComplete: function(tween:FlxTween)
+		{
+			ratings.destroy();
+		},
+		startDelay: Conductor.beatTime * 0.001
+	});
 }
