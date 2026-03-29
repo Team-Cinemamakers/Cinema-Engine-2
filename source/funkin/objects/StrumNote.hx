@@ -91,12 +91,14 @@ class StrumNote extends FlxSprite {
 			}
 			
         } else if (!playable) {
-			if(!pressedOnNote){
+			if(!pressedOnNote && !characters[0].playingLongNote){
 				this.shader = null;
 				playAnim('static');
 			} else {
-				this.shader = noteShader;
-				playAnim('confirm');
+				if (animation.curAnim.name != 'confirm' && pressedOnNote) {
+					this.shader = noteShader;
+					playAnim('confirm');
+				}
 			}
 		} else {
 			this.shader = null;
