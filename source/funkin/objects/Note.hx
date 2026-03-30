@@ -54,12 +54,9 @@ class Note extends FlxSprite {
 
         super(x, y);
 
-		centerOrigin();
-		centerOffsets();
-
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
-		this.updateHitbox();
+		// this.updateHitbox();
 
         this.angle = angle;
 		this.noteData = noteData;
@@ -85,6 +82,11 @@ class Note extends FlxSprite {
 
 		this.animation.addByPrefix('idle', strumline.noteskinData.notes.noteAnim.animPrefix+strumline.members[noteData.value].name, strumline.noteskinData.notes.noteAnim.fps, strumline.noteskinData.notes.noteAnim.loop);
 		this.animation.play("idle", true);
+
+		centerOrigin();
+		centerOffsets();
+
+		this.offset.add(strumline.noteskinData.notes.offset[0]*-1, strumline.noteskinData.notes.offset[1]*-1);
 
 		this.antialiasing = strumline.noteskinData.antialiasing;
 

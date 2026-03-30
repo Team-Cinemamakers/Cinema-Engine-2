@@ -12,6 +12,7 @@ class LongNote extends FlxSpriteGroup {
     var noteSparrow:FlxAtlasFrames;
     var noteEndSparrow:FlxAtlasFrames;
     var useOneSpritesheet:Null<Bool> = false;
+    var useShader:Bool = true;
 	public function new(note:Note, x:Float = 0, y:Float = 0)
 	{
         this.note = note;
@@ -20,6 +21,8 @@ class LongNote extends FlxSpriteGroup {
 
         if (useOneSpritesheet != null) useOneSpritesheet = note.strumline.noteskinData.sustains.useOneSpritesheet;
         else useOneSpritesheet = true;
+
+        useShader = note.strumline.noteskinData.useColorShader;
 
         if (note.strumline.noteskinData.spriteType == "seperate") {
 			if (note.strumline.noteskinData.strums.spritesheet == null) trace("SPRITESHEET IS NULL, UH OH");
@@ -62,7 +65,10 @@ class LongNote extends FlxSpriteGroup {
                 part.updateHitbox();
                 part.x = note.x + (note.width/4);
                 part.y = note.y + (i * 75);
-                part.shader = note.shader;
+
+                part.offset.add(note.strumline.noteskinData.sustains.offset[0]*-1, note.strumline.noteskinData.sustains.offset[1]*-1);
+
+                if (useShader) part.shader = note.shader;
                 add(part);
             } else {
                 var part:FlxSprite = new FlxSprite(0, 0);
@@ -73,7 +79,10 @@ class LongNote extends FlxSpriteGroup {
 
                 part.x = note.x + (note.width/4);
                 part.y = note.y + (i * 75);
-                part.shader = note.shader;
+
+                part.offset.add(note.strumline.noteskinData.sustains.offset[0]*-1, note.strumline.noteskinData.sustains.offset[1]*-1);
+
+                if (useShader) part.shader = note.shader;
                 add(part);
             }
         }
