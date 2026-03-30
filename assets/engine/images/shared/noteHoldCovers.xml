@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="noteHoldCovers.png">
+	<!-- Created with Adobe Animate version 21.0.3.38773 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="endUp0000" x="0" y="0" width="81" height="40" frameX="-79" frameY="-78" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0001" x="0" y="0" width="81" height="40" frameX="-79" frameY="-78" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0002" x="84" y="0" width="171" height="151" frameX="-30" frameY="-3" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0003" x="258" y="0" width="219" height="190" frameX="-4" frameY="0" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0004" x="258" y="0" width="219" height="190" frameX="-4" frameY="0" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0005" x="480" y="0" width="234" height="197" frameX="-1" frameY="-6" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0006" x="717" y="0" width="251" height="198" frameX="0" frameY="-22" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="endUp0007" x="0" y="201" width="246" height="171" frameX="-10" frameY="-58" frameWidth="256" frameHeight="229"/>
+	<SubTexture name="loopUp0000" x="249" y="201" width="161" height="125" frameX="0" frameY="-8" frameWidth="161" frameHeight="135"/>
+	<SubTexture name="loopUp0001" x="413" y="201" width="134" height="108" frameX="-11" frameY="-20" frameWidth="161" frameHeight="135"/>
+	<SubTexture name="loopUp0002" x="550" y="201" width="99" height="85" frameX="-30" frameY="-27" frameWidth="161" frameHeight="135"/>
+	<SubTexture name="loopUp0003" x="652" y="201" width="126" height="135" frameX="-13" frameY="0" frameWidth="161" frameHeight="135"/>
+	<SubTexture name="startUp0000" x="781" y="201" width="98" height="98"/>
+</TextureAtlas>

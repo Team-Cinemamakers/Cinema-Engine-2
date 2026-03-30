@@ -13,6 +13,8 @@ typedef NoteskinData = {
     var sustains:NoteskinSustains;
     var splashesEnabled:Bool;
     var splashes:Null<NoteskinSplashes>;
+    var sustainCoversEnabled:Bool;
+    var sustainCovers:Null<NoteskinSustainCovers>;
 }
 
 typedef NoteskinNotes = {
@@ -41,6 +43,14 @@ typedef NoteskinSustains = {
 typedef NoteskinSplashes = {
     var spritesheet:String;
     var splashAnim:NoteskinAnimation;
+    var offset:Array<Float>;
+}
+
+typedef NoteskinSustainCovers = {
+    var spritesheet:String;
+    var startAnim:NoteskinAnimation;
+    var loopAnim:NoteskinAnimation;
+    var endAnim:NoteskinAnimation;
     var offset:Array<Float>;
 }
 

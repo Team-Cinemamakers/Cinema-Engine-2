@@ -74,7 +74,7 @@ class LongNote extends FlxSpriteGroup {
                 var part:FlxSprite = new FlxSprite(0, 0);
                 part.frames = noteSparrow;
 
-                part.animation.addByPrefix('base', note.strumline.noteskinData.sustains.baseAnim.animPrefix+note.strumline.members[note.noteData.value%4].name, note.strumline.noteskinData.sustains.baseAnim.fps, note.strumline.noteskinData.sustains.baseAnim.loop);
+                part.animation.addByPrefix('base', note.strumline.noteskinData.sustains.baseAnim.animPrefix+note.strumline.members[note.noteData.value].name, note.strumline.noteskinData.sustains.baseAnim.fps, note.strumline.noteskinData.sustains.baseAnim.loop);
 		        part.animation.play("base", true);
 
                 part.x = note.x + (note.width/4);

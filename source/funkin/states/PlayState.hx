@@ -17,6 +17,7 @@ import funkin.data.Stage;
 import funkin.objects.Bar;
 import funkin.objects.Character;
 import funkin.objects.LongNote;
+import funkin.objects.LongNoteCover;
 import funkin.objects.Note;
 import funkin.objects.NoteSplash;
 import funkin.objects.StrumNote;
@@ -31,8 +32,9 @@ class PlayState extends FlxState
 	var bf:Character;
 	public var strumlines:FlxTypedGroup<Strumline>;
 	public var noteSplashes:FlxTypedGroup<NoteSplash>;
-
+	public var longNoteCovers:FlxTypedGroup<LongNoteCover>;
 	public var notesTypedGroup:FlxTypedGroup<Note>;
+
 	public var noteMap:Map<Strumline, Array<Note>> = new Map<Strumline, Array<Note>>();
 
 	public static var loadedSong:String;
@@ -168,10 +170,13 @@ class PlayState extends FlxState
 		strumlines.zIndex = ZLayers.UI;
 
 		notesTypedGroup = new FlxTypedGroup<Note>();
-		notesTypedGroup.zIndex = ZLayers.UI;
+		notesTypedGroup.zIndex = ZLayers.UI+1;
+
+		longNoteCovers = new FlxTypedGroup<LongNoteCover>();
+		longNoteCovers.zIndex = ZLayers.UI+2;
 
 		noteSplashes = new FlxTypedGroup<NoteSplash>();
-		noteSplashes.zIndex = ZLayers.UI;
+		noteSplashes.zIndex = ZLayers.UI+3;
 
 		// Create character declarations
 		for (charData in song.info.characters)
@@ -209,6 +214,7 @@ class PlayState extends FlxState
 
 		add(strumlines);
 		add(notesTypedGroup);
+		add(longNoteCovers);
 		add(noteSplashes);
 
 		if (characters.get(strumlines.members[0].characterNames[0]).cameraOffset != null)
@@ -352,6 +358,10 @@ class PlayState extends FlxState
 			FlxG.camera.scroll.y += ((desiredCamPos.y - (FlxG.camera.height/2) - FlxG.camera.scroll.y) * (5 * elapsed));
 		}
 
+		for (longNoteCover in longNoteCovers.members) {
+			if (!longNoteCover.strum.pressedOnNote) longNoteCover.end();
+		}
+
 		timeSinceLastNote += elapsed;
 
 		Scripts.callOnScripts("update", [elapsed]);
@@ -454,6 +464,17 @@ class PlayState extends FlxState
 						thisNote.held = true;
 						trace('clicked long note');
 						thisNote.input = input;
+
+						if (thisNote.strumline.noteskinData.sustainCoversEnabled) {
+							var goodCover:Bool = false;
+							if (hitType == NoteRating.PERFECT) goodCover = true;
+							else goodCover = false;
+
+							var longNoteCover:LongNoteCover = new LongNoteCover(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.sustainCovers.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.sustainCovers.offset[1], goodCover);
+							longNoteCover.cameras = [camUI];
+							longNoteCovers.add(longNoteCover);
+							longNoteCover.start();
+						}
 					} else {
 						thisNote.destroy();
 						notesTypedGroup.remove(thisNote, true);
@@ -468,8 +489,10 @@ class PlayState extends FlxState
 	{
 		for (i in 0...strumlines.length)
 		{
-			if (strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote)
+			if (strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote) {
 				strumlines.members[i].members[noteVal].pressedOnNote = false;
+			}
+				
 		}
 	}
 

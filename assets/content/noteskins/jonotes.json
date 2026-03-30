@@ -52,5 +52,25 @@
             "loop": false
         },
         "offset": [-20, -25]
+    },
+    "sustainCoversEnabled": true,
+    "sustainCovers": {
+        "spritesheet": "noteHoldCovers",
+        "startAnim": {
+            "animPrefix": "start",
+            "fps": 24,
+            "loop": false
+        },
+        "loopAnim": {
+            "animPrefix": "loop",
+            "fps": 24,
+            "loop": true
+        },
+        "endAnim": {
+            "animPrefix": "end",
+            "fps": 24,
+            "loop": false
+        },
+        "offset": [0, 0]
     }
 }
