@@ -426,7 +426,7 @@ class PlayState extends FlxState
 						score += 100;
 
 						if (thisNote.strumline.noteskinData.splashesEnabled) {
-							var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-20, thisNote.strumnote.y-25);
+							var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.splashes.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.splashes.offset[1]);
 							splash.cameras = [camUI];
 							// splash.scale = thisNote.strumnote.scale;
 							noteSplashes.add(splash);

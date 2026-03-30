@@ -38,6 +38,7 @@ class LongNote extends FlxSpriteGroup {
 			}
 		} else {
 			noteSparrow = note.strumline.noteskinSparrow;
+            noteEndSparrow = note.strumline.noteskinSparrow;
             useOneSpritesheet = true;
 		}
 

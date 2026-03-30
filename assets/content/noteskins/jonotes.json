@@ -1,10 +1,10 @@
 {
-    "name": "default",
-    "antialiasing": true,
-    "spriteType": "seperate",
-    "useColorShader": true,
+    "name": "jonotes",
+    "antialiasing": false,
+    "spriteType": "single",
+    "spritesheet": "ucnotes",
+    "useColorShader": false,
     "notes": {
-        "spritesheet": "notes",
         "noteAnim": {
             "animPrefix": "note",
             "fps": 24,
@@ -13,7 +13,6 @@
         "offset": [0, 0]
     },
     "strums": {
-        "spritesheet": "noteStrumline",
         "confirmAnim": {
             "animPrefix": "confirm",
             "fps": 24,
@@ -25,23 +24,20 @@
             "loop": false
         },
         "staticAnim": {
-            "animPrefix": "static",
+            "animPrefix": "strum",
             "fps": 24,
             "loop": false
         },
-        "offset": [0, 0]
+        "offset": [50, 40]
     },
     "sustains": {
-        "spritesheet": "NOTE_hold_default",
-        "endSpritesheet": "NOTE_hold_default_end",
-        "useOneSpritesheet": false,
         "baseAnim": {
-            "animPrefix": "idle",
+            "animPrefix": "piece",
             "fps": 24,
             "loop": false
         },
         "endAnim": {
-            "animPrefix": "idle",
+            "animPrefix": "end",
             "fps": 24,
             "loop": false
         },

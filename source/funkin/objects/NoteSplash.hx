@@ -18,17 +18,13 @@ class NoteSplash extends FlxSprite {
 
         this.useShader = strum.strumline.noteskinData.useColorShader;
 
-		if (strum.strumline.noteskinData.spriteType == "seperate") {
-			if (strum.strumline.noteskinData.strums.spritesheet == null) trace("SPRITESHEET IS NULL, UH OH");
-			else {
-				if (Paths.exists("assets/engine/images/shared/"+strum.strumline.noteskinData.splashes.spritesheet+".png")) noteSparrow = Paths.sparrow(strum.strumline.noteskinData.splashes.spritesheet, 'images/shared', ENGINE, this);
-				else if (Paths.exists("assets/content/images/shared/"+strum.strumline.noteskinData.splashes.spritesheet+".png")) noteSparrow = Paths.sparrow(strum.strumline.noteskinData.splashes.spritesheet, 'images/shared', CONTENT, this);
-				else trace('SPLASHES SPRITESHEET NOT FOUND');
-			}
-			frames = noteSparrow;
-		} else {
-			frames = strum.strumline.noteskinSparrow;
+		if (strum.strumline.noteskinData.strums.spritesheet == null) trace("SPRITESHEET IS NULL, UH OH");
+		else {
+			if (Paths.exists("assets/engine/images/shared/"+strum.strumline.noteskinData.splashes.spritesheet+".png")) noteSparrow = Paths.sparrow(strum.strumline.noteskinData.splashes.spritesheet, 'images/shared', ENGINE, this);
+			else if (Paths.exists("assets/content/images/shared/"+strum.strumline.noteskinData.splashes.spritesheet+".png")) noteSparrow = Paths.sparrow(strum.strumline.noteskinData.splashes.spritesheet, 'images/shared', CONTENT, this);
+			else trace('SPLASHES SPRITESHEET NOT FOUND');
 		}
+		frames = noteSparrow;
 
 		this.antialiasing = strum.strumline.noteskinData.antialiasing;
 

@@ -18,6 +18,7 @@ typedef NoteskinData = {
 typedef NoteskinNotes = {
     var spritesheet:Null<String>;
     var noteAnim:NoteskinAnimation;
+    var offset:Array<Float>;
 }
 
 typedef NoteskinStrums = {
@@ -25,19 +26,22 @@ typedef NoteskinStrums = {
     var confirmAnim:NoteskinAnimation;
     var pressAnim:NoteskinAnimation;
     var staticAnim:NoteskinAnimation;
+    var offset:Array<Float>;
 }
 
 typedef NoteskinSustains = {
     var spritesheet:Null<String>;
     var endSpritesheet:Null<String>;
-    var useOneSpritesheet:Bool; // rather than having 2 spritesheets for the base and end parts of the sustain, use one spritesheet.
+    var useOneSpritesheet:Null<Bool>; // rather than having 2 spritesheets for the base and end parts of the sustain, use one spritesheet.
     var baseAnim:NoteskinAnimation;
     var endAnim:NoteskinAnimation;
+    var offset:Array<Float>;
 }
 
 typedef NoteskinSplashes = {
     var spritesheet:String;
     var splashAnim:NoteskinAnimation;
+    var offset:Array<Float>;
 }
 
 typedef NoteskinAnimation = {

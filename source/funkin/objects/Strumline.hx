@@ -100,8 +100,8 @@ class Strumline extends FlxTypedGroup<StrumNote>
 			members[i].scale.x = scale[0];
 			members[i].scale.y = scale[1];
 
-			members[i].x = x + (i * kerning);
-			members[i].y = y;
+			members[i].x = x + (i * kerning) + noteskinData.strums.offset[0];
+			members[i].y = y + noteskinData.strums.offset[1];
 
 			members[i].characterNames = characterNames;
 			members[i].characters = characters;
