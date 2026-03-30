@@ -36,6 +36,10 @@ class Note extends FlxSprite {
 
 	var framesAdded:Bool = false;
 
+	private var noteSparrow:FlxAtlasFrames;
+
+	public var useShader:Bool = true;
+
 	public var iterator:Int = 0;
 
 	public var held:Bool = false;
@@ -63,7 +67,26 @@ class Note extends FlxSprite {
 		this.iterator = iterator;
 
         this.strumline = strumline;
-		this.frames = Paths.sparrow('notes', 'images/shared', ENGINE, this, true, true);
+
+		this.useShader = strumline.noteskinData.useColorShader;
+		// this.frames = Paths.sparrow('notes', 'images/shared', ENGINE, this, true, true);
+
+		if (strumline.noteskinData.spriteType == "seperate") {
+			if (strumline.noteskinData.strums.spritesheet == null) trace("SPRITESHEET IS NULL, UH OH");
+			else {
+				if (Paths.exists("assets/engine/images/shared/"+strumline.noteskinData.strums.spritesheet+".png")) noteSparrow = Paths.sparrow(strumline.noteskinData.notes.spritesheet, 'images/shared', ENGINE, this, true, true);
+				else if (Paths.exists("assets/content/images/shared/"+strumline.noteskinData.strums.spritesheet+".png")) noteSparrow = Paths.sparrow(strumline.noteskinData.notes.spritesheet, 'images/shared', CONTENT, this, true, true);
+				else trace('NOTE SPRITESHEET NOT FOUND');
+			}
+			this.frames = noteSparrow;
+		} else {
+			this.frames = strumline.noteskinSparrow;
+		}
+
+		this.animation.addByPrefix('idle', strumline.noteskinData.notes.noteAnim.animPrefix+strumline.members[noteData.value].name, strumline.noteskinData.notes.noteAnim.fps, strumline.noteskinData.notes.noteAnim.loop);
+		this.animation.play("idle", true);
+
+		this.antialiasing = strumline.noteskinData.antialiasing;
 
 		this.scale.set(scaleX, scaleY);
 
@@ -74,7 +97,8 @@ class Note extends FlxSprite {
 		if(PlayState.instance != null){
 			PlayState.instance.notesTypedGroup.add(this);
 		}
-		this.shader = strumnote.noteShader;
+
+		if (useShader) this.shader = strumnote.noteShader;
 		x = strumnote.x + (this.width/4);
 		this.yOFF = y - strumnote.y + (this.height/2);
 	}

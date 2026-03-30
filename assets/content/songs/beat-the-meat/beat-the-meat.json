@@ -43,20 +43,25 @@
 					0.75,
 					0.75
 				],
+				"noteskin": "default",
 				"strumNotes": [
 					{
+						"name": "Up",
 						"angle": 270,
 						"input": "noteLeft"
 					},
 					{
+						"name": "Up",
 						"angle": 180,
 						"input": "noteDown"
 					},
 					{
+						"name": "Up",
 						"angle": 0,
 						"input": "noteUp"
 					},
 					{
+						"name": "Up",
 						"angle": 90,
 						"input": "noteRight"
 					}
@@ -77,20 +82,25 @@
 					0.3,
 					0.3
 				],
+				"noteskin": "default",
 				"strumNotes": [
 					{
+						"name": "Up",
 						"angle": 270,
 						"input": "noteLeft"
 					},
 					{
+						"name": "Up",
 						"angle": 180,
 						"input": "noteDown"
 					},
 					{
+						"name": "Up",
 						"angle": 0,
 						"input": "noteUp"
 					},
 					{
+						"name": "Up",
 						"angle": 90,
 						"input": "noteRight"
 					}

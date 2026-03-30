@@ -1,0 +1,56 @@
+{
+    "name": "default",
+    "antialiasing": true,
+    "spriteType": "seperate",
+    "useColorShader": true,
+    "notes": {
+        "spritesheet": "notes",
+        "noteAnim": {
+            "animPrefix": "note",
+            "fps": 24,
+            "loop": false
+        }
+    },
+    "strums": {
+        "spritesheet": "noteStrumline",
+        "confirmAnim": {
+            "animPrefix": "confirm",
+            "fps": 24,
+            "loop": false
+        },
+        "pressAnim": {
+            "animPrefix": "press",
+            "fps": 24,
+            "loop": false
+        },
+        "staticAnim": {
+            "animPrefix": "static",
+            "fps": 24,
+            "loop": false
+        }
+    },
+    "sustains": {
+        "spritesheet": "NOTE_hold_default",
+        "endSpritesheet": "NOTE_hold_default_end",
+        "useOneSpritesheet": false,
+        "baseAnim": {
+            "animPrefix": "idle",
+            "fps": 24,
+            "loop": false
+        },
+        "endAnim": {
+            "animPrefix": "idle",
+            "fps": 24,
+            "loop": false
+        }
+    },
+    "splashesEnabled": true,
+    "splashes": {
+        "spritesheet": "noteSplash",
+        "splashAnim": {
+            "animPrefix": "note splash ",
+            "fps": 24,
+            "loop": false
+        }
+    }
+}

@@ -186,7 +186,7 @@ class PlayState extends FlxState
 		for (i in 0...song.info.strumlines.length)
 		{
 			var strumLine:Strumline = new Strumline(song.info.strumlines[i].strumNotes, song.info.strumlines[i].characters, song.info.strumlines[i].playable,
-				song.info.strumlines[i].kerning, song.info.strumlines[i].position[0], song.info.strumlines[i].position[1], i);
+				song.info.strumlines[i].kerning, song.info.strumlines[i].noteskin,song.info.strumlines[i].position[0], song.info.strumlines[i].position[1], i);
 
 			strumLine.scale = song.info.strumlines[i].scale;
 			strumLine.updateStrums();
@@ -425,11 +425,13 @@ class PlayState extends FlxState
 						hitType = NoteRating.PERFECT;
 						score += 100;
 
-						var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-20, thisNote.strumnote.y-25);
-						splash.cameras = [camUI];
-						// splash.scale = thisNote.strumnote.scale;
-						noteSplashes.add(splash);
-						splash.splash();
+						if (thisNote.strumline.noteskinData.splashesEnabled) {
+							var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x-20, thisNote.strumnote.y-25);
+							splash.cameras = [camUI];
+							// splash.scale = thisNote.strumnote.scale;
+							noteSplashes.add(splash);
+							splash.splash();
+						}
 					}
 					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 85))
 					{
