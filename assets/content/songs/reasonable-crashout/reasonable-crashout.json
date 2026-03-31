@@ -74,26 +74,26 @@
 					0.75,
 					0.75
 				],
-				"noteskin": "jonotes",
+				"noteskin": "default",
 				"strumNotes": [
 					{
-						"name": "LEFT",
-						"angle": 0,
+						"name": "Up",
+						"angle": 270,
 						"input": "noteLeft"
 					},
 					{
-						"name": "DOWN",
-						"angle": 0,
+						"name": "Up",
+						"angle": 180,
 						"input": "noteDown"
 					},
 					{
-						"name": "UP",
+						"name": "Up",
 						"angle": 0,
 						"input": "noteUp"
 					},
 					{
-						"name": "RIGHT",
-						"angle": 0,
+						"name": "Up",
+						"angle": 90,
 						"input": "noteRight"
 					}
 				]

@@ -360,9 +360,13 @@ class PlayState extends FlxState
 
 		for (longNoteCover in longNoteCovers.members) {
 			if (longNoteCover.strum != null) {
-				if (!longNoteCover.strum.pressedOnNote) {
+				if (!longNoteCover.strum.characters[0].playingLongNote) {
 					longNoteCover.end();
 				}
+			}
+			if (longNoteCover.delete) {
+				longNoteCovers.remove(longNoteCover, true);
+				longNoteCover.destroy();
 			}
 		}
 
@@ -469,16 +473,11 @@ class PlayState extends FlxState
 						trace('clicked long note');
 						thisNote.input = input;
 
-						if (thisNote.strumline.noteskinData.sustainCoversEnabled) {
-							var goodCover:Bool = false;
-							if (hitType == NoteRating.PERFECT) goodCover = true;
-							else goodCover = false;
+						var goodCover:Bool = false;
+						if (hitType == NoteRating.PERFECT) goodCover = true;
+						else goodCover = false;
 
-							var longNoteCover:LongNoteCover = new LongNoteCover(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.sustainCovers.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.sustainCovers.offset[1], goodCover, longNoteCovers);
-							longNoteCover.cameras = [camUI];
-							longNoteCovers.add(longNoteCover);
-							longNoteCover.start();
-						}
+						createLongNoteCover(thisNote.strumnote, goodCover);
 					} else {
 						thisNote.destroy();
 						notesTypedGroup.remove(thisNote, true);
@@ -504,7 +503,7 @@ class PlayState extends FlxState
 
 	public function activateEnemyNote(strumnote:StrumNote, value:Int)
 	{
-		if(timeSinceLastNote >= (60/Conductor.BPM) * 2) desiredCamPos = FlxPoint.get(strumnote.characters[0].x + strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x, strumnote.characters[0].y + strumnote.characters[0].animCamOffsets.get(strumnote.input).y + strumnote.characters[0].cameraOffset.y);
+		if(timeSinceLastNote >= (60/Conductor.BPM) * 2) desiredCamPos = FlxPoint.get(strumnote.characters[0].x + strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x, strumnote.characters[0].y + strumnote.characters[0].animCamOffsets.get(strumnote.input).y + strumnote.characters[0].cameraOffset.y);	
 		for (i in 0...strumnote.characters.length)
 		{
 			SongHandler.voices.volume = 1;
@@ -688,6 +687,14 @@ class PlayState extends FlxState
 		if (CoolInput.pressed("return")) {
 			endSong(); // Let me have my convenience.
 		}
+	}
+
+	public function createLongNoteCover(strumNote:StrumNote, goodCover:Bool = false) {
+		if (!strumNote.strumline.noteskinData.sustainCoversEnabled) return;
+		var longNoteCover:LongNoteCover = new LongNoteCover(strumNote, strumNote.x+strumNote.strumline.noteskinData.sustainCovers.offset[0], strumNote.y+strumNote.strumline.noteskinData.sustainCovers.offset[1], goodCover);
+		longNoteCover.cameras = [camUI];
+		longNoteCovers.add(longNoteCover);
+		longNoteCover.start();
 	}
 
 	function initHUD(name:String) {

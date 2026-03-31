@@ -21,7 +21,7 @@ class NoteHandler{
                             if(note.longNote == null && note.noteData.length > 0){
                                 note.longNote = new LongNote(note);
                                 note.longNote.cameras = note.cameras;
-                                note.longNote.zIndex = note.zIndex-1;
+                                note.longNote.zIndex = ZLayers.UI+1;
                                 SortUtil.reorder();
                                 PlayState.instance.add(note.longNote);
 			                }

@@ -10,8 +10,9 @@ class LongNoteCover extends FlxSprite {
     public var noteSparrow:FlxAtlasFrames;
     public var useShader:Bool = true;
     public var doEndAnim:Bool = true;
+    public var delete:Bool = false;
 
-    public function new(strum:StrumNote, x:Float = 0, y:Float = 0, doEndAnim:Bool = true, group:FlxTypedGroup<LongNoteCover>) {
+    public function new(strum:StrumNote, x:Float = 0, y:Float = 0, doEndAnim:Bool = true) {
         super(x, y);
 
         //frames = Paths.sparrow('noteSplash', 'images/shared', ENGINE, this);
@@ -40,8 +41,7 @@ class LongNoteCover extends FlxSprite {
             trace(animName+" just finished");
             if (animName == "start") animation.play("loop");
             if (animName == "end") {
-                group.remove(this, true);
-                this.destroy();
+                delete = true;
             }
         });
 
@@ -51,8 +51,8 @@ class LongNoteCover extends FlxSprite {
     override function update(elapsed:Float) {
         super.update(elapsed);
 
-        if (animation.curAnim.name == "loop") offset.set(strum.strumline.noteskinData.sustainCovers.loopOffset[0], strum.strumline.noteskinData.sustainCovers.loopOffset[1]);
-        else if (animation.curAnim.name == "end") offset.set(strum.strumline.noteskinData.sustainCovers.endOffset[0], strum.strumline.noteskinData.sustainCovers.endOffset[1]);
+        if (animation.curAnim.name == "loop") offset.set(strum.strumline.noteskinData.sustainCovers.loopOffset[0]*-1, strum.strumline.noteskinData.sustainCovers.loopOffset[1]*-1);
+        else if (animation.curAnim.name == "end") offset.set(strum.strumline.noteskinData.sustainCovers.endOffset[0]*-1, strum.strumline.noteskinData.sustainCovers.endOffset[1]*-1);
         else offset.set();
     }
 
@@ -63,12 +63,14 @@ class LongNoteCover extends FlxSprite {
     public function end() {
         if (this == null) return; // idk how this would be the case, but whatever
         if (doEndAnim) {
-            this.animation.play("end", true);
-            trace("doin end anim");
+            if (this.animation.name != "end") {
+                this.animation.play("end", true);
+                trace("doin end anim");
+            }
         }
         else {
             trace('no end anim');
-            this.destroy();
+            delete = true;
         }
     }
 

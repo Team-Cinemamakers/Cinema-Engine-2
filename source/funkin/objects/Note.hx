@@ -138,6 +138,7 @@ class Note extends FlxSprite {
 					if (this.longNote != null){
 						this.alpha = 0;
 						setCharactersLongNoteState(true);
+						PlayState.instance.createLongNoteCover(strumnote);
 					} else {
 						setCharactersLongNoteState(false);
 						PlayState.instance.notesTypedGroup.remove(this, true);

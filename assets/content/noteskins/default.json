@@ -77,6 +77,6 @@
         },
         "offset": [40, 40],
         "loopOffset": [0, 0],
-        "endOffset": [0, 0]
+        "endOffset": [-40, -40]
     }
 }

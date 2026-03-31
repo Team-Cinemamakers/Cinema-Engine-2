@@ -53,7 +53,7 @@
         },
         "offset": [-20, -25]
     },
-    "sustainCoversEnabled": true,
+    "sustainCoversEnabled": false,
     "sustainCovers": {
         "spritesheet": "noteHoldCovers",
         "startAnim": {
@@ -71,8 +71,8 @@
             "fps": 24,
             "loop": false
         },
-        "offset": [20, 25],
+        "offset": [40, 40],
         "loopOffset": [0, 0],
-        "endOffset": [0, 0]
+        "endOffset": [40, 40]
     }
 }
