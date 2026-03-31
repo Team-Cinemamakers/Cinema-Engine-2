@@ -170,13 +170,13 @@ class PlayState extends FlxState
 		strumlines.zIndex = ZLayers.UI;
 
 		notesTypedGroup = new FlxTypedGroup<Note>();
-		notesTypedGroup.zIndex = ZLayers.UI+1;
+		notesTypedGroup.zIndex = ZLayers.UI+2;
 
 		longNoteCovers = new FlxTypedGroup<LongNoteCover>();
-		longNoteCovers.zIndex = ZLayers.UI+2;
+		longNoteCovers.zIndex = ZLayers.UI+3;
 
 		noteSplashes = new FlxTypedGroup<NoteSplash>();
-		noteSplashes.zIndex = ZLayers.UI+3;
+		noteSplashes.zIndex = ZLayers.UI+4;
 
 		// Create character declarations
 		for (charData in song.info.characters)
@@ -359,7 +359,11 @@ class PlayState extends FlxState
 		}
 
 		for (longNoteCover in longNoteCovers.members) {
-			if (!longNoteCover.strum.pressedOnNote) longNoteCover.end();
+			if (longNoteCover.strum != null) {
+				if (!longNoteCover.strum.pressedOnNote) {
+					longNoteCover.end();
+				}
+			}
 		}
 
 		timeSinceLastNote += elapsed;
@@ -470,7 +474,7 @@ class PlayState extends FlxState
 							if (hitType == NoteRating.PERFECT) goodCover = true;
 							else goodCover = false;
 
-							var longNoteCover:LongNoteCover = new LongNoteCover(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.sustainCovers.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.sustainCovers.offset[1], goodCover);
+							var longNoteCover:LongNoteCover = new LongNoteCover(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.sustainCovers.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.sustainCovers.offset[1], goodCover, longNoteCovers);
 							longNoteCover.cameras = [camUI];
 							longNoteCovers.add(longNoteCover);
 							longNoteCover.start();

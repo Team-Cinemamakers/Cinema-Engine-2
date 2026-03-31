@@ -52,6 +52,8 @@ typedef NoteskinSustainCovers = {
     var loopAnim:NoteskinAnimation;
     var endAnim:NoteskinAnimation;
     var offset:Array<Float>;
+    var loopOffset:Array<Float>;
+    var endOffset:Array<Float>;
 }
 
 typedef NoteskinAnimation = {

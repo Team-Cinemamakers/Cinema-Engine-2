@@ -71,6 +71,8 @@
             "fps": 24,
             "loop": false
         },
-        "offset": [0, 0]
+        "offset": [20, 25],
+        "loopOffset": [0, 0],
+        "endOffset": [0, 0]
     }
 }
