@@ -130,7 +130,7 @@ class Conductor
 	{
 		if (doConductorTime)
 		{
-			deltaOffset += elapsed;
+			deltaOffset += elapsed * 1000;
 
 			if(TIME != newTime){
 				TIME = newTime;
