@@ -13,8 +13,8 @@ class NoteHandler{
         if(averageFrameMS == -1){
             averageFrameMS = (1/FlxG.updateFramerate);
         }
-        fuckingStop = false;
         for(noteArr in notes){
+            fuckingStop = false;
             for(i in 0...noteArr.length){
                 if(noteArr[i] != null){
                     var note = noteArr[i];
