@@ -103,6 +103,8 @@ class Note extends FlxSprite {
 		if (useShader) this.shader = strumnote.noteShader;
 		x = strumnote.x + (this.width/4);
 		this.yOFF = y - strumnote.y + (this.height/2);
+
+		this.alive = false;
 	}
 
 	var playedHitsound:Bool = false;

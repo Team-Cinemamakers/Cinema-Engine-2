@@ -320,16 +320,16 @@ class PlayState extends FlxState
 		{
 			if (SongHandler.inst.length >= SongHandler.voices.length)
 			{
-				Conductor.setConductorTime(SongHandler.inst.time);
+				Conductor.setConductorTime(SongHandler.inst.time, elapsed);
 			}
 			else
 			{
-				Conductor.setConductorTime(SongHandler.voices.time);
+				Conductor.setConductorTime(SongHandler.voices.time, elapsed);
 			}
 		}
 		else if (SongHandler.inst != null)
 		{
-			Conductor.setConductorTime(SongHandler.inst.time);
+			Conductor.setConductorTime(SongHandler.inst.time, elapsed);
 		}
 
 		processEvents();

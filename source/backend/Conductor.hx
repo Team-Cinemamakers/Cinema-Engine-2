@@ -24,6 +24,9 @@ class Conductor
 	static var beatTime:Float = (60 / BPM) * 1000; // The calculated milliseconds between each beat
 	static var stepTime:Float = beatTime / 4; // The calculated milliseconds between each step // TODO: support time signatures LMAOO
 
+	public static var deltaOffset:Float = 0;
+	static var lastUpdatedTime:Float = 0;
+
 	/**
 		Creates a conductor.
 
@@ -123,11 +126,17 @@ class Conductor
 
 		@param newTime New time the conductor should be on
 	**/
-	public static function setConductorTime(newTime:Float):Void
+	public static function setConductorTime(newTime:Float, elapsed:Float):Void
 	{
 		if (doConductorTime)
 		{
-			TIME = newTime;
+			deltaOffset += elapsed;
+
+			if(TIME != newTime){
+				TIME = newTime;
+				deltaOffset = 0;
+				lastUpdatedTime = TIME;
+			}
 		}
 
 		if (TIME >= lastBeatTime + beatTime) // Beat hits
