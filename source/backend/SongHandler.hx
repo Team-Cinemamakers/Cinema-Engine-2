@@ -109,6 +109,14 @@ class SongHandler
 		if((lod[0] && lod[1]) || (lod[0] && !hasVocals)){
 			loaded = true;
 		}
+
+		if(loaded && playing && inst != null && !inst.playing){
+			inst.play();
+			if(voices != null){
+				voices.time = inst.time;
+				voices.play();
+			}
+		}
 	}
 
 	public static function forceSync():Void

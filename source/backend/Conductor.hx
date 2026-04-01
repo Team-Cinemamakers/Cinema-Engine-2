@@ -144,6 +144,7 @@ class Conductor
 			curBeat++;
 			lastBeatTime += beatTime;
 			evDisp.dispatchEvent(beatEvent);
+			if(curBeat == 1) SongHandler.forceSync();
 		}
 
 		if (TIME >= lastStepTime + stepTime) // Step hits
