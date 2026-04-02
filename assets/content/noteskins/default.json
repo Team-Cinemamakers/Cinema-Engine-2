@@ -47,15 +47,15 @@
         },
         "offset": [0, 0]
     },
-    "splashesEnabled": false,
+    "splashesEnabled": true,
     "splashes": {
-        "spritesheet": "noteSplash",
+        "spritesheet": "noteSplashAlt",
         "splashAnim": {
-            "animPrefix": "note splash ",
+            "animPrefix": "note splash",
             "fps": 24,
             "loop": false
         },
-        "offset": [-20, -25]
+        "offset": [45, 30]
     },
     "sustainCoversEnabled": true,
     "sustainCovers": {

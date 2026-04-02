@@ -2,9 +2,9 @@
 <TextureAtlas imagePath="notesplashes.png">
 	<!-- Created with Adobe Animate version 20.0.2.22168 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="note splash0000" x="5" y="5" width="38" height="40" frameX="-59" frameY="-61" frameWidth="151" frameHeight="160"/>
-	<SubTexture name="note splash0001" x="48" y="5" width="150" height="149" frameX="0" frameY="-6" frameWidth="151" frameHeight="160"/>
-	<SubTexture name="note splash0002" x="203" y="5" width="149" height="160" frameX="-2" frameY="0" frameWidth="151" frameHeight="160"/>
-	<SubTexture name="note splash0003" x="357" y="5" width="131" height="141" frameX="-11" frameY="-10" frameWidth="151" frameHeight="160"/>
-	<SubTexture name="note splash0004" x="493" y="5" width="125" height="131" frameX="-14" frameY="-15" frameWidth="151" frameHeight="160"/>
+	<SubTexture name="note splashUp0000" x="5" y="5" width="38" height="40" frameX="-59" frameY="-61" frameWidth="151" frameHeight="160"/>
+	<SubTexture name="note splashUp0001" x="48" y="5" width="150" height="149" frameX="0" frameY="-6" frameWidth="151" frameHeight="160"/>
+	<SubTexture name="note splashUp0002" x="203" y="5" width="149" height="160" frameX="-2" frameY="0" frameWidth="151" frameHeight="160"/>
+	<SubTexture name="note splashUp0003" x="357" y="5" width="131" height="141" frameX="-11" frameY="-10" frameWidth="151" frameHeight="160"/>
+	<SubTexture name="note splashUp0004" x="493" y="5" width="125" height="131" frameX="-14" frameY="-15" frameWidth="151" frameHeight="160"/>
 </TextureAtlas>
