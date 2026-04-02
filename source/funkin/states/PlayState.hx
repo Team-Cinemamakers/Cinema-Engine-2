@@ -37,6 +37,8 @@ class PlayState extends FlxState
 
 	public var noteMap:Map<Strumline, Array<Note>> = new Map<Strumline, Array<Note>>();
 
+	public var loadedNotes:Map<Strumline, Int> = new Map<Strumline, Int>();
+
 	public static var loadedSong:String;
 
 	// chart note array of array to allow support for more than 2 characters
@@ -50,6 +52,7 @@ class PlayState extends FlxState
 
 	var loadAhead:Int = 50;
 	var totalNotes:Float = 0;
+	var notesPlayed:Float = 0;
 
 	public var camGame:FlxCamera;
 	public var camUI:FlxCamera;
@@ -212,6 +215,10 @@ class PlayState extends FlxState
 			noteMap.set(strumLine, []);
 		}
 
+		for (i in 0...strumlines.members.length) { // testing lol
+			loadedNotes.set(strumlines.members[i], 0);
+		}
+
 		add(strumlines);
 		add(notesTypedGroup);
 		add(longNoteCovers);
@@ -308,6 +315,11 @@ class PlayState extends FlxState
 		if(SongHandler.playing) NoteHandler.runNoteCheck(noteMap, elapsed);
 
 		Scripts.callOnScripts("preUpdate", [elapsed]);
+
+		if (notesPlayed > getLoadedNoteAmount()) {
+			trace('renderin new batch of notes');
+			renderNotes();
+		}
 
 		processInputs();
 
@@ -486,6 +498,7 @@ class PlayState extends FlxState
 				}
 			}
 		}
+		notesPlayed++;
 	}
 
 	function deactivateNote(noteVal:Int)
@@ -517,6 +530,8 @@ class PlayState extends FlxState
 				strumnote.pressedOnNote = false;
 			});
 		}
+
+		notesPlayed++;
 	}
 
 	var camTween:FlxTween;
@@ -554,13 +569,32 @@ class PlayState extends FlxState
 		var total:Int = 0;
 		for (i in 0...song.strumlines.length)
 		{
-			for (j in 0...song.strumlines[i].notes.length)
+			var startPoint = loadedNotes[strumlines.members[i]];
+
+			var endPoint = startPoint + loadAhead;
+
+			if (endPoint > song.strumlines[i].notes.length) {
+				endPoint = song.strumlines[i].notes.length;
+			}
+
+			for (j in startPoint...endPoint)
 			{
 				// trace('renderingNotes');
 				loadNote(i, song.strumlines[i].notes[j], total);
 				total++;
+				loadedNotes[strumlines.members[i]] += 1;
 			}
 		}
+	}
+
+	function getLoadedNoteAmount():Int {
+		var loaded:Int = 0;
+
+		for (i in 0...strumlines.members.length) {
+			loaded += loadedNotes[strumlines.members[i]];
+		}
+
+		return loaded;
 	}
 
 	public function noteHit(note:Note, animation:String, char:Character, playable:Bool)
@@ -617,6 +651,7 @@ class PlayState extends FlxState
 		}
 
 		note.destroy();
+		notesPlayed++;
 	}
 
 	function processEvents()
