@@ -13,8 +13,8 @@ class Bar extends FlxSpriteGroup{
 
     var barColors:Array<FlxColor> = [];
 
-    private var leftBar:FlxSprite;
-    private var rightBar:FlxSprite;
+    public var leftBar:FlxSprite;
+    public var rightBar:FlxSprite;
 
     public function new(width:Int, height:Int, ?colors:Array<FlxColor> = null, ?upperBound:Float = 1, ?defaultValue:Float = 0, ?lowerBound:Float = 0, ?x:Float = 0, ?y:Float = 0){
         super(x, y);

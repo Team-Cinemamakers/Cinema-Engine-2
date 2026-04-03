@@ -104,6 +104,7 @@ function beatHit(beat) {
             FlxTween.tween(bg, {"alpha": 0.5}, 2, {ease: FlxEase.linear});
         case 804: // 804
             dadTrailJ = new FlxTrail(game.characters["sigmiofinalalt"], null, 3, 24, 0.3, 0.05);
+            dadTrailJ.scrollFactor.set();
             
             game.add(dadTrailJ);
     }
@@ -152,6 +153,7 @@ function stepHit(step) {
             dadTrailJ.destroy();
             bfTrailJ = new FlxTrail(game.characters["unfairJo"], null, 3, 24, 0.3, 0.05);
             dadTrailJ = new FlxTrail(game.characters["sigmio-final"], null, 3, 24, 0.3, 0.05);
+            dadTrailJ.scrollFactor.set(1, 1);
             game.add(bfTrailJ);
             game.add(dadTrailJ);
     }

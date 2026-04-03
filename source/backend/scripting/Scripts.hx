@@ -8,6 +8,7 @@ import funkin.data.Song;
 import funkin.data.Stage;
 import funkin.objects.Alphabet;
 import funkin.objects.Bar;
+import funkin.objects.HealthIcon;
 import funkin.objects.Transition;
 import funkin.states.PlayState;
 import haxe.DynamicAccess;
@@ -103,6 +104,7 @@ class Scripts {
         "Globals" => Globals,
         "EventProcess" => EventProcess,
         "NoteRating" => NoteRating,
+        "HealthIcon" => HealthIcon,
 
         "ENGINE" => ENGINE,
         "CONTENT" => CONTENT,

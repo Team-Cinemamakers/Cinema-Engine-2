@@ -13,10 +13,13 @@ var combo:Int = 0;
 
 var comboGroup:FlxSpriteGroup;
 
+var iconP1:HealthIcon; // opponent
+var iconP2:HealthIcon; // player
+
 function onPlaystatePostInit(){
     trace('Setting up hud');
 
-	healthBar = new Bar(600, 15, [game.strumlines.members[0].characters[0].healthBarColor, game.strumlines.members[1].characters[0].healthBarColor], 2, 1);
+	healthBar = new Bar(600, 15, [game.strumlines.members[1].characters[0].healthBarColor, game.strumlines.members[0].characters[0].healthBarColor], 2, 1);
 	healthBar.cameras = [PlayState.instance.camUI];
 	healthBar.screenCenter();
 	healthBar.y = FlxG.height * 0.89;
@@ -27,6 +30,22 @@ function onPlaystatePostInit(){
 	barGraphic.cameras = [PlayState.instance.camUI];
 	barGraphic.zIndex = 27;
 	add(barGraphic);
+
+	iconP1 = new HealthIcon(game.strumlines.members[1].characters[0].icon, false, (((healthBar.members[0].x-healthBar.x)+healthBar.members[0].width)-(150/2))-10, healthBar.y);
+	iconP1.cameras = [PlayState.instance.camUI];
+	iconP1.zIndex = 28;
+	iconP1.y -= 150/2;
+	//iconP1.screenCenter("x");
+	//iconP1.x -= 150;
+	add(iconP1);
+
+	iconP2 = new HealthIcon(game.strumlines.members[0].characters[0].icon, true, ((healthBar.members[0].x-healthBar.x)+healthBar.members[0].width)+10, healthBar.y);
+	iconP2.cameras = [PlayState.instance.camUI];
+	iconP2.zIndex = 29;
+	iconP2.y -= 150/2;
+	//iconP2.screenCenter("x");
+	//iconP2.x += 150;
+	add(iconP2);
 
 	testText = new FlxText(0, healthBar.y + 40, FlxG.width, 'health: 0 | misses: 0 | score: 0', 20, true);
     testText.alignment = "center";
@@ -74,8 +93,16 @@ function update(elapsed:Float){
 
 	// health bar bs
 
-	healthBar.changeColors(game.strumlines.members[0].characters[0].healthBarColor, game.strumlines.members[1].characters[0].healthBarColor);
+	if (!game.songEnded) {
+		// icon updating
 
+		if (game.strumlines.members[1].characters[0].icon != iconP1.char) iconP1.changeIcon(game.strumlines.members[1].characters[0].icon);
+		if (game.strumlines.members[0].characters[0].icon != iconP2.char) iconP2.changeIcon(game.strumlines.members[0].characters[0].icon);
+
+		healthBar.changeColors(game.strumlines.members[1].characters[0].healthBarColor, game.strumlines.members[0].characters[0].healthBarColor);
+		
+	}
+	
 	// Actual updating
 
 	if (playedAnything) fullRating = MathUtil.floorDecimal(percentage, 2) + "% - " + rating;
@@ -92,13 +119,24 @@ function noteHit(note, char, playable) {
 		FlxTween.cancelTweensOf(testText);
 		testText.scale.set(1.075, 1.075);
 		FlxTween.tween(testText.scale, {x: 1, y: 1}, 0.2);
+
+		updateIcons();
 	}
+}
+
+function updateIcons() {
+	iconP1.x = (((healthBar.members[1].x-healthBar.x)-(150/2))-10)+300;
+	iconP2.x = ((healthBar.members[1].x-healthBar.x)+10)+300;
+		
+	iconP2.animation.curAnim.curFrame = (healthBar.percentage < .20) ? 1 : 0;
+	iconP1.animation.curAnim.curFrame = (healthBar.percentage > .80) ? 1 : 0;
 }
 
 function noteMiss(note) {
 	playedAnything = true;
 	notesPlayed += 1;
 	combo = 0;
+	updateIcons();
 }
 
 function noteScored(noteVal, ratingg) {
