@@ -466,13 +466,14 @@ class PlayState extends FlxState
 				var thisNote:Note = notesTypedGroup.members[i];
 				if (thisNote.noteData.value == noteVal
 					&& thisNote.strumnote.playable
-					&& MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 160))
+					&& MathUtil.isInRange((Conductor.TIME + Conductor.deltaOffset), thisNote.noteData.time, 125))
 				{
 					var hitType:NoteRating = NoteRating.BAD;
-					if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 50))
+					if (MathUtil.isInRange((Conductor.TIME + Conductor.deltaOffset), thisNote.noteData.time, 30))
 					{
 						hitType = NoteRating.PERFECT;
 						score += 100;
+						trace('perfect hit');
 
 						if (thisNote.strumline.noteskinData.splashesEnabled)
 						{
@@ -485,15 +486,17 @@ class PlayState extends FlxState
 							splash.splash();
 						}
 					}
-					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 85))
+					else if (MathUtil.isInRange((Conductor.TIME + Conductor.deltaOffset), thisNote.noteData.time, 60))
 					{
 						hitType = NoteRating.GREAT;
 						score += 75;
+						trace('great hit');
 					}
-					else if (MathUtil.isInRange(thisNote.y, thisNote.strumnote.y, 120))
+					else if (MathUtil.isInRange((Conductor.TIME + Conductor.deltaOffset), thisNote.noteData.time, 100))
 					{
 						hitType = NoteRating.GOOD;
 						score += 50;
+						trace('good hit');
 					}
 					thisNote.strumnote.pressedOnNote = true;
 					for (v in 0...thisNote.strumnote.characters.length)
