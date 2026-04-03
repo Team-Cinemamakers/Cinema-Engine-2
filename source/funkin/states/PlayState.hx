@@ -551,7 +551,7 @@ class PlayState extends FlxState
 		for (i in 0...strumnote.characters.length)
 		{
 			SongHandler.voices.volume = 1;
-			animDeb[strumlines.members.indexOf(strumnote.strumline)] = 0; // GENIUS
+			if (!songEnded) animDeb[strumlines.members.indexOf(strumnote.strumline)] = 0; // GENIUS
 			playAnimation(strumnote.characters[i], strumnote.input, true);
 			if (newTmr[value] != null)
 			{

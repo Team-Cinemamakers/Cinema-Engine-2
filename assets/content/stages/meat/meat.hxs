@@ -13,6 +13,7 @@ function update(elapsed) {
     
     time += elapsed;
 
+    /*
     for (i in 0...PlayState.instance.strumlines.members.length) {
         for (j in 0...PlayState.instance.strumlines.members[i].members.length) {
             var line = PlayState.instance.strumlines.members[i];
@@ -24,6 +25,7 @@ function update(elapsed) {
             strum.y = (Math.sin(time+(j*750)) * (j+200*((i+j)/2))) + 250;
         }
     }
+        */
 }
 
 function bigDih(char, charName, marker, strum) {
