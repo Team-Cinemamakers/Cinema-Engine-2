@@ -9,6 +9,7 @@
         75,
         250
     ],
+    "healthBarColor": "#FFFFFF",
     "fileName": "tweenmaster",
     "animations": [
         {

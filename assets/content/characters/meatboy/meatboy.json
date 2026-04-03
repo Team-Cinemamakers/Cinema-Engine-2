@@ -1,6 +1,7 @@
 {
     "name": "Meatboy",
     "icon": "bf",
+    "healthBarColor": "#B80202",
     "offset": [
         -30,
         650

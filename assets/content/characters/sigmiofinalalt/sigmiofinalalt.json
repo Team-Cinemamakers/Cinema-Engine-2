@@ -9,6 +9,7 @@
         -30,
         0
     ],
+    "healthBarColor": "#FFF800",
     "scale": 8.99999999999999,
     "antialiasing": false,
     "fileName": "sigmiofinalalt",

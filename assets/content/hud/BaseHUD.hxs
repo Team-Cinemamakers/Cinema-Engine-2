@@ -16,7 +16,7 @@ var comboGroup:FlxSpriteGroup;
 function onPlaystatePostInit(){
     trace('Setting up hud');
 
-	healthBar = new Bar(600, 15, [0xFFFF0000, 0xFF52BAFF], 2, 1);
+	healthBar = new Bar(600, 15, [game.strumlines.members[0].characters[0].healthBarColor, game.strumlines.members[1].characters[0].healthBarColor], 2, 1);
 	healthBar.cameras = [PlayState.instance.camUI];
 	healthBar.screenCenter();
 	healthBar.y = FlxG.height * 0.89;
@@ -71,6 +71,10 @@ function update(elapsed:Float){
 		else percentage = (notesHit / notesPlayed)*100;
 	} 
 	// else percentage = 100;
+
+	// health bar bs
+
+	healthBar.changeColors(game.strumlines.members[0].characters[0].healthBarColor, game.strumlines.members[1].characters[0].healthBarColor);
 
 	// Actual updating
 

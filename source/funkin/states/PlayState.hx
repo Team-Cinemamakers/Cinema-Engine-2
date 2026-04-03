@@ -30,6 +30,7 @@ import cpp.vm.ExecutionTrace;
 class PlayState extends FlxState
 {
 	var bf:Character;
+
 	public var strumlines:FlxTypedGroup<Strumline>;
 	public var noteSplashes:FlxTypedGroup<NoteSplash>;
 	public var longNoteCovers:FlxTypedGroup<LongNoteCover>;
@@ -64,6 +65,7 @@ class PlayState extends FlxState
 	public var currentStage:Stage;
 
 	public var baseZoom:Float = 0.85;
+
 	var cameraTween:FlxTween;
 	var lastCameraTween:Float = 0;
 
@@ -90,8 +92,8 @@ class PlayState extends FlxState
 	public static var health:Float = 1.0; // im health
 	public static var misses:Int = 0; // im misses
 	public static var score:Int = 0; // im score
-	// we're the song stat brothers
 
+	// we're the song stat brothers
 	var camFollow:FlxObject; // I like this system ngl.
 
 	var timeSinceLastNote:Float = 0;
@@ -122,7 +124,7 @@ class PlayState extends FlxState
 		Conductor.evDisp.addEventListener(Conductor.beatEvent.type, beatHit);
 		Conductor.evDisp.addEventListener(Conductor.stepEvent.type, stepHit);
 
-		//noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
+		// noteSparrow = Paths.sparrow('notes', 'images/shared', ENGINE);
 
 		camUI = new FlxCamera(0, 0, 1280, 720, 1);
 		camUI.bgColor = FlxColor.TRANSPARENT;
@@ -130,8 +132,8 @@ class PlayState extends FlxState
 		camGame = FlxG.camera;
 		FlxG.cameras.add(camUI, false);
 
-		//camGame.width = 12;
-		//camGame.height = 3500;
+		// camGame.width = 12;
+		// camGame.height = 3500;
 
 		if (loadedSong == null)
 		{
@@ -170,13 +172,13 @@ class PlayState extends FlxState
 		strumlines.zIndex = ZLayers.UI;
 
 		notesTypedGroup = new FlxTypedGroup<Note>();
-		notesTypedGroup.zIndex = ZLayers.UI+2;
+		notesTypedGroup.zIndex = ZLayers.UI + 2;
 
 		longNoteCovers = new FlxTypedGroup<LongNoteCover>();
-		longNoteCovers.zIndex = ZLayers.UI+3;
+		longNoteCovers.zIndex = ZLayers.UI + 3;
 
 		noteSplashes = new FlxTypedGroup<NoteSplash>();
-		noteSplashes.zIndex = ZLayers.UI+4;
+		noteSplashes.zIndex = ZLayers.UI + 4;
 
 		// Create character declarations
 		for (charData in song.info.characters)
@@ -191,7 +193,7 @@ class PlayState extends FlxState
 		for (i in 0...song.info.strumlines.length)
 		{
 			var strumLine:Strumline = new Strumline(song.info.strumlines[i].strumNotes, song.info.strumlines[i].characters, song.info.strumlines[i].playable,
-				song.info.strumlines[i].kerning, song.info.strumlines[i].noteskin,song.info.strumlines[i].position[0], song.info.strumlines[i].position[1], i);
+				song.info.strumlines[i].kerning, song.info.strumlines[i].noteskin, song.info.strumlines[i].position[0], song.info.strumlines[i].position[1], i);
 
 			strumLine.scale = song.info.strumlines[i].scale;
 			strumLine.updateStrums();
@@ -224,15 +226,15 @@ class PlayState extends FlxState
 		}
 
 		/*camFollow = new FlxObject(0, 0, 1, 1);
-		camFollow.setPosition(camCenterX, camCenterY);
+			camFollow.setPosition(camCenterX, camCenterY);
 
-		add(camFollow);
+			add(camFollow);
 
-		FlxG.camera.follow(camFollow, LOCKON, 0);
-		FlxG.camera.snapToTarget();
+			FlxG.camera.follow(camFollow, LOCKON, 0);
+			FlxG.camera.snapToTarget();
 
-		trace(camFollow.getPosition());
-		trace(FlxG.camera.x + " " + FlxG.camera.y);*/
+			trace(camFollow.getPosition());
+			trace(FlxG.camera.x + " " + FlxG.camera.y); */
 
 		FlxG.camera.scroll.x = camCenterX;
 		FlxG.camera.scroll.y = camCenterY;
@@ -255,16 +257,24 @@ class PlayState extends FlxState
 		// Gc.run(true);
 		// #end
 
-		for(char in characters){
-			desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get('Idle').x + char.cameraOffset.x, char.y + char.animCamOffsets.get('Idle').y + char.cameraOffset.y);
+		for (char in characters)
+		{
+			desiredCamPos = FlxPoint.get(char.x
+				+ char.animCamOffsets.get('Idle').x
+				+ char.cameraOffset.x,
+				char.y
+				+ char.animCamOffsets.get('Idle').y
+				+ char.cameraOffset.y);
 			break; // just get first character
 		}
 
-		if (song.info.hud == null) {
+		if (song.info.hud == null)
+		{
 			trace("Hud script not specified, returning to default");
 			initHUD('BaseHUD');
-		} else initHUD(song.info.hud);
-
+		}
+		else
+			initHUD(song.info.hud);
 
 		Scripts.callOnScripts("onPlaystatePostInit", []);
 
@@ -277,13 +287,16 @@ class PlayState extends FlxState
 
 	var safeContexts:Array<ScriptContext> = [ScriptContext.ANY, ScriptContext.STATE, ScriptContext.OTHER]; // These won't get removed.
 
-	override function destroy() {
+	override function destroy()
+	{
 		super.destroy();
 
-		for (key in Scripts.scripts.keys()) { // Unload all scripts with contexts relating to songs.
+		for (key in Scripts.scripts.keys())
+		{ // Unload all scripts with contexts relating to songs.
 			var script = Scripts.scripts[key];
 
-			if (!safeContexts.contains(script.context)) {
+			if (!safeContexts.contains(script.context))
+			{
 				Scripts.remove(key);
 			}
 		}
@@ -297,15 +310,18 @@ class PlayState extends FlxState
 
 		super.update(elapsed);
 
-		if(!SongHandler.loaded) return;
+		if (!SongHandler.loaded)
+			return;
 
-		if(!initialized && SongHandler.loaded){
+		if (!initialized && SongHandler.loaded)
+		{
 			SongHandler.play();
 			SongHandler.forceSync();
 			initialized = true;
 		}
 
-		if(SongHandler.playing) NoteHandler.runNoteCheck(noteMap, elapsed);
+		if (SongHandler.playing)
+			NoteHandler.runNoteCheck(noteMap, elapsed);
 
 		Scripts.callOnScripts("preUpdate", [elapsed]);
 
@@ -350,21 +366,28 @@ class PlayState extends FlxState
 			camGame.zoom = baseZoom;
 		}
 
-		if (health > 2) health = 2;
-		if (health < 0) health = 0;
+		if (health > 2)
+			health = 2;
+		if (health < 0)
+			health = 0;
 
-		if(FlxPoint.get(camGame.scroll.x, camGame.scroll.y) != desiredCamPos){
-			FlxG.camera.scroll.x += (((desiredCamPos.x - (FlxG.camera.width/2))- FlxG.camera.scroll.x) * (5 * elapsed));
-			FlxG.camera.scroll.y += ((desiredCamPos.y - (FlxG.camera.height/2) - FlxG.camera.scroll.y) * (5 * elapsed));
+		if (FlxPoint.get(camGame.scroll.x, camGame.scroll.y) != desiredCamPos)
+		{
+			FlxG.camera.scroll.x += (((desiredCamPos.x - (FlxG.camera.width / 2)) - FlxG.camera.scroll.x) * (5 * elapsed));
+			FlxG.camera.scroll.y += ((desiredCamPos.y - (FlxG.camera.height / 2) - FlxG.camera.scroll.y) * (5 * elapsed));
 		}
 
-		for (longNoteCover in longNoteCovers.members) {
-			if (longNoteCover.strum != null) {
-				if (!longNoteCover.strum.characters[0].playingLongNote) {
+		for (longNoteCover in longNoteCovers.members)
+		{
+			if (longNoteCover.strum != null)
+			{
+				if (!longNoteCover.strum.characters[0].playingLongNote)
+				{
 					longNoteCover.end();
 				}
 			}
-			if (longNoteCover.delete) {
+			if (longNoteCover.delete)
+			{
 				longNoteCovers.remove(longNoteCover, true);
 				longNoteCover.destroy();
 			}
@@ -379,12 +402,18 @@ class PlayState extends FlxState
 	{
 		Scripts.callOnScripts("preBeatHit", [Conductor.curBeat]);
 
-		if(!initialized || strumlines == null || strumlines.length <= 0)return;
+		if (!initialized || strumlines == null || strumlines.length <= 0)
+			return;
 		if (Conductor.curBeat % 2 == 0)
 		{
 			for (i in 0...strumlines.length)
 			{
-				if (animDeb[i] >= 0.2)
+				for (v in 0...strumlines.members[i].characters.length)
+				{
+					if (strumlines.members[i].characters[v].playingSpecial || strumlines.members[i].characters[v].playingLongNote)
+						animDeb[i] = 0;
+				}
+				if (animDeb[i] >= 0.5)
 				{
 					animDeb[i] = 0;
 					for (v in 0...strumlines.members[i].characters.length)
@@ -399,13 +428,16 @@ class PlayState extends FlxState
 		Scripts.callOnScripts("beatHit", [Conductor.curBeat]);
 	}
 
-	function stepHit(e:StepEvent) {
+	function stepHit(e:StepEvent)
+	{
 		Scripts.callOnScripts("preStepHit", [Conductor.curStep]);
 		Scripts.callOnScripts("stepHit", [Conductor.curStep]);
 	}
 
-	public function endSong() {
-		if (songEnded) return;
+	public function endSong()
+	{
+		if (songEnded)
+			return;
 		var eventReturn = Scripts.callOnScripts("songEnd", []);
 		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL)
 			return;
@@ -419,7 +451,6 @@ class PlayState extends FlxState
 		transition.cameras = [camUI];
 		transition.play(Transition.DOWN, 0.5, () -> FlxG.switchState(() -> new MainMenuState()));
 		add(transition);
-		
 	}
 
 	// i fixed ts
@@ -443,8 +474,11 @@ class PlayState extends FlxState
 						hitType = NoteRating.PERFECT;
 						score += 100;
 
-						if (thisNote.strumline.noteskinData.splashesEnabled) {
-							var splash:NoteSplash = new NoteSplash(thisNote.strumnote, thisNote.strumnote.x+thisNote.strumline.noteskinData.splashes.offset[0], thisNote.strumnote.y+thisNote.strumline.noteskinData.splashes.offset[1]);
+						if (thisNote.strumline.noteskinData.splashesEnabled)
+						{
+							var splash:NoteSplash = new NoteSplash(thisNote.strumnote,
+								thisNote.strumnote.x + thisNote.strumline.noteskinData.splashes.offset[0],
+								thisNote.strumnote.y + thisNote.strumline.noteskinData.splashes.offset[1]);
 							splash.cameras = [camUI];
 							// splash.scale = thisNote.strumnote.scale;
 							noteSplashes.add(splash);
@@ -467,18 +501,23 @@ class PlayState extends FlxState
 						noteHit(thisNote, thisNote.strumnote.input, thisNote.strumnote.characters[v], thisNote.strumnote.playable);
 					}
 					SongHandler.voices.volume = 1;
-					if(thisNote.longNote != null){
+					if (thisNote.longNote != null)
+					{
 						thisNote.alpha = 0;
 						thisNote.held = true;
 						trace('clicked long note');
 						thisNote.input = input;
 
 						var goodCover:Bool = false;
-						if (hitType == NoteRating.PERFECT) goodCover = true;
-						else goodCover = false;
+						if (hitType == NoteRating.PERFECT)
+							goodCover = true;
+						else
+							goodCover = false;
 
 						createLongNoteCover(thisNote.strumnote, goodCover);
-					} else {
+					}
+					else
+					{
 						thisNote.destroy();
 						notesTypedGroup.remove(thisNote, true);
 					}
@@ -492,10 +531,10 @@ class PlayState extends FlxState
 	{
 		for (i in 0...strumlines.length)
 		{
-			if (strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote) {
+			if (strumlines.members[i].members[noteVal].playable && strumlines.members[i].members[noteVal].pressedOnNote)
+			{
 				strumlines.members[i].members[noteVal].pressedOnNote = false;
 			}
-				
 		}
 	}
 
@@ -503,19 +542,28 @@ class PlayState extends FlxState
 
 	public function activateEnemyNote(strumnote:StrumNote, value:Int)
 	{
-		if(timeSinceLastNote >= (60/Conductor.BPM) * 2) desiredCamPos = FlxPoint.get(strumnote.characters[0].x + strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x, strumnote.characters[0].y + strumnote.characters[0].animCamOffsets.get(strumnote.input).y + strumnote.characters[0].cameraOffset.y);	
+		if (timeSinceLastNote >= (60 / Conductor.BPM) * 2)
+			desiredCamPos = FlxPoint.get(strumnote.characters[0].x
+				+ strumnote.characters[0].animCamOffsets.get(strumnote.input).x + strumnote.characters[0].cameraOffset.x,
+				strumnote.characters[0].y
+					+ strumnote.characters[0].animCamOffsets.get(strumnote.input).y
+						+ strumnote.characters[0].cameraOffset.y);
 		for (i in 0...strumnote.characters.length)
 		{
 			SongHandler.voices.volume = 1;
+			animDeb[strumlines.members.indexOf(strumnote.strumline)] = 0; // GENIUS
 			playAnimation(strumnote.characters[i], strumnote.input, true);
 			if (newTmr[value] != null)
 			{
-				newTmr[value].cancel();
+				newTmr[value].reset(0.05);
 			}
-			newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer)
+			else
 			{
-				strumnote.pressedOnNote = false;
-			});
+				newTmr[value] = new FlxTimer().start(0.05, function(tmr:FlxTimer)
+				{
+					strumnote.pressedOnNote = false;
+				});
+			}
 		}
 	}
 
@@ -545,7 +593,7 @@ class PlayState extends FlxState
 
 		noteNew.cameras = [camUI];
 		noteMap.get(strumlines.members[i]).push(noteNew);
-		//trace('loaded note' + j);
+		// trace('loaded note' + j);
 	}
 
 	// just pre-renders all notes cuz FUCK whatever I had before
@@ -577,19 +625,27 @@ class PlayState extends FlxState
 
 		health += eventData.health;
 
-		if (eventData.doAnimation) {
-			if(note != null && note.longNote != null) note.setCharactersLongNoteState(true);
-			animDeb[0] = 0;
+		if (eventData.doAnimation)
+		{
+			if (note != null && note.longNote != null)
+				note.setCharactersLongNoteState(true);
+			animDeb[strumlines.members.indexOf(note.strumline)] = 0;
 			playAnimation(char, animation, true, playable);
-		}	
-		desiredCamPos = FlxPoint.get(char.x + char.animCamOffsets.get(animation).x + char.cameraOffset.x, char.y + char.animCamOffsets.get(animation).y + char.cameraOffset.y);
+		}
+		desiredCamPos = FlxPoint.get(char.x
+			+ char.animCamOffsets.get(animation).x
+			+ char.cameraOffset.x,
+			char.y
+			+ char.animCamOffsets.get(animation).y
+			+ char.cameraOffset.y);
 		timeSinceLastNote = 0;
 	}
 
 	public function noteMiss(note:Note, animation:String)
 	{
 		var eventReturn = Scripts.callOnScripts("noteMiss", [note]);
-		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL) {
+		if (Scripts.getCallEventResult(eventReturn) == EventProcess.CANCEL)
+		{
 			note.destroy();
 			return;
 		}
@@ -602,17 +658,19 @@ class PlayState extends FlxState
 		};
 		eventData = Scripts.getCombinedCallResult(eventReturn, eventData);
 
-		if(note.longNote != null) trace('long note missed');
+		if (note.longNote != null)
+			trace('long note missed');
 		health -= eventData.health;
 		misses += eventData.misses;
 
 		if (eventData.muteVoices)
 			SongHandler.voices.volume = 0;
 
-		if (eventData.doAnimation) {
+		if (eventData.doAnimation)
+		{
 			for (v in 0...note.strumnote.characters.length)
 			{
-				playAnimation(note.strumnote.characters[v], animation+"Miss", true, note.strumnote.playable);
+				playAnimation(note.strumnote.characters[v], animation + "Miss", true, note.strumnote.playable);
 			}
 		}
 
@@ -621,7 +679,8 @@ class PlayState extends FlxState
 
 	function processEvents()
 	{
-		if(song == null)return;
+		if (song == null)
+			return;
 		for (event in song.events)
 		{
 			if (Conductor.TIME >= event.time && !event.triggered)
@@ -654,7 +713,7 @@ class PlayState extends FlxState
 			hitNoteDebounce[3] = false;
 			activateNote(3, 'singRIGHT', "noteRight");
 		}
-		
+
 		if (CoolInput.pressed("skipTime"))
 		{
 			SongHandler.skipTime(5000);
@@ -671,37 +730,47 @@ class PlayState extends FlxState
 		{
 			if (!paused)
 			{
-				if (Paths.exists(Paths.hscript("PauseSubstate", "substates"))) {
+				if (Paths.exists(Paths.hscript("PauseSubstate", "substates")))
+				{
 					pauseSubstate = new HScriptSubstate("PauseSubstate", Paths.hscript("PauseSubstate", "scripts/substates", CONTENT));
 				}
-				else {
+				else
+				{
 					// trace('Could not find custom pause substate, falling back to default');
 					pauseSubstate = new HScriptSubstate("PauseSubstate", Paths.hscript("PauseSubstate", "scripts/substates", ENGINE));
 				}
 				SongHandler.pause();
 				paused = true;
-				
+
 				openSubState(pauseSubstate);
 			}
 		}
-		if (CoolInput.pressed("return")) {
+		if (CoolInput.pressed("return"))
+		{
 			endSong(); // Let me have my convenience.
 		}
 	}
 
-	public function createLongNoteCover(strumNote:StrumNote, goodCover:Bool = false) {
-		if (!strumNote.strumline.noteskinData.sustainCoversEnabled) return;
-		var longNoteCover:LongNoteCover = new LongNoteCover(strumNote, strumNote.x+strumNote.strumline.noteskinData.sustainCovers.offset[0], strumNote.y+strumNote.strumline.noteskinData.sustainCovers.offset[1], goodCover);
+	public function createLongNoteCover(strumNote:StrumNote, goodCover:Bool = false)
+	{
+		if (!strumNote.strumline.noteskinData.sustainCoversEnabled)
+			return;
+		var longNoteCover:LongNoteCover = new LongNoteCover(strumNote, strumNote.x + strumNote.strumline.noteskinData.sustainCovers.offset[0],
+			strumNote.y + strumNote.strumline.noteskinData.sustainCovers.offset[1], goodCover);
 		longNoteCover.cameras = [camUI];
 		longNoteCovers.add(longNoteCover);
 		longNoteCover.start();
 	}
 
-	function initHUD(name:String) {
-		if (Paths.exists(Paths.hscript(name, "hud"))) {
+	function initHUD(name:String)
+	{
+		if (Paths.exists(Paths.hscript(name, "hud")))
+		{
 			hud = Scripts.create(name + "-hud", Paths.hscript(name, "hud"), ScriptContext.HUD);
-		} else {
-			hud = Scripts.create(name + "-hud", Paths.hscript("BaseHUD", "hud"), ScriptContext.HUD); 
+		}
+		else
+		{
+			hud = Scripts.create(name + "-hud", Paths.hscript("BaseHUD", "hud"), ScriptContext.HUD);
 		}
 
 		hud.set("add", add);

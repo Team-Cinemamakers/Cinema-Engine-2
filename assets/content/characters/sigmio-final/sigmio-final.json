@@ -9,6 +9,7 @@
         500,
         300
     ],
+    "healthBarColor": "#FFF800",
     "fileName": "sigmio-final",
     "scale": 1.5,
     "animations": [

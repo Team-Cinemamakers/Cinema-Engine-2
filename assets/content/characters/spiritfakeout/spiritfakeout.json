@@ -11,6 +11,7 @@
     ],
     "fileName": "spiritfakeout",
     "scale": 6,
+    "healthBarColor": "#FF3C6E",
     "animations": [
         {
             "name": "Idle",

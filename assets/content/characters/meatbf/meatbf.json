@@ -1,6 +1,7 @@
 {
     "name": "Meat Boyfriend",
     "icon": "bf",
+    "healthBarColor": "#52BAFF",
     "offset": [
         20,
         350

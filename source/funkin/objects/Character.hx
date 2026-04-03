@@ -10,6 +10,7 @@ typedef CharacterFile =
 	var camOffset:Array<Int>;
 	var fileName:String;
 	var animations:Array<CharacterAnimation>;
+	var healthBarColor:Null<String>;
 }
 
 typedef CharacterAnimation =
@@ -37,6 +38,8 @@ class Character extends FlxSprite
 
 	public var playingSpecial:Bool = false;
 	public var playingLongNote:Bool = false;
+	
+	public var healthBarColor:FlxColor; // Color of their health bar
 
 	public function new(character:String, x:Float = 0, y:Float = 0)
 	{
@@ -52,6 +55,9 @@ class Character extends FlxSprite
 
 		this.name = file.name;
 		this.icon = file.icon;
+
+		if (file.healthBarColor != null) this.healthBarColor = FlxColor.fromString(file.healthBarColor);
+		else this.healthBarColor = 0xFFFF0000;
 		
 		this.scale.set(file.scale, file.scale);
 		this.updateHitbox();

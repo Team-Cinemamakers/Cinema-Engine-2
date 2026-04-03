@@ -9,6 +9,7 @@
 		200,
 		175
     ],
+    "healthBarColor": "#8C5050",
     "fileName": "fbfmaster",
     "animations": [
         {

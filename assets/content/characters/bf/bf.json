@@ -1,6 +1,7 @@
 {
     "name": "Boyfriend",
     "icon": "bf",
+    "healthBarColor": "#52BAFF",
     "offset": [
         0,
         0

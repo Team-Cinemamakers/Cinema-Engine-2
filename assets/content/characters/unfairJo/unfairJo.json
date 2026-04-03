@@ -12,6 +12,7 @@
     "scale": 2.50000000000001,
     "antialiasing": false,
     "fileName": "unfairJo",
+    "healthBarColor": "#6256EB",
     "animations": [
         {
             "name": "Idle",

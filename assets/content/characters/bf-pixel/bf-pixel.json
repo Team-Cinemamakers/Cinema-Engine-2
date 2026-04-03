@@ -11,6 +11,7 @@
     ],
     "scale": 6,
     "antialiasing": false,
+    "healthBarColor": "#6256EB",
     "fileName": "spiritfakeout",
     "animations": [
         {
