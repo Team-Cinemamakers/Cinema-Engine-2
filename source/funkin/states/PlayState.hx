@@ -456,11 +456,14 @@ class PlayState extends FlxState
 	// i fixed ts
 	function activateNote(noteVal:Int, animation:String, input:String)
 	{
+		var alreadyProcessed:Bool = false;
 		if (notesTypedGroup.length <= 0)
 			return;
 
 		for (i in 0...notesTypedGroup.length)
 		{
+			if(alreadyProcessed)
+				break;
 			if (notesTypedGroup.members[i] != null)
 			{
 				var thisNote:Note = notesTypedGroup.members[i];
@@ -525,6 +528,7 @@ class PlayState extends FlxState
 						notesTypedGroup.remove(thisNote, true);
 					}
 					Scripts.callOnScripts("noteScored", [noteVal, hitType]);
+					alreadyProcessed = true;
 				}
 			}
 		}
