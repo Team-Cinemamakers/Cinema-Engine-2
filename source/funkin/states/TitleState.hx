@@ -31,6 +31,8 @@ class TitleState extends FlxState{
 			FlxG.sound.playMusic(Paths.audio('freakyMenu', 'audio/music', ENGINE));
 		}
 
+        FlxG.save.bind("cinema-engine-save", "cinemaMakers");
+
         titleBump = new FlxSprite();
         titleBump.frames = Paths.sparrow(path + 'logoBumpin', '', ENGINE, titleBump);
         titleBump.animation.addByPrefix("bump", 'logo bumpin', 24, false);

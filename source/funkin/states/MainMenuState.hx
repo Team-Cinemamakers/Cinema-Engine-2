@@ -4,6 +4,7 @@ import backend.events.*;
 import backend.options.Options;
 import funkin.objects.Transition;
 import funkin.states.*;
+import funkin.states.OptionsMenu;
 import funkin.states.TitleState;
 import openfl.events.Event;
 import openfl.events.EventType;
@@ -24,6 +25,12 @@ class MainMenuState extends FlxState
 	override public function create()
 	{
 		super.create();
+
+		var options = Options.getAllOptions();
+
+		for(i in 0...options.length){
+			trace("Option: " + options[i].name + ", Value: " + options[i].value);
+		}
 
 		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 		{
@@ -81,6 +88,10 @@ class MainMenuState extends FlxState
 					// new FlxTimer().start(1.5, function(tmr:FlxTimer){
 					// 	FlxG.switchState(() -> new FreeplayState());
 					// });
+				case 2:
+					transition.play(Transition.UP, 0.5, () -> {
+						FlxG.switchState(() -> new OptionsMenu());
+					});
 			}
 		}
 		if (CoolInput.pressed("uiDown"))

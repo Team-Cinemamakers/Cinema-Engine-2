@@ -21,5 +21,11 @@
         "type": "String",
         "defaultValue": "freakyMenu",
         "options": ["freakyMenu", "calmMenu", "funkyMenu"]
+        },
+        {
+        "name": "coolShit",
+        "type": "Int",
+        "defaultValue": 0,
+        "options": [0, 5, 7]
         }
     ]
