@@ -6,4 +6,5 @@ typedef OptionsData = {
     var defaultValue:Dynamic;
     var min:Dynamic;
     var max:Dynamic;
+    var options:Array<Dynamic>;
 };

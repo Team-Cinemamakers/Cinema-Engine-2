@@ -25,8 +25,6 @@ class MainMenuState extends FlxState
 	{
 		super.create();
 
-		trace(Options._FPS.max);
-
 		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.audio('freakyMenu', 'audio/music', ENGINE));

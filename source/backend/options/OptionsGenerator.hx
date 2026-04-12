@@ -28,7 +28,7 @@ class OptionsGenerator {
             fields.push({
                 name: storageName,
                 access: [APublic, AStatic],
-                kind: FVar(funkinOptionType, macro new backend.options.FunkinOption($v{item.name}, $v{item.type}, $v{item.defaultValue}, $v{item.min}, $v{item.max})),
+                kind: FVar(funkinOptionType, macro new backend.options.FunkinOption($v{item.name}, $v{item.type}, $v{item.defaultValue}, $v{item.min}, $v{item.max}, $v{item.options})),
                 pos: pos
             });
 
@@ -65,6 +65,8 @@ class OptionsGenerator {
                 }),
                 pos: pos
             });
+
+            trace("Generated option: " + item.name + " of type " + item.type);
         }
 
         return fields;

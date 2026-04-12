@@ -15,5 +15,11 @@
         "name": "antialiasing",
         "type": "Bool",
         "defaultValue": true
+        },
+        {
+        "name": "menuMusic",
+        "type": "String",
+        "defaultValue": "freakyMenu",
+        "options": ["freakyMenu", "calmMenu", "funkyMenu"]
         }
     ]
