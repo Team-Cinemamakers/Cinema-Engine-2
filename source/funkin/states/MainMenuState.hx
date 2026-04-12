@@ -1,6 +1,7 @@
 package funkin.states;
 
 import backend.events.*;
+import backend.options.Options;
 import funkin.objects.Transition;
 import funkin.states.*;
 import funkin.states.TitleState;
@@ -23,6 +24,8 @@ class MainMenuState extends FlxState
 	override public function create()
 	{
 		super.create();
+
+		trace(Options._FPS.max);
 
 		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
 		{

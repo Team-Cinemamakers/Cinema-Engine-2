@@ -51,6 +51,7 @@
 
 	<!-- Add Z-Index field to all FlxBasics -->
 	<haxeflag name="--macro" value="addMetadata('@:build(backend.macros.FlixelMacros.buildFlxBasic())', 'flixel.FlxBasic')" />
+	<haxeflag name="--macro" value="addMetadata('@:build(backend.options.OptionsGenerator.build())', 'backend.options.Options')" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

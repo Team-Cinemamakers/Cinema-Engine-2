@@ -1,0 +1,19 @@
+[
+        {
+        "name": "FPS",
+        "type": "Int",
+        "defaultValue": 60,
+        "min": 0,
+        "max": 240
+        },
+        {
+        "name": "vsync",
+        "type": "Bool",
+        "defaultValue": true
+        },
+        {
+        "name": "antialiasing",
+        "type": "Bool",
+        "defaultValue": true
+        }
+    ]
