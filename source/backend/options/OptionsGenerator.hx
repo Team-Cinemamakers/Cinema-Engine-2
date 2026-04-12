@@ -51,11 +51,13 @@ class OptionsGenerator {
                     ret: type,
                     expr: macro {
                         #if !macro
-                        if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
-                        if(FlxG.save.data.options[name] == null){
-                            FlxG.save.data.options[name] = $i{storageName}.value;
-                        } else {
-                            $i{storageName}.value = FlxG.save.data.options[name];
+                        if(FlxG.save != null){
+                            if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
+                            if(FlxG.save.data.options[name] == null){
+                                FlxG.save.data.options[name] = $i{storageName}.value;
+                            } else {
+                                $i{storageName}.value = FlxG.save.data.options[name];
+                            }
                         }
                         #end
                         return $i{storageName}.value;
@@ -72,8 +74,11 @@ class OptionsGenerator {
                     ret: type,
                     expr: macro {
                         #if !macro
-                        if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
-                        FlxG.save.data.options[name] = v;
+                        if(FlxG.save != null){
+                            if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
+                            FlxG.save.data.options[name] = v;
+                            FlxG.save.flush();
+                        }
                         #end
                         $i{storageName}.value = v;
                         return $i{storageName}.value;

@@ -37,14 +37,14 @@ class FunkinOption {
         #if !macro
         if(FlxG.save != null){
             if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
-            if(!FlxG.save.data.options.exists(name)){
-                FlxG.save.data.options.set(name, this.value);
+            if(!FlxG.save.data.options.exists(name) || FlxG.save.data.options.get(name) == null){
+                FlxG.save.data.options.set(name, value);
             } else {
-                this.value = FlxG.save.data.options.get(name);
+                value = FlxG.save.data.options.get(name);
             }
         }
         #end
-        return this.value;
+        return value;
     }
 
     function set_value(v:Dynamic):Dynamic {
@@ -52,9 +52,9 @@ class FunkinOption {
         if(FlxG.save != null){
             if(FlxG.save.data.options == null) FlxG.save.data.options = new Map<String, Dynamic>();
             FlxG.save.data.options.set(name, v);
-        }        
+            FlxG.save.flush();
+        }
         #end
-        this.value = v;
-        return this.value;
+        return this.value = v;
     }
 }

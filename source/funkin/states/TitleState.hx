@@ -32,6 +32,7 @@ class TitleState extends FlxState{
 		}
 
         FlxG.save.bind("cinema-engine-save", "cinemaMakers");
+        FlxG.save.flush();
 
         titleBump = new FlxSprite();
         titleBump.frames = Paths.sparrow(path + 'logoBumpin', '', ENGINE, titleBump);
